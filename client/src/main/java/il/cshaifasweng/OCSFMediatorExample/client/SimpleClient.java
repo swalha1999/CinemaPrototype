@@ -10,6 +10,7 @@ public class SimpleClient extends AbstractClient {
 	private static SimpleClient client = null;
 
 	private SimpleClient(String host, int port) {
+		//super("0.tco.eu.ngrok.io", 12760);
 		super(host, port);
 	}
 
