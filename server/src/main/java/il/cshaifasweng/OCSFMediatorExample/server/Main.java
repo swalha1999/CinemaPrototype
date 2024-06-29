@@ -35,7 +35,7 @@ public class Main
         SessionFactory sessionFactory = getSessionFactory();
         session = sessionFactory.openSession();
         session.beginTransaction();
-        server = new Server(3000);
+        server = new Server(3000, session);
         System.out.println("server is listening");
         server.listen();
     }
