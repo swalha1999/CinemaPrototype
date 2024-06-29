@@ -114,4 +114,6 @@ public class Server extends AbstractServer {
 		return session.createQuery(query).getResultList();
 	}
 
+//	public boolean
+
 }
