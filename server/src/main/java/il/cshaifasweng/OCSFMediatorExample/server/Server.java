@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
+import org.hibernate.Session;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -12,9 +13,11 @@ import java.util.Date;
 
 public class Server extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
+	private static Session session;
 
-	public Server(int port) {
+	public Server(int port, Session session) {
 		super(port);
+		this.session = session;
 	}
 
 	@Override
