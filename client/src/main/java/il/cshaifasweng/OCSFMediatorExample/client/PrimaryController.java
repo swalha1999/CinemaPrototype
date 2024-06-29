@@ -6,23 +6,28 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
+
 public class PrimaryController {
+
+    @FXML // fx:id="AddBtn"
+    private Button AddBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="DeleteBtn"
+    private Button DeleteBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="UpdateBtn"
+    private Button UpdateBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="col_email"
     private TableColumn<?, ?> col_email; // Value injected by FXMLLoader
-
-    @FXML // fx:id="col_id"
-    private TableColumn<?, ?> col_id; // Value injected by FXMLLoader
-
-    @FXML // fx:id="col_password"
-    private TableColumn<?, ?> col_password; // Value injected by FXMLLoader
-
-    @FXML // fx:id="col_type"
-    private TableColumn<?, ?> col_type; // Value injected by FXMLLoader
 
     @FXML // fx:id="col_username"
     private TableColumn<?, ?> col_username; // Value injected by FXMLLoader
@@ -31,8 +36,8 @@ public class PrimaryController {
     private TableView<?> table_users; // Value injected by FXMLLoader
 
     @FXML
-    void Add_users(ActionEvent event) {
-
+    void AddMovies(ActionEvent event) throws IOException {
+        setRoot("secondary");
     }
 
     @FXML
@@ -41,7 +46,7 @@ public class PrimaryController {
     }
 
     @FXML
-    void Edit(ActionEvent event) {
+    void Update(ActionEvent event) {
 
     }
 
