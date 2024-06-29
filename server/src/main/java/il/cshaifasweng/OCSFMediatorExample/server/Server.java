@@ -6,10 +6,15 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 import org.hibernate.Session;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Server extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
@@ -100,6 +105,13 @@ public class Server extends AbstractServer {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	public List<Movie> getMovies() {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Movie> query = builder.createQuery(Movie.class);
+		query.from(Movie.class);
+		return session.createQuery(query).getResultList();
 	}
 
 }

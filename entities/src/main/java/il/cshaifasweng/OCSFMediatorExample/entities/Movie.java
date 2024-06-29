@@ -10,14 +10,15 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "movie_name")
     private String name;
+    @Column(name = "screening_time")
     private Date date;
 
     public Movie(){}
     public Movie(String name, Date date) {
         this.name = name;
         this.date = date;
-
     }
 
     public String getName() {
