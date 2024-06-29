@@ -41,8 +41,6 @@ public class SimpleChatClient extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-    
-    
 
     @Override
 	public void stop() throws Exception {
@@ -50,7 +48,6 @@ public class SimpleChatClient extends Application {
     	EventBus.getDefault().unregister(this);
 		super.stop();
 	}
-
 
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
@@ -67,7 +64,6 @@ public class SimpleChatClient extends Application {
             alert.show();
         });
     }
-
 
 	public static void main(String[] args) {
         launch();

@@ -15,7 +15,6 @@ public class SimpleServer extends AbstractServer {
 
 	public SimpleServer(int port) {
 		super(port);
-		
 	}
 
 	@Override
@@ -32,8 +31,8 @@ public class SimpleServer extends AbstractServer {
 			// the IDs at data field in Message entity and send back to all subscribed clients a request to update
 			//their IDs text fields. An example of use of observer design pattern.
 			//message format: "change submitters IDs: 123456789, 987654321"
-			else if(request.startsWith("change submitters IDs:")){
-				message.setData(request.substring(23));
+			else if(request.equals("Movies1")){
+
 				message.setMessage("update submitters IDs");
 				sendToAllClients(message);
 			}

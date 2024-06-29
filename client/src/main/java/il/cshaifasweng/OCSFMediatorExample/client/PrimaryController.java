@@ -1,118 +1,53 @@
+/**
+ * Sample Skeleton for 'primary.fxml' Controller Class
+ */
+
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-
-import java.io.IOException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.util.Duration;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 public class PrimaryController {
 
-	@FXML
-	private TextField submitterID1;
+    @FXML // fx:id="col_email"
+    private TableColumn<?, ?> col_email; // Value injected by FXMLLoader
 
-	@FXML
-	private TextField submitterID2;
+    @FXML // fx:id="col_id"
+    private TableColumn<?, ?> col_id; // Value injected by FXMLLoader
 
-	@FXML
-	private TextField timeTF;
+    @FXML // fx:id="col_password"
+    private TableColumn<?, ?> col_password; // Value injected by FXMLLoader
 
-	@FXML
-	private TextField MessageTF;
+    @FXML // fx:id="col_type"
+    private TableColumn<?, ?> col_type; // Value injected by FXMLLoader
 
-	@FXML
-	private Button SendBtn;
+    @FXML // fx:id="col_username"
+    private TableColumn<?, ?> col_username; // Value injected by FXMLLoader
 
-	@FXML
-	private TextField DataFromServerTF;
+    @FXML // fx:id="table_users"
+    private TableView<?> table_users; // Value injected by FXMLLoader
 
-	private int msgId;
+    @FXML
+    void Add_users(ActionEvent event) {
 
-	@FXML
-	void sendMessage(ActionEvent event) {
-		try {
-			Message message = new Message(msgId++, MessageTF.getText());
-			MessageTF.clear();
-			SimpleClient.getClient().sendToServer(message);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    }
 
-	@Subscribe
-	public void setDataFromServerTF(MessageEvent event) {
-		DataFromServerTF.setText(event.getMessage().getMessage());
-	}
+    @FXML
+    void Delete(ActionEvent event) {
 
-	@Subscribe
-	public void setSubmittersTF(UpdateMessageEvent event) {
-		submitterID1.setText(event.getMessage().getData().substring(0,9));
-		submitterID2.setText(event.getMessage().getData().substring(11,20));
-	}
+    }
 
-	@Subscribe
-	public void getStarterData(NewSubscriberEvent event) {
-		try {
-			Message message = new Message(msgId, "send Submitters IDs");
-			SimpleClient.getClient().sendToServer(message);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    @FXML
+    void Edit(ActionEvent event) {
 
-	@Subscribe
-	public void errorEvent(ErrorEvent event){
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		Platform.runLater(() -> {
-			Alert alert = new Alert(Alert.AlertType.ERROR,
-					String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
-							event.getMessage().getId(),
-							event.getMessage().getMessage(),
-							event.getMessage().getTimeStamp().format(dtf))
-			);
-			alert.setTitle("Error!");
-			alert.setHeaderText("Error:");
-			alert.show();
-		});
-	}
+    }
 
-	@FXML
-	void initialize() {
-		EventBus.getDefault().register(this);
-		MessageTF.clear();
-		DataFromServerTF.clear();
-		msgId=0;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-			LocalTime currentTime = LocalTime.now();
-			timeTF.setText(currentTime.format(dtf));
-		}),
-				new KeyFrame(Duration.seconds(1))
-		);
-		clock.setCycleCount(Animation.INDEFINITE);
-		clock.play();
-		try {
-			Message message = new Message(msgId, "add client");
-			SimpleClient.getClient().sendToServer(message);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    @FXML
+    void getSelected(MouseEvent event) {
 
-	}
+    }
+
 }
