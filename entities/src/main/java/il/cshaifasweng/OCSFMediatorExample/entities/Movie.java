@@ -17,7 +17,6 @@ public class Movie {
     public Movie(String name, Date date) {
         this.name = name;
         this.date = date;
-
     }
 
     public String getName() {

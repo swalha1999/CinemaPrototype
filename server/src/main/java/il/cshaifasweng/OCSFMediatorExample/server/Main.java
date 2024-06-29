@@ -1,6 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import java.io.IOException;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,15 +22,13 @@ public class Main
         Configuration configuration = new Configuration();
 
 //         Add ALL of your entities here. You can also try adding a wholepackage.
-//        configuration.addAnnotatedClass(Car.class);
-//        configuration.addAnnotatedClass(Person.class);
-//        configuration.addAnnotatedClass(Garage.class);
+        configuration.addAnnotatedClass(Movie.class);
+
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
         return configuration.buildSessionFactory(serviceRegistry);
     }
-
 
     public static void main( String[] args ) throws IOException
     {
