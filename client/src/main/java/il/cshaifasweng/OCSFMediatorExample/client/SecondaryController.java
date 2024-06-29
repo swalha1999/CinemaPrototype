@@ -28,7 +28,7 @@ public class SecondaryController {
     void AddMovie(ActionEvent event) throws IOException {
         Movie movie = new Movie();
         movie.setName(name.getText());
-        movie.setDate(Date.from(datePicker.getValue().from(ZoneId.systemDefault()).toInstant()));
+        movie.setDate(Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         setRoot("primary");
     }
 
