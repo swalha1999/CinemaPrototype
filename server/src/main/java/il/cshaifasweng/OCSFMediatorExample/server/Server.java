@@ -10,10 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SimpleServer extends AbstractServer {
+public class Server extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
 
-	public SimpleServer(int port) {
+	public Server(int port) {
 		super(port);
 	}
 
@@ -22,15 +22,12 @@ public class SimpleServer extends AbstractServer {
 		Message message = (Message) msg;
 		String request = message.getMessage();
 		try {
-			//we got an empty message, so we will send back an error message with the error details.
+
 			if (request.isBlank()){
 				message.setMessage("Error! we got an empty message");
 				client.sendToClient(message);
 			}
-			//we got a request to change submitters IDs with the updated IDs at the end of the string, so we save
-			// the IDs at data field in Message entity and send back to all subscribed clients a request to update
-			//their IDs text fields. An example of use of observer design pattern.
-			//message format: "change submitters IDs: 123456789, 987654321"
+
 			else if(request.equals("Movies1")){
 
 				message.setMessage("update submitters IDs");
