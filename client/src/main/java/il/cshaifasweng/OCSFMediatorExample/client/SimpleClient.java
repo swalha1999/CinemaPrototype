@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.DeleteMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
@@ -20,16 +21,23 @@ public class SimpleClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		Message message = (Message) msg;
-		System.out.println(message.getMessage());
-		if(message.getMessage().equals("update all movies")) {
-			EventBus.getDefault().post(new UpdateMoviesEvent(message));
-		}
-		else{
-			EventBus.getDefault().post(new MessageEvent(message));
-		}
+		String messageContent = message.getMessage();
+		System.out.println(messageContent);
 
+		switch (messageContent) {
+			case "get all movies":
+			case "update movies":
+				EventBus.getDefault().post(new UpdateMoviesEvent(message));
+				break;
+			case "delete movies":
+				EventBus.getDefault().post(new DeleteMoviesEvent(message));
+				break;
+			default:
+				EventBus.getDefault().post(new MessageEvent(message));
+				break;
+		}
 	}
-	
+
 	public static SimpleClient getClient() {
 		if (client == null) {
 			client = new SimpleClient("localhost", 3000);

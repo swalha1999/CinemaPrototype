@@ -38,14 +38,14 @@ public class Server extends AbstractServer {
 						SubscribedClient connection = new SubscribedClient(client);
 						openClients.add(connection);
 						client.sendToClient(new Message(200,"client added successfully"));
-						client.sendToClient(new Message(200,"update all movies", getMovies()));
+						client.sendToClient(new Message(200,"get all movies", getMovies()));
 						break;
 
 					case "echo all":
 						sendToAllClients(new Message(200, request.getMessage()));
 						break;
 
-					case "update all movies":
+					case "get all movies":
 						sendToAllClients(new Message(200, request.getMessage(), getMovies()));
 						break;
 
