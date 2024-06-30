@@ -15,6 +15,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import  il.cshaifasweng.OCSFMediatorExample.entities.Message;
+
 import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
@@ -42,8 +44,8 @@ public class PrimaryController {
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this);
-        AddBtn.setOnAction(event -> EventBus.getDefault().post(new MessageEvent("Hello from EventBus!"))); // replace with server calls
-        DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent("Sticky Hello from EventBus!"))); // replace with server calls
+        AddBtn.setOnAction(event -> EventBus.getDefault().post(new MessageEvent(new Message(1,"Hello world" )))); // replace with server calls
+        DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent(new Message(1,"Hello world with a sticy maseaagee" )))); // replace with server calls
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
