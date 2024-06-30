@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class SecondaryController {
-
+    private Movie movie;
     @FXML // fx:id="UpdateBtn"
     private Button UpdateBtn; // Value injected by FXMLLoader
 
@@ -24,7 +25,11 @@ public class SecondaryController {
 
     @FXML
     void UpdateMovieTime(ActionEvent event) throws IOException {
+        if(!name.equals("")){
+
+        }
         SimpleClient.getClient().sendToServer(new Message(2, "Updated the Movie"));
+
         setRoot("primary");
     }
 

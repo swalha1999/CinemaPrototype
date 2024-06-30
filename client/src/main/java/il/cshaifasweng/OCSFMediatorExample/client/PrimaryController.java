@@ -97,13 +97,31 @@ public class PrimaryController {
     }
 
     @FXML
-    void Delete(ActionEvent event) {
-
+    void Delete(ActionEvent event) throws IOException {
+        Message message = new Message(1,"delete movies");
+        message.addMovie(getSelectedMovie());
+        SimpleClient.getClient().sendToServer(message);
     }
 
     @FXML
     void Update(ActionEvent event) throws IOException {
-
+        Movie movie = getSelectedMovie();
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+//            Parent root = loader.load();
+//
+//            // Get the controller of the secondary scene
+//            SecondaryController secondaryController = loader.getController();
+//
+//            // Pass the data to the secondary controller
+//            secondaryController.setData(inputField.getText());
+//
+//            Stage stage = (Stage) inputField.getScene().getWindow();
+//            stage.setScene(new Scene(root));
+//            stage.setTitle("Secondary Scene");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
             setRoot("secondary");
     }
 
