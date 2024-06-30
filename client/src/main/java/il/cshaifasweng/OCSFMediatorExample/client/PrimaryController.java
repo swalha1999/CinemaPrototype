@@ -50,7 +50,7 @@ public class PrimaryController {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        System.out.println(event.getMessage());
+        System.out.println(event.getMessage().getMessage());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

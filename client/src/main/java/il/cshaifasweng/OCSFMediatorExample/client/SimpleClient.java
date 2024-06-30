@@ -12,13 +12,13 @@ public class SimpleClient extends AbstractClient {
 	public static int port6=0;
 
 	private SimpleClient(String host, int port) {
-		//super("0.tco.eu.ngrok.io", 12760);
 		super(host, port);
 	}
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		Message message = (Message) msg;
+		System.out.println(message.getMessage());
 		if(message.getMessage().equals("update submitters IDs")){
 			EventBus.getDefault().post(new UpdateMessageEvent(message));
 		}else if(message.getMessage().equals("client added successfully")){

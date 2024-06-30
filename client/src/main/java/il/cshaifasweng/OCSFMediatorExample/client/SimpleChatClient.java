@@ -26,7 +26,7 @@ public class SimpleChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
     	EventBus.getDefault().register(this);
-        scene = new Scene(loadFXML("host"), 640, 480);
+        scene = new Scene(loadFXML("host"), 900, 1200);
         stage.setScene(scene);
         stage.show();
     }
@@ -57,7 +57,7 @@ public class SimpleChatClient extends Application {
                             message.getMessage().getMessage(),
                             message.getMessage().getTimeStamp().format(dtf))
             );
-            alert.setTitle("new message");
+            alert.setTitle("Debug Message");
             alert.setHeaderText("New Message:");
             alert.show();
         });

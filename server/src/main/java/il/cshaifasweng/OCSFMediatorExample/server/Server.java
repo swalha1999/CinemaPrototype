@@ -29,6 +29,7 @@ public class Server extends AbstractServer {
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		Message message = (Message) msg;
 		String request = message.getMessage();
+		System.out.println(request);
 		try {
 
 			if (request.isBlank()){
@@ -83,12 +84,7 @@ public class Server extends AbstractServer {
 				client.sendToClient(message);
 
 			}else{
-				//add code here to send received message to all clients.
-				//The string we received in the message is the message we will send back to all clients subscribed.
-				//Example:
-					// message received: "Good morning"
-					// message sent: "Good morning"
-				//see code for changing submitters IDs for help
+				// Echo: req = "Hello " -> res = req = "Hello "
 				message.setMessage(request);
 				sendToAllClients(message);
 			}
