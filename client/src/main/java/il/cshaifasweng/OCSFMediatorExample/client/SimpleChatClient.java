@@ -26,7 +26,9 @@ public class SimpleChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
     	EventBus.getDefault().register(this);
-        scene = new Scene(loadFXML("host"), 900, 1200);
+        scene = new Scene(loadFXML("primary"), 1200, 900);
+        client = SimpleClient.getClient();
+        client.openConnection();
         stage.setScene(scene);
         stage.show();
     }

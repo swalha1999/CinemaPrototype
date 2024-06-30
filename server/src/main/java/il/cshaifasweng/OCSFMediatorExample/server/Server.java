@@ -30,7 +30,11 @@ public class Server extends AbstractServer {
 		Message reqMessage = (Message) req;
 		Message response = new Message(reqMessage.getId(), reqMessage.getMessage());
 		System.out.println(reqMessage.getId() + ": " + reqMessage.getMessage());
+		for (SubscribedClient subscribedClient : SubscribersList) {
+			System.out.println("there is server here: " + subscribedClient);
+		}
 		sendToAllClients(response);
+
 	}
 
 	public void sendToAllClients(Message message) {

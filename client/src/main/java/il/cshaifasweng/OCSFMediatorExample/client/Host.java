@@ -14,6 +14,7 @@ import java.io.IOException;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleClient.host;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleClient.port6;
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 
 public class Host {
 
