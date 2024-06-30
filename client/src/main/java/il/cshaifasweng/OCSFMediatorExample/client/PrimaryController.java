@@ -63,7 +63,7 @@ public class PrimaryController {
         }); // replace with server calls
         MovieName_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         ScreeningTime_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-        DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent(new Message(1,"Hello world with a sticy maseaagee" )))); // replace with server calls
+        //DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent(new Message(1,"Hello world with a sticy maseaagee" )))); // replace with server calls
     }
 
     private void addUpdatedMoviesToTableView(List<Movie> movies) {

@@ -40,6 +40,9 @@ public class Message implements Serializable {
     }
 
     public boolean addMovie(Movie movie) {
+        if(this.movies==null){
+            this.movies = new ArrayList<Movie>();
+        }
         if (this.movies.contains(movie)){
             return false;
         }
