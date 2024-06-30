@@ -78,18 +78,16 @@ public class Main
 
     public static void main( String[] args ) throws Exception
     {
+        // add some movie to the database
         SessionFactory sessionFactory = getSessionFactory();
         session = sessionFactory.openSession();
         session.beginTransaction();
-
-
         generateMovies();
-
-
         session.getTransaction().commit();
 
+        // start the server
         server = new Server(3000, session);
-        System.out.println("server is listening");
+        System.out.println("server is listening at port 3000");
         server.listen();
     }
 }
