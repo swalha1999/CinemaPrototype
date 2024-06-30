@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +26,8 @@ public class SecondaryController {
     private TextField name; // Value injected by FXMLLoader
 
     @FXML
-    void UpdateMovie(ActionEvent event) throws IOException {
-        Movie movie = new Movie();
-        movie.setName(name.getText());
-        movie.setDate(Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
+    void UpdateMovieTime(ActionEvent event) throws IOException {
+        SimpleClient.getClient().sendToServer(new Message(2, "Updated the Movie"));
         setRoot("primary");
     }
 
