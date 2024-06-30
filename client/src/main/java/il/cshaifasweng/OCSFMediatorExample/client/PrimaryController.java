@@ -6,6 +6,9 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.StickyMessageEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 
 import java.io.IOException;
+import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
@@ -41,18 +45,25 @@ public class PrimaryController {
     private TableColumn<?, ?> col_username; // Value injected by FXMLLoader
 
     @FXML // fx:id="table_users"
-    private TableView<?> table_users; // Value injected by FXMLLoader
+    private TableView<Movie> table_users; // Value injected by FXMLLoader
 
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this);
-        AddBtn.setOnAction(event -> EventBus.getDefault().post(new MessageEvent(new Message(1,"Hello world" )))); // replace with server calls
+        AddBtn.setOnAction(event -> {
+            try {
+                SimpleClient.getClient().sendToServer(new Message(1,"update all movies"));
+            } catch (IOException e) {
+                System.out.println("Cant send message to server");
+            }
+        }); // replace with server calls
         DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent(new Message(1,"Hello world with a sticy maseaagee" )))); // replace with server calls
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-//        System.out.println(event.getMessage().getMessage());
+    public void onMessageEvent(UpdateMoviesEvent event) {
+        List<Movie> movies = event.getMessage().getMovies();
+        table_users.setItems((ObservableList<Movie>) movies);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
