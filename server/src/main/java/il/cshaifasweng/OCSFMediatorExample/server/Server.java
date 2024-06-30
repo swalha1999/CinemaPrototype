@@ -11,14 +11,12 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Server extends AbstractServer {
-	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
-	private static Session session;
+	private static final ArrayList<SubscribedClient> openClients = new ArrayList<>();
+	private final Session session;
 
 	public Server(int port, Session session) {
 		super(port);
@@ -26,12 +24,37 @@ public class Server extends AbstractServer {
 	}
 
 	@Override
-	protected void handleMessageFromClient(Object req, ConnectionToClient client) {
-		Message reqMessage = (Message) req;
-		Message response = new Message(reqMessage.getId(), reqMessage.getMessage());
-		System.out.println(reqMessage.getId() + ": " + reqMessage.getMessage());
+	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+		Message request = (Message) msg;
+		System.out.println(request.getId() + ": " + request.getMessage());
+
 		try {
-			client.sendToClient(response);
+			if (request.getMessage().isBlank()){
+				client.sendToClient(new Message(404,"Error! we got an empty message"));
+			}
+			else {
+				switch (request.getMessage()) {
+					case "add client":
+						SubscribedClient connection = new SubscribedClient(client);
+						openClients.add(connection);
+						client.sendToClient(new Message(200,"client added successfully"));
+						break;
+
+					case "echo all":
+						sendToAllClients(new Message(200, request.getMessage()));
+						break;
+
+					case "get all movies":
+						sendToAllClients(new Message(200, request.getMessage(), getMovies()));
+						break;
+
+					//TODO: Add more cases as needed Here
+
+					default:
+						client.sendToClient(new Message(500,"Error! Unknown message received"));
+						break;
+				}
+			}
 		}
 		catch (IOException e) {
 			System.out.println("Error sending message: " + e.getMessage());
@@ -39,13 +62,16 @@ public class Server extends AbstractServer {
 	}
 
 	public void sendToAllClients(Message message) {
-		try {
-			for (SubscribedClient SubscribedClient : SubscribersList) {
+		// here we send to all the clients that registered to our server
+		for (SubscribedClient SubscribedClient : openClients) {
+			try {
 				SubscribedClient.getClient().sendToClient(message);
+			} catch (IOException e1) {
+				System.out.println("Error sending message: " + e1.getMessage());
+				//TODO:  remove the clients that fail to respond
 			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
 		}
+
 	}
 
 	public List<Movie> getMovies() {

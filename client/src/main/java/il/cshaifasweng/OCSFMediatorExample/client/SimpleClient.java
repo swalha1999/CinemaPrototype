@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import org.greenrobot.eventbus.EventBus;
 
