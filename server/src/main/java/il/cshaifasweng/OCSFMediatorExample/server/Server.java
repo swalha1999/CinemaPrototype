@@ -44,7 +44,7 @@ public class Server extends AbstractServer {
 						sendToAllClients(new Message(200, request.getMessage()));
 						break;
 
-					case "get all movies":
+					case "update all movies":
 						sendToAllClients(new Message(200, request.getMessage(), getMovies()));
 						break;
 

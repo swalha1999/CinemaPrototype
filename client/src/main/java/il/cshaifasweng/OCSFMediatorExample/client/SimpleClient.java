@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import org.greenrobot.eventbus.EventBus;
 
@@ -20,7 +21,13 @@ public class SimpleClient extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		Message message = (Message) msg;
 		System.out.println(message.getMessage());
-		EventBus.getDefault().post(new MessageEvent(message));
+		if(message.getMessage().equals("update all movies")) {
+			EventBus.getDefault().post(new UpdateMoviesEvent(message));
+		}
+		else{
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+
 	}
 	
 	public static SimpleClient getClient() {
