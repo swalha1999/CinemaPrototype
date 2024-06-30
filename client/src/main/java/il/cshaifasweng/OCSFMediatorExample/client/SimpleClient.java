@@ -8,6 +8,8 @@ import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 public class SimpleClient extends AbstractClient {
 	
 	private static SimpleClient client = null;
+	public static String host="";
+	public static int port6=0;
 
 	private SimpleClient(String host, int port) {
 		//super("0.tco.eu.ngrok.io", 12760);
@@ -30,7 +32,7 @@ public class SimpleClient extends AbstractClient {
 	
 	public static SimpleClient getClient() {
 		if (client == null) {
-			client = new SimpleClient("localhost", 3000);
+			client = new SimpleClient(host, port6);
 		}
 		return client;
 	}

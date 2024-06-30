@@ -15,8 +15,8 @@ import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoo
 
 public class SecondaryController {
 
-    @FXML // fx:id="AddBtn"
-    private Button AddBtn; // Value injected by FXMLLoader
+    @FXML // fx:id="UpdateBtn"
+    private Button UpdateBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="datePicker"
     private DatePicker datePicker; // Value injected by FXMLLoader
@@ -25,12 +25,14 @@ public class SecondaryController {
     private TextField name; // Value injected by FXMLLoader
 
     @FXML
-    void AddMovie(ActionEvent event) throws IOException {
+    void UpdateMovie(ActionEvent event) throws IOException {
         Movie movie = new Movie();
         movie.setName(name.getText());
         movie.setDate(Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
         setRoot("primary");
     }
 
 }
+
 

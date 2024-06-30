@@ -1,6 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Scanner;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import org.hibernate.HibernateException;
@@ -30,11 +33,55 @@ public class Main
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    public static void main( String[] args ) throws IOException
+    private static void generateMovies() throws Exception {
+        Movie[] movies = new Movie[8];
+        Date[] dates = new Date[10];
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(2024, Calendar.AUGUST, 5);
+        dates[0] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 6);
+        dates[1] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 10);
+        dates[2] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 7);
+        dates[3] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 16);
+        dates[4] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 18);
+        dates[5] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 11);
+        dates[6] = calendar.getTime();
+        calendar.set(2024, Calendar.AUGUST, 6);
+        dates[7] = calendar.getTime();
+
+        movies[0] = new Movie("Mission: Impossible – Dead Reckoning Part Two", dates[0]);
+        movies[1] = new Movie("Dune: Part Two", dates[1]);
+        movies[2] = new Movie("Avatar 3", dates[2] );
+        movies[3] = new Movie("The Marvels", dates[3] );
+        movies[4] = new Movie("Fantastic Beasts 4", dates[4]);
+        movies[5] = new Movie("Spider-Man: Beyond the Spider-Verse", dates[5] );
+        movies[6] = new Movie("Guardians of the Galaxy Vol. 3", dates[6]);
+        movies[7] = new Movie("Indiana Jones 5" , dates[7] );
+
+        // Example of how to access the array
+        for (Movie person : movies) {
+            session.save(person);
+            session.flush();
+        }
+    }
+
+    public static void main( String[] args ) throws Exception
     {
         SessionFactory sessionFactory = getSessionFactory();
         session = sessionFactory.openSession();
         session.beginTransaction();
+
+        generateMovies();
+
+        session.getTransaction().commit();
+
         server = new Server(3000, session);
         System.out.println("server is listening");
         server.listen();

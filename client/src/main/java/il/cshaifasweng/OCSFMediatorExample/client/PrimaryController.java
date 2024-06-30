@@ -37,7 +37,7 @@ public class PrimaryController {
 
     @FXML
     void AddMovies(ActionEvent event) throws IOException {
-        setRoot("secondary");
+
     }
 
     @FXML
@@ -46,8 +46,9 @@ public class PrimaryController {
     }
 
     @FXML
-    void Update(ActionEvent event) {
-
+    void Update(ActionEvent event) throws IOException {
+        
+        setRoot("secondary");
     }
 
     @FXML
