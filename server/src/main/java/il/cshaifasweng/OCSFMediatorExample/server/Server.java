@@ -71,7 +71,6 @@ public class Server extends AbstractServer {
 				//TODO:  remove the clients that fail to respond
 			}
 		}
-
 	}
 
 	public List<Movie> getMovies() {
