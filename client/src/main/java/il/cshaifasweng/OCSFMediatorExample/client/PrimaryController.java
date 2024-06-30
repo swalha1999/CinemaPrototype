@@ -25,7 +25,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
@@ -64,18 +66,20 @@ public class PrimaryController {
         DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent(new Message(1,"Hello world with a sticy maseaagee" )))); // replace with server calls
     }
 
-    private void populateTableView(List<Movie> movies) {
-        ObservableList<Movie> movieList = FXCollections.observableArrayList(movies);
-        table_users.setItems(movieList);
+    private void addUpdatedMoviesToTableView(List<Movie> movies) {
+        Set<Movie> existingMovies = new HashSet<>(table_users.getItems());
+        for (Movie movie : movies) {
+            if (!existingMovies.contains(movie)) {
+                table_users.getItems().add(movie);
+                existingMovies.add(movie);
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(UpdateMoviesEvent event) {
         List<Movie> movies = event.getMessage().getMovies();
-//        for(Movie movie: movies){
-//            System.out.println(movie.getName());
-//        }
-        populateTableView(movies);
+        addUpdatedMoviesToTableView(movies);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
