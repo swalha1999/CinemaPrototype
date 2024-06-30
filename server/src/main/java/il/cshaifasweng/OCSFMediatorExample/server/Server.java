@@ -54,7 +54,13 @@ public class Server extends AbstractServer {
 						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
 						break;
 
-						//TODO: Add more cases as needed Here
+					case "delete movies":
+						for (Movie movie : request.getMovies()) {
+							System.out.println("deleted this movie: " + deleteMovie(movie).getName()); 						}
+						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
+						break;
+
+					//TODO: Add more cases as needed Here
 
 					default:
 						client.sendToClient(new Message(500,"Error! Unknown message received"));
@@ -84,6 +90,21 @@ public class Server extends AbstractServer {
 		CriteriaQuery<Movie> query = builder.createQuery(Movie.class);
 		query.from(Movie.class);
 		return session.createQuery(query).getResultList();
+	}
+
+	public Movie getMovie(int id) {
+		return session.get(Movie.class, id);
+	}
+
+	public Movie deleteMovie(int id) {
+		Movie movie = session.get(Movie.class, id);
+		session.delete(movie);
+		return movie;
+	}
+
+	public Movie deleteMovie(Movie movie) {
+		session.delete(movie);
+		return movie;
 	}
 
 }

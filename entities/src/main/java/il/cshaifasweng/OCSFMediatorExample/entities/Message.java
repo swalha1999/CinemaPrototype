@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Message implements Serializable {
@@ -39,6 +40,9 @@ public class Message implements Serializable {
     }
 
     public boolean addMovie(Movie movie) {
+        if (this.movies.contains(movie)){
+            return false;
+        }
         return movies.add(movie);
     }
 
