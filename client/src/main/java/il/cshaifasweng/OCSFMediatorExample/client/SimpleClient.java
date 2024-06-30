@@ -19,15 +19,7 @@ public class SimpleClient extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		Message message = (Message) msg;
 		System.out.println(message.getMessage());
-		if(message.getMessage().equals("update submitters IDs")){
-			EventBus.getDefault().post(new UpdateMessageEvent(message));
-		}else if(message.getMessage().equals("client added successfully")){
-			EventBus.getDefault().post(new NewSubscriberEvent(message));
-		}else if(message.getMessage().equals("Error! we got an empty message")){
-			EventBus.getDefault().post(new ErrorEvent(message));
-		}else {
-			EventBus.getDefault().post(new MessageEvent(message));
-		}
+		EventBus.getDefault().post(new MessageEvent(message));
 	}
 	
 	public static SimpleClient getClient() {
