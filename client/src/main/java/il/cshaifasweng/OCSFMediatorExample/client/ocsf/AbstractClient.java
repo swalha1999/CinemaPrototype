@@ -4,11 +4,12 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.ocsf;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketException;
 
 /**
 * The <code> AbstractClient </code> contains all the
@@ -67,7 +68,7 @@ public abstract class AbstractClient implements Runnable
   /**
   * Sockets are used in the operating system as channels
   * of communication between two processes.
-  * @see java.net.Socket
+  * @see Socket
   */
   private Socket clientSocket;
 

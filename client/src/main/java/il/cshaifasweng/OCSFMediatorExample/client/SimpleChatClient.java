@@ -25,10 +25,8 @@ public class SimpleChatClient extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-    	EventBus.getDefault().register(this);
-        scene = new Scene(loadFXML("primary"), 1200, 900);
-        client = SimpleClient.getClient();
-        client.openConnection();
+        EventBus.getDefault().register(this);
+        scene = new Scene(loadFXML("host"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
@@ -42,12 +40,15 @@ public class SimpleChatClient extends Application {
         return fxmlLoader.load();
     }
 
+
+
     @Override
-	public void stop() throws Exception {
-		// TODO Auto-generated method stub
-    	EventBus.getDefault().unregister(this);
-		super.stop();
-	}
+    public void stop() throws Exception {
+        // TODO Auto-generated method stub
+        EventBus.getDefault().unregister(this);
+        super.stop();
+    }
+
 
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
@@ -59,13 +60,14 @@ public class SimpleChatClient extends Application {
                             message.getMessage().getMessage(),
                             message.getMessage().getTimeStamp().format(dtf))
             );
-            alert.setTitle("Debug Message");
+            alert.setTitle("new message");
             alert.setHeaderText("New Message:");
             alert.show();
         });
     }
 
-	public static void main(String[] args) {
+
+    public static void main(String[] args) {
         launch();
     }
 

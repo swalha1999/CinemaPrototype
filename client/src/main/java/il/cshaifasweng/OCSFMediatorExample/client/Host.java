@@ -4,6 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,13 @@ public class Host {
         port6= Integer.parseInt(port.getText());
         SimpleClient client = SimpleClient.getClient();
         client.openConnection();
+        try {
+            Message message = new Message(0, "add client");
+            SimpleClient.getClient().sendToServer(message);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         Platform.runLater(()->{
             try {
                 setRoot("primary");
