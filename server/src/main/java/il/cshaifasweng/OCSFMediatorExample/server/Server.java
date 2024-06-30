@@ -38,6 +38,7 @@ public class Server extends AbstractServer {
 						SubscribedClient connection = new SubscribedClient(client);
 						openClients.add(connection);
 						client.sendToClient(new Message(200,"client added successfully"));
+						client.sendToClient(new Message(200,"update all movies", getMovies()));
 						break;
 
 					case "echo all":
@@ -48,7 +49,12 @@ public class Server extends AbstractServer {
 						sendToAllClients(new Message(200, request.getMessage(), getMovies()));
 						break;
 
-					//TODO: Add more cases as needed Here
+					case "update movies":
+						// get the updated movies from the client and send it to all the clients
+						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
+						break;
+
+						//TODO: Add more cases as needed Here
 
 					default:
 						client.sendToClient(new Message(500,"Error! Unknown message received"));
