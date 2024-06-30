@@ -82,7 +82,9 @@ public class Main
         session = sessionFactory.openSession();
         session.beginTransaction();
 
+
         generateMovies();
+
 
         session.getTransaction().commit();
 

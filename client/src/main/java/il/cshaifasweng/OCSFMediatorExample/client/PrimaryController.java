@@ -103,13 +103,11 @@ public class PrimaryController {
 
     @FXML
     void Update(ActionEvent event) throws IOException {
-        
-        setRoot("secondary");
+
+            setRoot("secondary");
     }
 
-    @FXML
-    void getSelected(MouseEvent event) {
-
+    public Movie getSelectedMovie(){
+        return table_users.getSelectionModel().getSelectedItem();
     }
-
 }
