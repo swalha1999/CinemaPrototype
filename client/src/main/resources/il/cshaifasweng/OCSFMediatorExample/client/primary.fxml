@@ -18,8 +18,8 @@
       <!-- Main TableView -->
       <TableView fx:id="table_users" style="-fx-background-color: #1a1a1a; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 4); -fx-table-cell-border-color: transparent; -fx-text-fill: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <columns>
-            <TableColumn fx:id="col_username" text="Movie Name" style="-fx-background-color: #2c2c2c; -fx-text-fill: white;" prefWidth="400.0" maxWidth="Infinity" minWidth="100.0" />
-            <TableColumn fx:id="col_email" text="Screening Time" style="-fx-background-color: #2c2c2c; -fx-text-fill: white;" prefWidth="400.0" maxWidth="Infinity" minWidth="100.0" />
+            <TableColumn fx:id="MovieName_col" maxWidth="Infinity" minWidth="100.0" prefWidth="400.0" style="-fx-background-color: #2c2c2c; -fx-text-fill: white;" text="Movie Name" />
+            <TableColumn fx:id="ScreeningTime_col" maxWidth="Infinity" minWidth="100.0" prefWidth="400.0" style="-fx-background-color: #2c2c2c; -fx-text-fill: white;" text="Screening Time" />
          </columns>
       </TableView>
    </children>
