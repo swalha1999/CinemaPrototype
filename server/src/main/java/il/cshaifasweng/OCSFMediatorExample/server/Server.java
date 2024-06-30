@@ -67,7 +67,7 @@ public class Server extends AbstractServer {
 			try {
 				SubscribedClient.getClient().sendToClient(message);
 			} catch (IOException e1) {
-				System.out.println("Error sending message: " + e1.getMessage());
+				System.out.println("Error sending message to this client: " + e1.getMessage());
 				//TODO:  remove the clients that fail to respond
 			}
 		}
