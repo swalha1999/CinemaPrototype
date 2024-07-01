@@ -38,7 +38,6 @@ public class Server extends AbstractServer {
 						SubscribedClient connection = new SubscribedClient(client);
 						openClients.add(connection);
 						client.sendToClient(new Message(200,"client added successfully"));
-						client.sendToClient(new Message(200,"get all movies", getMovies()));
 						break;
 
 					case "echo all":
@@ -46,7 +45,7 @@ public class Server extends AbstractServer {
 						break;
 
 					case "get all movies":
-						sendToAllClients(new Message(200, request.getMessage(), getMovies()));
+						client.sendToClient(new Message(200,request.getMessage(), getMovies()));
 						break;
 
 					case "update movies":
@@ -55,6 +54,10 @@ public class Server extends AbstractServer {
 						break;
 
 					case "delete movies":
+						System.out.println("Data: " + request.getData());
+						if (request.getMovies().isEmpty()){
+							System.out.println("The list of movies to delete is Empty");
+						}
 						for (Movie movie : request.getMovies()) {
 							System.out.println("deleted this movie: " + deleteMovie(movie).getName()); 						}
 						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));

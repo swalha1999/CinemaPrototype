@@ -4,6 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.DeleteMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.StickyMessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
@@ -54,16 +55,15 @@ public class PrimaryController {
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this);
-        AddBtn.setOnAction(event -> {
-            try {
-                SimpleClient.getClient().sendToServer(new Message(1,"update all movies"));
-            } catch (IOException e) {
-                System.out.println("Cant send message to server");
-            }
-        }); // replace with server calls
         MovieName_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         ScreeningTime_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-        //DeleteBtn.setOnAction(event -> EventBus.getDefault().postSticky(new StickyMessageEvent(new Message(1,"Hello world with a sticy maseaagee" )))); // replace with server calls
+
+        try {
+            SimpleClient.getClient().sendToServer(new Message(1,"get all movies"));
+        } catch (IOException e) {
+            System.out.println("Error sending message to server to get all the movies");
+        }
+
     }
 
     private void addUpdatedMoviesToTableView(List<Movie> movies) {
@@ -77,10 +77,16 @@ public class PrimaryController {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(UpdateMoviesEvent event) {
+    public void onUpdateMoviesEven(UpdateMoviesEvent event) {
         List<Movie> movies = event.getMessage().getMovies();
         addUpdatedMoviesToTableView(movies);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDeleteMoviesEven(DeleteMoviesEvent event) {
+        System.out.println("Deleting movies :" + event.getMessage().getMovies().getFirst().getName());
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStickyMessageEvent(StickyMessageEvent event) {
@@ -93,6 +99,7 @@ public class PrimaryController {
 
     @FXML
     void AddMovies(ActionEvent event) throws IOException {
+        SimpleClient.getClient().sendToServer(new Message(1,"get all movies"));
 
     }
 
@@ -100,6 +107,8 @@ public class PrimaryController {
     void Delete(ActionEvent event) throws IOException {
         Message message = new Message(1,"delete movies");
         message.addMovie(getSelectedMovie());
+        message.setData("" + message.getMovies().getFirst().getId());
+        System.out.println("Deleting movies :" + message.getMessage() + " movies: " + message.getMovies().getFirst().getId());
         SimpleClient.getClient().sendToServer(message);
     }
 
@@ -122,7 +131,7 @@ public class PrimaryController {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-            setRoot("secondary");
+        setRoot("secondary");
     }
 
     public Movie getSelectedMovie(){
