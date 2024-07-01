@@ -61,9 +61,10 @@ public class MovieDAO {
 
     public Movie addMovie(Movie addedMovie) {
         Transaction transaction = null;
+        Movie movie = null;
         try {
             transaction = session.beginTransaction();
-            Movie movie = new Movie(addedMovie.getName(), addedMovie.getDate());
+            movie = new Movie(addedMovie.getName(), addedMovie.getDate());
             session.save(movie);
             session.flush();
             transaction.commit();
@@ -73,7 +74,7 @@ public class MovieDAO {
             }
             e.printStackTrace();
         }
-        return addedMovie;
+        return movie;
     }
 
     public List<Movie> getMovies() {
