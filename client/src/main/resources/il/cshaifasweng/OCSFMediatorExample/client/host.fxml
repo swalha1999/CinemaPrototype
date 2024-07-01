@@ -10,7 +10,7 @@
       <Button layoutX="261.0" layoutY="247.0" mnemonicParsing="false" onAction="#updatePort" text="Connect" />
       <TextField fx:id="ipAdd" layoutX="212.0" layoutY="123.0" />
       <TextField fx:id="port" layoutX="212.0" layoutY="174.0" />
-      <Label layoutX="182.0" layoutY="122.0" prefHeight="26.0" prefWidth="30.0" text="IP" />
+      <Label layoutX="175.0" layoutY="122.0" prefHeight="26.0" prefWidth="30.0" text="Host" />
       <Label layoutX="175.0" layoutY="178.0" prefHeight="18.0" prefWidth="30.0" text="Port" />
    </children>
 </AnchorPane>
