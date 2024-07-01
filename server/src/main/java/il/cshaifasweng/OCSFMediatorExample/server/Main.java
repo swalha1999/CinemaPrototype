@@ -81,6 +81,7 @@ public class Main
         // add some movie to the database
         SessionFactory sessionFactory = getSessionFactory();
         session = sessionFactory.openSession();
+
         session.beginTransaction();
         generateMovies();
         session.getTransaction().commit();

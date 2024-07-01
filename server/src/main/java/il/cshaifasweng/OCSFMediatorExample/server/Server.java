@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 import org.hibernate.Session;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -59,7 +60,8 @@ public class Server extends AbstractServer {
 							System.out.println("The list of movies to delete is Empty");
 						}
 						for (Movie movie : request.getMovies()) {
-							System.out.println("deleted this movie: " + deleteMovie(movie).getName()); 						}
+							System.out.println("deleted this movie: " + deleteMovie(movie.getId()).getName());
+						}
 						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
 						break;
 
@@ -100,13 +102,44 @@ public class Server extends AbstractServer {
 	}
 
 	public Movie deleteMovie(int id) {
-		Movie movie = session.get(Movie.class, id);
-		session.delete(movie);
+		Transaction transaction = null;
+		Movie movie = null;
+		try {
+			transaction = session.beginTransaction();
+			movie = session.get(Movie.class, id);
+			if (movie != null) {
+				session.delete(movie);
+				session.flush();
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
 		return movie;
 	}
 
-	public Movie deleteMovie(Movie movie) {
-		session.delete(movie);
+	public Movie editMovie(Movie editedMovie) {
+		Transaction transaction = null;
+		Movie movie = null;
+		try {
+			transaction = session.beginTransaction();
+			movie = session.get(Movie.class, editedMovie.getId());
+			if (movie != null) {
+				movie.setName(editedMovie.getName());
+				movie.setDate(editedMovie.setName());
+				session.update(movie);
+				session.flush();
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
 		return movie;
 	}
 
