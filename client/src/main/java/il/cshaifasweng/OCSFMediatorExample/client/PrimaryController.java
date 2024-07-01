@@ -13,12 +13,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -115,23 +119,15 @@ public class PrimaryController {
     @FXML
     void Update(ActionEvent event) throws IOException {
         Movie movie = getSelectedMovie();
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
-//            Parent root = loader.load();
-//
-//            // Get the controller of the secondary scene
-//            SecondaryController secondaryController = loader.getController();
-//
-//            // Pass the data to the secondary controller
-//            secondaryController.setData(inputField.getText());
-//
-//            Stage stage = (Stage) inputField.getScene().getWindow();
-//            stage.setScene(new Scene(root));
-//            stage.setTitle("Secondary Scene");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        setRoot("secondary");
+        if (movie != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+            Parent root = loader.load();
+            SecondaryController controller = loader.getController();
+            controller.setMovie(movie);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
     }
 
     public Movie getSelectedMovie(){
