@@ -58,7 +58,7 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							System.out.println("edited this movie: " + movieDAO.addMovie(movie).getName());
+							System.out.println("added this movie: " + movieDAO.addMovie(movie).getName());
 						}
 						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
 						break;
