@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,26 +28,31 @@ public class SecondaryController {
     @FXML // fx:id="name"
     private TextField name; // Value injected by FXMLLoader
 
+
+    @FXML
+    public void initialize() {
+
+    }
+
     @FXML
     void UpdateMovieTime(ActionEvent event) throws IOException {
-        name.setText(movie.getName());
-        datePicker.setValue(LocalDate.from(movie.getDate().toInstant()));
-        if(!name.equals("")){
+        if(!name.getText().isEmpty()){
             movie.setName(name.getText());
+            LocalDate localDate = datePicker.getValue();
+            if (localDate != null) {
+                Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                movie.setDate(date);
+            }
+            Message message = new Message(2, "update movies");
+            message.addMovie(movie);
+            SimpleClient.getClient().sendToServer(message);
         }
-        LocalDate localDate = datePicker.getValue();
-        if (localDate != null) {
-            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            movie.setDate(date);
-        }
-        Message message = new Message(2, "update movies");
-        message.addMovie(movie);
-        SimpleClient.getClient().sendToServer(message);
         setRoot("primary");
     }
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+        name.setText(movie.getName());
     }
 }
 
