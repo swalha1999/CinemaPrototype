@@ -88,7 +88,8 @@ public class PrimaryController {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDeleteMoviesEven(DeleteMoviesEvent event) {
-        System.out.println("Deleting movies :" + event.getMessage().getMovies().getFirst().getName());
+        List<Movie> moviesToDelete = event.getMessage().getMovies();
+        table_users.getItems().removeAll(moviesToDelete);
     }
 
 

@@ -25,14 +25,14 @@ public class SecondaryController {
 
     @FXML
     void UpdateMovieTime(ActionEvent event) throws IOException {
-        if(!name.equals("")){
-            movie.setName(name.getText());
-        }
-        movie.setDate(datePicker);
-        Message message = new Message(2, "update movies");
-        message.addMovie(movie);
-        SimpleClient.getClient().sendToServer(message);
-        setRoot("primary");
+//        if(!name.equals("")){
+//            movie.setName(name.getText());
+//        }
+//        movie.setDate(datePicker);
+//        Message message = new Message(2, "update movies");
+//        message.addMovie(movie);
+//        SimpleClient.getClient().sendToServer(message);
+//        setRoot("primary");
     }
 
     public void setMovie(Movie movie) {

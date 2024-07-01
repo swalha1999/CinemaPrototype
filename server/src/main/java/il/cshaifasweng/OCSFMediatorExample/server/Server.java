@@ -50,17 +50,21 @@ public class Server extends AbstractServer {
 						break;
 
 					case "update movies":
-						// get the updated movies from the client and send it to all the clients
+						if (request.getMovies().isEmpty()){
+							System.out.println("The list of movies to Edit is Empty");
+						}
+						for (Movie movie : request.getMovies()) {
+							System.out.println("edited this movie: " + editMovie(movie).getName());
+						}
 						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
 						break;
 
 					case "delete movies":
-						System.out.println("Data: " + request.getData());
 						if (request.getMovies().isEmpty()){
 							System.out.println("The list of movies to delete is Empty");
 						}
 						for (Movie movie : request.getMovies()) {
-							System.out.println("deleted this movie: " + deleteMovie(movie.getId()).getName());
+							System.out.println("deleted this movie: " + deleteMovie(movie).getName());
 						}
 						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
 						break;
@@ -101,12 +105,12 @@ public class Server extends AbstractServer {
 		return session.get(Movie.class, id);
 	}
 
-	public Movie deleteMovie(int id) {
+	public Movie deleteMovie(Movie deletedMovie) {
 		Transaction transaction = null;
 		Movie movie = null;
 		try {
 			transaction = session.beginTransaction();
-			movie = session.get(Movie.class, id);
+			movie = session.get(Movie.class, deletedMovie.getId());
 			if (movie != null) {
 				session.delete(movie);
 				session.flush();
@@ -129,7 +133,7 @@ public class Server extends AbstractServer {
 			movie = session.get(Movie.class, editedMovie.getId());
 			if (movie != null) {
 				movie.setName(editedMovie.getName());
-				movie.setDate(editedMovie.setName());
+				movie.setDate(editedMovie.getDate());
 				session.update(movie);
 				session.flush();
 			}
