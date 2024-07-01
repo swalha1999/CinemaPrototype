@@ -70,14 +70,26 @@ public class PrimaryController {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddMoviesEvent(AddMoviesEvent event) {
-        List<Movie> movies = event.getMessage().getMovies();
+        List<Movie> moviesToUpdate = event.getMessage().getMovies();
         Set<Movie> existingMovies = new HashSet<>(table_users.getItems());
-        for (Movie movie : movies) {
-            if (!existingMovies.contains(movie)) {
-                table_users.getItems().add(movie);
-                existingMovies.add(movie);
+
+        for (Movie updatedMovie : moviesToUpdate) {
+            boolean found = false;
+            for (Movie existingMovie : existingMovies) {
+                if (existingMovie.getId() == updatedMovie.getId() ) {
+                    existingMovie.setName(updatedMovie.getName());
+                    existingMovie.setDate(updatedMovie.getDate());
+                    break;
+                }
+            }
+            if (!found) {
+                table_users.getItems().add(updatedMovie);
             }
         }
+
+        // Refresh the table view
+        table_users.refresh();
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -88,21 +100,7 @@ public class PrimaryController {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateMoviesEvent(UpdateMoviesEvent event) {
-        List<Movie> moviesToUpdate = event.getMessage().getMovies();
-        Set<Movie> existingMovies = new HashSet<>(table_users.getItems());
-
-        for (Movie updatedMovie : moviesToUpdate) {
-            for (Movie existingMovie : existingMovies) {
-                if (existingMovie.getId() == updatedMovie.getId() ) {
-                    existingMovie.setName(updatedMovie.getName());
-                    existingMovie.setDate(updatedMovie.getDate());
-                    break;
-                }
-            }
-        }
-
-        // Refresh the table view
-        table_users.refresh();
+        onAddMoviesEvent(new AddMoviesEvent(event.getMessage()));
     }
 
     public void cleanup() {

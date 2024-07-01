@@ -8,22 +8,16 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 import org.hibernate.Session;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
-import org.hibernate.Transaction;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Server extends AbstractServer {
 	private static final ArrayList<SubscribedClient> openClients = new ArrayList<>();
-	private final Session session;
 	private final MovieDAO movieDAO;
 
 	public Server(int port, Session session) {
 		super(port);
-		this.session = session;
 		this.movieDAO = new MovieDAO(session);
 	}
 
