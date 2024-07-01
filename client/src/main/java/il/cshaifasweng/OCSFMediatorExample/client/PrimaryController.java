@@ -24,9 +24,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class PrimaryController {
 
@@ -106,8 +111,7 @@ public class PrimaryController {
 
     @FXML
     void AddMovies(ActionEvent event) throws IOException {
-        SimpleClient.getClient().sendToServer(new Message(1,"get all movies"));
-
+        setRoot("addView");
     }
 
     @FXML
