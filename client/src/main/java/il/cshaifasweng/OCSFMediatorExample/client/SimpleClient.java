@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.DeleteMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
@@ -26,6 +27,8 @@ public class SimpleClient extends AbstractClient {
 
 		switch (messageContent) {
 			case "get all movies":
+				EventBus.getDefault().post(new AddMoviesEvent(message));
+				break;
 			case "update movies":
 				EventBus.getDefault().post(new UpdateMoviesEvent(message));
 				break;

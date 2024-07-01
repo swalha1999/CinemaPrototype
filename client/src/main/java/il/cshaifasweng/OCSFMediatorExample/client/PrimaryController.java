@@ -4,13 +4,8 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.client.events.DeleteMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.StickyMessageEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
@@ -33,8 +27,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class PrimaryController {
 
@@ -70,7 +62,10 @@ public class PrimaryController {
 
     }
 
-    private void addUpdatedMoviesToTableView(List<Movie> movies) {
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAddMoviesEvent(AddMoviesEvent event) {
+        List<Movie> movies = event.getMessage().getMovies();
         Set<Movie> existingMovies = new HashSet<>(table_users.getItems());
         for (Movie movie : movies) {
             if (!existingMovies.contains(movie)) {
@@ -81,21 +76,28 @@ public class PrimaryController {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpdateMoviesEven(UpdateMoviesEvent event) {
-        List<Movie> movies = event.getMessage().getMovies();
-        addUpdatedMoviesToTableView(movies);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDeleteMoviesEven(DeleteMoviesEvent event) {
+    public void onDeleteMoviesEvent(DeleteMoviesEvent event) {
         List<Movie> moviesToDelete = event.getMessage().getMovies();
         table_users.getItems().removeAll(moviesToDelete);
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStickyMessageEvent(StickyMessageEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
+    public void onUpdateMoviesEvent(UpdateMoviesEvent event) {
+        List<Movie> moviesToUpdate = event.getMessage().getMovies();
+        Set<Movie> existingMovies = new HashSet<>(table_users.getItems());
+
+        for (Movie updatedMovie : moviesToUpdate) {
+            for (Movie existingMovie : existingMovies) {
+                if (existingMovie.getId() == updatedMovie.getId() ) {
+                    existingMovie.setName(updatedMovie.getName());
+                    existingMovie.setDate(updatedMovie.getDate());
+                    break;
+                }
+            }
+        }
+
+        // Refresh the table view
+        table_users.refresh();
     }
 
     public void cleanup() {
