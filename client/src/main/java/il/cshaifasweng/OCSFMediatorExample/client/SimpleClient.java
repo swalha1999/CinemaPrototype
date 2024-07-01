@@ -26,6 +26,7 @@ public class SimpleClient extends AbstractClient {
 		System.out.println(messageContent);
 
 		switch (messageContent) {
+			case "add movies":
 			case "get all movies":
 				EventBus.getDefault().post(new AddMoviesEvent(message));
 				break;
