@@ -104,6 +104,7 @@ public class Server extends AbstractServer {
 		for (SubscribedClient SubscribedClient : openClients) {
 			try {
 				SubscribedClient.getClient().sendToClient(message);
+				System.out.println("Sent to client: " + SubscribedClient.getClient().getName() + " the message: " + message.getMessage());
 			} catch (IOException e1) {
 				System.out.println("Error sending message to this client: " + e1.getMessage());
 				//TODO:  remove the clients that fail to respond
