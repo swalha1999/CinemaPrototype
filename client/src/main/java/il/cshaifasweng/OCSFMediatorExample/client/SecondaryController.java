@@ -28,6 +28,8 @@ public class SecondaryController {
 
     @FXML
     void UpdateMovieTime(ActionEvent event) throws IOException {
+        name.setText(movie.getName());
+        datePicker.setValue(LocalDate.from(movie.getDate().toInstant()));
         if(!name.equals("")){
             movie.setName(name.getText());
         }
