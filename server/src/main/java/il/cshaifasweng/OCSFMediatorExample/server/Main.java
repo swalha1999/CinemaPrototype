@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,8 +18,6 @@ import java.util.Scanner;
 public class Main {
 
     private static Session session;
-    private static Server server;
-    private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
@@ -27,8 +26,10 @@ public class Main {
         String password = myObj.nextLine();  // Read user input
         myObj.close();
         configuration.setProperty("hibernate.connection.password", password);
+
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(Movie.class);
+        configuration.addAnnotatedClass(User.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
@@ -83,7 +84,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            sessionFactory = getSessionFactory();
+            SessionFactory sessionFactory = getSessionFactory();
             session = sessionFactory.openSession();
 
             session.beginTransaction();
@@ -91,7 +92,7 @@ public class Main {
             session.getTransaction().commit();
 
             // Start the server
-            server = new Server(3000, session);
+            Server server = new Server(3000, session);
             System.out.println("Server is listening at port 3000");
             server.listen();
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.server.DAO.MovieDAO;
+import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 public class Server extends AbstractServer {
 	private static final ArrayList<SubscribedClient> openClients = new ArrayList<>();
-	private final MovieDAO movieDAO;
+	private final DatabaseController database;
 
 	public Server(int port, Session session) {
 		super(port);
-		this.movieDAO = new MovieDAO(session);
+		this.database = new DatabaseController(session);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class Server extends AbstractServer {
 						break;
 
 					case "get all movies":
-						response.setMovies(movieDAO.getMovies());
+						response.setMovies(database.getMoviesManger().getMovies());
 						client.sendToClient(response);
 						break;
 
@@ -56,7 +56,7 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							response.addMovie(movieDAO.addMovie(movie));
+							response.addMovie(database.getMoviesManger().addMovie(movie));
 							System.out.println("Movie added successfully" + movie.getName());
 						}
 						sendToAllClients(response);
@@ -69,7 +69,7 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							response.addMovie(movieDAO.editMovie(movie));
+							response.addMovie(database.getMoviesManger().editMovie(movie));
 							System.out.println("Movie updated successfully" + movie.getName());
 						}
 						sendToAllClients(response);
@@ -81,7 +81,7 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							response.addMovie(movieDAO.deleteMovie(movie));
+							response.addMovie(database.getMoviesManger().deleteMovie(movie));
 							System.out.println("Movie deleted successfully" + movie.getName());
 						}
 						sendToAllClients(response);
