@@ -31,19 +31,23 @@ public class Server extends AbstractServer {
 				client.sendToClient(new Message(404,"Error! we got an empty message"));
 			}
 			else {
+				Message response = new Message(200,request.getMessage());
 				switch (request.getMessage()) {
+
 					case "add client":
 						SubscribedClient connection = new SubscribedClient(client);
 						openClients.add(connection);
-						client.sendToClient(new Message(200,"client added successfully"));
+						response.setMessage("client added successfully");
+						client.sendToClient(response);
 						break;
 
 					case "echo all":
-						sendToAllClients(new Message(200, request.getMessage()));
+						sendToAllClients(response);
 						break;
 
 					case "get all movies":
-						client.sendToClient(new Message(200,request.getMessage(), movieDAO.getMovies()));
+						response.setMovies(movieDAO.getMovies());
+						client.sendToClient(response);
 						break;
 
 					case "add movies":
@@ -52,9 +56,10 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							System.out.println("added this movie: " + movieDAO.addMovie(movie).getName());
+							response.addMovie(movieDAO.addMovie(movie));
+							System.out.println("Movie added successfully" + movie.getName());
 						}
-						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
+						sendToAllClients(response);
 						break;
 
 
@@ -64,9 +69,10 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							System.out.println("edited this movie: " + movieDAO.editMovie(movie).getName());
+							response.addMovie(movieDAO.editMovie(movie));
+							System.out.println("Movie updated successfully" + movie.getName());
 						}
-						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
+						sendToAllClients(response);
 						break;
 
 					case "delete movies":
@@ -75,9 +81,10 @@ public class Server extends AbstractServer {
 							break;
 						}
 						for (Movie movie : request.getMovies()) {
-							System.out.println("deleted this movie: " + movieDAO.deleteMovie(movie).getName());
+							response.addMovie(movieDAO.deleteMovie(movie));
+							System.out.println("Movie deleted successfully" + movie.getName());
 						}
-						sendToAllClients(new Message(200, request.getMessage(), request.getMovies()));
+						sendToAllClients(response);
 						break;
 
 					//TODO: Add more cases as needed Here

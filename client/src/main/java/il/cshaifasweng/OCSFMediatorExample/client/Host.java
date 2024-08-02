@@ -9,6 +9,8 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -23,6 +25,11 @@ public class Host {
 
     @FXML // fx:id="port"
     private TextField port; // Value injected by FXMLLoader
+
+    public void initialize() {
+        port.setText("3000");
+        ipAdd.setText("localhost");
+    }
 
     @FXML
     void updatePort(ActionEvent event) throws IOException {
