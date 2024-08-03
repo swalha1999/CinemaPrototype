@@ -8,10 +8,11 @@ import java.util.List;
 public class Message implements Serializable {
     int id;
     LocalDateTime timeStamp;
+    User user;
     String message;
     String data;
     List<Movie> movies;
-    Object object;
+
 
     public Message(int id, LocalDateTime timeStamp, String message) {
         this.id = id;
@@ -93,4 +94,13 @@ public class Message implements Serializable {
     public void setData(String data) {
         this.data = data;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

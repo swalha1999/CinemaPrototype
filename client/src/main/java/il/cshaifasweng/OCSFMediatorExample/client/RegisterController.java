@@ -4,12 +4,16 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+
+import java.io.IOException;
 
 public class RegisterController {
 
@@ -56,7 +60,15 @@ public class RegisterController {
     private Label firstNameLabel; // Value injected by FXMLLoader
 
     @FXML
-    void ConfrimRegister(ActionEvent event) {
+    void ConfrimRegister(ActionEvent event) throws IOException {
+
+        Message message = new Message(2, "register a new user");
+        message.setUser(new User());
+        message.getUser().setFirstName(FirstNameText.getText());
+        message.getUser().setLastName(LastNameText.getText());
+        message.getUser().setUsername(UserNameText.getText());
+        message.setData(PasswordText.getText());
+        SimpleClient.getClient().sendToServer(message);
 
     }
 

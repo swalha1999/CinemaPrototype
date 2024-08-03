@@ -30,7 +30,7 @@ public class Screening implements Serializable {
     private int price;
     private int availableSeats;
 
-    private boolean isOnlineScreening = false; // true if the screening is online, false if it's in a physical hall (default)
+    private boolean isOnlineScreening = false; //TODO: for future use if the screening is online from home and should send a link for the user
 
     public Screening(Movie movie, Hall hall, String date, String time, int price, int availableSeats, boolean isOnlineScreening) {
         this.movie = movie;

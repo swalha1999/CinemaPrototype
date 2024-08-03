@@ -28,7 +28,6 @@ public class DatabaseController {
     }
 
 
-
     public void setSession(Session session) {
         this.session = session;
         this.movies = new MovieDAO(session);

@@ -1,11 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
-import il.cshaifasweng.OCSFMediatorExample.entities.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.Actor;
-import il.cshaifasweng.OCSFMediatorExample.entities.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.Hall;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -39,6 +34,7 @@ public class Main {
         configuration.addAnnotatedClass(MovieTicket.class);
         configuration.addAnnotatedClass(Screening.class);
         configuration.addAnnotatedClass(Hall.class);
+        configuration.addAnnotatedClass(Seat.class);
 
         // if the tables do not exist, hibernate will create them
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");

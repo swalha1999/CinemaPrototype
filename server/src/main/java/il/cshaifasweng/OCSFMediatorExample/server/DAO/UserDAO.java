@@ -131,6 +131,21 @@ public class UserDAO {
         return user;
     }
 
+    public User registerUser(User newUser) {
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(newUser);
+            session.flush();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return newUser;
+    }
     static public String generateSalt(){
         StringBuilder salt = new StringBuilder();
         for (int i = 0; i < 10; i++) {
@@ -146,7 +161,6 @@ public class UserDAO {
     static public boolean checkPassword(String password, String salt, String hashedPassword) {
         return hashedPassword.equals(hashPassword(password , salt));
     }
-
 
 
 

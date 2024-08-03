@@ -23,6 +23,10 @@ public class Hall implements Serializable {
     @OneToMany(mappedBy = "hall")
     private Set<Seat> seats = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinema_id")
+    private Cinema cinema;
+
     public Hall(String name, int rows, int columns) {
         this.name = name;
 

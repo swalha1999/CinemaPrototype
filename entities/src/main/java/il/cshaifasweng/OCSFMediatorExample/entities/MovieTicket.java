@@ -21,8 +21,10 @@ public class MovieTicket implements Serializable {
     @JoinColumn(name = "screening_id")
     private Screening screening;
 
-    private int seatNumber;
-    private boolean isUsed;
+    private int seatNumber; //TODO: replace with seat object for future use
+    private boolean isUsed; //TODO: for prvent double use of ticket
+    private boolean isRefunded; //TODO: this marks the ticket as refunded and should be used in the future
+    private boolean isBundleTicket; //TODO: for future use
 
 
     public MovieTicket() {

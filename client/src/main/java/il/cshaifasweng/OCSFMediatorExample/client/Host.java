@@ -46,7 +46,7 @@ public class Host {
         }
         Platform.runLater(()->{
             try {
-                setRoot("primary");
+                setRoot("Login");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

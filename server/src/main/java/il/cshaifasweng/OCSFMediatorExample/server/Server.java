@@ -1,7 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
+import il.cshaifasweng.OCSFMediatorExample.server.DAO.UserDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
@@ -85,6 +87,35 @@ public class Server extends AbstractServer {
 							System.out.println("Movie deleted successfully" + movie.getName());
 						}
 						sendToAllClients(response);
+						break;
+
+					case "register a new user":
+						if (request.getData().isEmpty()){
+							System.out.println("The data to register a new user is Empty");
+							break;
+						}
+						User user = new User();
+						user.setUsername(request.getUser().getUsername());
+						user.setFirstName(request.getUser().getFirstName());
+						user.setLastName(request.getUser().getLastName());
+						user.setEmail(request.getUser().getEmail());
+						user.setSalt(UserDAO.generateSalt());
+						user.setHashedPassword(UserDAO.hashPassword(request.getData(),user.getSalt()));
+						database.getUsersManager().addUser(user);
+						client.sendToClient(response);
+						break;
+					case "login":
+						if (request.getData().isEmpty()){
+							System.out.println("The data to login is Empty");
+							break;
+						}
+						User userToLogin = database.getUsersManager().getUserbyUsername(request.getUser().getUsername());
+						if (userToLogin != null && userToLogin.getHashedPassword().equals(UserDAO.hashPassword(request.getData(),userToLogin.getSalt()))){
+							client.sendToClient(new Message(200,"Login successful"));
+						}
+						else {
+							client.sendToClient(new Message(404,"Username or password is incorrect"));
+						}
 						break;
 
 					//TODO: Add more cases as needed Here

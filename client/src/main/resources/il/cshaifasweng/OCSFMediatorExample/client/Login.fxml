@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.LoginController">
     <children>
         <PasswordField fx:id="Password" layoutX="141.0" layoutY="237.0" prefHeight="25.0" prefWidth="177.0" promptText="Password" style="-fx-border-color: #E96151; -fx-background-color: transparent; -fx-border-width: 0px0px2px0px;" />
         <PasswordField fx:id="UserName" layoutX="141.0" layoutY="184.0" prefHeight="25.0" prefWidth="177.0" promptText="User Name" style="-fx-border-color: #E96151; -fx-background-color: transparent; -fx-border-width: 0px0px2px0px;" />
