@@ -38,9 +38,9 @@ public class Movie implements Serializable {
     private Set<Screening> screenings = new HashSet<>();
 
     public Movie(){}
-    public Movie(String name, Date date) {
+    public Movie(String name, Date releaseDate) {
         this.name = name;
-        this.releaseDate = date;
+        this.releaseDate = releaseDate;
     }
 
     public String getName() {
@@ -51,12 +51,12 @@ public class Movie implements Serializable {
         this.name = name;
     }
 
-    public Date getDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setDate(Date date) {
-        this.releaseDate = date;
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public String getDescription() {
@@ -110,7 +110,7 @@ public class Movie implements Serializable {
 
     public void removeScreening(Screening screening) {
         this.screenings.remove(screening);
-        screening.setMovie(null); //TODO: not sure if this is the right way to do it (might cause problems) or should we delete the screening from the database maybe? (server problem) :)
+        screening.setMovie(null);
     }
 
     public void addActor(Actor actor) {
@@ -136,7 +136,6 @@ public class Movie implements Serializable {
                 '}';
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -150,8 +149,15 @@ public class Movie implements Serializable {
         return Objects.hash(id);
     }
 
-
     public String getTitle() {
         return name;
+    }
+
+    public Date getDate() {
+        return this.getReleaseDate();
+    }
+
+    public void setDate(Date date) {
+        this.setReleaseDate(date);
     }
 }

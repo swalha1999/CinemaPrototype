@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class Screening implements Serializable {
     private Hall hall;
 
     @OneToMany(mappedBy = "screening")
-    private Set<MovieTicket> tickets;
+    private Set<MovieTicket> tickets = new HashSet<>();
 
     private String date;
     private String time;
@@ -31,19 +32,13 @@ public class Screening implements Serializable {
 
     private boolean isOnlineScreening = false; // true if the screening is online, false if it's in a physical hall (default)
 
-
-    public Screening(int movieId, int hallId, String date, String time, int price, int availableSeats) {
+    public Screening(Movie movie, Hall hall, String date, String time, int price, int availableSeats) {
+        this.movie = movie;
+        this.hall = hall;
         this.date = date;
         this.time = time;
         this.price = price;
         this.availableSeats = availableSeats;
-    }
-
-    public Screening(int movieId, int hallId, String date, String time, int price, Hall hall) {
-        this.date = date;
-        this.time = time;
-        this.price = price;
-        this.hall = hall;
         hall.addScreening(this);
     }
 
@@ -105,5 +100,4 @@ public class Screening implements Serializable {
     public void setHall(Hall hall) {
         this.hall = hall;
     }
-
 }

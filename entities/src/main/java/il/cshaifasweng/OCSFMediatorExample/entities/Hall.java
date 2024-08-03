@@ -14,9 +14,9 @@ public class Hall implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name = "";
-    private int rows = 0;
-    private int columns = 0;
+    private String name;
+    private int rows;
+    private int columns;
 
     @OneToMany(mappedBy = "hall")
     private Set<Screening> screenings = new HashSet<>();
@@ -25,14 +25,12 @@ public class Hall implements Serializable {
         this.name = name;
         this.rows = rows;
         this.columns = columns;
-        this.screenings = new HashSet<>();
     }
 
     public Hall() {
         this.name = "";
         this.rows = 0;
         this.columns = 0;
-        this.screenings = new HashSet<>();
     }
 
     public int getId() {
