@@ -12,25 +12,24 @@ public class Hall implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int  id;
 
+    @Column(name = "name")
     private String name;
-    private int rows;
-    private int columns;
 
     @OneToMany(mappedBy = "hall")
     private Set<Screening> screenings = new HashSet<>();
 
+    @OneToMany(mappedBy = "hall")
+    private Set<Seat> seats = new HashSet<>();
+
     public Hall(String name, int rows, int columns) {
         this.name = name;
-        this.rows = rows;
-        this.columns = columns;
+
     }
 
     public Hall() {
         this.name = "";
-        this.rows = 0;
-        this.columns = 0;
     }
 
     public int getId() {
@@ -45,22 +44,6 @@ public class Hall implements Serializable {
         this.name = name;
     }
 
-    public int getRows() {
-        return rows;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public int getColumns() {
-        return columns;
-    }
-
-    public void setColumns(int columns) {
-        this.columns = columns;
-    }
-
     public Set<Screening> getScreenings() {
         return screenings;
     }
@@ -73,7 +56,44 @@ public class Hall implements Serializable {
         this.screenings = screenings;
     }
 
-    public int getAvailableSeats() {
-        return rows * columns;
+    public Set<Seat> getSeats() {
+        return seats;
     }
+
+    public void addSeat(Seat seat) {
+        this.seats.add(seat);
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Hall{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public void removeScreening(Screening screening) {
+        this.screenings.remove(screening);
+    }
+
+    public void removeSeat(Seat seat) {
+        this.seats.remove(seat);
+    }
+
+    public void removeAllSeats() {
+        this.seats.clear();
+    }
+
+    public void removeAllScreenings() {
+        this.screenings.clear();
+    }
+
 }

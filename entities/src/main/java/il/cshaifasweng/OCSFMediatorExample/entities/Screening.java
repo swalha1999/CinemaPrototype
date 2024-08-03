@@ -32,14 +32,17 @@ public class Screening implements Serializable {
 
     private boolean isOnlineScreening = false; // true if the screening is online, false if it's in a physical hall (default)
 
-    public Screening(Movie movie, Hall hall, String date, String time, int price, int availableSeats) {
+    public Screening(Movie movie, Hall hall, String date, String time, int price, int availableSeats, boolean isOnlineScreening) {
         this.movie = movie;
         this.hall = hall;
         this.date = date;
         this.time = time;
         this.price = price;
         this.availableSeats = availableSeats;
-        hall.addScreening(this);
+        this.isOnlineScreening = isOnlineScreening;
+        if (!isOnlineScreening) {
+            hall.addScreening(this);
+        }
     }
 
     public Screening() {
@@ -100,4 +103,44 @@ public class Screening implements Serializable {
     public void setHall(Hall hall) {
         this.hall = hall;
     }
+
+    public Set<MovieTicket> getTickets() {
+        return tickets;
+    }
+
+    public void addTicket(MovieTicket ticket) {
+        this.tickets.add(ticket);
+    }
+
+    public boolean getIsOnlineScreening() {
+        return isOnlineScreening;
+    }
+
+    public void setIsOnlineScreening(boolean isOnlineScreening) {
+        this.isOnlineScreening = isOnlineScreening;
+    }
+
+    public void setTickets(Set<MovieTicket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public void addHall(Hall hall) {
+        this.hall = hall;
+    }
+
+    public void removeHall(Hall hall) {
+        this.hall = null;
+    }
+
+    public void removeMovie(Movie movie) {
+        this.movie = null;
+    }
+
+    public void removeTicket(MovieTicket ticket) {
+        this.tickets.remove(ticket);
+    }
+
+
+
+
 }
