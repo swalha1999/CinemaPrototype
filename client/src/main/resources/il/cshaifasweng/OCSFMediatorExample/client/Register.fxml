@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.RegisterController">
+    <children>
+        <AnchorPane layoutX="-6.0" prefHeight="85.0" prefWidth="630.0" style="-fx-background-color: #E96151;">
+            <children>
+                <Label fx:id="RegisterLogo" layoutX="120.0" layoutY="13.0" prefHeight="60.0" prefWidth="190.0" text="User Registeration">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <Label fx:id="firstNameLabel" layoutX="144.0" layoutY="127.0" text="FirstName">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="FirstNameText" layoutX="144.0" layoutY="156.0" prefHeight="25.0" prefWidth="336.0" />
+        <TextField fx:id="LastNameText" layoutX="144.0" layoutY="219.0" prefHeight="25.0" prefWidth="336.0" />
+        <TextField fx:id="UserNameText" layoutX="144.0" layoutY="281.0" prefHeight="25.0" prefWidth="336.0" />
+        <TextField fx:id="PasswordText" layoutX="144.0" layoutY="337.0" prefHeight="25.0" prefWidth="336.0" />
+        <Label fx:id="LastNameLabel" layoutX="145.0" layoutY="192.0" text="LastName">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="UserNameLabel" layoutX="143.0" layoutY="251.0" text="UserName">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="PasswordLabel" layoutX="143.0" layoutY="312.0" text="Password">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="ConfPasswordText" layoutX="143.0" layoutY="404.0" prefHeight="25.0" prefWidth="336.0" />
+        <Label fx:id="ConfPasswordLabel" layoutX="143.0" layoutY="377.0" text="Confirm Password">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <Button fx:id="ConfirmationBut" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="Register" textFill="WHITE">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Button>
+        <Button fx:id="ConfirmationBut1" layoutX="144.0" layoutY="486.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="Close" textFill="#f5f5f5">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>
