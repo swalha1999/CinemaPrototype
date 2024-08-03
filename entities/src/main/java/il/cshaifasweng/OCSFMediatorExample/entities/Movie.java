@@ -1,23 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.MovieGenre;
-import il.cshaifasweng.OCSFMediatorExample.entities.Country;
-
 
 @Entity
 @Table(name = "movies")
@@ -29,12 +18,11 @@ public class Movie implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "movie_name")
+
     private String name;
-    @Column(name = "screening_time")
-    private Date date;
+    private Date releaseDate;
     private String description;
-    private String language;
+    private Language language;
     private MovieGenre genre;
     private Country country;
 
@@ -44,12 +32,15 @@ public class Movie implements Serializable {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    private Set<Actor> actors;
+    private Set<Actor> actors = new HashSet<>();
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Screening> screenings = new HashSet<>();
 
     public Movie(){}
     public Movie(String name, Date date) {
         this.name = name;
-        this.date = date;
+        this.releaseDate = date;
     }
 
     public String getName() {
@@ -61,16 +52,90 @@ public class Movie implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return releaseDate;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.releaseDate = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public MovieGenre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(MovieGenre genre) {
+        this.genre = genre;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public int getId() {
         return id;
     }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public Set<Screening> getScreenings() {
+        return screenings;
+    }
+
+    public void addScreening(Screening screening) {
+        this.screenings.add(screening);
+        screening.setMovie(this);
+    }
+
+    public void removeScreening(Screening screening) {
+        this.screenings.remove(screening);
+        screening.setMovie(null); //TODO: not sure if this is the right way to do it (might cause problems) or should we delete the screening from the database maybe? (server problem) :)
+    }
+
+    public void addActor(Actor actor) {
+        this.actors.add(actor);
+        actor.addMovie(this);
+    }
+
+    public void removeActor(Actor actor) {
+        this.actors.remove(actor);
+        actor.removeMovie(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", description='" + description + '\'' +
+                ", language=" + language +
+                ", genre=" + genre +
+                ", country=" + country +
+                '}';
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -85,4 +150,8 @@ public class Movie implements Serializable {
         return Objects.hash(id);
     }
 
+
+    public String getTitle() {
+        return name;
+    }
 }

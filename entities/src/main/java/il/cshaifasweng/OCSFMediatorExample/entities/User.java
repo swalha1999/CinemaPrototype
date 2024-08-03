@@ -1,11 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
-
+import java.util.Set;
 
 
 @Entity
@@ -21,38 +27,46 @@ public class User implements Serializable {
     @Column(unique = true)
     private String username;
 
-    private String password;
+    private String hashedPassword;
     private String salt;
-    private UserRole role; // 0 - user, 1 - employee, 2 - branch manager, 3 - manager of all branches 4 -
+    private UserRole role;
     private String email;
     private String phone;
-    private String FirstName;
-    private String LastName;
+    private String firstName;
+    private String lastName;
     private String creditCard;
-    private String subscription;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MovieTicket> tickets;
+
+    private int remainingTicketsPurchasedByBundle;
+
     private boolean isLogged;
     private boolean isBlocked;
+    private boolean isDeleted;
+    private boolean isAgeRestricted; //TODO: For future use
 
+    private int NumberOfTicketsPurchased; //TODO: For future use in statistics
+    private int NumberOfBundlePurchased; //TODO: For future use in statistics
+    private int NumberOfOnlineScreeningsPurchased; //TODO: For future use in statistics
 
-    public User(String username, String password, UserRole role, String email, String phone, String creditCard, String subscription) {
+    public User(String username, String password, UserRole role, String email, String phone, String creditCard) {
         this.username = username;
-        this.password = password;
+        this.hashedPassword = password;
         this.role = role;
         this.email = email;
         this.phone = phone;
         this.creditCard = creditCard;
-        this.subscription = subscription;
         this.isLogged = false;
     }
 
     public User() {
         this.username = "";
-        this.password = "";
+        this.hashedPassword = "";
         this.role = UserRole.USER;
         this.email = "";
         this.phone = "";
         this.creditCard = "";
-        this.subscription = "";
         this.isLogged = false;
     }
 
@@ -62,14 +76,6 @@ public class User implements Serializable {
 
     public void setLogged(boolean logged) {
         isLogged = logged;
-    }
-
-    public String getSubscription() {
-        return subscription;
-    }
-
-    public void setSubscription(String subscription) {
-        this.subscription = subscription;
     }
 
     public String getCreditCard() {
@@ -104,12 +110,12 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashedPassword(String password) {
+        this.hashedPassword = password;
     }
 
     public String getUsername() {
@@ -129,19 +135,19 @@ public class User implements Serializable {
     }
 
     public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+        this.firstName = FirstName;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setLastName(String LastName) {
-        this.LastName = LastName;
+        this.lastName = LastName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setBlocked(boolean blocked) {
@@ -159,4 +165,35 @@ public class User implements Serializable {
     public int getId() {
         return id;
     }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Set<MovieTicket> getTickets() {
+        return tickets;
+    }
+
+    public void addTicket(MovieTicket ticket) {
+        this.tickets.add(ticket);
+        ticket.setUser(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
 }

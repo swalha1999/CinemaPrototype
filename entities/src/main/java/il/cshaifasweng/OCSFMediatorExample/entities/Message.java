@@ -11,6 +11,7 @@ public class Message implements Serializable {
     String message;
     String data;
     List<Movie> movies;
+    Object object;
 
     public Message(int id, LocalDateTime timeStamp, String message) {
         this.id = id;

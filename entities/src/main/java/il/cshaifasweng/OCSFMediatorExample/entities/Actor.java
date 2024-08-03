@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.Country;
 
 @Entity
 @Table(name = "actors")
@@ -29,7 +28,7 @@ public class Actor implements Serializable {
     private Country country;
 
     @ManyToMany(mappedBy = "actors")
-    private Set<Movie> movies;
+    private Set<Movie> movies = new HashSet<>();
 
 
     public Actor(String firstName, String lastName, Date birthDate, Country country) {
@@ -114,4 +113,11 @@ public class Actor implements Serializable {
         return country.name();
     }
 
+    public void removeMovie(Movie movie) {
+        movies.remove(movie);
+    }
+
+    public void addMovie(Movie movie) {
+        movies.add(movie);
+    }
 }

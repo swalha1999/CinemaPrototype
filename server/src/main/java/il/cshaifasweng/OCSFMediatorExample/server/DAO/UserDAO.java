@@ -63,7 +63,7 @@ public class UserDAO {
                 user.setFirstName(editedUser.getFirstName());
                 user.setLastName(editedUser.getLastName());
                 user.setEmail(editedUser.getEmail());
-                user.setPassword(editedUser.getPassword());
+                user.setHashedPassword(editedUser.getHashedPassword());
                 user.setRole(editedUser.getRole());
                 session.update(user);
                 session.flush();

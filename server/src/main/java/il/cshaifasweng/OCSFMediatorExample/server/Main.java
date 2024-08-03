@@ -2,6 +2,11 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.Actor;
+import il.cshaifasweng.OCSFMediatorExample.entities.MovieTicket;
+import il.cshaifasweng.OCSFMediatorExample.entities.Screening;
+import il.cshaifasweng.OCSFMediatorExample.entities.Hall;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,8 +33,15 @@ public class Main {
         configuration.setProperty("hibernate.connection.password", password);
 
         // Add ALL of your entities here. You can also try adding a whole package.
-        configuration.addAnnotatedClass(Movie.class);
+        configuration.addAnnotatedClass(Hall.class);
         configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Movie.class);
+        configuration.addAnnotatedClass(Actor.class);
+        configuration.addAnnotatedClass(MovieTicket.class);
+        configuration.addAnnotatedClass(Screening.class);
+
+        // if the tables do not exist, hibernate will create them
+        configuration.setProperty("hibernate.hbm2ddl.auto", "update");
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
@@ -70,7 +82,7 @@ public class Main {
 
         for (Movie movie : movies) {
             // Check if the movie already exists in the database
-            Query<Movie> query = session.createQuery("from Movie where name = :name and date = :date", Movie.class);
+            Query<Movie> query = session.createQuery("from Movie where name = :name and releaseDate = :date", Movie.class);
             query.setParameter("name", movie.getName());
             query.setParameter("date", movie.getDate());
             List<Movie> existingMovies = query.list();
