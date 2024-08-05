@@ -10,10 +10,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
-
 public class LoginController {
 
     @FXML
@@ -26,13 +26,10 @@ public class LoginController {
     private PasswordField Password;
 
     @FXML
-    private ImageView PasswordFont;
+    private Button RegisterNewAccount;
 
     @FXML
-    private ImageView UserFont;
-
-    @FXML
-    private PasswordField UserName;
+    private TextField UserNameTxt;
 
     @FXML
     private Hyperlink forgotPassword;
@@ -41,9 +38,12 @@ public class LoginController {
     void LoginAccount(ActionEvent event) throws IOException {
         Message message = new Message(2, "login");
         message.setUser(new User());
-        message.getUser().setUsername(UserName.getText());
+        message.getUser().setUsername(UserNameTxt.getText());
         message.setData(Password.getText());
         SimpleClient.getClient().sendToServer(message);
     }
 
 }
+
+
+

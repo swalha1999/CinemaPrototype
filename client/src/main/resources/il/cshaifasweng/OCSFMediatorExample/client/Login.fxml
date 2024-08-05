@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.LoginController">
+    <children>
+        <PasswordField fx:id="Password" layoutX="139.0" layoutY="190.0" prefHeight="25.0" prefWidth="177.0" promptText="Password" style="-fx-border-color: #E96151; -fx-background-color: transparent; -fx-border-width: 0px0px2px0px;" />
+        <Button fx:id="LoginBtn" layoutX="185.0" layoutY="235.0" mnemonicParsing="false" onAction="#LoginAccount" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #E96151;" text="Login" />
+        <Hyperlink fx:id="forgotPassword" layoutX="160.0" layoutY="275.0" text="Forgot  Password ?" textFill="#e96151" />
+        <Text fx:id="LoginText" fill="#e96151" layoutX="154.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Text>
+        <TextField fx:id="UserName" layoutX="144.0" layoutY="146.0" prefHeight="26.0" prefWidth="177.0" promptText="User Name" style="-fx-border-color: #E96151;" />
+        <Label layoutX="68.0" layoutY="159.0" text="UserName">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="71.0" layoutY="194.0" text="Password">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Button fx:id="RegisterNewAccount" graphicTextGap="3.0" layoutX="154.0" layoutY="311.0" mnemonicParsing="false" style="-fx-background-color: #E96151;" text="Create New Account" textFill="#ffffffab" />
+    </children>
 </AnchorPane>
