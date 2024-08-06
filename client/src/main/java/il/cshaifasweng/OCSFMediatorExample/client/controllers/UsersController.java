@@ -2,7 +2,7 @@
  * Sample Skeleton for 'UsersController.fxml' Controller Class
  */
 
-package il.cshaifasweng.OCSFMediatorExample.client;
+package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
