@@ -1,4 +1,7 @@
-package il.cshaifasweng.OCSFMediatorExample.entities;
+package il.cshaifasweng.OCSFMediatorExample.entities.Messages;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -8,10 +11,13 @@ import java.util.List;
 public class Message implements Serializable {
     int id;
     LocalDateTime timeStamp;
-    User user;
-    String message;
-    String data;
-    List<Movie> movies;
+    Object dataObject;
+
+    User user; //TODO : deprecated field need to be removed
+    String message; //TODO : deprecated field need to be removed
+    String data; //TODO : deprecated field need to be removed
+    List<Movie> movies; //TODO : deprecated field need to be removed
+
 
 
     public Message(int id, LocalDateTime timeStamp, String message) {
