@@ -19,7 +19,7 @@
                 <Font size="22.0" />
             </font>
         </Text>
-        <TextField fx:id="UserName" layoutX="144.0" layoutY="146.0" prefHeight="26.0" prefWidth="177.0" promptText="User Name" style="-fx-border-color: #E96151;" />
+        <TextField fx:id="UserNameTxt" layoutX="144.0" layoutY="146.0" prefHeight="26.0" prefWidth="177.0" promptText="User Name" style="-fx-border-color: #E96151;" />
         <Label layoutX="68.0" layoutY="159.0" text="UserName">
             <font>
                 <Font size="14.0" />
