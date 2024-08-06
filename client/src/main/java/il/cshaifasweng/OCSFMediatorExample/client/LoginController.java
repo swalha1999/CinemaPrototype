@@ -30,14 +30,14 @@ public class LoginController {
     @FXML // fx:id="Password"
     private PasswordField Password; // Value injected by FXMLLoader
 
-    @FXML // fx:id="RegisterNewAccount"
-    private Button RegisterNewAccount; // Value injected by FXMLLoader
-
     @FXML // fx:id="UserNameTxt"
     private TextField UserNameTxt; // Value injected by FXMLLoader
 
     @FXML // fx:id="forgotPassword"
     private Hyperlink forgotPassword; // Value injected by FXMLLoader
+
+    @FXML // fx:id="registerBtn"
+    private Button registerBtn; // Value injected by FXMLLoader
 
     @FXML
     void LoginAccount(ActionEvent event) throws IOException {
@@ -55,7 +55,19 @@ public class LoginController {
         });
     }
 
+    @FXML
+    void createNewAccount(ActionEvent event) {
+        Platform.runLater(()->{
+            try {
+                setRoot("Register");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
 }
+
 
 
 

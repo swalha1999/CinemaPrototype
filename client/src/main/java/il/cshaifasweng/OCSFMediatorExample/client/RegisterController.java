@@ -6,14 +6,16 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class RegisterController {
 
@@ -22,12 +24,6 @@ public class RegisterController {
 
     @FXML // fx:id="ConfPasswordText"
     private TextField ConfPasswordText; // Value injected by FXMLLoader
-
-    @FXML // fx:id="ConfirmationBut"
-    private Button ConfirmationBut; // Value injected by FXMLLoader
-
-    @FXML // fx:id="ConfirmationBut1"
-    private Button ConfirmationBut1; // Value injected by FXMLLoader
 
     @FXML // fx:id="FirstNameText"
     private TextField FirstNameText; // Value injected by FXMLLoader
@@ -53,11 +49,14 @@ public class RegisterController {
     @FXML // fx:id="UserNameText"
     private TextField UserNameText; // Value injected by FXMLLoader
 
-    @FXML // fx:id="chechMark"
-    private ImageView chechMark; // Value injected by FXMLLoader
-
     @FXML // fx:id="firstNameLabel"
     private Label firstNameLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="loginBtn"
+    private Button loginBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="registerBtn"
+    private Button registerBtn; // Value injected by FXMLLoader
 
     @FXML
     void ConfrimRegister(ActionEvent event) throws IOException {
@@ -70,6 +69,29 @@ public class RegisterController {
         message.setData(PasswordText.getText());
         SimpleClient.getClient().sendToServer(message);
 
+        Platform.runLater(()->{
+            try {
+                setRoot("Login");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+    @FXML
+    void returnLogin(ActionEvent event) {
+        Platform.runLater(()->{
+            try {
+                setRoot("Login");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 }
+
+
+
+
