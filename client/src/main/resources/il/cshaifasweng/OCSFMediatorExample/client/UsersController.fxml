@@ -17,8 +17,8 @@
       <Button fx:id="adminBtn" layoutX="665.0" layoutY="65.0" mnemonicParsing="false" onAction="#createAdmin" prefHeight="25.0" prefWidth="94.0" text="Make admin" />
       <Button fx:id="userBtn" layoutX="674.0" layoutY="124.0" mnemonicParsing="false" onAction="#createUser" prefHeight="25.0" prefWidth="76.0" text="Make user" />
       <Button fx:id="customerServiceBtn" layoutX="643.0" layoutY="183.0" mnemonicParsing="false" onAction="#createCustomerService" text="Make customer service" />
-      <Button fx:id="suspendBtn" layoutX="634.0" layoutY="468.0" mnemonicParsing="false" onAction="#Suspend" text="Suspend" />
-      <Button fx:id="releaseBtn" layoutX="724.0" layoutY="468.0" mnemonicParsing="false" onAction="#Release" text="Release" />
+      <Button fx:id="blockUserBtn" layoutX="634.0" layoutY="468.0" mnemonicParsing="false" onAction="#BlockUser" text="Suspend" />
+      <Button fx:id="unblockUserBtn" layoutX="724.0" layoutY="468.0" mnemonicParsing="false" onAction="#UnblockUser" text="Release" />
       <Button fx:id="deleteBtn" layoutX="686.0" layoutY="510.0" mnemonicParsing="false" onAction="#Delete" text="Delete" />
    </children>
 </AnchorPane>

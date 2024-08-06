@@ -25,6 +25,8 @@ public class Movie implements Serializable {
     private Language language;
     private MovieGenre genre;
     private Country country;
+    private String imageUrl;
+    private String trailerUrl;
 
     @ManyToMany
     @JoinTable(

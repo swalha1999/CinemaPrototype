@@ -34,12 +34,12 @@ public class UsersController {
     }
 
     @FXML
-    void Release(ActionEvent event) {
+    void UnblockUser(ActionEvent event) {
 
     }
 
     @FXML
-    void Suspend(ActionEvent event) {
+    void BlockUser(ActionEvent event) {
 
     }
 
