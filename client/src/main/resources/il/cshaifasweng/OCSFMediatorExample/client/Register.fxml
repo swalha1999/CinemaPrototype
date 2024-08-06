@@ -47,12 +47,12 @@
                 <Font size="13.0" />
             </font>
         </Label>
-        <Button fx:id="ConfirmationBut" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="Register" textFill="WHITE">
+        <Button fx:id="registerBtn" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="Register" textFill="WHITE">
             <font>
                 <Font size="13.0" />
             </font>
         </Button>
-        <Button fx:id="ConfirmationBut1" layoutX="144.0" layoutY="486.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="Close" textFill="#f5f5f5">
+        <Button fx:id="loginBtn" layoutX="144.0" layoutY="486.0" mnemonicParsing="false" onAction="#returnLogin" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="login" textFill="#f5f5f5">
             <font>
                 <Font size="13.0" />
             </font>
