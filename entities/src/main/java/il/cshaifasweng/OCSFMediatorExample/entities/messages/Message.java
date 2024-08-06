@@ -1,4 +1,4 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.Messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;

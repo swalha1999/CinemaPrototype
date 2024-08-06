@@ -1,4 +1,4 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.Messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 public class LoginResponse {
     private boolean success;

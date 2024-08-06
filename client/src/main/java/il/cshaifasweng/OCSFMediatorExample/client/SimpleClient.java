@@ -4,7 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.DeleteMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.Messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
