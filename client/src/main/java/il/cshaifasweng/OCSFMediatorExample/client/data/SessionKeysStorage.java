@@ -25,29 +25,33 @@ public class SessionKeysStorage {
         return sessionKey;
     }
 
-    public void setSessionKey(String sessionKey) {
+    public SessionKeysStorage setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public SessionKeysStorage setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public UserRole getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public SessionKeysStorage setRole(UserRole role) {
         this.role = role;
+        return this;
     }
 
-    public void clearSession() {
+    public SessionKeysStorage clearSession() {
         sessionKey = null;
         username = null;
         role = null;
+        return this;
     }
 }

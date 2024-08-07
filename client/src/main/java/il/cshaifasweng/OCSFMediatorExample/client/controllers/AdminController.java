@@ -5,6 +5,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -117,9 +118,9 @@ public class AdminController {
 
     @FXML
     void logOut(ActionEvent event) throws IOException {
-
         RegisterRequest registerRequest = new RegisterRequest();
         SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.LOGOUT_REQUEST));
+        SessionKeysStorage.getInstance().clearSession();
         Platform.runLater(()->{
             try {
                 setRoot("Login");

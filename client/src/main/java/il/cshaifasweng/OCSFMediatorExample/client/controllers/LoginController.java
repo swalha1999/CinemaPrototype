@@ -5,6 +5,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginResponse;
@@ -72,6 +73,13 @@ public class LoginController {
     @Subscribe
     public void  onLoginEvent(LoginEvent response) {
         Platform.runLater(()->{
+
+            SessionKeysStorage.getInstance()
+                    .clearSession()
+                    .setSessionKey(response.getSessionKey())
+                    .setUsername(response.getUsername())
+                    .setRole(response.getRole());
+
             try {
                 if (response.isSuccess()) {
                     setRoot("AdminPage");
