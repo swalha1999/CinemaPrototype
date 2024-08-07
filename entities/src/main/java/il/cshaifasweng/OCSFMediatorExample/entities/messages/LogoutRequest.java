@@ -9,8 +9,6 @@ public class LogoutRequest implements Serializable {
 
     private String sessionKey;
     private String username;
-    private int userId;
-
 
     public LogoutRequest() {
     }
@@ -38,14 +36,6 @@ public class LogoutRequest implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String toString() {
