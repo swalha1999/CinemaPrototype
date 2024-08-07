@@ -4,11 +4,21 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.RegisterRequest;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class AdminController {
 
@@ -47,6 +57,9 @@ public class AdminController {
 
     @FXML // fx:id="ExitBtn"
     private Button ExitBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="logoutBtn"
+    private Button logoutBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="WelcomeLabel"
     private Label WelcomeLabel; // Value injected by FXMLLoader
@@ -100,6 +113,20 @@ public class AdminController {
     @FXML
     void Exit(ActionEvent event) {
 
+    }
+
+    @FXML
+    void logOut(ActionEvent event) throws IOException {
+
+        RegisterRequest registerRequest = new RegisterRequest();
+        SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.LOGOUT_REQUEST));
+        Platform.runLater(()->{
+            try {
+                setRoot("Login");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 }

@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="579.0" prefWidth="766.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminController">
    <children>
       <AnchorPane layoutX="-2.0" layoutY="-6.0" prefHeight="586.0" prefWidth="195.0" style="-fx-background-color: green;">
@@ -25,6 +24,7 @@
             <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Availble Movies" />
             <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Edit Screening" />
             <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Customers" />
+            <Button fx:id="logoutBtn" layoutX="68.0" layoutY="528.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="43.0" prefWidth="766.0">

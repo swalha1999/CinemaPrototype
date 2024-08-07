@@ -122,7 +122,7 @@ public class RegisterController {
     }
 
     @Subscribe
-    void OnRegister(RegisterEvent response) {
+    public void OnRegister(RegisterEvent response) {
         Platform.runLater(()->{
 
             if (response.isSuccess()) {

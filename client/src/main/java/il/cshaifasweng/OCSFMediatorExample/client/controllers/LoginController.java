@@ -74,7 +74,7 @@ public class LoginController {
         Platform.runLater(()->{
             try {
                 if (response.isSuccess()) {
-                    setRoot("Primary");
+                    setRoot("AdminPage");
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
