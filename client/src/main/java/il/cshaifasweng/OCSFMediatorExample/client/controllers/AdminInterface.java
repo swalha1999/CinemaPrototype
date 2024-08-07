@@ -21,7 +21,7 @@ import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
-public class AdminController {
+public class AdminInterface {
 
     @FXML // fx:id="AddMoviesBtn"
     private Button AddMoviesBtn; // Value injected by FXMLLoader
