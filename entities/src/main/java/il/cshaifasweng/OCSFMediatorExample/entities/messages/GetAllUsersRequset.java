@@ -9,6 +9,7 @@ public class GetAllUsersRequset implements Serializable {
 
     private String SessionKey;
     private String username;
+    private int userId;
 
     public GetAllUsersRequset() {
     }
@@ -35,9 +36,19 @@ public class GetAllUsersRequset implements Serializable {
         return this;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public GetAllUsersRequset setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+
     public String toString() {
         return "GetAllUsersRequset{" +
                 "SessionKey='" + SessionKey + '\'' +
+                ", userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 '}';
     }

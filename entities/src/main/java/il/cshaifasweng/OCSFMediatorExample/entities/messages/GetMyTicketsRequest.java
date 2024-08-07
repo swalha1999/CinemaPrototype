@@ -9,6 +9,7 @@ public class GetMyTicketsRequest implements Serializable {
 
     private String sessionKey;
     private String username;
+    private int userId;
 
     public GetMyTicketsRequest() {
     }
@@ -35,10 +36,20 @@ public class GetMyTicketsRequest implements Serializable {
         return this;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public GetMyTicketsRequest setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+
     public String toString() {
         return "GetMyTicketsRequest{" +
                 "sessionKey='" + sessionKey + '\'' +
                 ", username='" + username + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 

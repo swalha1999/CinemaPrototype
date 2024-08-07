@@ -9,13 +9,15 @@ import java.time.LocalDateTime;
 public class LoggedInUser {
     private final String sessionKey;
     private final String username;
+    private int userId;
     private final ConnectionToClient client;
     private UserRole role;
     private LocalDateTime expirationTime; // TODO: for future use in session expiration
 
-    public LoggedInUser(String sessionKey, String username, UserRole role, ConnectionToClient client) {
+    public LoggedInUser(String sessionKey, String username, int UserId, UserRole role, ConnectionToClient client) {
         this.sessionKey = sessionKey;
         this.username = username;
+        this.userId = UserId;
         this.role = role;
         this.client = client;
     }
@@ -52,6 +54,15 @@ public class LoggedInUser {
 
     public boolean isExpired() {
         return expirationTime.isBefore(LocalDateTime.now());
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public LoggedInUser setUserId(int userId) {
+        this.userId = userId;
+        return this;
     }
 
 
