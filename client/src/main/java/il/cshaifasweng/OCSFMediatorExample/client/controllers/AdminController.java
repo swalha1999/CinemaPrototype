@@ -129,20 +129,18 @@ public class AdminController {
         RegisterRequest registerRequest = new RegisterRequest();
         SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.LOGOUT_REQUEST));
         SessionKeysStorage.getInstance().clearSession();
-
     }
 
     @Subscribe
     public void onLogoutEvent(LogoutEvent response) {
-
-            Platform.runLater(()->{
+        SessionKeysStorage.getInstance().clearSession();
+        Platform.runLater(()->{
                 try {
                     setRoot("Login");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            });
-
+        });
     }
 
 }
