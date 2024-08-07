@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 
+import il.cshaifasweng.OCSFMediatorExample.server.DAO.UserDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -90,6 +94,29 @@ public class Main {
         }
     }
 
+    private static void generateAdmin() {
+        User admin = new User()
+            .setUsername("admin")
+            .setSalt("salt");
+
+        admin.setHashedPassword(UserDAO.hashPassword("admin", admin.getSalt()));
+        admin.setRole(UserRole.SYSTEM_MANAGER);
+        admin.setBlocked(false);
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
+        criteria.select(root).where(builder.equal(root.get("username"), "admin"));
+        List<User> users = session.createQuery(criteria).getResultList();
+
+        if (!users.isEmpty()) {
+            return;
+        }
+
+        session.save(admin);
+        session.flush();
+    }
+
     public static void main(String[] args) {
         try {
             SessionFactory sessionFactory = getSessionFactory();
@@ -97,6 +124,7 @@ public class Main {
 
             session.beginTransaction();
             generateMovies();
+            generateAdmin();
             session.getTransaction().commit();
 
             // Start the server
