@@ -1,9 +1,14 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
-public class LoginRequest {
+import java.io.Serializable;
+
+public class LoginRequest implements Serializable{
 
     private String username;
     private String password;
+
+    public LoginRequest() {
+    }
 
     public LoginRequest(String username, String password) {
         this.username = username;
@@ -26,9 +31,16 @@ public class LoginRequest {
         this.password = password;
     }
 
+    public boolean equals(LoginRequest loginRequest) {
+        return this.username.equals(loginRequest.getUsername()) && this.password.equals(loginRequest.getPassword());
+    }
+
+    public boolean isValid() {
+        return username != null && password != null && !username.isEmpty() && !password.isEmpty();
+    }
+
     public String toString() {
         return "Username: " + username + ", Password: " + password;
     }
-
 
 }

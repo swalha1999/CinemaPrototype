@@ -22,4 +22,5 @@ public class    EmailUtil {
     public static boolean isValid(String email, String pattern) {
         return email.matches(pattern);
     }
+
 }
