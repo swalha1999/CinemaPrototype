@@ -32,6 +32,14 @@ public class LoginResponse implements Serializable {
         this.role = role;
     }
 
+    public LoginResponse(LoginResponse other) {
+        this.success = other.success;
+        this.message = other.message;
+        this.username = other.username;
+        this.sessionKey = other.sessionKey;
+        this.role = other.role;
+    }
+
     public UserRole getRole() {
         return role;
     }
@@ -80,7 +88,13 @@ public class LoginResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "Success: " + success + ", Message: " + message;
+        return "LoginResponse{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                ", username='" + username + '\'' +
+                ", sessionKey='" + sessionKey + '\'' +
+                ", role=" + role +
+                '}';
     }
 
     @Override

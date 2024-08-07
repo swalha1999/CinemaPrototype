@@ -40,7 +40,10 @@ public class LoginRequest implements Serializable{
     }
 
     public String toString() {
-        return "Username: " + username + ", Password: " + password;
+        return "LoginRequest{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
 }

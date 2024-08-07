@@ -37,13 +37,20 @@ public class SimpleChatClient extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        if (fxmls.containsKey(fxml)) {
-            scene.setRoot(fxmls.get(fxml));
+        // TODO: make the call of whether to load the fxml file from the hashtable or not and remove the if(false) statement
+        if (false) {
+            if (fxmls.containsKey(fxml)) {
+                scene.setRoot(fxmls.get(fxml));
+            }
+            else {
+                fxmls.put(fxml, loadFXML(fxml));
+                scene.setRoot(fxmls.get(fxml));
+            }
         }
         else {
-            fxmls.put(fxml, loadFXML(fxml));
-            scene.setRoot(fxmls.get(fxml));
+            scene.setRoot(loadFXML(fxml));
         }
+
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

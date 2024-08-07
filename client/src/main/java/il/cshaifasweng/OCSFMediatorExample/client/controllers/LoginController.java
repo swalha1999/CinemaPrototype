@@ -5,8 +5,12 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +18,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -41,19 +48,14 @@ public class LoginController {
     private Button registerBtn; // Value injected by FXMLLoader
 
     @FXML
+    public void initialize() {
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+    }
+
+    @FXML
     void LoginAccount(ActionEvent event) throws IOException {
-        Message message = new Message(2, "login");
-        message.setUser(new User());
-        //message.getUser().setUsername(UserNameTxt.getText());
-        message.setData(Password.getText());
-        SimpleClient.getClient().sendToServer(message);
-        Platform.runLater(()->{
-            try {
-                setRoot("primary");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        LoginRequest loginRequest = new LoginRequest(UserNameTxt.getText(), Password.getText());
+        SimpleClient.getClient().sendToServer(new Message(loginRequest, MessageType.LOGIN_REQUEST));
     }
 
     @FXML
@@ -61,6 +63,19 @@ public class LoginController {
         Platform.runLater(()->{
             try {
                 setRoot("Register");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Subscribe
+    public void  onLoginEvent(LoginEvent response) {
+        Platform.runLater(()->{
+            try {
+                if (response.isSuccess()) {
+                    setRoot("Primary");
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

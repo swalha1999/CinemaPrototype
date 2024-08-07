@@ -1,7 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.utils;
 
 public class PasswordUtil {
-    public int passwordStrength(String password) {
+    static public int passwordStrength(String password) {
         int strength = 0;
         if (password.length() >= 8) {
             strength++;
@@ -21,19 +21,19 @@ public class PasswordUtil {
         return strength;
     }
 
-    public boolean isStrong(String password) {
+    static public boolean isStrong(String password) {
         return passwordStrength(password) >= 3;
     }
 
-    public boolean isWeak(String password) {
+    static public boolean isWeak(String password) {
         return passwordStrength(password) < 3;
     }
 
-    public boolean isVeryWeak(String password) {
+    static public boolean isVeryWeak(String password) {
         return passwordStrength(password) < 2;
     }
 
-    public boolean isVeryStrong(String password) {
+    static public boolean isVeryStrong(String password) {
         return passwordStrength(password) == 5;
     }
 

@@ -21,44 +21,13 @@ public class Message implements Serializable {
     String data; //TODO : deprecated field need to be removed
     List<Movie> movies; //TODO : deprecated field need to be removed
 
-
-
-    public Message(MessageType type) {
+    public Message(Object dataObject, MessageType type) {
+        this.version = MessageVersion.V2;
         this.type = type;
         this.id = type.ordinal();
         this.timeStamp = LocalDateTime.now();
-        this.version = MessageVersion.V2;
-        // this is a temporary solution to get rid of the deprecated fields in the message class
-        // TODO: add the classes that will be used in the dataObject field
-        switch (type) {
-            case STRING:
-                this.message = "";
-                break;
-            case LOGIN_REQUEST:
-                this.message = "login";
-                this.dataObject = new LoginRequest();
-                break;
-            case LOGIN_RESPONSE:
-                this.message = "login response";
-                break;
-            case LOGOUT_REQUEST:
-                this.message = "logout";
-                break;
-            case LOGOUT_RESPONSE:
-                this.message = "logout response";
-                break;
-            case REGISTER_REQUEST:
-                this.message = "register";
-                break;
-            case REGISTER_RESPONSE:
-                this.message = "register response";
-                break;
-            default:
-                this.message = "";
-                break;
-        }
+        this.dataObject = dataObject;
     }
-
 
     public Message(int id, LocalDateTime timeStamp, String message) {
         this.id = id;
@@ -175,6 +144,20 @@ public class Message implements Serializable {
 
     public MessageVersion getVersion() {
         return version;
+    }
+
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", type=" + type.toString() +
+                ", version=" + version.toString() +
+                ", timeStamp=" + timeStamp.format( java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") ) +
+                ", dataObject=" + dataObject.toString() +
+                ", user=" + user +
+                ", message='" + message + '\'' +
+                ", data='" + data + '\'' +
+                ", movies=" + movies +
+                '}';
     }
 
 }

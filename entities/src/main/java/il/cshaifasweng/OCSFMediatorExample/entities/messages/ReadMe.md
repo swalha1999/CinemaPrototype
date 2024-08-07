@@ -51,3 +51,8 @@ important note: evey new request message should have a SessionKey except the log
 
 some time the session is expired, so the client should send a new login request message to get a new session key.
 and we can add a new message type to handle the session expired message. 
+
+### `Copy Constructor`
+
+its very important to add a copy constructor to the message class to avoid the shallow copy of the message object.
+and for every new Request and Response message class.

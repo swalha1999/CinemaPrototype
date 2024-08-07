@@ -7,12 +7,18 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.RegisterRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.RegisterResponse;
+import il.cshaifasweng.OCSFMediatorExample.entities.utils.PasswordUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -62,21 +68,38 @@ public class RegisterController {
     @FXML
     void ConfrimRegister(ActionEvent event) throws IOException {
 
-        Message message = new Message(2, "register a new user");
-        message.setUser(new User());
-        message.getUser().setFirstName(FirstNameText.getText());
-        message.getUser().setLastName(LastNameText.getText());
-        message.getUser().setUsername(UserNameText.getText());
-        message.setData(PasswordText.getText());
-        SimpleClient.getClient().sendToServer(message);
+        // TODO: temp code to fix later
+        if(!PasswordText.getText().equals(ConfPasswordText.getText())){
+            Platform.runLater(()->{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Password does not match");
+                alert.setContentText("Please make sure the password is the same in both fields");
+                alert.show();
+            });
+            return;
+        }
 
-        Platform.runLater(()->{
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        // TODO: temp code to fix later make a slider that shows the password strength with error message not a popup
+        if (PasswordUtil.isWeak(PasswordText.getText())) {
+            Platform.runLater(()->{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Password is weak");
+                alert.setContentText("Please make sure the password is at least 8 characters long and contains at least one uppercase letter, one lowercase letter, one number and one special character");
+                alert.show();
+            });
+            return;
+        }
+
+        RegisterRequest registerRequest =
+                new RegisterRequest()
+                .setFirstName(FirstNameText.getText())
+                .setLastName(LastNameText.getText())
+                .setUsername(UserNameText.getText())
+                .setPassword(PasswordText.getText());
+
+        SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.REGISTER_REQUEST));
 
     }
 
@@ -87,6 +110,33 @@ public class RegisterController {
                 setRoot("AdminPage");
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Subscribe
+    void OnRegister(RegisterResponse response) {
+        Platform.runLater(()->{
+
+            if (response.isSuccess()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("User registered successfully");
+                alert.show();
+
+                try {
+                    setRoot("Login");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("User registration failed");
+                alert.setContentText(response.getMessage());
+                alert.show();
             }
         });
     }
