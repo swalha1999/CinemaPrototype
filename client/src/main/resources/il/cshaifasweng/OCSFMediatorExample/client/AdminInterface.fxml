@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -21,15 +24,67 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Button fx:id="DashBoard" layoutX="21.0" layoutY="211.0" mnemonicParsing="false" onAction="#DashBoard_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90EE90; -fx-text-fill: #fff; -fx-font-size: 14px; -fx-cursor: hand; -fx-alignment: Center;" text="DashBoard" />
-            <Button fx:id="AddMoviesBtn" layoutX="20.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddMovies_form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90; -fx-cursor: hand;" text="AddMovies" />
-            <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Availble Movies" />
-            <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Edit Screening" />
-            <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Customers" />
+            <Button fx:id="DashBoard" layoutX="21.0" layoutY="211.0" mnemonicParsing="false" onAction="#DashBoard_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90EE90; -fx-font-size: 14px; -fx-alignment: Center;" text="DashBoard" textFill="#030303fa">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="AddMoviesBtn" layoutX="20.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddMovies_form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90EE90; -fx-cursor: hand;" text="AddMovies">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Availble Movies">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Edit Screening">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Customers">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #90ee90;" text="Log Out" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="AddMovies_Form" layoutX="196.0" layoutY="-6.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
+      <AnchorPane fx:id="AddMovies_Form" layoutX="196.0" layoutY="-6.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: grey;" visible="false">
+         <children>
+            <AnchorPane fx:id="TableAnchor" layoutY="3.0" prefHeight="504.0" prefWidth="1008.0" style="-fx-background-color: white;">
+               <children>
+                  <TableView fx:id="MoviesTable" prefHeight="504.0" prefWidth="1008.0">
+                    <columns>
+                      <TableColumn fx:id="IdCol" prefWidth="78.0" text="Movie Id" />
+                      <TableColumn fx:id="MovieNameCol" prefWidth="123.0" text="MovieName" />
+                        <TableColumn fx:id="ScreeningDateCol" prefWidth="116.0" text="Screening Date" />
+                        <TableColumn fx:id="GenreCol" prefWidth="112.0" text="Genre" />
+                        <TableColumn fx:id="UrlCol" prefWidth="153.0" text="Image Url" />
+                        <TableColumn fx:id="CountryCol" prefWidth="135.0" text="Country" />
+                        <TableColumn fx:id="OnlineCol" prefWidth="157.0" text="Online/Offline" />
+                        <TableColumn fx:id="TicketPriceCol" prefWidth="133.0" text="Ticket Price" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="NotTableAnchor" layoutX="1.0" layoutY="534.0" prefHeight="371.0" prefWidth="1008.0" style="-fx-background-color: white;">
+               <children>
+                  <TextField fx:id="MovieId_Txt" layoutX="187.0" layoutY="81.0" />
+                  <Label fx:id="MovieID_Label" layoutX="89.0" layoutY="85.0" text="Movie Id" />
+                  <TextField fx:id="MovieName_Txt" layoutX="187.0" layoutY="139.0" />
+                  <Label fx:id="MovieName_Label" layoutX="89.0" layoutY="143.0" text="Movie Name" />
+                  <TextField fx:id="ScreeningDate_Txt" layoutX="187.0" layoutY="203.0" />
+                  <TextField fx:id="Genre_Txt" layoutX="187.0" layoutY="255.0" />
+                  <TextField fx:id="TicketPrice_txt" layoutX="458.0" layoutY="81.0" prefHeight="25.0" prefWidth="155.0" />
+                  <Label fx:id="ScreeningDate_Label" layoutX="89.0" layoutY="207.0" text="Screening Date" />
+                  <Label fx:id="Genre_Label" layoutX="89.0" layoutY="259.0" text="Genre" />
+                  <Label fx:id="Ticket_Price_Label" layoutX="373.0" layoutY="85.0" text="Ticket Price" />
+                  <Label fx:id="Price_Label" layoutX="389.0" layoutY="143.0" text="Price" />
+                  <TextField fx:id="Price_Txt" layoutX="458.0" layoutY="139.0" prefHeight="25.0" prefWidth="155.0" />
+                  <Button fx:id="ImportButton" layoutX="842.0" layoutY="255.0" mnemonicParsing="false" onAction="#ImportPicture" style="-fx-background-color: #B22222;" text="Import" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="768.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="188.0" fitWidth="200.0" layoutX="768.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: GREY;" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
       <AnchorPane fx:id="AvailbleMovies_Form" layoutX="194.0" layoutY="-5.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
       <AnchorPane fx:id="EditScreening_Form" layoutX="193.0" prefHeight="900.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
       <AnchorPane fx:id="Customer_Form" layoutX="196.0" prefHeight="900.0" prefWidth="1003.0" style="-fx-background-color: white;" visible="false">

@@ -2,6 +2,10 @@
  * Sample Skeleton for 'AdminInterface.fxml' Controller Class
  */
 
+/**
+ * Sample Skeleton for 'AdminInterface.fxml' Controller Class
+ */
+
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
@@ -19,10 +23,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.greenrobot.eventbus.EventBus;
@@ -119,6 +120,63 @@ public class AdminInterface {
     @FXML // fx:id="logoutBtn"
     private Button logoutBtn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="MovieID_Label"
+    private Label MovieID_Label; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MovieId_Txt"
+    private TextField MovieId_Txt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MovieNameCol"
+    private TableColumn<?, ?> MovieNameCol; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MovieName_Label"
+    private Label MovieName_Label; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MovieName_Txt"
+    private TextField MovieName_Txt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MoviesTable"
+    private TableView<?> MoviesTable; // Value injected by FXMLLoader
+
+    @FXML // fx:id="NotTableAnchor"
+    private AnchorPane NotTableAnchor; // Value injected by FXMLLoader
+
+    @FXML // fx:id="OnlineCol"
+    private TableColumn<?, ?> OnlineCol; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Price_Label"
+    private Label Price_Label; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Price_Txt"
+    private TextField Price_Txt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ScreeningDateCol"
+    private TableColumn<?, ?> ScreeningDateCol; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ScreeningDate_Label"
+    private Label ScreeningDate_Label; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ScreeningDate_Txt"
+    private TextField ScreeningDate_Txt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="TableAnchor"
+    private AnchorPane TableAnchor; // Value injected by FXMLLoader
+
+    @FXML // fx:id="TicketPriceCol"
+    private TableColumn<?, ?> TicketPriceCol; // Value injected by FXMLLoader
+
+    @FXML // fx:id="TicketPrice_txt"
+    private TextField TicketPrice_txt; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Ticket_Price_Label"
+    private Label Ticket_Price_Label; // Value injected by FXMLLoader
+
+
+
+    @FXML // fx:id="UrlCol"
+    private TableColumn<?, ?> UrlCol; // Value injected by FXMLLoader
+
+
     @FXML
     public void initialize() {
         AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
@@ -143,6 +201,7 @@ public class AdminInterface {
         Customer_Form.setVisible(false);
         DashBoard_Form.setVisible(false);
     }
+
 
     @FXML
     void AddUser(ActionEvent event) {
@@ -173,17 +232,7 @@ public class AdminInterface {
         EditScreening_Form.setVisible(false);
 
         GetAllUsersRequset getAllUsersRequset = new GetAllUsersRequset(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset,MessageType.GET_ALL_USERS_REQUEST));
-    }
-
-    @Subscribe
-    public void onGetAllUsersEvent(GetAllUsersEvent response){
-        List<User> users = response.getUsers();
-        Users_Table.getItems().clear();
-        for (User user : users) {
-            Users_Table.getItems().add(new UserView(user));
-        }
-
+        SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset, MessageType.GET_ALL_USERS_REQUEST));
     }
 
     @FXML
@@ -205,7 +254,7 @@ public class AdminInterface {
     }
 
     @FXML
-    void Exit(ActionEvent event) {
+    void ImportPicture(ActionEvent event) {
 
     }
 
@@ -223,6 +272,19 @@ public class AdminInterface {
     void UnblockUser(ActionEvent event) {
 
     }
+
+    @Subscribe
+    public void onGetAllUsersEvent(GetAllUsersEvent response){
+        List<User> users = response.getUsers();
+        Users_Table.getItems().clear();
+        for (User user : users) {
+            Users_Table.getItems().add(new UserView(user));
+        }
+
+    }
+
+
+
 
     @FXML
     void logOut(ActionEvent event) throws IOException {
@@ -249,6 +311,9 @@ public class AdminInterface {
         });
     }
 }
+
+
+
 
 
 
