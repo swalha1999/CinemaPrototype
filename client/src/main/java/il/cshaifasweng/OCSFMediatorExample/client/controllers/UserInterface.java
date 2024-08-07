@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -26,7 +27,7 @@ public class UserInterface {
     private AnchorPane AddMovies_Form; // Value injected by FXMLLoader
 
     @FXML // fx:id="AdminLabel"
-    private Label AdminLabel; // Value injected by FXMLLoader
+    private Label UserLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="AvailbleMoviesBtn"
     private Button AvailbleMoviesBtn; // Value injected by FXMLLoader
@@ -59,6 +60,13 @@ public class UserInterface {
     private Button logoutBtn; // Value injected by FXMLLoader
 
     @FXML
+    public void initialize() {
+        UserLabel.setText(SessionKeysStorage.getInstance().getUsername());
+        System.out.println(SessionKeysStorage.getInstance().getUsername());
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+    }
+
+    @FXML
     void AvailbleMovies_Form(ActionEvent event) {
 
     }
@@ -81,6 +89,7 @@ public class UserInterface {
     @FXML
     void logOut(ActionEvent event) throws IOException {
         LogoutRequest logoutRequest = new LogoutRequest (SessionKeysStorage.getInstance().getSessionKey());
+        int x=0;
         SimpleClient.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(()->{
             try {
