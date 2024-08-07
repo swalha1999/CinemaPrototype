@@ -54,4 +54,12 @@ public class SessionKeysStorage {
         role = null;
         return this;
     }
+
+    public String toString() {
+        return "SessionKeysStorage{" +
+                "sessionKey='" + sessionKey + '\'' +
+                ", username='" + username + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }
