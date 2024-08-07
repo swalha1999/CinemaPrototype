@@ -14,7 +14,7 @@
                         <Font size="22.0" />
                     </font>
                 </Label>
-                <Label fx:id="UserLabel" layoutX="62.0" layoutY="91.0" text="User">
+                <Label fx:id="UserLabel" layoutX="73.0" layoutY="91.0" text="User">
                     <font>
                         <Font size="25.0" />
                     </font>
@@ -24,6 +24,7 @@
                 <Button fx:id="UpcomingMoviesBtn" layoutX="20.0" layoutY="290.0" mnemonicParsing="false" onAction="#UpcomingMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Upcoming Movies" />
                 <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
             <Button fx:id="OnlineMoviesBtn" layoutX="20.0" layoutY="337.0" mnemonicParsing="false" onAction="#OnlineMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Online Movies" />
+            <Button fx:id="OnlineMoviesBtn1" layoutX="20.0" layoutY="387.0" mnemonicParsing="false" onAction="#OnlineMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="My Tickets" />
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="43.0" prefWidth="766.0" />

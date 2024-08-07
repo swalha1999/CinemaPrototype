@@ -51,6 +51,4 @@ public class GetAllUsersRequset implements Request {
                 ", username='" + username + '\'' +
                 '}';
     }
-
-
 }
