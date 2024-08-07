@@ -215,4 +215,26 @@ public class User implements Serializable {
     public int hashCode() {
         return id;
     }
+
+    public String toString(){
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", salt='" + salt + '\'' +
+                ", role=" + role +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", creditCard='" + creditCard + '\'' +
+                ", isLogged=" + isLogged +
+                ", isBlocked=" + isBlocked +
+                ", isDeleted=" + isDeleted +
+                ", isAgeRestricted=" + isAgeRestricted +
+                ", NumberOfTicketsPurchased=" + NumberOfTicketsPurchased +
+                ", NumberOfBundlePurchased=" + NumberOfBundlePurchased +
+                ", NumberOfOnlineScreeningsPurchased=" + NumberOfOnlineScreeningsPurchased +
+                '}';
+    }
 }
