@@ -6,7 +6,10 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequset;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -148,12 +151,32 @@ public class AdminInterface {
     }
 
     @FXML
-    void Customers_Form(ActionEvent event) {
+    void Customers_Form(ActionEvent event) throws IOException {
         AvailbleMovies_Form.setVisible(false);
         Customer_Form.setVisible(true);
         DashBoard_Form.setVisible(false);
         AddMovies_Form.setVisible(false);
         EditScreening_Form.setVisible(false);
+
+        GetAllUsersRequset getAllUsersRequset = new GetAllUsersRequset(SessionKeysStorage.getInstance().getSessionKey());
+        SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset,MessageType.GET_ALL_USERS_REQUEST));
+    }
+
+    @Subscribe
+    public void onGetAllUsersEvent(GetAllUsersEvent response){
+
+//        for (User updatedMovie : moviesToUpdate) {
+//            Movie existingMovie = existingMoviesMap.get(updatedMovie.getId());
+//            if (existingMovie != null) {
+//                existingMovie.setName(updatedMovie.getName());
+//                existingMovie.setDate(updatedMovie.getDate());
+//            } else {
+//                table_users.getItems().add(updatedMovie);
+//            }
+//        }
+//
+//        // Refresh the table view
+//        table_users.refresh();
     }
 
     @FXML

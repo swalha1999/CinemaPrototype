@@ -20,6 +20,12 @@ public class GetAllUsersResponse implements Serializable {
     public GetAllUsersResponse() {
     }
 
+    public GetAllUsersResponse(GetAllUsersResponse response) {
+        this.isSucceed = response.isSucceed;
+        this.message = response.message;
+        this.users = response.users;
+    }
+
     public GetAllUsersResponse(List<User> users) {
         this.users = users;
     }
@@ -44,6 +50,10 @@ public class GetAllUsersResponse implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 
     public GetAllUsersResponse setMessage(String message) {
