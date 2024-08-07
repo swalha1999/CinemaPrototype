@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetMyTicketsResponse implements Serializable {
+public class GetMyTicketsResponse implements Response {
 
     private static final long serialVersionUID = -5386248350340650197L;
 

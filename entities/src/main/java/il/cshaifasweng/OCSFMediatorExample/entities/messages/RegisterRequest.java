@@ -3,7 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class RegisterRequest implements Serializable {
+public class RegisterRequest implements Request {
 
     @Serial
     private static final long serialVersionUID = -5386248350340650194L;
@@ -22,6 +22,16 @@ public class RegisterRequest implements Serializable {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    @Override
+    public String getSessionKey() {
+        return "";
+    }
+
+    @Override
+    public RegisterRequest setSessionKey(String sessionKey) {
+        return null;
     }
 
     public String getUsername() {
@@ -48,6 +58,16 @@ public class RegisterRequest implements Serializable {
     public RegisterRequest setUsername(String username) {
         this.username = username;
         return this;
+    }
+
+    @Override
+    public int getUserId() {
+        return 0;
+    }
+
+    @Override
+    public RegisterRequest setUserId(int userId) {
+        return null;
     }
 
     public RegisterRequest setPassword(String password) {

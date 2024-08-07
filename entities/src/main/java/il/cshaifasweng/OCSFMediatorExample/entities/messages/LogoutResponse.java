@@ -3,7 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class LogoutResponse implements Serializable {
+public class LogoutResponse implements Response {
 
     @Serial
     private static final long serialVersionUID = -5386248350340650194L;

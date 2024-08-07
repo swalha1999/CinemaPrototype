@@ -94,7 +94,7 @@ public class Server extends AbstractServer {
                 handleGetMyTicketsRequest(request, client);
                 break;
 
-			//TODO: add more cases for the other message types
+                //TODO: add more cases here
 
             default:
                 sendErrorMessage(client, "Error! Unknown message received");
@@ -201,12 +201,13 @@ public class Server extends AbstractServer {
 
     private void handleLogoutRequest(Message request, ConnectionToClient client) {
         LogoutRequest logoutRequest = (LogoutRequest) request.getDataObject();
-        System.out.println("Logout request received:" + logoutRequest.toString()); //TODO: remove this line debug only
         logoutRequest.setUsername(sessionKeys.get(logoutRequest.getSessionKey()).getUsername());
-        LogoutResponse logoutResponse = database.getUsersManager().logoutUser(logoutRequest);
 
+        System.out.println("Logout request received:" + logoutRequest.toString()); //TODO: remove this line debug only
+        LogoutResponse logoutResponse = database.getUsersManager().logoutUser(logoutRequest);
         sessionKeys.remove(logoutRequest.getSessionKey());
         System.out.println("Logout response: " + logoutResponse.toString()); //TODO: remove this line debug only
+
         sendResponse(client, new Message(logoutResponse, MessageType.LOGOUT_RESPONSE));
     }
 

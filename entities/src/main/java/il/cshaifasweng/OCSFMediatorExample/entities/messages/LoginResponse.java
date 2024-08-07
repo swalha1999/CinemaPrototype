@@ -6,7 +6,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class LoginResponse implements Serializable {
+public class LoginResponse implements Response {
     @Serial
     private static final long serialVersionUID = -5386248350340650194L;
 
