@@ -1,6 +1,13 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
-public class LogoutResponse {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class LogoutResponse implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -5386248350340650194L;
+
     private boolean success;
     private String message;
 
