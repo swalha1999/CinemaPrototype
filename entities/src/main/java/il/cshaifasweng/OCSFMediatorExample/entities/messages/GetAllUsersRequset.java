@@ -52,6 +52,4 @@ public class GetAllUsersRequset implements Serializable {
                 ", username='" + username + '\'' +
                 '}';
     }
-
-
 }
