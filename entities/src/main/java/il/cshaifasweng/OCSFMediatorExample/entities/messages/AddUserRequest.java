@@ -1,14 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import java.io.Serializable;
-import java.util.Set;
-
-public class AddUserRequest implements Serializable {
+public class AddUserRequest implements Request{
     private String username;
     private UserRole role;
     private String email;
@@ -29,12 +23,35 @@ public class AddUserRequest implements Serializable {
         this.isDeleted = false;
         this.username = username;
     }
+
+    @Override
+    public String getSessionKey() {
+        return "";
+    }
+
+    @Override
+    public Request setSessionKey(String sessionKey) {
+        return null;
+    }
+
     public String getUsername() {
         return username;
     }
-    public void setUsername(String username) {
+    public AddUserRequest setUsername(String username) {
         this.username = username;
+        return this;
     }
+
+    @Override
+    public int getUserId() {
+        return 0;
+    }
+
+    @Override
+    public Request setUserId(int userId) {
+        return null;
+    }
+
     public UserRole getRole() {
         return role;
     }
