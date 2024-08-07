@@ -6,6 +6,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
@@ -22,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -73,46 +75,46 @@ public class AdminInterface {
     private AnchorPane EditScreening_Form; // Value injected by FXMLLoader
 
     @FXML // fx:id="Email_col"
-    private TableColumn<User, String> Email_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, String> Email_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="FirstName_col"
-    private TableColumn<User, String> FirstName_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, String> FirstName_col; // Value injected by FXMLLoader
 
-    @FXML // fx:id="IsLocked_col"
-    private TableColumn<User, Boolean> IsLocked_col; // Value injected by FXMLLoader
+    @FXML // fx:id="IsBlocked_col"
+    private TableColumn<UserView, Boolean> IsBlocked_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="IsLogged_col"
-    private TableColumn<User, Boolean> IsLogged_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, Boolean> IsLogged_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="LastName_col"
-    private TableColumn<User, String> LastName_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, String> LastName_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="MakeAdmin"
     private Button MakeAdmin; // Value injected by FXMLLoader
 
     @FXML // fx:id="Phone_col"
-    private TableColumn<User, String> Phone_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, String> Phone_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="RemoveUser"
     private Button RemoveUser; // Value injected by FXMLLoader
 
-    @FXML // fx:id="Role_cole"
-    private TableColumn<User, UserRole> Role_cole; // Value injected by FXMLLoader
+    @FXML // fx:id="Role_col"
+    private TableColumn<UserView, UserRole> Role_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="UnblockUser"
     private Button UnblockUser; // Value injected by FXMLLoader
 
     @FXML // fx:id="UserName_col"
-    private TableColumn<User, String> UserName_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, String> UserName_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="Users_Table"
-    private TableView<User> Users_Table; // Value injected by FXMLLoader
+    private TableView<UserView> Users_Table; // Value injected by FXMLLoader
 
     @FXML // fx:id="WelcomeLabel"
     private Label WelcomeLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="isDeleted_col"
-    private TableColumn<User, Boolean> isDeleted_col; // Value injected by FXMLLoader
+    private TableColumn<UserView, Boolean> isDeleted_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="logoutBtn"
     private Button logoutBtn; // Value injected by FXMLLoader
@@ -120,8 +122,17 @@ public class AdminInterface {
     @FXML
     public void initialize() {
         AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
-        System.out.println(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+
+        UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        LastName_col.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        Email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
+        Phone_col.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        Role_col.setCellValueFactory(new PropertyValueFactory<>("role"));
+        IsLogged_col.setCellValueFactory(new PropertyValueFactory<>("isLogged"));
+        IsBlocked_col.setCellValueFactory(new PropertyValueFactory<>("isLocked"));
+        isDeleted_col.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
     }
 
     @FXML
@@ -168,11 +179,11 @@ public class AdminInterface {
     @Subscribe
     public void onGetAllUsersEvent(GetAllUsersEvent response){
         List<User> users = response.getUsers();
-        for (User currUser : users) {
-            Users_Table.getItems().add(currUser);
+        Users_Table.getItems().clear();
+        for (User user : users) {
+            Users_Table.getItems().add(new UserView(user));
         }
-        // Refresh the table view
-        Users_Table.refresh();
+
     }
 
     @FXML

@@ -41,9 +41,9 @@
                   <TableColumn fx:id="LastName_col" prefWidth="97.0" text="LastName" />
                   <TableColumn fx:id="Email_col" prefWidth="104.0" text="Email" />
                   <TableColumn fx:id="Phone_col" prefWidth="114.0" text="Phone" />
-                  <TableColumn fx:id="Role_cole" prefWidth="100.0" text="Role" />
+                  <TableColumn fx:id="Role_col" prefWidth="100.0" text="Role" />
                   <TableColumn fx:id="IsLogged_col" prefWidth="134.0" text="IsLogged" />
-                  <TableColumn fx:id="IsLocked_col" prefWidth="130.0" text="IsLocked" />
+                  <TableColumn fx:id="IsBlocked_col" prefWidth="130.0" text="IsLocked" />
                   <TableColumn fx:id="isDeleted_col" prefWidth="129.0" text="IsDeleted" />
                </columns>
             </TableView>
