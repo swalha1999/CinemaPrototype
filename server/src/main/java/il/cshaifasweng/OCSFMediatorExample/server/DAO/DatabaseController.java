@@ -8,11 +8,13 @@ public class DatabaseController {
     private Session session;
     private MovieDAO movies;
     private UserDAO users;
+    private TicketDAO tickets;
 
     public DatabaseController(Session session) {
         this.session = session;
         this.movies = new MovieDAO(session);
         this.users = new UserDAO(session);
+        this.tickets = new TicketDAO(session);
     }
 
     public MovieDAO getMoviesManger() {
@@ -27,11 +29,16 @@ public class DatabaseController {
         return users;
     }
 
+    public TicketDAO getTicketsManager() {
+        return tickets;
+    }
+
 
     public void setSession(Session session) {
         this.session = session;
         this.movies = new MovieDAO(session);
         this.users = new UserDAO(session);
+        this.tickets = new TicketDAO(session);
         // add more DAOs here
     }
 }

@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
@@ -85,6 +86,12 @@ public class Server extends AbstractServer {
                 break;
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
+                break;
+            case GET_ALL_USERS_REQUEST:
+                handleGetAllUsersRequest(request, client);
+                break;
+            case GET_MY_TICKETS_REQUEST:
+                handleGetMyTicketsRequest(request, client);
                 break;
 
 			//TODO: add more cases for the other message types
@@ -182,6 +189,7 @@ public class Server extends AbstractServer {
             LoggedInUser loggedInUser = new LoggedInUser(
                     loginResponse.getSessionKey(),
                     loginResponse.getUsername(),
+                    loginResponse.getUserId(),
                     loginResponse.getRole(),
                     client
             );
@@ -216,6 +224,59 @@ public class Server extends AbstractServer {
             System.out.println("Error sending message: " + e.getMessage());
         }
     }
+
+    private void handleGetAllUsersRequest(Message request, ConnectionToClient client) {
+        GetAllUsersRequset getAllUsersRequset = (GetAllUsersRequset) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(getAllUsersRequset.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER :
+            case MANAGER_OF_ALL_BRANCHES :
+            case BRANCH_MANAGER :
+            case CUSTOMER_SERVICE:
+                break;
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to get all users");
+                return;
+        }
+
+
+        getAllUsersRequset.setUsername(sessionKeys.get(getAllUsersRequset.getSessionKey()).getUsername()); // add the username for faster access
+
+        System.out.println("Get all users request received:" + getAllUsersRequset.toString()); //TODO: remove this line debug only
+        GetAllUsersResponse getAllUsersResponse = database.getUsersManager().getAllUsers(getAllUsersRequset);
+        System.out.println("Get all users response: " + getAllUsersResponse.toString()); //TODO: remove this line debug only
+        sendResponse(client, new Message(getAllUsersResponse, MessageType.GET_ALL_USERS_RESPONSE));
+
+    }
+
+    private void handleGetMyTicketsRequest(Message request, ConnectionToClient client) {
+        GetMyTicketsRequest getMyTicketsRequest = (GetMyTicketsRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(getMyTicketsRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        getMyTicketsRequest.setUsername(loggedInUser.getUsername());
+        getMyTicketsRequest.setUserId(loggedInUser.getUserId());
+
+        System.out.println("Get my tickets request received:" + getMyTicketsRequest.toString()); //TODO: remove this line debug only
+        GetMyTicketsResponse getMyTicketsResponse = database.getTicketsManager().getMyTickets(getMyTicketsRequest);
+        System.out.println("Get my tickets response: " + getMyTicketsResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(getMyTicketsResponse, MessageType.GET_MY_TICKETS_RESPONSE));
+    }
+
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
         try {

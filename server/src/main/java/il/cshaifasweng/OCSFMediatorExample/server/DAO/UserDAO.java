@@ -205,16 +205,17 @@ public class UserDAO {
         // TODO: check if the user is already logged in and return an error if they are
         // TODO: check the user if they are blocked and return an error if they are
 
+        // mark the user as logged in
+        user.setLoggedIn();
+        this.updateUser(user);
+
         loginResponse
                 .setSuccess(true)
                 .setMessage("Login successful")
                 .setRole(user.getRole())
                 .setUsername(user.getUsername())
+                .setUserId(user.getId())
                 .setSessionKey(UserDAO.generateSalt()); //TODO: generate a unique session ID and save it to the user database
-
-        // set the user to be logged in
-        user.setLoggedIn();
-        this.updateUser(user);
 
         return loginResponse;
     }
@@ -236,6 +237,24 @@ public class UserDAO {
         this.updateUser(user);
 
         return logoutResponse;
+    }
+
+    public GetAllUsersResponse getAllUsers(GetAllUsersRequset getAllUsersRequset) {
+        GetAllUsersResponse getAllUsersResponse = new GetAllUsersResponse();
+        List<User> users = getUsers();
+        if (users.isEmpty()){
+            getAllUsersResponse
+                    .setSucceed(false)
+                    .setMessage("No users found");
+            return getAllUsersResponse;
+        }
+
+        getAllUsersResponse
+                .setSucceed(true)
+                .setMessage("Users found")
+                .setUsers(users);
+
+        return getAllUsersResponse;
     }
 
     static public String generateSalt(){

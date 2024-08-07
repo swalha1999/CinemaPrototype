@@ -15,6 +15,7 @@ public class LoginResponse implements Serializable {
     private String username;
     private String sessionKey;
     private UserRole role;
+    private int userId;
 
     public LoginResponse() {
     }
@@ -38,6 +39,7 @@ public class LoginResponse implements Serializable {
         this.message = other.message;
         this.username = other.username;
         this.sessionKey = other.sessionKey;
+        this.userId = other.userId;
         this.role = other.role;
     }
 
@@ -86,6 +88,14 @@ public class LoginResponse implements Serializable {
         return this;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public LoginResponse setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
 
     @Override
     public String toString() {

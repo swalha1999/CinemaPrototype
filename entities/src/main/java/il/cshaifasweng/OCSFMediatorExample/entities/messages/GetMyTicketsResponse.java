@@ -23,6 +23,12 @@ public class GetMyTicketsResponse implements Serializable {
         this.tickets = tickets;
     }
 
+    public GetMyTicketsResponse(List<MovieTicket> tickets) {
+        this.success = true;
+        this.message = "Tickets retrieved successfully";
+        this.tickets = tickets;
+    }
+
     public boolean isSuccess() {
         return success;
     }
