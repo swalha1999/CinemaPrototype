@@ -1,54 +1,84 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 public class MakeAdminRequest implements Request{
     @Serial
     private static final long serialVersionUID = 1L;
-    private String request;
+
+    // the data of the user that makes the request (the admin)
     private String SessionKey;
-    private String UserName;
+    private String Username;
     private int UserId;
-    public MakeAdminRequest(String request) {
-        this.request = request;
+
+    private String username_to_make_admin;
+
+    public MakeAdminRequest() {
     }
-    public String getRequest() {
-        return request;
+
+    public MakeAdminRequest(MakeAdminRequest other) {
+        this.SessionKey = other.SessionKey;
+        this.Username = other.Username;
+        this.UserId = other.UserId;
+        this.username_to_make_admin = other.username_to_make_admin;
     }
-    public void setRequest(String request) {
-        this.request = request;
+
+    public MakeAdminRequest(String SessionKey, String UserName, int UserId, String username_to_make_admin) {
+        this.SessionKey = SessionKey;
+        this.Username = UserName;
+        this.UserId = UserId;
+        this.username_to_make_admin = username_to_make_admin;
     }
-    public String toString() {
-        return request;
-    }
+
     public String getSessionKey() {
         return SessionKey;
     }
 
     public MakeAdminRequest setSessionKey(String sessionKey) {
-       this.SessionKey = sessionKey;
-       return this;
+        this.SessionKey = sessionKey;
+        return this;
     }
 
     public String getUsername() {
-       return UserName;
+        return Username;
     }
 
-    @Override
     public MakeAdminRequest setUsername(String username) {
-        this.UserName = username;
+        Username = username;
         return this;
     }
 
-    @Override
     public int getUserId() {
-        return this.UserId;
+        return UserId;
+    }
+
+    public MakeAdminRequest setUserId(int userId) {
+        UserId = userId;
+        return this;
+    }
+
+    public String getUsername_to_make_admin() {
+        return username_to_make_admin;
+    }
+
+    public MakeAdminRequest setUsername_to_make_admin(String username_to_make_admin) {
+        this.username_to_make_admin = username_to_make_admin;
+        return this;
     }
 
     @Override
-    public MakeAdminRequest setUserId(int userId) {
-        this.UserId = userId;
-        return this;
+    public String toString() {
+        return "MakeAdminRequest{" +
+                "SessionKey='" + SessionKey + '\'' +
+                ", Username='" + Username + '\'' +
+                ", UserId=" + UserId +
+                ", username_to_make_admin='" + username_to_make_admin + '\'' +
+                '}';
     }
+
+
+
+
+
+
 }
