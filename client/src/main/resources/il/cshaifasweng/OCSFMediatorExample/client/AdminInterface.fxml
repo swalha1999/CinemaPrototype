@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -31,7 +33,27 @@
       <AnchorPane fx:id="AddMovies_Form" layoutX="188.0" layoutY="47.0" prefHeight="536.0" prefWidth="578.0" style="-fx-background-color: white;" visible="false" />
       <AnchorPane fx:id="AvailbleMovies_Form" layoutX="188.0" layoutY="62.0" prefHeight="515.0" prefWidth="578.0" style="-fx-background-color: white;" visible="false" />
       <AnchorPane fx:id="EditScreening_Form" layoutX="193.0" layoutY="49.0" prefHeight="536.0" prefWidth="571.0" style="-fx-background-color: white;" visible="false" />
-      <AnchorPane fx:id="Customer_Form" layoutX="193.0" layoutY="55.0" prefHeight="525.0" prefWidth="571.0" style="-fx-background-color: white;" visible="false" />
+      <AnchorPane fx:id="Customer_Form" layoutX="201.0" prefHeight="900.0" prefWidth="1014.0" style="-fx-background-color: white;">
+         <children>
+            <TableView fx:id="Users_Table" prefHeight="715.0" prefWidth="1002.0">
+               <columns>
+                  <TableColumn fx:id="UserName_col" prefWidth="95.0" text="UserName" />
+                  <TableColumn fx:id="FirstName_col" prefWidth="98.0" text="FirstName" />
+                  <TableColumn fx:id="LastName_col" prefWidth="97.0" text="LastName" />
+                  <TableColumn fx:id="Email_col" prefWidth="104.0" text="Email" />
+                  <TableColumn fx:id="Phone_col" prefWidth="114.0" text="Phone" />
+                  <TableColumn fx:id="Role_cole" prefWidth="100.0" text="Role" />
+                  <TableColumn fx:id="IsLogged_col" prefWidth="134.0" text="IsLogged" />
+                  <TableColumn fx:id="IsLocked_col" prefWidth="130.0" text="IsLocked" />
+                  <TableColumn fx:id="isDeleted_col" prefWidth="129.0" text="IsDeleted" />
+               </columns>
+            </TableView>
+            <Button fx:id="MakeAdmin" layoutX="544.0" layoutY="794.0" mnemonicParsing="false" onAction="#MakeAdmin" prefHeight="25.0" prefWidth="167.0" text="Make Admin" />
+            <Button fx:id="RemoveUser" layoutX="348.0" layoutY="760.0" mnemonicParsing="false" onAction="#RemoveUser" prefHeight="25.0" prefWidth="167.0" text="Remove User" />
+            <Button fx:id="BlockUser" layoutX="763.0" layoutY="760.0" mnemonicParsing="false" onAction="#BlockUser" prefHeight="25.0" prefWidth="167.0" text="Block" />
+            <Button fx:id="UnblockUser" layoutX="763.0" layoutY="794.0" mnemonicParsing="false" onAction="#UnblockUser" prefHeight="25.0" prefWidth="167.0" text="Unblock" />
+            <Button fx:id="A" layoutX="544.0" layoutY="760.0" mnemonicParsing="false" onAction="#AddUser" prefHeight="25.0" prefWidth="167.0" text="Add User" />
+         </children></AnchorPane>
       <AnchorPane fx:id="DashBoard_Form" layoutX="193.0" layoutY="43.0" prefHeight="536.0" prefWidth="571.0" style="-fx-background-color: white;" visible="false" />
    </children>
 </AnchorPane>
