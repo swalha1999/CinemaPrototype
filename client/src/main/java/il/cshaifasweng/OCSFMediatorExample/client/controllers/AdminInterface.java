@@ -9,6 +9,8 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequset;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -25,6 +27,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
@@ -70,46 +73,46 @@ public class AdminInterface {
     private AnchorPane EditScreening_Form; // Value injected by FXMLLoader
 
     @FXML // fx:id="Email_col"
-    private TableColumn<?, ?> Email_col; // Value injected by FXMLLoader
+    private TableColumn<User, String> Email_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="FirstName_col"
-    private TableColumn<?, ?> FirstName_col; // Value injected by FXMLLoader
+    private TableColumn<User, String> FirstName_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="IsLocked_col"
-    private TableColumn<?, ?> IsLocked_col; // Value injected by FXMLLoader
+    private TableColumn<User, Boolean> IsLocked_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="IsLogged_col"
-    private TableColumn<?, ?> IsLogged_col; // Value injected by FXMLLoader
+    private TableColumn<User, Boolean> IsLogged_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="LastName_col"
-    private TableColumn<?, ?> LastName_col; // Value injected by FXMLLoader
+    private TableColumn<User, String> LastName_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="MakeAdmin"
     private Button MakeAdmin; // Value injected by FXMLLoader
 
     @FXML // fx:id="Phone_col"
-    private TableColumn<?, ?> Phone_col; // Value injected by FXMLLoader
+    private TableColumn<User, String> Phone_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="RemoveUser"
     private Button RemoveUser; // Value injected by FXMLLoader
 
     @FXML // fx:id="Role_cole"
-    private TableColumn<?, ?> Role_cole; // Value injected by FXMLLoader
+    private TableColumn<User, UserRole> Role_cole; // Value injected by FXMLLoader
 
     @FXML // fx:id="UnblockUser"
     private Button UnblockUser; // Value injected by FXMLLoader
 
     @FXML // fx:id="UserName_col"
-    private TableColumn<?, ?> UserName_col; // Value injected by FXMLLoader
+    private TableColumn<User, String> UserName_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="Users_Table"
-    private TableView<?> Users_Table; // Value injected by FXMLLoader
+    private TableView<User> Users_Table; // Value injected by FXMLLoader
 
     @FXML // fx:id="WelcomeLabel"
     private Label WelcomeLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="isDeleted_col"
-    private TableColumn<?, ?> isDeleted_col; // Value injected by FXMLLoader
+    private TableColumn<User, Boolean> isDeleted_col; // Value injected by FXMLLoader
 
     @FXML // fx:id="logoutBtn"
     private Button logoutBtn; // Value injected by FXMLLoader
@@ -164,19 +167,12 @@ public class AdminInterface {
 
     @Subscribe
     public void onGetAllUsersEvent(GetAllUsersEvent response){
-
-//        for (User updatedMovie : moviesToUpdate) {
-//            Movie existingMovie = existingMoviesMap.get(updatedMovie.getId());
-//            if (existingMovie != null) {
-//                existingMovie.setName(updatedMovie.getName());
-//                existingMovie.setDate(updatedMovie.getDate());
-//            } else {
-//                table_users.getItems().add(updatedMovie);
-//            }
-//        }
-//
-//        // Refresh the table view
-//        table_users.refresh();
+        List<User> users = response.getUsers();
+        for (User currUser : users) {
+            Users_Table.getItems().add(currUser);
+        }
+        // Refresh the table view
+        Users_Table.refresh();
     }
 
     @FXML
