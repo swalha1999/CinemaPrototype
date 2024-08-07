@@ -14,6 +14,12 @@ public class LogoutResponse implements Serializable {
     public LogoutResponse() {
     }
 
+    public LogoutResponse(LogoutResponse other) {
+        this.success = other.success;
+        this.message = other.message;
+    }
+
+
     public LogoutResponse(boolean success, String message) {
         this.success = success;
         this.message = message;

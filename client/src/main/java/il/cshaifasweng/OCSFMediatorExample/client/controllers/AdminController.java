@@ -6,6 +6,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -16,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -64,6 +67,11 @@ public class AdminController {
 
     @FXML // fx:id="WelcomeLabel"
     private Label WelcomeLabel; // Value injected by FXMLLoader
+
+    @FXML
+    public void initialize() {
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+    }
 
     @FXML
     void AddMovies_form(ActionEvent event) {
@@ -121,13 +129,20 @@ public class AdminController {
         RegisterRequest registerRequest = new RegisterRequest();
         SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.LOGOUT_REQUEST));
         SessionKeysStorage.getInstance().clearSession();
-        Platform.runLater(()->{
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+
+    }
+
+    @Subscribe
+    public void onLogoutEvent(LogoutEvent response) {
+
+            Platform.runLater(()->{
+                try {
+                    setRoot("Login");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
     }
 
 }

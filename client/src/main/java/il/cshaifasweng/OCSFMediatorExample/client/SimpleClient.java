@@ -52,7 +52,7 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post( new RegisterEvent((RegisterResponse) message.getDataObject()));
 					break;
 				case LOGOUT_RESPONSE:
-					EventBus.getDefault().post( (LogoutResponse) message.getDataObject() );
+					EventBus.getDefault().post( new LogoutEvent((LogoutResponse) message.getDataObject()));
 					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
