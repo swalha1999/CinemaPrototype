@@ -29,13 +29,12 @@
             <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="43.0" prefWidth="766.0" />
-      <AnchorPane fx:id="AddMovies_Form" layoutX="188.0" layoutY="47.0" prefHeight="536.0" prefWidth="578.0" style="-fx-background-color: white;" visible="false" />
-      <AnchorPane fx:id="AvailbleMovies_Form" layoutX="188.0" layoutY="62.0" prefHeight="515.0" prefWidth="578.0" style="-fx-background-color: white;" visible="false" />
-      <AnchorPane fx:id="EditScreening_Form" layoutX="193.0" layoutY="49.0" prefHeight="536.0" prefWidth="571.0" style="-fx-background-color: white;" visible="false" />
-      <AnchorPane fx:id="Customer_Form" layoutX="201.0" prefHeight="900.0" prefWidth="1014.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="AddMovies_Form" layoutX="196.0" layoutY="-6.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
+      <AnchorPane fx:id="AvailbleMovies_Form" layoutX="194.0" layoutY="-5.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
+      <AnchorPane fx:id="EditScreening_Form" layoutX="193.0" prefHeight="900.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
+      <AnchorPane fx:id="Customer_Form" layoutX="196.0" prefHeight="900.0" prefWidth="1003.0" style="-fx-background-color: white;" visible="false">
          <children>
-            <TableView fx:id="Users_Table" prefHeight="715.0" prefWidth="1002.0">
+            <TableView fx:id="Users_Table" prefHeight="715.0" prefWidth="1008.0">
                <columns>
                   <TableColumn fx:id="UserName_col" prefWidth="95.0" text="UserName" />
                   <TableColumn fx:id="FirstName_col" prefWidth="98.0" text="FirstName" />
