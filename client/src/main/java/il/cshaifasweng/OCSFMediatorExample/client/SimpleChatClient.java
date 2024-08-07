@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Hashtable;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,6 +25,9 @@ public class SimpleChatClient extends Application {
     private static Scene scene;
     private SimpleClient client;
 
+    // hashtable to save the loaded fxml files to avoid loading them again
+    private static final Hashtable<String, Parent> fxmls = new Hashtable<String, Parent>();
+
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
@@ -33,7 +37,13 @@ public class SimpleChatClient extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        if (fxmls.containsKey(fxml)) {
+            scene.setRoot(fxmls.get(fxml));
+        }
+        else {
+            fxmls.put(fxml, loadFXML(fxml));
+            scene.setRoot(fxmls.get(fxml));
+        }
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

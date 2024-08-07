@@ -13,7 +13,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -73,113 +72,135 @@ public class User implements Serializable {
         return isLogged;
     }
 
-    public void setLogged(boolean logged) {
+    public User setLogged(boolean logged) {
         isLogged = logged;
+        return this;
+    }
+
+    public User setLoggedIn() {
+        return setLogged(true);
+    }
+
+    public User setLoggedOut() {
+        return setLogged(false);
     }
 
     public String getCreditCard() {
         return creditCard;
     }
 
-    public void setCreditCard(String creditCard) {
+    public User setCreditCard(String creditCard) {
         this.creditCard = creditCard;
+        return this;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public User setPhone(String phone) {
         this.phone = phone;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public UserRole getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public User setRole(UserRole role) {
         this.role = role;
+        return this;
     }
 
     public String getHashedPassword() {
         return hashedPassword;
     }
 
-    public void setHashedPassword(String password) {
+    public User setHashedPassword(String password) {
         this.hashedPassword = password;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
+    public User setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
     public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public User setSalt(String salt) {
         this.salt = salt;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setFirstName(String FirstName) {
-        this.firstName = FirstName;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setLastName(String LastName) {
-        this.lastName = LastName;
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
     }
 
     public boolean isBlocked() {
         return isBlocked;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public User setBlocked(boolean blocked) {
+        isBlocked = blocked;
+        return this;
     }
 
     public int getId() {
         return id;
     }
 
+    public User setId(int id) {
+        this.id = id;
+        return this;
+    }
+
     public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public User setDeleted(boolean deleted) {
         isDeleted = deleted;
+        return this;
     }
 
     public Set<MovieTicket> getTickets() {
         return tickets;
     }
 
-    public void addTicket(MovieTicket ticket) {
+    public User addTicket(MovieTicket ticket) {
         this.tickets.add(ticket);
         ticket.setUser(this);
+        return this;
     }
 
     @Override
@@ -194,5 +215,4 @@ public class User implements Serializable {
     public int hashCode() {
         return id;
     }
-
 }

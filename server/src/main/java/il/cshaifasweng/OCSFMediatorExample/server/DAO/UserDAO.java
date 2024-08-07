@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -29,6 +30,7 @@ public class UserDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
+            return null;
         }
         return newUser;
     }
@@ -78,6 +80,23 @@ public class UserDAO {
         return user;
     }
 
+    private User updateUser(User updatedUser) {
+        Transaction transaction = null;
+        User user = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(updatedUser);
+            session.flush();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public User getUserById(int id) {
         Transaction transaction = null;
         User user = null;
@@ -94,13 +113,6 @@ public class UserDAO {
         return user;
     }
 
-    public List<User> getUsers() {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = builder.createQuery(User.class);
-        criteria.from(User.class);
-        return session.createQuery(criteria).getResultList();
-    }
-
     public User getUserbyUsername(String username) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
@@ -108,6 +120,13 @@ public class UserDAO {
         criteria.select(root).where(builder.equal(root.get("username"), username));
         List<User> users = session.createQuery(criteria).getResultList();
         return users.isEmpty() ? null : users.getFirst();
+    }
+
+    public List<User> getUsers() {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        criteria.from(User.class);
+        return session.createQuery(criteria).getResultList();
     }
 
     public User blockUserById(int id) {
@@ -131,21 +150,93 @@ public class UserDAO {
         return user;
     }
 
-    public User registerUser(User newUser) {
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.save(newUser);
-            session.flush();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+    public RegisterResponse registerUser(RegisterRequest registerRequest){
+        RegisterResponse registerResponse = new RegisterResponse();
+
+        //check if the user is already registered
+        if (getUserbyUsername(registerRequest.getUsername()) != null){
+            registerResponse
+                    .setSuccess(false)
+                    .setMessage("User already registered");
+            return registerResponse;
         }
-        return newUser;
+
+        User user = new User();
+        user
+            .setUsername(registerRequest.getUsername())
+            .setEmail(registerRequest.getEmail())
+            .setFirstName(registerRequest.getFirstName())
+            .setLastName(registerRequest.getLastName())
+            .setSalt(UserDAO.generateSalt())
+            .setHashedPassword(UserDAO.hashPassword(registerRequest.getPassword(),user.getSalt()));
+
+        User registerdUser = this.addUser(user);
+        if (registerdUser == null){
+            registerResponse
+                    .setSuccess(false)
+                    .setMessage("Error registering user Try again later");
+
+            return registerResponse;
+        }
+
+        registerResponse
+                .setSuccess(true)
+                .setMessage("User registered successfully");
+
+        return registerResponse;
     }
+
+    public LoginResponse loginUser(LoginRequest loginRequest){
+        LoginResponse loginResponse = new LoginResponse();
+        // set the default response to false, so we can return it if the login fails without changing it
+        loginResponse
+                .setSuccess(false)
+                .setMessage("password or username is incorrect");
+
+        User user = getUserbyUsername(loginRequest.getUsername());
+        if (user == null){
+            return loginResponse;
+        }
+
+        if (!UserDAO.checkPassword(loginRequest.getPassword(),user)){
+            return loginResponse;
+        }
+
+        // TODO: check if the user is already logged in and return an error if they are
+        // TODO: check the user if they are blocked and return an error if they are
+
+        loginResponse
+                .setSuccess(true)
+                .setMessage("Login successful")
+                .setRole(user.getRole())
+                .setSessionKey(UserDAO.generateSalt()); //TODO: generate a unique session ID and save it to the user database
+
+        // set the user to be logged in
+        user.setLoggedIn();
+        this.updateUser(user);
+
+        return loginResponse;
+    }
+
+    public LogoutResponse logoutUser(LogoutRequest logoutRequest) {
+        LogoutResponse logoutResponse = new LogoutResponse();
+
+        // we always return true because we don't want to give the user any information about the state of the server
+        logoutResponse
+                .setSuccess(true)
+                .setMessage("Logout successful");
+
+        User user = getUserbyUsername(logoutRequest.getUsername());
+        if (user == null) {
+            return logoutResponse;
+        }
+
+        user.setLoggedOut();
+        this.updateUser(user);
+
+        return logoutResponse;
+    }
+
     static public String generateSalt(){
         StringBuilder salt = new StringBuilder();
         for (int i = 0; i < 10; i++) {
@@ -158,11 +249,7 @@ public class UserDAO {
         return password + salt;
     }
 
-    static public boolean checkPassword(String password, String salt, String hashedPassword) {
-        return hashedPassword.equals(hashPassword(password , salt));
+    static public boolean checkPassword(String password, User user) {
+        return user.getHashedPassword().equals(hashPassword(password , user.getSalt()));
     }
-
-
-
-
 }
