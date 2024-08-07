@@ -39,10 +39,10 @@ public class User implements Serializable {
 
     private int remainingTicketsPurchasedByBundle;
 
-    private boolean isLogged;
-    private boolean isBlocked;
-    private boolean isDeleted;
-    private boolean isAgeRestricted; //TODO: For future use
+    private Boolean isLogged;
+    private Boolean isBlocked;
+    private Boolean isDeleted;
+    private Boolean isAgeRestricted; //TODO: For future use
 
     private int NumberOfTicketsPurchased; //TODO: For future use in statistics
     private int NumberOfBundlePurchased; //TODO: For future use in statistics
