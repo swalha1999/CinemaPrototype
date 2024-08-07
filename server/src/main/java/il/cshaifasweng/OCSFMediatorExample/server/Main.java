@@ -79,9 +79,8 @@ public class Main {
 
         for (Movie movie : movies) {
             // Check if the movie already exists in the database
-            Query<Movie> query = session.createQuery("from Movie where name = :name and releaseDate = :date", Movie.class);
+            Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);
             query.setParameter("name", movie.getName());
-            query.setParameter("date", movie.getDate());
             List<Movie> existingMovies = query.list();
 
             if (existingMovies.isEmpty()) {

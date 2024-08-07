@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Message implements Serializable {
-    int id; // TODO : deprecated field need to be removed
+    int id = 0; // TODO : deprecated field need to be removed
 
-    MessageType type;
-    MessageVersion version;
-    LocalDateTime timeStamp;
-    Object dataObject;
+    MessageType type = MessageType.NONE;
+    MessageVersion version = MessageVersion.V1;
+    LocalDateTime timeStamp = LocalDateTime.now();
+    Object dataObject = "No data";
 
-    User user; //TODO : deprecated field need to be removed
-    String message; //TODO : deprecated field need to be removed
-    String data; //TODO : deprecated field need to be removed
-    List<Movie> movies; //TODO : deprecated field need to be removed
+    User user = new User(); //TODO : deprecated field need to be removed
+    String message = "no message"; //TODO : deprecated field need to be removed
+    String data = "no data"; //TODO : deprecated field need to be removed
+    List<Movie> movies = new ArrayList<Movie>(); //TODO : deprecated field need to be removed
 
     public Message(Object dataObject, MessageType type) {
         this.version = MessageVersion.V2;
@@ -30,34 +30,38 @@ public class Message implements Serializable {
     }
 
     public Message(int id, LocalDateTime timeStamp, String message) {
+        this.version = MessageVersion.V1;
         this.id = id;
         this.timeStamp = timeStamp;
         this.message = message;
-        this.version = MessageVersion.V1;
+        this.dataObject = "No data";
     }
 
     public Message(int id, String message) {
+        this.version = MessageVersion.V1;
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
-        this.data = null;
-        this.version = MessageVersion.V1;
+        this.data = "null";
+        this.dataObject = "No data";
     }
 
     public Message(int id, String message, String data) {
+        this.version = MessageVersion.V1;
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
-        this.data = data;
-        this.version = MessageVersion.V1;
+        this.data = "no Data";
+        this.dataObject = "No data";
     }
 
     public Message(int id, String message, List<Movie> movies) {
+        this.version = MessageVersion.V1;
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.movies = movies;
-        this.version = MessageVersion.V1;
+        this.dataObject = "No data";
     }
 
     public static Message createLoginRequest(String username, String password){

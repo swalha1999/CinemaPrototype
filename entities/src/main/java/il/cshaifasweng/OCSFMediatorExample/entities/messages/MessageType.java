@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serializable;
 
 public enum MessageType implements Serializable {
+    NONE,
     ERROR,
     STRING,
     LOGIN_REQUEST,
