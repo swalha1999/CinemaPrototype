@@ -194,8 +194,11 @@ public class Server extends AbstractServer {
     private void handleLogoutRequest(Message request, ConnectionToClient client) {
         LogoutRequest logoutRequest = (LogoutRequest) request.getDataObject();
         System.out.println("Logout request received:" + logoutRequest.toString()); //TODO: remove this line debug only
+        logoutRequest.setUsername(sessionKeys.get(logoutRequest.getSessionKey()).getUsername());
         LogoutResponse logoutResponse = database.getUsersManager().logoutUser(logoutRequest);
+
         sessionKeys.remove(logoutRequest.getSessionKey());
+        System.out.println("Logout response: " + logoutResponse.toString()); //TODO: remove this line debug only
         sendResponse(client, new Message(logoutResponse, MessageType.LOGOUT_RESPONSE));
     }
 
