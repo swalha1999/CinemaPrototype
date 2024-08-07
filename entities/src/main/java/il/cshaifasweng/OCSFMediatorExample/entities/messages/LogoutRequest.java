@@ -39,7 +39,10 @@ public class LogoutRequest implements Serializable {
     }
 
     public String toString() {
-        return "Session Key: " + sessionKey;
+        return "LogoutRequest{" +
+                "sessionKey='" + sessionKey + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 
     public boolean isValid() {

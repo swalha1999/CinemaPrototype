@@ -42,4 +42,11 @@ public class LogoutResponse implements Serializable {
         this.message = message;
         return this;
     }
+
+    public String toString() {
+        return "LogoutResponse{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
