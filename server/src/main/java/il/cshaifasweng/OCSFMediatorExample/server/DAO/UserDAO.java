@@ -209,6 +209,7 @@ public class UserDAO {
                 .setSuccess(true)
                 .setMessage("Login successful")
                 .setRole(user.getRole())
+                .setUsername(user.getUsername())
                 .setSessionKey(UserDAO.generateSalt()); //TODO: generate a unique session ID and save it to the user database
 
         // set the user to be logged in
