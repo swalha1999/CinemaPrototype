@@ -7,12 +7,16 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.LogoutRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +26,9 @@ import java.io.IOException;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class AdminInterface {
+
+    @FXML // fx:id="A"
+    private Button A; // Value injected by FXMLLoader
 
     @FXML // fx:id="AddMoviesBtn"
     private Button AddMoviesBtn; // Value injected by FXMLLoader
@@ -37,6 +44,9 @@ public class AdminInterface {
 
     @FXML // fx:id="AvailbleMovies_Form"
     private AnchorPane AvailbleMovies_Form; // Value injected by FXMLLoader
+
+    @FXML // fx:id="BlockUser"
+    private Button BlockUser; // Value injected by FXMLLoader
 
     @FXML // fx:id="Customer_Form"
     private AnchorPane Customer_Form; // Value injected by FXMLLoader
@@ -56,14 +66,50 @@ public class AdminInterface {
     @FXML // fx:id="EditScreening_Form"
     private AnchorPane EditScreening_Form; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ExitBtn"
-    private Button ExitBtn; // Value injected by FXMLLoader
+    @FXML // fx:id="Email_col"
+    private TableColumn<?, ?> Email_col; // Value injected by FXMLLoader
 
-    @FXML // fx:id="logoutBtn"
-    private Button logoutBtn; // Value injected by FXMLLoader
+    @FXML // fx:id="FirstName_col"
+    private TableColumn<?, ?> FirstName_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="IsLocked_col"
+    private TableColumn<?, ?> IsLocked_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="IsLogged_col"
+    private TableColumn<?, ?> IsLogged_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="LastName_col"
+    private TableColumn<?, ?> LastName_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MakeAdmin"
+    private Button MakeAdmin; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Phone_col"
+    private TableColumn<?, ?> Phone_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="RemoveUser"
+    private Button RemoveUser; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Role_cole"
+    private TableColumn<?, ?> Role_cole; // Value injected by FXMLLoader
+
+    @FXML // fx:id="UnblockUser"
+    private Button UnblockUser; // Value injected by FXMLLoader
+
+    @FXML // fx:id="UserName_col"
+    private TableColumn<?, ?> UserName_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Users_Table"
+    private TableView<?> Users_Table; // Value injected by FXMLLoader
 
     @FXML // fx:id="WelcomeLabel"
     private Label WelcomeLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="isDeleted_col"
+    private TableColumn<?, ?> isDeleted_col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="logoutBtn"
+    private Button logoutBtn; // Value injected by FXMLLoader
 
     @FXML
     public void initialize() {
@@ -74,11 +120,16 @@ public class AdminInterface {
 
     @FXML
     void AddMovies_form(ActionEvent event) {
-      AddMovies_Form.setVisible(true);
-      EditScreening_Form.setVisible(false);
-      AvailbleMovies_Form.setVisible(false);
-      Customer_Form.setVisible(false);
-      DashBoard_Form.setVisible(false);
+        AddMovies_Form.setVisible(true);
+        EditScreening_Form.setVisible(false);
+        AvailbleMovies_Form.setVisible(false);
+        Customer_Form.setVisible(false);
+        DashBoard_Form.setVisible(false);
+    }
+
+    @FXML
+    void AddUser(ActionEvent event) {
+
     }
 
     @FXML
@@ -88,6 +139,11 @@ public class AdminInterface {
         DashBoard_Form.setVisible(false);
         AddMovies_Form.setVisible(false);
         EditScreening_Form.setVisible(false);
+
+    }
+
+    @FXML
+    void BlockUser(ActionEvent event) {
 
     }
 
@@ -124,8 +180,23 @@ public class AdminInterface {
     }
 
     @FXML
+    void MakeAdmin(ActionEvent event) {
+
+    }
+
+    @FXML
+    void RemoveUser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void UnblockUser(ActionEvent event) {
+
+    }
+
+    @FXML
     void logOut(ActionEvent event) throws IOException {
-        LogoutRequest logoutRequest = new LogoutRequest (SessionKeysStorage.getInstance().getSessionKey());
+        LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(()->{
             try {
@@ -140,12 +211,30 @@ public class AdminInterface {
     public void onLogoutEvent(LogoutEvent response) {
         SessionKeysStorage.getInstance().clearSession();
         Platform.runLater(()->{
-                try {
-                    setRoot("Login");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            try {
+                setRoot("Login");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
