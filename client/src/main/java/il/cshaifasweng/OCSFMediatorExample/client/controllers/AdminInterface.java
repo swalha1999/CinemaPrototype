@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'AdminPage.fxml' Controller Class
+ * Sample Skeleton for 'AdminInterface.fxml' Controller Class
  */
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
