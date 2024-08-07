@@ -3,53 +3,58 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class AddUserResponse implements Request {
+public class AddUserResponse implements Response {
     @Serial
     private static final long serialVersionUID = 1L;
-    private String message;
-    public AddUserResponse(String message) {
-        this.message = message;
 
+    private String message;
+    private boolean success;
+    private String newUsername;
+
+    public AddUserResponse() {
     }
-    public AddUserResponse(AddUserResponse response) {
-        this.message = response.message;
+
+    public AddUserResponse(AddUserResponse other) {
+        this.message = other.message;
+        this.success = other.success;
+        this.newUsername = other.newUsername;
     }
+
+    public AddUserResponse(String message, boolean success, String newUsername) {
+        this.message = message;
+        this.success = success;
+        this.newUsername = newUsername;
+    }
+
     public String getMessage() {
         return message;
     }
+
     public AddUserResponse setMessage(String message) {
         this.message = message;
         return this;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public AddUserResponse setSuccess(boolean success) {
+        this.success = success;
+        return this;
+    }
+
+    public String getNewUsername() {
+        return newUsername;
+    }
+
+    public AddUserResponse setNewUsername(String newUsername) {
+        this.newUsername = newUsername;
+        return this;
+    }
+
     public String toString() {
-        return "AddUserResponse [message=" + message + "]";
+        return message;
     }
 
-    public String getSessionKey() {
-        return "";
-    }
-
-    public Request setSessionKey(String sessionKey) {
-       sessionKey = getSessionKey();
-        return null;
-    }
-
-    public String getUsername() {
-       return  this.getUsername();
-    }
-
-    public Request setUsername(String username) {
-        this.setUsername(username);
-        return this;
-    }
-
-    public int getUserId() {
-        return  this.getUserId();
-    }
-
-    @Override
-    public Request setUserId(int userId) {
-        this.setUserId(userId);
-        return this;
-    }
 }

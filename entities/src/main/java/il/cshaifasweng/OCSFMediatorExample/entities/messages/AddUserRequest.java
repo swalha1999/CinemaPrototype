@@ -3,24 +3,26 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 
 public class AddUserRequest implements Request{
+
+    // for the user how made the request (the admin)
+    private String sessionKey;
+    private int userId;
+
+    // the data to add the new user
     private String username;
     private UserRole role;
     private String email;
     private String phone;
     private String firstName;
     private String lastName;
-    private boolean isLogged;
-    private boolean isBlocked;
-    private boolean isDeleted;
+
+
     public AddUserRequest(String username, UserRole role, String email, String phone, String firstName, String lastName) {
         role = role;
         this.email = email;
         this.phone = phone;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isLogged = false;
-        this.isBlocked = false;
-        this.isDeleted = false;
         this.username = username;
     }
 
@@ -30,8 +32,9 @@ public class AddUserRequest implements Request{
     }
 
     @Override
-    public Request setSessionKey(String sessionKey) {
-        return null;
+    public AddUserRequest setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+        return this;
     }
 
     public String getUsername() {
@@ -48,8 +51,9 @@ public class AddUserRequest implements Request{
     }
 
     @Override
-    public Request setUserId(int userId) {
-        return null;
+    public AddUserRequest setUserId(int userId) {
+        this.userId = userId;
+        return this;
     }
 
     public UserRole getRole() {
@@ -81,15 +85,6 @@ public class AddUserRequest implements Request{
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-    public boolean isLogged() {
-        return isLogged;
-    }
-    public void setLogged(boolean logged) {
-        isLogged = logged;
-    }
-    public boolean isBlocked() {
-        return isBlocked;
     }
 
 }
