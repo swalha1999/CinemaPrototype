@@ -1,8 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class MakeAdminResponse implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private String message;
     public MakeAdminResponse(String message) {
