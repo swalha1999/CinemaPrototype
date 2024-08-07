@@ -13,6 +13,11 @@ public class RegisterResponse implements Serializable {
     public RegisterResponse() {
     }
 
+    public RegisterResponse(RegisterResponse other) {
+        this.success = other.success;
+        this.message = other.message;
+    }
+
     public RegisterResponse(boolean success, String message) {
         this.success = success;
         this.message = message;

@@ -5,6 +5,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RegisterEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -18,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
@@ -64,6 +66,11 @@ public class RegisterController {
 
     @FXML // fx:id="registerBtn"
     private Button registerBtn; // Value injected by FXMLLoader
+
+    @FXML
+    public void initialize() {
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+    }
 
     @FXML
     void ConfrimRegister(ActionEvent event) throws IOException {
@@ -115,7 +122,7 @@ public class RegisterController {
     }
 
     @Subscribe
-    void OnRegister(RegisterResponse response) {
+    void OnRegister(RegisterEvent response) {
         Platform.runLater(()->{
 
             if (response.isSuccess()) {

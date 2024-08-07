@@ -49,7 +49,7 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post(new LoginEvent((LoginResponse) message.getDataObject()));
 					break;
 				case REGISTER_RESPONSE:
-					EventBus.getDefault().post( (RegisterResponse) message.getDataObject() );
+					EventBus.getDefault().post( new RegisterEvent((RegisterResponse) message.getDataObject()));
 					break;
 				case LOGOUT_RESPONSE:
 					EventBus.getDefault().post( (LogoutResponse) message.getDataObject() );
