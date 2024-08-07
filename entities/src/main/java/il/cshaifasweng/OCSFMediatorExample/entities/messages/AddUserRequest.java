@@ -47,7 +47,7 @@ public class AddUserRequest implements Request{
 
     @Override
     public int getUserId() {
-        return 0;
+        return this.userId;
     }
 
     @Override
