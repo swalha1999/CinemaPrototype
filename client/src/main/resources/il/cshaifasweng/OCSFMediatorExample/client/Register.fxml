@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="626.0" style="-fx-background-color: #b22222;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.RegisterController">
     <children>
-        <AnchorPane layoutX="-6.0" prefHeight="85.0" prefWidth="630.0" style="-fx-background-color: #E96151;">
+        <AnchorPane layoutX="-6.0" prefHeight="85.0" prefWidth="630.0" style="-fx-background-color: #90ee90;">
             <children>
                 <Label fx:id="RegisterLogo" layoutX="120.0" layoutY="13.0" prefHeight="60.0" prefWidth="190.0" text="User Registeration">
                     <font>
@@ -47,12 +47,12 @@
                 <Font size="13.0" />
             </font>
         </Label>
-        <Button fx:id="registerBtn" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="Register" textFill="WHITE">
+        <Button fx:id="registerBtn" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #90ee90;" text="Register" textFill="#0a0000">
             <font>
                 <Font size="13.0" />
             </font>
         </Button>
-        <Button fx:id="loginBtn" layoutX="144.0" layoutY="486.0" mnemonicParsing="false" onAction="#returnLogin" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #E96151;" text="login" textFill="#f5f5f5">
+        <Button fx:id="loginBtn" layoutX="144.0" layoutY="486.0" mnemonicParsing="false" onAction="#returnLogin" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #90ee90;" text="login" textFill="#1b0202">
             <font>
                 <Font size="13.0" />
             </font>

@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminInterface">
    <children>
-      <AnchorPane layoutX="-2.0" layoutY="-6.0" prefHeight="906.0" prefWidth="201.0" style="-fx-background-color: green;">
+      <AnchorPane layoutX="-2.0" layoutY="-6.0" prefHeight="906.0" prefWidth="201.0" style="-fx-background-color: #B22222;">
          <children>
             <Label fx:id="WelcomeLabel" layoutX="53.0" layoutY="50.0" text="Welcome">
                <font>
@@ -21,12 +21,12 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <Button fx:id="DashBoard" layoutX="21.0" layoutY="211.0" mnemonicParsing="false" onAction="#DashBoard_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: transparent; -fx-text-fill: #fff; -fx-font-size: 14px; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;" text="DashBoard" />
-            <Button fx:id="AddMoviesBtn" layoutX="20.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddMovies_form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow; -fx-cursor: hand;" text="AddMovies" />
-            <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Availble Movies" />
-            <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Edit Screening" />
-            <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Customers" />
-            <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+            <Button fx:id="DashBoard" layoutX="21.0" layoutY="211.0" mnemonicParsing="false" onAction="#DashBoard_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90EE90; -fx-text-fill: #fff; -fx-font-size: 14px; -fx-cursor: hand; -fx-alignment: Center;" text="DashBoard" />
+            <Button fx:id="AddMoviesBtn" layoutX="20.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddMovies_form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90; -fx-cursor: hand;" text="AddMovies" />
+            <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Availble Movies" />
+            <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Edit Screening" />
+            <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Customers" />
+            <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #90ee90;" text="Log Out" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="AddMovies_Form" layoutX="196.0" layoutY="-6.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
