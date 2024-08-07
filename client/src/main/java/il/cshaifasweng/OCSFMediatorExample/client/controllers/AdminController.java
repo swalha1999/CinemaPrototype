@@ -67,6 +67,8 @@ public class AdminController {
 
     @FXML
     public void initialize() {
+        AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
+        System.out.println(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
     }
 
@@ -125,6 +127,13 @@ public class AdminController {
     void logOut(ActionEvent event) throws IOException {
         LogoutRequest logoutRequest = new LogoutRequest (SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
+        Platform.runLater(()->{
+            try {
+                setRoot("Login");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Subscribe

@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="579.0" prefWidth="766.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminController">
    <children>
-      <AnchorPane layoutX="-2.0" layoutY="-6.0" prefHeight="586.0" prefWidth="195.0" style="-fx-background-color: green;">
+      <AnchorPane layoutX="-2.0" layoutY="-6.0" prefHeight="906.0" prefWidth="201.0" style="-fx-background-color: green;">
          <children>
             <Label fx:id="WelcomeLabel" layoutX="53.0" layoutY="50.0" text="Welcome">
                <font>
@@ -24,14 +24,10 @@
             <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Availble Movies" />
             <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Edit Screening" />
             <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: yellow;" text="Customers" />
-            <Button fx:id="logoutBtn" layoutX="68.0" layoutY="528.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+            <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="43.0" prefWidth="766.0">
-         <children>
-            <Button fx:id="ExitBtn" layoutX="740.0" layoutY="2.0" mnemonicParsing="false" onAction="#Exit" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: black;" text="X" textFill="#f87a7a" />
-         </children>
-      </AnchorPane>
+      <AnchorPane prefHeight="43.0" prefWidth="766.0" />
       <AnchorPane fx:id="AddMovies_Form" layoutX="188.0" layoutY="47.0" prefHeight="536.0" prefWidth="578.0" style="-fx-background-color: white;" visible="false" />
       <AnchorPane fx:id="AvailbleMovies_Form" layoutX="188.0" layoutY="62.0" prefHeight="515.0" prefWidth="578.0" style="-fx-background-color: white;" visible="false" />
       <AnchorPane fx:id="EditScreening_Form" layoutX="193.0" layoutY="49.0" prefHeight="536.0" prefWidth="571.0" style="-fx-background-color: white;" visible="false" />

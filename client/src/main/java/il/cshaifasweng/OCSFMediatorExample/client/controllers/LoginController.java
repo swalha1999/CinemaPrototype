@@ -72,14 +72,15 @@ public class LoginController {
 
     @Subscribe
     public void  onLoginEvent(LoginEvent response) {
+        SessionKeysStorage.getInstance()
+                .clearSession()
+                .setSessionKey(response.getSessionKey())
+                .setUsername(response.getUsername())
+                .setRole(response.getRole());
+
+        System.out.println(SessionKeysStorage.getInstance().toString());
+
         Platform.runLater(()->{
-
-            SessionKeysStorage.getInstance()
-                    .clearSession()
-                    .setSessionKey(response.getSessionKey())
-                    .setUsername(response.getUsername())
-                    .setRole(response.getRole());
-
             try {
                 if (response.isSuccess()) {
                     setRoot("AdminPage");
