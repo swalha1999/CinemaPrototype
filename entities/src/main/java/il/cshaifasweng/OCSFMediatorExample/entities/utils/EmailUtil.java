@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.utils;
 
-public class EmailUtil {
+public class    EmailUtil {
 
     /**
      * Validates an email address using a regular expression pattern.

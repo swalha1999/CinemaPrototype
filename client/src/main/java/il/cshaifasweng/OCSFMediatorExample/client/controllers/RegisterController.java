@@ -84,7 +84,7 @@ public class RegisterController {
     void returnLogin(ActionEvent event) {
         Platform.runLater(()->{
             try {
-                setRoot("Login");
+                setRoot("AdminPage");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
