@@ -3,12 +3,13 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class LogoutRequest implements Serializable {
+public class LogoutRequest implements Request {
     @Serial
     private static final long serialVersionUID = -5386248350340650194L;
 
     private String sessionKey;
     private String username;
+    private int userId;
 
     public LogoutRequest() {
     }
@@ -26,16 +27,29 @@ public class LogoutRequest implements Serializable {
         return sessionKey;
     }
 
-    public void setSessionKey(String sessionKey) {
+    public LogoutRequest setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public LogoutRequest setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    @Override
+    public int getUserId() {
+        return userId;
+    }
+
+    @Override
+    public LogoutRequest setUserId(int userId) {
+        this.userId = userId;
+        return this;
     }
 
     public String toString() {

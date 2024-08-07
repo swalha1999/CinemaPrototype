@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GetAllUsersResponse implements Serializable {
+public class GetAllUsersResponse implements Response {
 
     @Serial
     private static final long serialVersionUID = -5386248350340650199L;
@@ -39,7 +39,7 @@ public class GetAllUsersResponse implements Serializable {
         return this;
     }
 
-    public boolean isSucceed() {
+    public boolean isSuccess() {
         return isSucceed;
     }
 

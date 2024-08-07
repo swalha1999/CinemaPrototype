@@ -3,7 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class GetMyTicketsRequest implements Serializable {
+public class GetMyTicketsRequest implements Request {
     @Serial
     private static final long serialVersionUID = -5386248350340650198L;
 

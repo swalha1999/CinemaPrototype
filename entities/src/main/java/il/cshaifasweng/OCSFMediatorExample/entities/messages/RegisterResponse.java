@@ -1,9 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 import java.io.Serial;
-import java.io.Serializable;
 
-public class RegisterResponse implements Serializable {
+public class RegisterResponse implements Response {
     @Serial
     private static final long serialVersionUID = -5386248350340650194L;
 

@@ -1,8 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
+import java.io.Serial;
 import java.io.Serializable;
 
-public class LoginRequest implements Serializable{
+public class LoginRequest implements Request{
+
+    @Serial
+    private static final long serialVersionUID = -5386248350340650197L;
 
     private String username;
     private String password;
@@ -15,6 +19,16 @@ public class LoginRequest implements Serializable{
         this.password = password;
     }
 
+    @Override
+    public String getSessionKey() {
+        return "";
+    }
+
+    @Override
+    public Request setSessionKey(String sessionKey) {
+        return this;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -23,8 +37,19 @@ public class LoginRequest implements Serializable{
         return password;
     }
 
-    public void setUsername(String username) {
+    public LoginRequest setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    @Override
+    public int getUserId() {
+        return 0;
+    }
+
+    @Override
+    public Request setUserId(int userId) {
+        return null;
     }
 
     public void setPassword(String password) {
