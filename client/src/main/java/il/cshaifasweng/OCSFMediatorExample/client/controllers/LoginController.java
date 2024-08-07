@@ -7,6 +7,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.LoginResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -83,7 +84,11 @@ public class LoginController {
         Platform.runLater(()->{
             try {
                 if (response.isSuccess()) {
-                    setRoot("AdminPage");
+                    if( response.getRole() == UserRole.USER){
+                        setRoot("UserInterface");
+                    } else {
+                        setRoot("AdminInterface");
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
