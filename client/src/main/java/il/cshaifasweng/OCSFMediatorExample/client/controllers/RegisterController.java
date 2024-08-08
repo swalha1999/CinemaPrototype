@@ -67,10 +67,14 @@ public class RegisterController {
     @FXML // fx:id="registerBtn"
     private Button registerBtn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="EmailText"
+    private TextField EmailText; // Value injected by FXMLLoader
+
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
     }
+
 
     @FXML
     void  confirmRegister(ActionEvent event) throws IOException {
@@ -104,7 +108,8 @@ public class RegisterController {
                 .setFirstName(FirstNameText.getText())
                 .setLastName(LastNameText.getText())
                 .setUsername(UserNameText.getText())
-                .setPassword(PasswordText.getText());
+                .setPassword(PasswordText.getText()).setEmail(EmailText.getText());
+
 
         SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.REGISTER_REQUEST));
 
