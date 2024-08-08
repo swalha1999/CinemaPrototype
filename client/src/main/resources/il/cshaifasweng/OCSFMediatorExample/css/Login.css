@@ -1,0 +1,43 @@
+/* login.css */
+
+.login-pane {
+    -fx-background-color: #ECF0F1; /* Background color matching AdminInterface's main pane */
+    -fx-padding: 50;
+}
+
+.login-title {
+    -fx-text-fill: #2C3E50; /* Header text color matching AdminInterface's sidebar-header */
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-padding: 20;
+}
+
+.login-label {
+    -fx-text-fill: #2C3E50; /* Text color matching AdminInterface's sidebar-subheader */
+    -fx-font-size: 16px;
+}
+
+.login-text-field, .login-password-field {
+    -fx-background-color: white;
+    -fx-border-color: #34495E; /* Border color matching AdminInterface's sidebar-button */
+    -fx-border-width: 2;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.login-button, .register-button {
+    -fx-background-color: #34495E; /* Button color matching AdminInterface's sidebar-button */
+    -fx-text-fill: #ECF0F1; /* Text color matching AdminInterface's sidebar-button */
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #ECF0F1;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+}
+
+.login-button:hover, .register-button:hover {
+    -fx-background-color: #3D566E; /* Hover effect matching AdminInterface's sidebar-button */
+}
