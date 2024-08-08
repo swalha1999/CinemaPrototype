@@ -11,5 +11,5 @@ Pay attention to the three modules:
 // TODO: Add instructions on how to run the project inside IntelliJ IDEA.
 
 ## `WindowSize`
-height = 1200
-width = 900
+width = 1200
+hight = 900
