@@ -48,7 +48,7 @@ public class MainController {
 
     @FXML
     private void showMovies(ActionEvent event) {
-        loadUI("AddMovies");
+        loadUI("Movies");
     }
 
     @FXML
