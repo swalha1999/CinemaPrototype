@@ -16,5 +16,7 @@ public enum MessageType implements Serializable {
     GET_ALL_USERS_RESPONSE,
     GET_MY_TICKETS_REQUEST,
     GET_MY_TICKETS_RESPONSE,
+    BLOCK_USER_REQUEST,
+    BLOCK_USER_RESPONSE,
 }
 

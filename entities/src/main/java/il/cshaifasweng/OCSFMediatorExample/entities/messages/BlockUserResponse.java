@@ -1,9 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 import java.io.Serial;
-import java.io.Serializable;
 
-public class BlockResponse implements Response {
+public class BlockUserResponse implements Response {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -11,14 +10,14 @@ public class BlockResponse implements Response {
     private String message;
     private Boolean success;
 
-    public BlockResponse(String block) {
+    public BlockUserResponse(String block) {
         this.block = block;
     }
 
     public String getBlock() {
         return block;
     }
-    public BlockResponse setBlock(String block) {
+    public BlockUserResponse setBlock(String block) {
 
         this.block = block;
         return this;
@@ -32,7 +31,7 @@ public class BlockResponse implements Response {
         return this.message;
     }
 
-    public BlockResponse setMessage(String message) {
+    public BlockUserResponse setMessage(String message) {
         this.message = message;
         return this;
     }
