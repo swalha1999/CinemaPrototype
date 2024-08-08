@@ -8,7 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RegisterEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets.RegisterRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RegisterRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.utils.PasswordUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

@@ -1,4 +1,4 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.requests;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Request;
 
