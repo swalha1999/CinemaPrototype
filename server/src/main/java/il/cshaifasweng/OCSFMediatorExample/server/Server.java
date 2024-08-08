@@ -95,6 +95,11 @@ public class Server extends AbstractServer {
             case BLOCK_USER_REQUEST:
                 handleBlockUserRequest(request, client);
                 break;
+            case UNBLOCK_USER_REQUEST:
+                handleUnblockUserRequest(request, client);
+                break;
+            case REMOVE_USER_REQUEST:
+
 
                 //TODO: add more cases here
 
@@ -234,7 +239,7 @@ public class Server extends AbstractServer {
     }
 
     private void handleGetAllUsersRequest(Message request, ConnectionToClient client) {
-        GetAllUsersRequset getAllUsersRequset = (GetAllUsersRequset) request.getDataObject();
+        GetAllUsersRequest getAllUsersRequset = (GetAllUsersRequest) request.getDataObject();
         LoggedInUser loggedInUser = sessionKeys.get(getAllUsersRequset.getSessionKey());
 
         if (loggedInUser == null) {
@@ -297,12 +302,90 @@ public class Server extends AbstractServer {
         blockUserRequest.setUsername(loggedInUser.getUsername());
         blockUserRequest.setUserId(loggedInUser.getUserId());
 
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER :
+            case MANAGER_OF_ALL_BRANCHES :
+            case BRANCH_MANAGER :
+                break;
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to block users");
+                return;
+        }
+
         System.out.println("Block user request received:" + blockUserRequest.toString()); //TODO: remove this line debug only
         BlockUserResponse blockUserResponse = database.getUsersManager().blockUser(blockUserRequest);
         System.out.println("Block user response: " + blockUserResponse.toString()); //TODO: remove this line debug only
 
         sendResponse(client, new Message(blockUserResponse, MessageType.BLOCK_USER_RESPONSE));
     }
+
+    private void handleUnblockUserRequest(Message request, ConnectionToClient client) {
+        UnblockUserRequest unblockUserRequest = (UnblockUserRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(unblockUserRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        unblockUserRequest.setUsername(loggedInUser.getUsername());
+        unblockUserRequest.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER :
+            case MANAGER_OF_ALL_BRANCHES :
+            case BRANCH_MANAGER :
+                break;
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to unblock users");
+                return;
+        }
+
+        System.out.println("Unblock user request received:" + unblockUserRequest.toString()); //TODO: remove this line debug only
+        UnblockUserResponse unblockUserResponse = database.getUsersManager().unblockUser(unblockUserRequest);
+        System.out.println("Unblock user response: " + unblockUserResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(unblockUserResponse, MessageType.UNBLOCK_USER_RESPONSE));
+    }
+
+    private void handleRemoveUserRequest(Message request, ConnectionToClient client) {
+        RemoveUserRequest removeUserRequest = (RemoveUserRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(removeUserRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        removeUserRequest.setUsername(loggedInUser.getUsername());
+        removeUserRequest.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to remove users");
+                return;
+        }
+
+        System.out.println("Remove user request received:" + removeUserRequest.toString()); //TODO: remove this line debug only
+        RemoveUserResponse removeUserResponse = database.getUsersManager().removeUser(removeUserRequest);
+        System.out.println("Remove user response: " + removeUserResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(removeUserResponse, MessageType.REMOVE_USER_RESPONSE));
+    }
+
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
         try {

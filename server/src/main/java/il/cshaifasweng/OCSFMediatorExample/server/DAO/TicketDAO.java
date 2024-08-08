@@ -1,8 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequset;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetMyTicketsRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetMyTicketsResponse;
 import org.hibernate.Session;

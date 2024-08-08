@@ -10,8 +10,8 @@ public class BlockUserRequest implements Request {
     private String username;
     private int userId;
 
-    private String usernameToBlock;
-    private int userIdToBlock;
+    private String usernameToBlock = "admin"; // we cant block the admin so we set it as default
+    private int userIdToBlock = 0 ;
 
     public BlockUserRequest() {
     }
@@ -45,7 +45,13 @@ public class BlockUserRequest implements Request {
     }
 
     public String toString() {
-        return "BlockUserRequest";
+        return "BlockUserRequest{" +
+                "sessionKey='" + sessionKey + '\'' +
+                ", username='" + username + '\'' +
+                ", userId=" + userId +
+                ", usernameToBlock='" + usernameToBlock + '\'' +
+                ", userIdToBlock=" + userIdToBlock +
+                '}';
     }
 
     public BlockUserRequest setSessionKey(String sessionKey) {
