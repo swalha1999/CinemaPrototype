@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CustomerController">
-    <children>
-        <TableView fx:id="Users_Table" prefHeight="715.0" prefWidth="1008.0">
-            <columns>
-                <TableColumn fx:id="UserName_col" prefWidth="95.0" text="UserName" />
-                <TableColumn fx:id="FirstName_col" prefWidth="98.0" text="FirstName" />
-                <TableColumn fx:id="LastName_col" prefWidth="97.0" text="LastName" />
-                <TableColumn fx:id="Email_col" prefWidth="104.0" text="Email" />
-                <TableColumn fx:id="Phone_col" prefWidth="114.0" text="Phone" />
-                <TableColumn fx:id="Role_col" prefWidth="100.0" text="Role" />
-                <TableColumn fx:id="IsLogged_col" prefWidth="134.0" text="IsLogged" />
-                <TableColumn fx:id="IsBlocked_col" prefWidth="130.0" text="IsLocked" />
-                <TableColumn fx:id="isDeleted_col" prefWidth="129.0" text="IsDeleted" />
-            </columns>
-        </TableView>
-        <Button fx:id="MakeAdmin" layoutX="544.0" layoutY="794.0" mnemonicParsing="false" onAction="#MakeAdmin" prefHeight="25.0" prefWidth="167.0" text="Make Admin" />
-        <Button fx:id="RemoveUser" layoutX="348.0" layoutY="760.0" mnemonicParsing="false" onAction="#RemoveUser" prefHeight="25.0" prefWidth="167.0" text="Remove User" />
-        <Button fx:id="BlockUser" layoutX="347.0" layoutY="794.0" mnemonicParsing="false" onAction="#BlockUser" prefHeight="25.0" prefWidth="167.0" text="Block User" />
-        <Button fx:id="UnlockUser" layoutX="735.0" layoutY="794.0" mnemonicParsing="false" onAction="#UnlockUser" prefHeight="25.0" prefWidth="167.0" text="Unlock User" />
-    </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CustomerController" stylesheets="@../css/CustomersList.css">
+    <TableView fx:id="Users_Table" styleClass="table-view" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="100">
+        <columns>
+            <TableColumn fx:id="UserName_col" text="UserName" prefWidth="120" styleClass="table-column"/>
+            <TableColumn fx:id="FirstName_col" text="FirstName" prefWidth="120" styleClass="table-column"/>
+            <TableColumn fx:id="LastName_col" text="LastName" prefWidth="120" styleClass="table-column"/>
+            <TableColumn fx:id="Email_col" text="Email" prefWidth="150" styleClass="table-column"/>
+            <TableColumn fx:id="Phone_col" text="Phone" prefWidth="130" styleClass="table-column"/>
+            <TableColumn fx:id="Role_col" text="Role" prefWidth="100" styleClass="table-column"/>
+            <TableColumn fx:id="IsLogged_col" text="IsLogged" prefWidth="100" styleClass="table-column"/>
+            <TableColumn fx:id="IsBlocked_col" text="IsBlocked" prefWidth="100" styleClass="table-column"/>
+            <TableColumn fx:id="isDeleted_col" text="IsDeleted" prefWidth="100" styleClass="table-column"/>
+        </columns>
+    </TableView>
+    <Button fx:id="MakeAdmin" layoutX="20" layoutY="740" mnemonicParsing="false" onAction="#MakeAdmin" text="Make Admin" styleClass="action-button"/>
+    <Button fx:id="RemoveUser" layoutX="200" layoutY="740" mnemonicParsing="false" onAction="#RemoveUser" text="Remove User" styleClass="action-button"/>
+    <Button fx:id="BlockUser" layoutX="380" layoutY="740" mnemonicParsing="false" onAction="#BlockUser" text="Block User" styleClass="action-button"/>
+    <Button fx:id="UnlockUser" layoutX="560" layoutY="740" mnemonicParsing="false" onAction="#UnlockUser" text="Unlock User" styleClass="action-button"/>
 </AnchorPane>

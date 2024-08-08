@@ -4,20 +4,20 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MainController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MainController" stylesheets="@../css/AdminInterface.css">
    <left>
-      <VBox spacing="10.0" style="-fx-background-color: #B22222;" prefWidth="200.0">
-         <Label text="Welcome" style="-fx-text-fill: white; -fx-font-size: 22.0;" />
-         <Label text="Admin" style="-fx-text-fill: white; -fx-font-size: 25.0;" />
-         <Button text="DashBoard" onAction="#showDashBoard" />
-         <Button text="Add Movies" onAction="#showAddMovies" />
-         <Button text="Available Movies" onAction="#showAvailableMovies" />
-         <Button text="Edit Screening" onAction="#showEditScreening" />
-         <Button text="Customers" onAction="#showCustomers" />
-         <Button text="Log Out" onAction="#logOut" style="-fx-background-color: #90ee90;" />
+      <VBox spacing="20.0" styleClass="sidebar" prefWidth="250.0" alignment="CENTER">
+         <Label text="Welcome" styleClass="sidebar-header" />
+         <Label fx:id="AdminLabel" styleClass="sidebar-subheader" />
+         <Button text="DashBoard" onAction="#showDashBoard" styleClass="sidebar-button" />
+         <Button text="Add Movies" onAction="#showAddMovies" styleClass="sidebar-button" />
+         <Button text="Available Movies" onAction="#showAvailableMovies" styleClass="sidebar-button" />
+         <Button text="Edit Screening" onAction="#showEditScreening" styleClass="sidebar-button" />
+         <Button text="Customers" onAction="#showCustomers" styleClass="sidebar-button" />
+         <Button text="Log Out" onAction="#logOut" styleClass="sidebar-logout-button" />
       </VBox>
    </left>
    <center>
-      <BorderPane fx:id="mainPane" />
+      <BorderPane fx:id="mainPane" styleClass="main-pane" />
    </center>
 </BorderPane>

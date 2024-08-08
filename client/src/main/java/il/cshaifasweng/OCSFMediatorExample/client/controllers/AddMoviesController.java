@@ -64,5 +64,6 @@ public class AddMoviesController {
     private TableColumn<?, ?> UrlCol; // Value injected by FXMLLoader
 
     public void ImportPicture(ActionEvent actionEvent) {
+
     }
 }

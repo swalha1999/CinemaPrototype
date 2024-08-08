@@ -1,0 +1,28 @@
+/* styles.css */
+
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #BDC3C7;
+    -fx-border-width: 1;
+}
+
+.table-column {
+    -fx-text-fill: #2C3E50;
+    -fx-font-size: 14px;
+}
+
+.action-button {
+    -fx-background-color: #3498DB;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #2980B9;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #2980B9;
+}
