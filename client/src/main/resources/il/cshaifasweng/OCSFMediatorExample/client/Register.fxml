@@ -6,56 +6,54 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="626.0" style="-fx-background-color: #b22222;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1200.0" styleClass="main-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.RegisterController" stylesheets="@../css/Register.css">
     <children>
-        <AnchorPane layoutX="-6.0" prefHeight="85.0" prefWidth="630.0" style="-fx-background-color: #90ee90;">
+        <AnchorPane layoutX="0.0" prefHeight="100.0" prefWidth="1200.0" styleClass="header-pane">
             <children>
-                <Label fx:id="RegisterLogo" layoutX="120.0" layoutY="13.0" prefHeight="60.0" prefWidth="190.0" text="User Registeration">
+                <Label fx:id="RegisterLogo" layoutX="30.0" layoutY="20.0" prefHeight="60.0" prefWidth="300.0" text="User Registration" styleClass="header-label">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="24.0" />
                     </font>
                 </Label>
             </children>
         </AnchorPane>
-        <Label fx:id="firstNameLabel" layoutX="144.0" layoutY="127.0" text="FirstName">
+        <Label fx:id="firstNameLabel" layoutX="150.0" layoutY="150.0" text="First Name" styleClass="form-label">
             <font>
-                <Font size="13.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="FirstNameText" layoutX="144.0" layoutY="156.0" prefHeight="25.0" prefWidth="336.0" />
-        <TextField fx:id="LastNameText" layoutX="144.0" layoutY="219.0" prefHeight="25.0" prefWidth="336.0" />
-        <TextField fx:id="UserNameText" layoutX="144.0" layoutY="281.0" prefHeight="25.0" prefWidth="336.0" />
-        <TextField fx:id="PasswordText" layoutX="144.0" layoutY="337.0" prefHeight="25.0" prefWidth="336.0" />
-        <Label fx:id="LastNameLabel" layoutX="145.0" layoutY="192.0" text="LastName">
+        <TextField fx:id="FirstNameText" layoutX="150.0" layoutY="180.0" prefHeight="25.0" prefWidth="900.0" styleClass="form-text-field"/>
+        <Label fx:id="lastNameLabel" layoutX="150.0" layoutY="220.0" text="Last Name" styleClass="form-label">
             <font>
-                <Font size="13.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="UserNameLabel" layoutX="143.0" layoutY="251.0" text="UserName">
+        <TextField fx:id="LastNameText" layoutX="150.0" layoutY="250.0" prefHeight="25.0" prefWidth="900.0" styleClass="form-text-field"/>
+        <Label fx:id="userNameLabel" layoutX="150.0" layoutY="290.0" text="Username" styleClass="form-label">
             <font>
-                <Font size="13.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="PasswordLabel" layoutX="143.0" layoutY="312.0" text="Password">
+        <TextField fx:id="UserNameText" layoutX="150.0" layoutY="320.0" prefHeight="25.0" prefWidth="900.0" styleClass="form-text-field"/>
+        <Label fx:id="emailLabel" layoutX="150.0" layoutY="360.0" text="Email" styleClass="form-label">
             <font>
-                <Font size="13.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="ConfPasswordText" layoutX="143.0" layoutY="404.0" prefHeight="25.0" prefWidth="336.0" />
-        <Label fx:id="ConfPasswordLabel" layoutX="143.0" layoutY="377.0" text="Confirm Password">
+        <TextField fx:id="EmailText" layoutX="150.0" layoutY="390.0" prefHeight="25.0" prefWidth="900.0" styleClass="form-text-field"/>
+        <Label fx:id="passwordLabel" layoutX="150.0" layoutY="430.0" text="Password" styleClass="form-label">
             <font>
-                <Font size="13.0" />
+                <Font size="14.0" />
             </font>
         </Label>
-        <Button fx:id="registerBtn" layoutX="144.0" layoutY="450.0" mnemonicParsing="false" onAction="#ConfrimRegister" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #90ee90;" text="Register" textFill="#0a0000">
+        <TextField fx:id="PasswordText" layoutX="150.0" layoutY="460.0" prefHeight="25.0" prefWidth="900.0" styleClass="form-text-field"/>
+        <Label fx:id="confPasswordLabel" layoutX="150.0" layoutY="500.0" text="Confirm Password" styleClass="form-label">
             <font>
-                <Font size="13.0" />
+                <Font size="14.0" />
             </font>
-        </Button>
-        <Button fx:id="loginBtn" layoutX="144.0" layoutY="486.0" mnemonicParsing="false" onAction="#returnLogin" prefHeight="25.0" prefWidth="350.0" style="-fx-background-color: #90ee90;" text="login" textFill="#1b0202">
-            <font>
-                <Font size="13.0" />
-            </font>
-        </Button>
+        </Label>
+        <TextField fx:id="ConfPasswordText" layoutX="150.0" layoutY="530.0" prefHeight="25.0" prefWidth="900.0" styleClass="form-text-field"/>
+        <Button fx:id="registerBtn" layoutX="150.0" layoutY="570.0" mnemonicParsing="false" onAction="#confirmRegister" prefHeight="35.0" prefWidth="900.0" styleClass="action-button" text="Register" />
+        <Button fx:id="loginBtn" layoutX="150.0" layoutY="620.0" mnemonicParsing="false" onAction="#returnLogin" prefHeight="35.0" prefWidth="900.0" styleClass="action-button" text="Login" />
     </children>
 </AnchorPane>
