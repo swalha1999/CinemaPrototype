@@ -1,0 +1,51 @@
+/* General styles for the whole pane */
+.anchor-pane {
+    -fx-background-color: #f4f4f9; /* Light background color for the pane */
+}
+
+/* Styles for TableView */
+.table-view {
+    -fx-background-color: #ffffff; /* White background for table */
+    -fx-border-color: #d0d0d0; /* Light border color for table */
+    -fx-border-width: 1px;
+}
+
+/* Styles for TableColumn headers */
+.table-column > .header-label {
+    -fx-text-fill: #333333; /* Dark grey text for headers */
+    -fx-font-weight: bold;
+}
+
+/* Styles for TextFields */
+.text-field {
+    -fx-background-color: #ffffff; /* White background for text fields */
+    -fx-border-color: #d0d0d0; /* Light border color */
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+}
+
+/* Styles for Labels */
+.label {
+    -fx-text-fill: #333333; /* Dark grey text for labels */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Styles for Buttons */
+.button {
+    -fx-background-color: #34495E; /* Blue color for the Import button */
+    -fx-text-fill: #ffffff; /* White text */
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #ECF0F1; /* Darker blue shade for hover effect */
+}
+
+/* Styles for ImageView */
+.image-view {
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0.5, 0, 0);
+}
