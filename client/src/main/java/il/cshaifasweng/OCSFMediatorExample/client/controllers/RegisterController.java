@@ -114,7 +114,7 @@ public class RegisterController {
     void returnLogin(ActionEvent event) {
         Platform.runLater(()->{
             try {
-                setRoot("AdminPage");
+                setRoot("Login");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -124,7 +124,6 @@ public class RegisterController {
     @Subscribe
     public void OnRegister(RegisterEvent response) {
         Platform.runLater(()->{
-
             if (response.isSuccess()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
