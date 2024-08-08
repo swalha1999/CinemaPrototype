@@ -170,111 +170,14 @@ public class AdminInterface {
 
 
     @FXML
-    public void initialize() {
+    public void initialize()  throws  IOException{
         AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        LastName_col.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        Email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
-        Phone_col.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        Role_col.setCellValueFactory(new PropertyValueFactory<>("role"));
-        IsLogged_col.setCellValueFactory(new PropertyValueFactory<>("isLogged"));
-        IsBlocked_col.setCellValueFactory(new PropertyValueFactory<>("isLocked"));
-        isDeleted_col.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
-    }
-
-    @FXML
-    void AddMovies_form(ActionEvent event) {
-        AddMovies_Form.setVisible(true);
-        EditScreening_Form.setVisible(false);
-        AvailbleMovies_Form.setVisible(false);
-        Customer_Form.setVisible(false);
-        DashBoard_Form.setVisible(false);
-    }
-
-
-    @FXML
-    void AddUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void AvailbleMovies_Form(ActionEvent event) {
-        AvailbleMovies_Form.setVisible(true);
-        Customer_Form.setVisible(false);
-        DashBoard_Form.setVisible(false);
-        AddMovies_Form.setVisible(false);
-        EditScreening_Form.setVisible(false);
-
-    }
-
-    @FXML
-    void BlockUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void Customers_Form(ActionEvent event) throws IOException {
-        AvailbleMovies_Form.setVisible(false);
-        Customer_Form.setVisible(true);
-        DashBoard_Form.setVisible(false);
-        AddMovies_Form.setVisible(false);
-        EditScreening_Form.setVisible(false);
-
         GetAllUsersRequset getAllUsersRequset = new GetAllUsersRequset(SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset, MessageType.GET_ALL_USERS_REQUEST));
-    }
-
-    @FXML
-    void DashBoard_Form(ActionEvent event) {
-        AvailbleMovies_Form.setVisible(false);
-        Customer_Form.setVisible(false);
-        DashBoard_Form.setVisible(true);
-        AddMovies_Form.setVisible(false);
-        EditScreening_Form.setVisible(false);
-    }
-
-    @FXML
-    void EditScreening_Form(ActionEvent event) {
-        AvailbleMovies_Form.setVisible(false);
-        Customer_Form.setVisible(false);
-        DashBoard_Form.setVisible(false);
-        AddMovies_Form.setVisible(false);
-        EditScreening_Form.setVisible(true);
-    }
-
-    @FXML
-    void ImportPicture(ActionEvent event) {
 
     }
-
-    @FXML
-    void MakeAdmin(ActionEvent event) {
-
-    }
-
-    @FXML
-    void RemoveUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void UnblockUser(ActionEvent event) {
-
-    }
-
-    @Subscribe
-    public void onGetAllUsersEvent(GetAllUsersEvent response){
-        List<User> users = response.getUsers();
-        Users_Table.getItems().clear();
-        for (User user : users) {
-            Users_Table.getItems().add(new UserView(user));
-        }
-
-    }
-
 
     @FXML
     void logOut(ActionEvent event) throws IOException {

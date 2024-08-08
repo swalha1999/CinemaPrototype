@@ -3,10 +3,13 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequset;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,8 +19,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CustomerController {
     @FXML // fx:id="EditScreening_Form"
@@ -68,79 +73,37 @@ public class CustomerController {
     @FXML // fx:id="logoutBtn"
     private Button logoutBtn; // Value injected by FXMLLoader
     @FXML
-    public void initialize() {
-//        AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
-//        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
-//
-//        UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
-//        FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-//        LastName_col.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//        Email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
-//        Phone_col.setCellValueFactory(new PropertyValueFactory<>("phone"));
-//        Role_col.setCellValueFactory(new PropertyValueFactory<>("role"));
-//        IsLogged_col.setCellValueFactory(new PropertyValueFactory<>("isLogged"));
-//        IsBlocked_col.setCellValueFactory(new PropertyValueFactory<>("isLocked"));
-//        isDeleted_col.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
+    public void initialize() throws IOException {
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+
+        GetAllUsersRequset getAllUsersRequset = new GetAllUsersRequset(SessionKeysStorage.getInstance().getSessionKey());
+        SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset, MessageType.GET_ALL_USERS_REQUEST));
+
+        UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        LastName_col.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        Email_col.setCellValueFactory(new PropertyValueFactory<>("email"));
+        Phone_col.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        Role_col.setCellValueFactory(new PropertyValueFactory<>("role"));
+        IsLogged_col.setCellValueFactory(new PropertyValueFactory<>("isLogged"));
+        IsBlocked_col.setCellValueFactory(new PropertyValueFactory<>("isLocked"));
+        isDeleted_col.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
     }
 
-    @FXML
-    void AddMovies_form(ActionEvent event) {
-//        AddMovies_Form.setVisible(true);
-//        EditScreening_Form.setVisible(false);
-//        AvailbleMovies_Form.setVisible(false);
-//        Customer_Form.setVisible(false);
-//        DashBoard_Form.setVisible(false);
-    }
-
-
-    @FXML
-    void AddUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void AvailbleMovies_Form(ActionEvent event) {
-//        AvailbleMovies_Form.setVisible(true);
-//        Customer_Form.setVisible(false);
-//        DashBoard_Form.setVisible(false);
-//        AddMovies_Form.setVisible(false);
-//        EditScreening_Form.setVisible(false);
-
+    @Subscribe
+    public void onGetAllUsersEvent(GetAllUsersEvent response){
+        Platform.runLater(()->{
+            List<User> users = response.getUsers();
+            Users_Table.getItems().clear();
+            for (User user : users) {
+                Users_Table.getItems().add(new UserView(user));
+            }
+        });
     }
 
     @FXML
     void BlockUser(ActionEvent event) {
 
-    }
-
-    @FXML
-    void Customers_Form(ActionEvent event) throws IOException {
-//        AvailbleMovies_Form.setVisible(false);
-//        Customer_Form.setVisible(true);
-//        DashBoard_Form.setVisible(false);
-//        AddMovies_Form.setVisible(false);
-//        EditScreening_Form.setVisible(false);
-//
-//        GetAllUsersRequset getAllUsersRequset = new GetAllUsersRequset(SessionKeysStorage.getInstance().getSessionKey());
-//        SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset, MessageType.GET_ALL_USERS_REQUEST));
-    }
-
-    @FXML
-    void DashBoard_Form(ActionEvent event) {
-//        AvailbleMovies_Form.setVisible(false);
-//        Customer_Form.setVisible(false);
-//        DashBoard_Form.setVisible(true);
-//        AddMovies_Form.setVisible(false);
-//        EditScreening_Form.setVisible(false);
-    }
-
-    @FXML
-    void EditScreening_Form(ActionEvent event) {
-//        AvailbleMovies_Form.setVisible(false);
-//        Customer_Form.setVisible(false);
-//        DashBoard_Form.setVisible(false);
-//        AddMovies_Form.setVisible(false);
-//        EditScreening_Form.setVisible(true);
     }
 
     public void MakeAdmin(ActionEvent actionEvent) {

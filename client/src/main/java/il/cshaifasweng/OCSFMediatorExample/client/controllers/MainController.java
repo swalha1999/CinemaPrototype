@@ -93,7 +93,11 @@ public class MainController {
 
     private void loadUI(String ui) {
         try {
-            Pane pane = FXMLLoader.load(Objects.requireNonNull(SimpleChatClient.class.getResource(ui + ".fxml")));
+            Pane pane = FXMLLoader.load(
+                    Objects.requireNonNull(
+                            SimpleChatClient.class.getResource(ui + ".fxml")
+                    )
+            );
             mainPane.setCenter(pane);
         } catch (IOException e) {
             e.printStackTrace();
