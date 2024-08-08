@@ -9,7 +9,7 @@
     <children>
         <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="850.0" prefWidth="900">
             <content>
-                <GridPane fx:id="MoviesGrid" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="900.0" hgap="10" vgap="10">
+                <GridPane fx:id="MoviesGrid" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="890.0" hgap="10" vgap="10">
                     <!--The Movies will be displayed here-->
                 </GridPane>
             </content>
