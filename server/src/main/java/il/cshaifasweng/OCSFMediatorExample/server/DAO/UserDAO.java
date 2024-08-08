@@ -272,4 +272,9 @@ public class UserDAO {
     static public boolean checkPassword(String password, User user) {
         return user.getHashedPassword().equals(hashPassword(password , user.getSalt()));
     }
+
+    public BlockUserResponse blockUser(BlockUserRequest blockUserRequest) {
+        //TODO: implement this
+        return null;
+    }
 }

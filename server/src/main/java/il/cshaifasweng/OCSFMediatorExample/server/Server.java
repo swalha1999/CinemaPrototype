@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
@@ -93,6 +92,9 @@ public class Server extends AbstractServer {
             case GET_MY_TICKETS_REQUEST:
                 handleGetMyTicketsRequest(request, client);
                 break;
+            case BLOCK_USER_REQUEST:
+                handleBlockUserRequest(request, client);
+                break;
 
                 //TODO: add more cases here
 
@@ -102,6 +104,7 @@ public class Server extends AbstractServer {
         }
     }
 
+    //TODO: DEPRECATED REMOVE SAFELY
     private void handleAddClient(ConnectionToClient client, Message response) {
         SubscribedClient connection = new SubscribedClient(client);
         openClients.add(connection);
@@ -109,11 +112,13 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
+    //TODO: DEPRECATED REMOVE SAFELY
     private void handleGetAllMovies(ConnectionToClient client, Message response) {
         response.setMovies(database.getMoviesManger().getMovies());
         sendResponse(client, response);
     }
 
+    //TODO: DEPRECATED REMOVE SAFELY
     private void handleAddMovies(Message request, ConnectionToClient client, Message response) {
         if (request.getMovies().isEmpty()) {
             sendErrorMessage(client, "The list of movies to Add is Empty");
@@ -126,6 +131,7 @@ public class Server extends AbstractServer {
         sendToAllClients(response);
     }
 
+    //TODO: DEPRECATED REMOVE SAFELY
     private void handleUpdateMovies(Message request, ConnectionToClient client, Message response) {
         if (request.getMovies().isEmpty()) {
             sendErrorMessage(client, "The list of movies to Edit is Empty");
@@ -138,6 +144,7 @@ public class Server extends AbstractServer {
         sendToAllClients(response);
     }
 
+    //TODO: DEPRECATED REMOVE SAFELY
     private void handleDeleteMovies(Message request, ConnectionToClient client, Message response) {
         if (request.getMovies().isEmpty()) {
             sendErrorMessage(client, "The list of movies to delete is Empty");
@@ -150,7 +157,7 @@ public class Server extends AbstractServer {
         sendToAllClients(response);
     }
 
-	// TODO: remove safely
+    //TODO: DEPRECATED REMOVE SAFELY
     private void handleRegisterUser(Message request, ConnectionToClient client, Message response) {
         if (request.getData().isEmpty()) {
             sendErrorMessage(client, "The data to register a new user is Empty");
@@ -167,7 +174,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-	//TODO: remove safely
+	//TODO: DEPRECATED REMOVE SAFELY
     private void handleLogin(Message request, ConnectionToClient client) {
         if (request.getData().isEmpty()) {
             sendErrorMessage(client, "The data to login is Empty");
@@ -278,6 +285,24 @@ public class Server extends AbstractServer {
         sendResponse(client, new Message(getMyTicketsResponse, MessageType.GET_MY_TICKETS_RESPONSE));
     }
 
+    private void handleBlockUserRequest(Message request, ConnectionToClient client) {
+        BlockUserRequest blockUserRequest = (BlockUserRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(blockUserRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        blockUserRequest.setUsername(loggedInUser.getUsername());
+        blockUserRequest.setUserId(loggedInUser.getUserId());
+
+        System.out.println("Block user request received:" + blockUserRequest.toString()); //TODO: remove this line debug only
+        BlockUserResponse blockUserResponse = database.getUsersManager().blockUser(blockUserRequest);
+        System.out.println("Block user response: " + blockUserResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(blockUserResponse, MessageType.BLOCK_USER_RESPONSE));
+    }
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
         try {
