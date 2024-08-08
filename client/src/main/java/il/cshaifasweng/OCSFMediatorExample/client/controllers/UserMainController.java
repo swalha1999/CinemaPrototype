@@ -4,6 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
@@ -13,13 +14,16 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
@@ -63,29 +67,30 @@ public class UserMainController {
     private Label UserLabel; // Value injected by FXMLLoader
 
     @FXML
-    void showAddMovies(ActionEvent event) {
-
+    void ShowMyTickets(ActionEvent event) {
+        loadUI("MyTickets");
     }
 
     @FXML
     void showAvailableMovies(ActionEvent event) {
-
+        loadUI("UserAvailbleMovies");
+    }
+    @FXML
+    void ShowUpcomingMovies(ActionEvent event) {
+        loadUI("UpcomingMovies");
     }
 
     @FXML
-    void showCustomers(ActionEvent event) {
-
+    void ShowOnlineMoves(ActionEvent event) {
+        loadUI("OnlineMovies");
     }
 
     @FXML
     void showDashBoard(ActionEvent event) {
-
+        loadUI("UserDashBoard");
     }
 
-    @FXML
-    void showEditScreening(ActionEvent event) {
 
-    }
     @FXML
     public void initialize() {
         UserLabel.setText(SessionKeysStorage.getInstance().getUsername());
@@ -118,5 +123,16 @@ public class UserMainController {
             }
         });
     }
-
+    private void loadUI(String ui) {
+        try {
+            Pane pane = FXMLLoader.load(
+                    Objects.requireNonNull(
+                            SimpleChatClient.class.getResource(ui + ".fxml")
+                    )
+            );
+            mainPane.setCenter(pane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
