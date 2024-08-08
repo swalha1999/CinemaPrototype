@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane stylesheets="@../css/AdminInterface.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.UserMainController">
+<BorderPane stylesheets="@../css/AdminInterface.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.UserMain">
     <left>
         <VBox alignment="CENTER" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
             <Label fx:id="Welcome_Label" styleClass="sidebar-header" text="Welcome" />

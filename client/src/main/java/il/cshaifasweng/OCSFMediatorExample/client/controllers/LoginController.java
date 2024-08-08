@@ -79,9 +79,9 @@ public class LoginController {
             try {
                 if (response.isSuccess()) {
                     if( response.getRole() == UserRole.USER){
-                        setRoot("UserInterface");
+                        setRoot("UserMain");
                     } else {
-                        setRoot("AdminInterface");
+                        setRoot("AdminMain");
                     }
                 }
                 else {

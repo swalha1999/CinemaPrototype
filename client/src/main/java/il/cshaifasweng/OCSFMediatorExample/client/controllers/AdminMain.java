@@ -23,7 +23,7 @@ import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
-public class MainController {
+public class AdminMain {
 
     @FXML
     private BorderPane mainPane;
@@ -36,7 +36,7 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        //AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
+//        AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this);
         loadUI("DashBoard");
     }
