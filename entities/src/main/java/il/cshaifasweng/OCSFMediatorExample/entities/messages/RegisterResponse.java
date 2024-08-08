@@ -8,6 +8,7 @@ public class RegisterResponse implements Response {
 
     private boolean success;
     private String message;
+    private int userId;
 
     public RegisterResponse() {
     }
@@ -37,6 +38,15 @@ public class RegisterResponse implements Response {
 
     public RegisterResponse setMessage(String message) {
         this.message = message;
+        return this;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public RegisterResponse setUserId(int userId) {
+        this.userId = userId;
         return this;
     }
 }

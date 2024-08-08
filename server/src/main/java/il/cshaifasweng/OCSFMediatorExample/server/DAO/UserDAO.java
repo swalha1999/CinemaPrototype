@@ -182,7 +182,8 @@ public class UserDAO {
 
         registerResponse
                 .setSuccess(true)
-                .setMessage("User registered successfully");
+                .setMessage("User registered successfully")
+                .setUserId(registerdUser.getId());
 
         return registerResponse;
     }
