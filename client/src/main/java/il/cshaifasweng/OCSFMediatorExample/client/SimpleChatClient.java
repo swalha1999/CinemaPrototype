@@ -64,9 +64,11 @@ public class SimpleChatClient extends Application {
                         )
                 );
                 SimpleChatClient.fxmlScenes.put(fxml, pane);
+                System.out.println("Loaded fxml file at url: " + Objects.requireNonNull(SimpleChatClient.class.getResource(fxml + ".fxml")).getPath());
                 return pane;
             } catch (IOException e) {
                 System.err.println("Error loading fxml file: " + fxml);
+                e.printStackTrace();
             }
             return null;
         }

@@ -69,7 +69,7 @@ public class UserMain {
 
     @FXML
     void showAvailableMovies(ActionEvent event) {
-        loadUI("UserAvailbleMovies");
+        loadUI("MovieCatalog");
     }
     @FXML
     void ShowUpcomingMovies(ActionEvent event) {

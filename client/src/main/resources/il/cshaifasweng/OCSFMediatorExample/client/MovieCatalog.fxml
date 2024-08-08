@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="785.0" prefWidth="1084.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieCatalogController" stylesheets="@css/MovieCatalog.css">
+    <children>
+        <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="850.0" prefWidth="900">
+            <content>
+                <GridPane fx:id="MoviesGrid" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="900.0" hgap="10" vgap="10">
+                    <!--The Movies will be displayed here-->
+                </GridPane>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>
