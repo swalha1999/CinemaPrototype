@@ -33,7 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
-public class UserInterface {
+public class UserMainController {
 
     @FXML // fx:id="AvailbleMovies_Btn"
     private Button AvailbleMovies_Btn; // Value injected by FXMLLoader
