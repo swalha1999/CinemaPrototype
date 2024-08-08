@@ -7,7 +7,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.LogoutRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -15,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -27,10 +26,6 @@ import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoo
  * Sample Skeleton for 'UserInterface.fxml' Controller Class
  */
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 public class UserInterface {

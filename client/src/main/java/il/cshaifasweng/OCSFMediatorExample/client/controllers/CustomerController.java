@@ -6,7 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets.GetAllUsersRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;

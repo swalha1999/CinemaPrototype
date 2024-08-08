@@ -1,7 +1,8 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 public class AddUserResponse implements Response {
     @Serial

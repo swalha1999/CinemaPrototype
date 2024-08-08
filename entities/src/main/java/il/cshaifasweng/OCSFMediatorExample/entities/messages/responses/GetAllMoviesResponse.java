@@ -1,12 +1,13 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetAllMoviesResponse implements Response{
+public class GetAllMoviesResponse implements Response {
     @Serial
     private static final long serialVersionUID = -5386248350340650300L;
 

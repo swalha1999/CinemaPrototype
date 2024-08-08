@@ -1,22 +1,25 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
 import java.io.Serial;
 
-public class UnblockUserResponse implements Response {
+public class BlockUserResponse implements Response {
+
     @Serial
     private static final long serialVersionUID = 1L;
 
     private String message;
     private Boolean success;
 
-    public UnblockUserResponse() {
+    public BlockUserResponse() {
         this.message = "";
         this.success = false;
     }
 
 
     public String toString() {
-        return "UnblockResponse{" +
+        return "BlockUserResponse{" +
                 "message='" + message + '\'' +
                 ", success=" + success +
                 '}';
@@ -26,7 +29,7 @@ public class UnblockUserResponse implements Response {
         return this.message;
     }
 
-    public UnblockUserResponse setMessage(String message) {
+    public BlockUserResponse setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -35,7 +38,7 @@ public class UnblockUserResponse implements Response {
         return this.success;
     }
 
-    public UnblockUserResponse setSuccess(Boolean success) {
+    public BlockUserResponse setSuccess(Boolean success) {
         this.success = success;
         return this;
     }

@@ -1,8 +1,9 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Request;
 
-public class AddUserRequest implements Request{
+public class AddUserRequest implements Request {
 
     // for the user how made the request (the admin)
     private String sessionKey;

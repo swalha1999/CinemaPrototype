@@ -1,7 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

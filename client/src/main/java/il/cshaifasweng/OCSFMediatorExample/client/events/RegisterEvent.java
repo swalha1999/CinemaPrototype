@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.events;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.RegisterResponse;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RegisterResponse;
 
 public class RegisterEvent extends RegisterResponse {
 

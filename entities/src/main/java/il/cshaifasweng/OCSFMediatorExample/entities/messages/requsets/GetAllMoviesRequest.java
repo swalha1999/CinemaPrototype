@@ -1,19 +1,21 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Request;
 
 import java.io.Serial;
 
-public class GetAllUsersRequest implements Request {
+public class GetAllMoviesRequest implements Request {
     @Serial
-    private static final long serialVersionUID = -5386248350340650199L;
+    private static final long serialVersionUID = -5386248350340650300L;
 
     private String SessionKey;
     private String username;
     private int userId;
 
-    public GetAllUsersRequest() {
+    public GetAllMoviesRequest() {
     }
 
-    public GetAllUsersRequest(String sessionKey) {
+    public GetAllMoviesRequest(String sessionKey) {
         SessionKey = sessionKey;
     }
 
@@ -21,7 +23,7 @@ public class GetAllUsersRequest implements Request {
         return SessionKey;
     }
 
-    public GetAllUsersRequest setSessionKey(String sessionKey) {
+    public GetAllMoviesRequest setSessionKey(String sessionKey) {
         SessionKey = sessionKey;
         return this;
     }
@@ -30,7 +32,7 @@ public class GetAllUsersRequest implements Request {
         return username;
     }
 
-    public GetAllUsersRequest setUsername(String username) {
+    public GetAllMoviesRequest setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -39,16 +41,16 @@ public class GetAllUsersRequest implements Request {
         return userId;
     }
 
-    public GetAllUsersRequest setUserId(int userId) {
+    public GetAllMoviesRequest setUserId(int userId) {
         this.userId = userId;
         return this;
     }
 
     public String toString() {
-        return "GetAllUsersRequest{" +
+        return "GetAllMoviesRequest{" +
                 "SessionKey='" + SessionKey + '\'' +
+                ", userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
-                ", userId=" + userId +
                 '}';
     }
 }

@@ -1,9 +1,10 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Request;
 
 import java.io.Serial;
-import java.io.Serializable;
 
-public class LoginRequest implements Request{
+public class LoginRequest implements Request {
 
     @Serial
     private static final long serialVersionUID = -5386248350340650197L;

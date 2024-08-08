@@ -1,8 +1,10 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.requsets;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Request;
 
 import java.io.Serial;
 
-public class MakeAdminRequest implements Request{
+public class MakeAdminRequest implements Request {
     @Serial
     private static final long serialVersionUID = 1L;
 

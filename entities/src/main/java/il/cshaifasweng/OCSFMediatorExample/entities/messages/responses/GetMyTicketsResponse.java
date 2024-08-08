@@ -1,8 +1,8 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.MovieTicket;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

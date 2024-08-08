@@ -1,9 +1,9 @@
-package il.cshaifasweng.OCSFMediatorExample.entities.messages;
+package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Objects;
 
 public class LoginResponse implements Response {
