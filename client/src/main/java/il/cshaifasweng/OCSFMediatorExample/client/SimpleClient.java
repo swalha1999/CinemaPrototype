@@ -23,8 +23,6 @@ public class SimpleClient extends AbstractClient {
 		String messageContent = message.getMessage();
 
 		if (message.getVersion() == MessageVersion.V1) {
-			System.out.println("Received message of type: " + messageContent);
-			System.out.println("Message Version: V1" );
 			switch (messageContent) {
 				case "add movies":
 				case "get all movies":
@@ -42,8 +40,6 @@ public class SimpleClient extends AbstractClient {
 			}
 		}
 		else if (message.getVersion() == MessageVersion.V2){
-			System.out.println("Received message of type: " + message.getType() + " with data: " + message.getDataObject());
-			System.out.println("Message Version: V2" );
 			switch (message.getType()){
 				case LOGIN_RESPONSE:
 					EventBus.getDefault().post(new LoginEvent((LoginResponse) message.getDataObject()));

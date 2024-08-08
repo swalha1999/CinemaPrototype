@@ -16,10 +16,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
@@ -90,6 +87,14 @@ public class LoginController {
                         setRoot("AdminInterface");
                     }
                 }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Login Failed");
+                    alert.setHeaderText("Login Failed");
+                    alert.setContentText(response.getMessage());
+                    alert.show();
+                }
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

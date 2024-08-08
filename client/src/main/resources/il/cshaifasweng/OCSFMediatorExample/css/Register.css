@@ -1,53 +1,53 @@
 /* Register.css */
 
-/* Main pane background color matching AdminInterface's main pane */
+/* Main pane background color matching the Login pane */
 .main-pane {
-    -fx-background-color: #ECF0F1;
+    -fx-background-color: #ECF0F1; /* Ensure it matches Login's background */
     -fx-padding: 50; /* Adjust padding to match Login pane */
 }
 
-/* Header pane background color matching AdminInterface's sidebar-header */
+/* Header pane background color */
 .header-pane {
-    -fx-background-color: #2C3E50;
+    -fx-background-color: #2C3E50; /* This may stay the same unless you want to match it */
 }
 
-/* Header label text color and style matching AdminInterface's sidebar-header */
+/* Header label text color and style */
 .header-label {
     -fx-text-fill: #ECF0F1;
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
-/* Form labels matching AdminInterface's sidebar-subheader */
+/* Form labels and fields should match text style */
 .form-label {
     -fx-text-fill: #2C3E50;
-    -fx-font-size: 16px; /* Increase font size for consistency */
+    -fx-font-size: 16px;
 }
 
-/* Text fields and password fields matching AdminInterface's sidebar-button */
 .form-text-field {
     -fx-background-color: white;
-    -fx-border-color: #34495E; /* Border color matching AdminInterface's sidebar-button */
+    -fx-border-color: #34495E;
     -fx-border-width: 2;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-padding: 5;
+    -fx-pref-height: 30; /* Ensure height is consistent */
 }
 
-/* Buttons matching AdminInterface's sidebar-button */
+/* Buttons should be consistent */
 .action-button {
     -fx-background-color: #34495E;
     -fx-text-fill: #ECF0F1;
     -fx-font-size: 16px;
-    -fx-padding: 10 20;
+    -fx-padding: 10; /* Adjust as necessary */
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: #ECF0F1;
     -fx-border-width: 2;
     -fx-cursor: hand;
+    -fx-pref-height: 30; /* Ensure height is consistent */
 }
 
-/* Hover effect for buttons */
 .action-button:hover {
-    -fx-background-color: #3D566E;
+    -fx-background-color: #3D566E; /* Match hover effect */
 }
