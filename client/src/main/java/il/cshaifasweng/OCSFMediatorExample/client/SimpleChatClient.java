@@ -17,16 +17,13 @@ import java.util.Hashtable;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-/**
- * JavaFX App
- */
 public class SimpleChatClient extends Application {
 
     private static Scene scene;
     private SimpleClient client;
 
     // hashtable to save the loaded fxml files to avoid loading them again
-    private static final Hashtable<String, Parent> fxmls = new Hashtable<String, Parent>();
+    private static final Hashtable<String, Parent> fxml = new Hashtable<String, Parent>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -37,20 +34,13 @@ public class SimpleChatClient extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        // TODO: make the call of whether to load the fxml file from the hashtable or not and remove the if(false) statement
-        if (false) {
-            if (fxmls.containsKey(fxml)) {
-                scene.setRoot(fxmls.get(fxml));
-            }
-            else {
-                fxmls.put(fxml, loadFXML(fxml));
-                scene.setRoot(fxmls.get(fxml));
-            }
+        if (SimpleChatClient.fxml.containsKey(fxml)) {
+            scene.setRoot(SimpleChatClient.fxml.get(fxml));
         }
         else {
-            scene.setRoot(loadFXML(fxml));
+            SimpleChatClient.fxml.put(fxml, loadFXML(fxml));
+            scene.setRoot(SimpleChatClient.fxml.get(fxml));
         }
-
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
