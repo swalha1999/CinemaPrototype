@@ -162,4 +162,10 @@ public class Movie implements Serializable {
     public void setDate(Date date) {
         this.setReleaseDate(date);
     }
+
+    public String getImageUrl() { return imageUrl;
+    }
+
+    public String getTrailerUrl() { return trailerUrl;
+    }
 }
