@@ -58,7 +58,7 @@ public class MainController {
 
     @FXML
     private void ShowScreenings(ActionEvent event) {
-        loadUI("EditScreening");
+        loadUI("Screening");
     }
 
     @FXML
