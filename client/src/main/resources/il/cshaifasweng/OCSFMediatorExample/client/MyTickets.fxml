@@ -7,11 +7,11 @@
 
 <AnchorPane prefHeight="785.0" prefWidth="1084.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MyTicketsController">
    <children>
-      <TableView layoutX="14.0" layoutY="14.0" prefHeight="583.0" prefWidth="1056.0">
+      <TableView fx:id="TicketsTable" layoutX="14.0" layoutY="14.0" prefHeight="583.0" prefWidth="1056.0">
         <columns>
-          <TableColumn prefWidth="258.0" text="Id" />
-          <TableColumn minWidth="0.0" prefWidth="335.0" text="Screening" />
-            <TableColumn prefWidth="461.0" text="SeatNumber" />
+          <TableColumn fx:id="Id_Col" prefWidth="258.0" text="Id" />
+          <TableColumn fx:id="Screening_Col" minWidth="0.0" prefWidth="335.0" text="Screening" />
+            <TableColumn fx:id="SeatNumber_Col" prefWidth="461.0" text="SeatNumber" />
         </columns>
       </TableView>
    </children>

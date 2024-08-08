@@ -96,4 +96,9 @@ public class MovieTicket implements Serializable {
     }
 
 
+    public boolean isRefunded() {   return this.isRefunded;
+    }
+
+    public boolean isBundleTicket() { return this.isBundleTicket;
+    }
 }
