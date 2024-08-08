@@ -9,7 +9,7 @@
     <left>
         <VBox alignment="CENTER" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
             <Label fx:id="Welcome_Label" styleClass="sidebar-header" text="Welcome" />
-         <Label fx:id="UserLabel" prefHeight="18.0" prefWidth="103.0" text="User" />
+         <Label fx:id="UserLabel" prefHeight="32.0" prefWidth="113.0" text="User" textAlignment="CENTER" textFill="WHITE" />
             <Button fx:id="DashBoard_Btn" onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
             <Button fx:id="UpComingMovies_Btn" onAction="#ShowUpcomingMovies" styleClass="sidebar-button" text="UpComingMovies" />
             <Button fx:id="AvailbleMovies_Btn" onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
