@@ -1,11 +1,3 @@
-/**
- * Sample Skeleton for 'AdminInterface.fxml' Controller Class
- */
-
-/**
- * Sample Skeleton for 'AdminInterface.fxml' Controller Class
- */
-
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
@@ -282,8 +274,6 @@ public class AdminInterface {
         }
 
     }
-
-
 
 
     @FXML
