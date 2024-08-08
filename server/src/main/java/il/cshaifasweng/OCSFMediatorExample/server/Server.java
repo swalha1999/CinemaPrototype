@@ -1,7 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.UserDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
@@ -228,6 +230,16 @@ public class Server extends AbstractServer {
         System.out.println("Register request received:" + registerRequest.toString()); //TODO: remove this line debug only
         RegisterResponse registerResponse = database.getUsersManager().registerUser(registerRequest);
         sendResponse(client, new Message(registerResponse, MessageType.REGISTER_RESPONSE));
+
+        // send a patch to all the logged-in admins to notify them that a new user has been added
+        if (registerResponse.isSuccess()) {
+            NewUserAddedPatch newUserAddedPatch = new NewUserAddedPatch()
+                    .setSuccess(true)
+                    .setMessage("New user added successfully")
+                    .setUser(database.getUsersManager().getUserById(registerResponse.getUserId()));
+
+            sendToAllAdmins(new Message(newUserAddedPatch, MessageType.NEW_USER_ADDED_PATCH));
+        }
     }
 
     private void sendResponse(ConnectionToClient client, Message response) {
@@ -421,6 +433,25 @@ public class Server extends AbstractServer {
 
                 // if the user fail to respond we will remove him from the logged-in users list
                 sessionKeys.remove(loggedInUser.getSessionKey());
+            }
+        }
+    }
+
+    public void sendToAllAdmins(Message message) {
+        // here we send to all the clients that registered to our server
+        for (LoggedInUser loggedInUser : sessionKeys.values()) {
+            if (loggedInUser.getRole() == UserRole.SYSTEM_MANAGER || loggedInUser.getRole() == UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() == UserRole.BRANCH_MANAGER) {
+                try {
+                    loggedInUser.getClient().sendToClient(message);
+                    System.out.println("Sent to client: " + loggedInUser.getClient().getName() + " the message: " + message.getMessage());
+                } catch (IOException e1) {
+                    System.out.println("Error sending message to this client: " + e1.getMessage());
+
+                    // if the user fail to respond we will remove him from the logged-in users list
+                    sessionKeys.remove(loggedInUser.getSessionKey());
+                    //TODO : indicate the user that he is logged out
+
+                }
             }
         }
     }
