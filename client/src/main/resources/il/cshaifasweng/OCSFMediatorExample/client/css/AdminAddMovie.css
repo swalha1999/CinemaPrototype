@@ -1,0 +1,66 @@
+/* AdminAddMovie.css */
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2C3E50;
+}
+
+.form-textfield {
+    -fx-background-color: white;
+    -fx-border-color: #34495E;
+    -fx-border-width: 1;
+    -fx-padding: 5;
+}
+
+.form-datepicker {
+    -fx-background-color: white;
+    -fx-border-color: #34495E;
+    -fx-border-width: 1;
+    -fx-padding: 5;
+}
+
+.import-button {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5;
+}
+
+.insert-button {
+    -fx-background-color: #2ECC71; /* Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5;
+}
+
+.update-button {
+    -fx-background-color: #27AE60; /* Darker Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5;
+}
+
+.delete-button {
+    -fx-background-color: #E74C3C; /* Red */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5;
+}
+
+.clear-button {
+    -fx-background-color: #9B59B6; /* Purple */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #34495E;
+    -fx-border-width: 1;
+}
+
+.table-column {
+    -fx-text-fill: #2C3E50;
+    -fx-font-size: 14px;
+}

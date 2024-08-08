@@ -83,7 +83,7 @@ public class UserMain {
 
     @FXML
     void showDashBoard(ActionEvent event) {
-        loadUI("UserDashBoard");
+        loadUI("AdminAddMovie");
     }
 
 
@@ -119,6 +119,7 @@ public class UserMain {
             }
         });
     }
+
     private void loadUI(String ui) {
         mainPane.setCenter(loadFXMLPane(ui));
     }
