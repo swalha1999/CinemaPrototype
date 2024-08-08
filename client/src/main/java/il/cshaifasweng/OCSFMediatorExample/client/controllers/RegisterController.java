@@ -73,7 +73,7 @@ public class RegisterController {
     }
 
     @FXML
-    void ConfrimRegister(ActionEvent event) throws IOException {
+    void  confirmRegister(ActionEvent event) throws IOException {
 
         // TODO: temp code to fix later
         if(!PasswordText.getText().equals(ConfPasswordText.getText())){
@@ -147,7 +147,6 @@ public class RegisterController {
             }
         });
     }
-
 }
 
 
