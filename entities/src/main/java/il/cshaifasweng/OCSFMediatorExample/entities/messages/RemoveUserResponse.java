@@ -1,21 +1,30 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
-import java.io.Serializable;
-
-public class RemoveUserResponse implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class RemoveUserResponse implements Response {
     private String message;
-    public RemoveUserResponse(String message) {
-        this.message = message;
+    private Boolean success;
+
+    public RemoveUserResponse() {
+        this.message = "";
+        this.success = false;
     }
+
     public String getMessage() {
-        return message;
+        return this.message;
     }
+
     public RemoveUserResponse setMessage(String message) {
         this.message = message;
         return this;
     }
-    public String toString() {
-        return "RemoveUserResponse [message=" + message + "]";
+
+    public boolean isSuccess() {
+        return this.success;
     }
+
+    public RemoveUserResponse setSuccess(Boolean success) {
+        this.success = success;
+        return this;
+    }
+
 }

@@ -36,6 +36,7 @@ public class UserDAO {
     }
 
     public User deleteUser(User deletedUser) {
+        // TODO: fix this is not right and doesn't indicate if the user was deleted or not out side of the function
         Transaction transaction = null;
         User user = null;
         try {
@@ -239,7 +240,7 @@ public class UserDAO {
         return logoutResponse;
     }
 
-    public GetAllUsersResponse getAllUsers(GetAllUsersRequset getAllUsersRequset) {
+    public GetAllUsersResponse getAllUsers(GetAllUsersRequest getAllUsersRequset) {
         GetAllUsersResponse getAllUsersResponse = new GetAllUsersResponse();
         List<User> users = getUsers();
         if (users.isEmpty()){
@@ -255,6 +256,86 @@ public class UserDAO {
                 .setUsers(users);
 
         return getAllUsersResponse;
+    }
+
+    public BlockUserResponse blockUser(BlockUserRequest blockUserRequest) {
+        User user = null;
+        BlockUserResponse blockUserResponse = new BlockUserResponse();
+
+        if (blockUserRequest.getUserIdToBlock() != 0){
+            user = getUserById(blockUserRequest.getUserIdToBlock());
+        }else if(!blockUserRequest.getUsernameToBlock().equals("admin")){
+            user = getUserbyUsername(blockUserRequest.getUsernameToBlock());
+        }
+
+        if (user == null){
+            blockUserResponse
+                    .setSuccess(false)
+                    .setMessage("User not found");
+            return blockUserResponse;
+        }
+
+        user.setBlocked(true);
+        this.updateUser(user);
+
+        blockUserResponse
+                .setSuccess(true)
+                .setMessage("User blocked successfully");
+
+        return blockUserResponse;
+    }
+
+    public UnblockUserResponse unblockUser(UnblockUserRequest unblockUserRequest) {
+        User user = null;
+        UnblockUserResponse unblockUserResponse = new UnblockUserResponse();
+
+        if (unblockUserRequest.getUserIdToUnblock() != 0){
+            user = getUserById(unblockUserRequest.getUserIdToUnblock());
+        }else if(!unblockUserRequest.getUsernameToUnblock().equals("admin")){
+            user = getUserbyUsername(unblockUserRequest.getUsernameToUnblock());
+        }
+
+        if (user == null){
+            unblockUserResponse
+                    .setSuccess(false)
+                    .setMessage("User not found");
+            return unblockUserResponse;
+        }
+
+        user.setBlocked(false);
+        this.updateUser(user);
+
+        unblockUserResponse
+                .setSuccess(true)
+                .setMessage("User unblocked successfully");
+
+        return unblockUserResponse;
+    }
+
+    public RemoveUserResponse removeUser(RemoveUserRequest removeUserRequest) {
+        User user = null;
+        RemoveUserResponse removeUserResponse = new RemoveUserResponse();
+
+        if (removeUserRequest.getUserId() != 0){
+            user = getUserById(removeUserRequest.getUserId());
+        }else if(!removeUserRequest.getUsername().equals("admin")){
+            user = getUserbyUsername(removeUserRequest.getUsername());
+        }
+
+        if (user == null){
+            removeUserResponse
+                    .setSuccess(false)
+                    .setMessage("User not found");
+            return removeUserResponse;
+        }
+
+        deleteUser(user);
+
+        removeUserResponse
+                .setSuccess(true)
+                .setMessage("User removed successfully");
+
+        return removeUserResponse;
     }
 
     static public String generateSalt(){
@@ -273,8 +354,4 @@ public class UserDAO {
         return user.getHashedPassword().equals(hashPassword(password , user.getSalt()));
     }
 
-    public BlockUserResponse blockUser(BlockUserRequest blockUserRequest) {
-        //TODO: implement this
-        return null;
-    }
 }

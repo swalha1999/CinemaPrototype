@@ -6,7 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequset;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.GetAllUsersRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -76,7 +76,7 @@ public class CustomerController {
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        GetAllUsersRequset getAllUsersRequset = new GetAllUsersRequset(SessionKeysStorage.getInstance().getSessionKey());
+        GetAllUsersRequest getAllUsersRequset = new GetAllUsersRequest(SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset, MessageType.GET_ALL_USERS_REQUEST));
 
         UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));

@@ -2,7 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 import java.io.Serial;
 
-public class GetAllUsersRequset implements Request {
+public class GetAllUsersRequest implements Request {
     @Serial
     private static final long serialVersionUID = -5386248350340650199L;
 
@@ -10,10 +10,10 @@ public class GetAllUsersRequset implements Request {
     private String username;
     private int userId;
 
-    public GetAllUsersRequset() {
+    public GetAllUsersRequest() {
     }
 
-    public GetAllUsersRequset(String sessionKey) {
+    public GetAllUsersRequest(String sessionKey) {
         SessionKey = sessionKey;
     }
 
@@ -21,7 +21,7 @@ public class GetAllUsersRequset implements Request {
         return SessionKey;
     }
 
-    public GetAllUsersRequset setSessionKey(String sessionKey) {
+    public GetAllUsersRequest setSessionKey(String sessionKey) {
         SessionKey = sessionKey;
         return this;
     }
@@ -30,7 +30,7 @@ public class GetAllUsersRequset implements Request {
         return username;
     }
 
-    public GetAllUsersRequset setUsername(String username) {
+    public GetAllUsersRequest setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -39,16 +39,16 @@ public class GetAllUsersRequset implements Request {
         return userId;
     }
 
-    public GetAllUsersRequset setUserId(int userId) {
+    public GetAllUsersRequest setUserId(int userId) {
         this.userId = userId;
         return this;
     }
 
     public String toString() {
-        return "GetAllUsersRequset{" +
+        return "GetAllUsersRequest{" +
                 "SessionKey='" + SessionKey + '\'' +
-                ", userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }
