@@ -117,6 +117,29 @@ public class Main {
         session.flush();
     }
 
+    private static void generateTestUser(){
+        User user = new User()
+            .setUsername("user")
+            .setSalt("salt");
+
+        user.setHashedPassword(UserDAO.hashPassword("user", user.getSalt()));
+        user.setRole(UserRole.USER);
+        user.setBlocked(false);
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
+        criteria.select(root).where(builder.equal(root.get("username"), "user"));
+        List<User> users = session.createQuery(criteria).getResultList();
+
+        if (!users.isEmpty()) {
+            return;
+        }
+
+        session.save(user);
+        session.flush();
+    }
+
     public static void main(String[] args) {
         try {
             SessionFactory sessionFactory = getSessionFactory();
@@ -125,6 +148,7 @@ public class Main {
             session.beginTransaction();
             generateMovies();
             generateAdmin();
+            generateTestUser();
             session.getTransaction().commit();
 
             // Start the server
