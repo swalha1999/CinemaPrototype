@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CustomerController" stylesheets="@../css/CustomersList.css">
-    <TableView fx:id="Users_Table" styleClass="table-view" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="100">
+<AnchorPane prefHeight="785.0" prefWidth="1084.0" stylesheets="@../css/CustomersList.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CustomerController">
+    <TableView fx:id="Users_Table" prefHeight="588.0" prefWidth="1044.0" styleClass="table-view" AnchorPane.bottomAnchor="177.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
         <columns>
-            <TableColumn fx:id="UserName_col" text="UserName" prefWidth="120" styleClass="table-column"/>
-            <TableColumn fx:id="FirstName_col" text="FirstName" prefWidth="120" styleClass="table-column"/>
-            <TableColumn fx:id="LastName_col" text="LastName" prefWidth="120" styleClass="table-column"/>
-            <TableColumn fx:id="Email_col" text="Email" prefWidth="150" styleClass="table-column"/>
-            <TableColumn fx:id="Phone_col" text="Phone" prefWidth="130" styleClass="table-column"/>
-            <TableColumn fx:id="Role_col" text="Role" prefWidth="100" styleClass="table-column"/>
-            <TableColumn fx:id="IsLogged_col" text="IsLogged" prefWidth="100" styleClass="table-column"/>
-            <TableColumn fx:id="IsBlocked_col" text="IsBlocked" prefWidth="100" styleClass="table-column"/>
-            <TableColumn fx:id="isDeleted_col" text="IsDeleted" prefWidth="100" styleClass="table-column"/>
+            <TableColumn fx:id="UserName_col" prefWidth="120" styleClass="table-column" text="UserName" />
+            <TableColumn fx:id="FirstName_col" prefWidth="120" styleClass="table-column" text="FirstName" />
+            <TableColumn fx:id="LastName_col" prefWidth="120" styleClass="table-column" text="LastName" />
+            <TableColumn fx:id="Email_col" prefWidth="150" styleClass="table-column" text="Email" />
+            <TableColumn fx:id="Phone_col" prefWidth="130" styleClass="table-column" text="Phone" />
+            <TableColumn fx:id="Role_col" prefWidth="100" styleClass="table-column" text="Role" />
+            <TableColumn fx:id="IsLogged_col" prefWidth="100" styleClass="table-column" text="IsLogged" />
+            <TableColumn fx:id="IsBlocked_col" prefWidth="100" styleClass="table-column" text="IsBlocked" />
+            <TableColumn fx:id="isDeleted_col" prefWidth="100" styleClass="table-column" text="IsDeleted" />
         </columns>
     </TableView>
-    <Button fx:id="MakeAdmin" layoutX="20" layoutY="740" mnemonicParsing="false" onAction="#MakeAdmin" text="Make Admin" styleClass="action-button"/>
-    <Button fx:id="RemoveUser" layoutX="200" layoutY="740" mnemonicParsing="false" onAction="#RemoveUser" text="Remove User" styleClass="action-button"/>
-    <Button fx:id="BlockUser" layoutX="380" layoutY="740" mnemonicParsing="false" onAction="#BlockUser" text="Block User" styleClass="action-button"/>
-    <Button fx:id="UnlockUser" layoutX="560" layoutY="740" mnemonicParsing="false" onAction="#UnlockUser" text="Unlock User" styleClass="action-button"/>
+    <Button fx:id="MakeAdmin" layoutX="20.0" layoutY="740.0" mnemonicParsing="false" onAction="#MakeAdmin" styleClass="action-button" text="Make Admin" />
+    <Button fx:id="RemoveUser" layoutX="200.0" layoutY="740.0" mnemonicParsing="false" onAction="#RemoveUser" styleClass="action-button" text="Remove User" />
+    <Button fx:id="BlockUser" layoutX="380.0" layoutY="740.0" mnemonicParsing="false" onAction="#BlockUser" styleClass="action-button" text="Block User" />
+    <Button fx:id="UnlockUser" layoutX="560.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnlockUser" styleClass="action-button" text="Unlock User" />
 </AnchorPane>
