@@ -1,113 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminInterface">
-   <children>
-      <AnchorPane layoutX="-2.0" layoutY="-6.0" prefHeight="906.0" prefWidth="201.0" style="-fx-background-color: #B22222;">
-         <children>
-            <Label fx:id="WelcomeLabel" layoutX="53.0" layoutY="50.0" text="Welcome">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="AdminLabel" layoutX="62.0" layoutY="91.0" text="Admin">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Label>
-            <Button fx:id="DashBoard" layoutX="21.0" layoutY="211.0" mnemonicParsing="false" onAction="#DashBoard_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90EE90; -fx-font-size: 14px; -fx-alignment: Center;" text="DashBoard" textFill="#030303fa">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="AddMoviesBtn" layoutX="20.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddMovies_form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90EE90; -fx-cursor: hand;" text="AddMovies">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="AvailbleMoviesBtn" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#AvailbleMovies_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Availble Movies">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="EditScreeningBtn" layoutX="20.0" layoutY="332.0" mnemonicParsing="false" onAction="#EditScreening_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Edit Screening">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="CustomersBtn" layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#Customers_Form" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #90ee90;" text="Customers">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="logoutBtn" layoutX="68.0" layoutY="867.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #90ee90;" text="Log Out" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="AddMovies_Form" layoutX="196.0" layoutY="-6.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: grey;" visible="false">
-         <children>
-            <AnchorPane fx:id="TableAnchor" layoutY="3.0" prefHeight="504.0" prefWidth="1008.0" style="-fx-background-color: white;">
-               <children>
-                  <TableView fx:id="MoviesTable" prefHeight="504.0" prefWidth="1008.0">
-                    <columns>
-                      <TableColumn fx:id="IdCol" prefWidth="78.0" text="Movie Id" />
-                      <TableColumn fx:id="MovieNameCol" prefWidth="123.0" text="MovieName" />
-                        <TableColumn fx:id="ScreeningDateCol" prefWidth="116.0" text="Screening Date" />
-                        <TableColumn fx:id="GenreCol" prefWidth="112.0" text="Genre" />
-                        <TableColumn fx:id="UrlCol" prefWidth="153.0" text="Image Url" />
-                        <TableColumn fx:id="CountryCol" prefWidth="135.0" text="Country" />
-                        <TableColumn fx:id="OnlineCol" prefWidth="157.0" text="Online/Offline" />
-                        <TableColumn fx:id="TicketPriceCol" prefWidth="133.0" text="Ticket Price" />
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="NotTableAnchor" layoutX="1.0" layoutY="534.0" prefHeight="371.0" prefWidth="1008.0" style="-fx-background-color: white;">
-               <children>
-                  <TextField fx:id="MovieId_Txt" layoutX="187.0" layoutY="81.0" />
-                  <Label fx:id="MovieID_Label" layoutX="89.0" layoutY="85.0" text="Movie Id" />
-                  <TextField fx:id="MovieName_Txt" layoutX="187.0" layoutY="139.0" />
-                  <Label fx:id="MovieName_Label" layoutX="89.0" layoutY="143.0" text="Movie Name" />
-                  <TextField fx:id="ScreeningDate_Txt" layoutX="187.0" layoutY="203.0" />
-                  <TextField fx:id="Genre_Txt" layoutX="187.0" layoutY="255.0" />
-                  <TextField fx:id="TicketPrice_txt" layoutX="458.0" layoutY="81.0" prefHeight="25.0" prefWidth="155.0" />
-                  <Label fx:id="ScreeningDate_Label" layoutX="89.0" layoutY="207.0" text="Screening Date" />
-                  <Label fx:id="Genre_Label" layoutX="89.0" layoutY="259.0" text="Genre" />
-                  <Label fx:id="Ticket_Price_Label" layoutX="373.0" layoutY="85.0" text="Ticket Price" />
-                  <Label fx:id="Price_Label" layoutX="389.0" layoutY="143.0" text="Price" />
-                  <TextField fx:id="Price_Txt" layoutX="458.0" layoutY="139.0" prefHeight="25.0" prefWidth="155.0" />
-                  <Button fx:id="ImportButton" layoutX="842.0" layoutY="255.0" mnemonicParsing="false" onAction="#ImportPicture" style="-fx-background-color: #B22222;" text="Import" />
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="768.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="188.0" fitWidth="200.0" layoutX="768.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: GREY;" />
-               </children>
-            </AnchorPane>
-         </children></AnchorPane>
-      <AnchorPane fx:id="AvailbleMovies_Form" layoutX="194.0" layoutY="-5.0" prefHeight="906.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
-      <AnchorPane fx:id="EditScreening_Form" layoutX="193.0" prefHeight="900.0" prefWidth="1008.0" style="-fx-background-color: white;" visible="false" />
-      <AnchorPane fx:id="Customer_Form" layoutX="196.0" prefHeight="900.0" prefWidth="1003.0" style="-fx-background-color: white;" visible="false">
-         <children>
-            <TableView fx:id="Users_Table" prefHeight="715.0" prefWidth="1008.0">
-               <columns>
-                  <TableColumn fx:id="UserName_col" prefWidth="95.0" text="UserName" />
-                  <TableColumn fx:id="FirstName_col" prefWidth="98.0" text="FirstName" />
-                  <TableColumn fx:id="LastName_col" prefWidth="97.0" text="LastName" />
-                  <TableColumn fx:id="Email_col" prefWidth="104.0" text="Email" />
-                  <TableColumn fx:id="Phone_col" prefWidth="114.0" text="Phone" />
-                  <TableColumn fx:id="Role_col" prefWidth="100.0" text="Role" />
-                  <TableColumn fx:id="IsLogged_col" prefWidth="134.0" text="IsLogged" />
-                  <TableColumn fx:id="IsBlocked_col" prefWidth="130.0" text="IsLocked" />
-                  <TableColumn fx:id="isDeleted_col" prefWidth="129.0" text="IsDeleted" />
-               </columns>
-            </TableView>
-            <Button fx:id="MakeAdmin" layoutX="544.0" layoutY="794.0" mnemonicParsing="false" onAction="#MakeAdmin" prefHeight="25.0" prefWidth="167.0" text="Make Admin" />
-            <Button fx:id="RemoveUser" layoutX="348.0" layoutY="760.0" mnemonicParsing="false" onAction="#RemoveUser" prefHeight="25.0" prefWidth="167.0" text="Remove User" />
-            <Button fx:id="BlockUser" layoutX="763.0" layoutY="760.0" mnemonicParsing="false" onAction="#BlockUser" prefHeight="25.0" prefWidth="167.0" text="Block" />
-            <Button fx:id="UnblockUser" layoutX="763.0" layoutY="794.0" mnemonicParsing="false" onAction="#UnblockUser" prefHeight="25.0" prefWidth="167.0" text="Unblock" />
-            <Button fx:id="A" layoutX="544.0" layoutY="760.0" mnemonicParsing="false" onAction="#AddUser" prefHeight="25.0" prefWidth="167.0" text="Add User" />
-         </children></AnchorPane>
-      <AnchorPane fx:id="DashBoard_Form" layoutX="193.0" layoutY="43.0" prefHeight="536.0" prefWidth="571.0" style="-fx-background-color: white;" visible="false" />
-   </children>
-</AnchorPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MainController">
+   <left>
+      <VBox spacing="10.0" style="-fx-background-color: #B22222;" prefWidth="200.0">
+         <Label text="Welcome" style="-fx-text-fill: white; -fx-font-size: 22.0;" />
+         <Label text="Admin" style="-fx-text-fill: white; -fx-font-size: 25.0;" />
+         <Button text="DashBoard" onAction="#showDashBoard" />
+         <Button text="Add Movies" onAction="#showAddMovies" />
+         <Button text="Available Movies" onAction="#showAvailableMovies" />
+         <Button text="Edit Screening" onAction="#showEditScreening" />
+         <Button text="Customers" onAction="#showCustomers" />
+         <Button text="Log Out" onAction="#logOut" style="-fx-background-color: #90ee90;" />
+      </VBox>
+   </left>
+   <center>
+      <BorderPane fx:id="mainPane" />
+   </center>
+</BorderPane>
