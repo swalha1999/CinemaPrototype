@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane stylesheets="@css/AddMovies.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MoviesController">
+<AnchorPane stylesheets="@css/AddMovies.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.Movies">
     <children>
         <AnchorPane layoutY="3.0" prefHeight="504.0" prefWidth="1008.0" styleClass="anchor-pane">
             <children>

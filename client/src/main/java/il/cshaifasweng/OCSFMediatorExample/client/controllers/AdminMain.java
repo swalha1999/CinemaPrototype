@@ -54,7 +54,7 @@ public class AdminMain {
 
     @FXML
     private void showAvailableMovies(ActionEvent event) {
-        loadUI("AvailbleMovies");
+        loadUI("MovieCatalog");
     }
 
     @FXML

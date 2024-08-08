@@ -24,7 +24,7 @@ import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
-public class RegisterController {
+public class Register {
 
     @FXML // fx:id="ConfPasswordLabel"
     private Label ConfPasswordLabel; // Value injected by FXMLLoader

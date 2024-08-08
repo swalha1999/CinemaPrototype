@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'host.fxml' Controller Class
+ * Sample Skeleton for 'Host.fxml' Controller Class
  */
 
 package il.cshaifasweng.OCSFMediatorExample.client;

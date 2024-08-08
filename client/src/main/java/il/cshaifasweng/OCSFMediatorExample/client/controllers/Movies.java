@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class MoviesController {
+public class Movies {
     @FXML // fx:id="MovieID_Label"
     private Label MovieID_Label; // Value injected by FXMLLoader
 

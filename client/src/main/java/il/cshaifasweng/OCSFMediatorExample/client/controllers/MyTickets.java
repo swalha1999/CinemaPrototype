@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-public class MyTicketsController {
+public class MyTickets {
 
     @FXML
     private VBox TicketsContainer;

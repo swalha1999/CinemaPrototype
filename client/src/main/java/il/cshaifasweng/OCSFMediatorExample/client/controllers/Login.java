@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
-public class LoginController {
+public class Login {
 
     @FXML // fx:id="LoginBtn"
     private Button LoginBtn; // Value injected by FXMLLoader

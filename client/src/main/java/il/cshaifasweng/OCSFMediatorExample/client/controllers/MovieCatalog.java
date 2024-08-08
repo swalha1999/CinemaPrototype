@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
 
-public class MovieCatalogController {
+public class MovieCatalog {
 
     @FXML
     private GridPane MoviesGrid;

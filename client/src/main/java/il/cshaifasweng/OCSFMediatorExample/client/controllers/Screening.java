@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ScreeningController {
+public class Screening {
 
     @FXML
     private TableColumn<?, ?> AvailvleSeats_Col;

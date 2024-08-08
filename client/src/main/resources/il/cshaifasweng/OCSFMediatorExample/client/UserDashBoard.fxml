@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.UserDashBoardController"
+            fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.UserDashBoard"
             prefHeight="785.0" prefWidth="1084.0">
 
 </AnchorPane>
