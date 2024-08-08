@@ -1,4 +1,4 @@
-package il.cshaifasweng.OCSFMediatorExample.entities;
+package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
 public enum Language {
     ENGLISH, HEBREW, ARABIC, RUSSIAN, FRENCH, SPANISH, GERMAN, ITALIAN, CHINESE, JAPANESE, KOREAN, HINDI, TURKISH,

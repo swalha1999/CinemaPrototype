@@ -5,10 +5,9 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.TicketView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

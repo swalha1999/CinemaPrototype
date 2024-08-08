@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

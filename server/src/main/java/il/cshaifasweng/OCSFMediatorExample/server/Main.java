@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.*;
-
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.UserDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

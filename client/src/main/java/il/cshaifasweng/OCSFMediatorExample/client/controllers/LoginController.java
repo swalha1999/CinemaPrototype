@@ -7,7 +7,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LoginRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;

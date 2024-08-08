@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,6 +57,9 @@ public class SimpleClient extends AbstractClient {
 					break;
 				case GET_ALL_MOVIES_RESPONSE:
 					EventBus.getDefault().post( new GetAllMoviesEvent((GetAllMoviesResponse) message.getDataObject()));
+					break;
+				case NEW_USER_ADDED_PATCH:
+					EventBus.getDefault().post( new NewUserAddedEvent((NewUserAddedPatch) message.getDataObject()));
 					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));

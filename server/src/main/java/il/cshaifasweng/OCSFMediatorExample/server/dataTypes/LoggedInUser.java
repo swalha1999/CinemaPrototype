@@ -1,8 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server.dataTypes;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
-import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 
 import java.time.LocalDateTime;
 

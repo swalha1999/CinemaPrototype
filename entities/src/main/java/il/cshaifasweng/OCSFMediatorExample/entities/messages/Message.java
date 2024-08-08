@@ -1,7 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
-import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

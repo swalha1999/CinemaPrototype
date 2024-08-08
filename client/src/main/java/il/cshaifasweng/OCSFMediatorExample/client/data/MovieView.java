@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.data;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;

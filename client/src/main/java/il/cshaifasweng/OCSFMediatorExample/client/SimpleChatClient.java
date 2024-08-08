@@ -4,15 +4,18 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
+import java.util.Objects;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,6 +27,7 @@ public class SimpleChatClient extends Application {
 
     // hashtable to save the loaded fxml files to avoid loading them again
     private static final Hashtable<String, Parent> fxml = new Hashtable<String, Parent>();
+    private static final Hashtable<String, Pane> fxmlScenes = new Hashtable<String, Pane>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -34,21 +38,39 @@ public class SimpleChatClient extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        if (SimpleChatClient.fxml.containsKey(fxml)) {
-            scene.setRoot(SimpleChatClient.fxml.get(fxml));
-        }
-        else {
+        if (!SimpleChatClient.fxml.containsKey(fxml)) {
             SimpleChatClient.fxml.put(fxml, loadFXML(fxml));
-            scene.setRoot(SimpleChatClient.fxml.get(fxml));
         }
+        scene.setRoot(SimpleChatClient.fxml.get(fxml));
     }
 
+    // this function is used to load the main scene fxml file
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
-
+    // this function is used to load fxml files that are not the main scene
+    // this helps to avoid reloading the scene every time we want to change the view
+    public static Pane loadFXMLPane(String fxml) {
+        if (SimpleChatClient.fxmlScenes.containsKey(fxml)) {
+            return SimpleChatClient.fxmlScenes.get(fxml);
+        }
+        else {
+            try {
+                Pane pane = FXMLLoader.load(
+                        Objects.requireNonNull(
+                                SimpleChatClient.class.getResource(fxml + ".fxml")
+                        )
+                );
+                SimpleChatClient.fxmlScenes.put(fxml, pane);
+                return pane;
+            } catch (IOException e) {
+                System.err.println("Error loading fxml file: " + fxml);
+            }
+            return null;
+        }
+    }
 
     @Override
     public void stop() throws Exception {

@@ -4,8 +4,9 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.client.events.NewUserAddedEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllUsersRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -24,7 +25,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.util.List;
 
-public class CustomerController {
+public class AdminUsersView {
     @FXML // fx:id="EditScreening_Form"
     private AnchorPane EditScreening_Form; // Value injected by FXMLLoader
 
@@ -98,6 +99,13 @@ public class CustomerController {
             for (User user : users) {
                 Users_Table.getItems().add(new UserView(user));
             }
+        });
+    }
+
+    @Subscribe
+    public void onNewUserEvent(NewUserAddedEvent event){
+        Platform.runLater(()->{
+            Users_Table.getItems().add(new UserView(event.getUser()));
         });
     }
 

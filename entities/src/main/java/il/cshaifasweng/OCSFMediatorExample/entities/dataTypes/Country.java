@@ -1,4 +1,4 @@
-package il.cshaifasweng.OCSFMediatorExample.entities;
+package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
 // This enum represents the countries that are available in the system
 // Automatically generated

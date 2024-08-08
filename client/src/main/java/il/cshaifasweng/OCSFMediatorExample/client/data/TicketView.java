@@ -1,8 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.client.data;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

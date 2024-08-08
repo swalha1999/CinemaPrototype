@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages.requests;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Request;
 
 public class AddUserRequest implements Request {

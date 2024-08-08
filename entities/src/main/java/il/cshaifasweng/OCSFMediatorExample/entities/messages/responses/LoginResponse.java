@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
 import java.io.Serial;

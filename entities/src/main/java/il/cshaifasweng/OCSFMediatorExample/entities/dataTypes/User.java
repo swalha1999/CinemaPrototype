@@ -1,4 +1,4 @@
-package il.cshaifasweng.OCSFMediatorExample.entities;
+package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.io.Serial;
 import java.io.Serializable;

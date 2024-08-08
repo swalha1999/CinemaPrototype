@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.data;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 
 // This class is used to store the session keys of the user that is currently logged in.
 // This is a singleton class, meaning that there can only be one instance of this class.

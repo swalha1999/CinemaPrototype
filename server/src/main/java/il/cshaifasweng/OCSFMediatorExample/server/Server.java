@@ -1,8 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
-import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
@@ -14,7 +14,7 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 import org.hibernate.Session;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,8 +103,8 @@ public class Server extends AbstractServer {
                 handleUnblockUserRequest(request, client);
                 break;
             case REMOVE_USER_REQUEST:
-
-
+                handleRemoveUserRequest(request, client);
+                break;
                 //TODO: add more cases here
 
             default:
@@ -399,7 +399,6 @@ public class Server extends AbstractServer {
 
         sendResponse(client, new Message(removeUserResponse, MessageType.REMOVE_USER_RESPONSE));
     }
-
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
         try {

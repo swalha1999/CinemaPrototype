@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 
 public class NewUserAddedPatch implements Patch {
 
@@ -12,6 +12,13 @@ public class NewUserAddedPatch implements Patch {
     public NewUserAddedPatch() {
         this.message = "";
         this.success = false;
+        this.user = null;
+    }
+
+    public NewUserAddedPatch(NewUserAddedPatch other) {
+        this.message = other.message;
+        this.success = other.success;
+        this.user = other.user;
     }
 
     public String getMessage() {

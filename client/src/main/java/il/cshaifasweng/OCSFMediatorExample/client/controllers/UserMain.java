@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.util.Objects;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.loadFXMLPane;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 /**
@@ -119,15 +120,6 @@ public class UserMain {
         });
     }
     private void loadUI(String ui) {
-        try {
-            Pane pane = FXMLLoader.load(
-                    Objects.requireNonNull(
-                            SimpleChatClient.class.getResource(ui + ".fxml")
-                    )
-            );
-            mainPane.setCenter(pane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mainPane.setCenter(loadFXMLPane(ui));
     }
 }

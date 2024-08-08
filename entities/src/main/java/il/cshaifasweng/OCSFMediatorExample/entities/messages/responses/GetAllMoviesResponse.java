@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.messages.responses;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Response;
 
 import java.io.Serial;

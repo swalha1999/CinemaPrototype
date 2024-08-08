@@ -5,7 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.DeleteMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
