@@ -29,7 +29,6 @@ public class MovieTicket implements Serializable {
 
     public MovieTicket() {
         this.user = null;
-
         this.seatNumber = 0;
         this.isUsed = false;
     }
