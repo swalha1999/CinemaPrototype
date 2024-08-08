@@ -47,7 +47,7 @@ public class MainController {
     }
 
     @FXML
-    private void showAddMovies(ActionEvent event) {
+    private void showMovies(ActionEvent event) {
         loadUI("AddMovies");
     }
 
@@ -57,7 +57,7 @@ public class MainController {
     }
 
     @FXML
-    private void showEditScreening(ActionEvent event) {
+    private void ShowScreenings(ActionEvent event) {
         loadUI("EditScreening");
     }
 
@@ -103,4 +103,5 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
 }

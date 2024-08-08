@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MainController" stylesheets="@../css/AdminInterface.css">
+<BorderPane stylesheets="@../css/AdminInterface.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MainController">
    <left>
-      <VBox spacing="20.0" styleClass="sidebar" prefWidth="250.0" alignment="CENTER">
-         <Label text="Welcome" styleClass="sidebar-header" />
+      <VBox alignment="CENTER" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
+         <Label styleClass="sidebar-header" text="Welcome" />
          <Label fx:id="AdminLabel" styleClass="sidebar-subheader" />
-         <Button text="DashBoard" onAction="#showDashBoard" styleClass="sidebar-button" />
-         <Button text="Add Movies" onAction="#showAddMovies" styleClass="sidebar-button" />
-         <Button text="Available Movies" onAction="#showAvailableMovies" styleClass="sidebar-button" />
-         <Button text="Edit Screening" onAction="#showEditScreening" styleClass="sidebar-button" />
-         <Button text="Customers" onAction="#showCustomers" styleClass="sidebar-button" />
-         <Button text="Log Out" onAction="#logOut" styleClass="sidebar-logout-button" />
+         <Button onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
+         <Button onAction="#showMovies" styleClass="sidebar-button" text="Movies" />
+         <Button onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
+         <Button onAction="#ShowScreenings" styleClass="sidebar-button" text=" Screenings" />
+         <Button onAction="#showCustomers" styleClass="sidebar-button" text="Customers" />
+         <Button onAction="#logOut" styleClass="sidebar-logout-button" text="Log Out" />
       </VBox>
    </left>
    <center>
