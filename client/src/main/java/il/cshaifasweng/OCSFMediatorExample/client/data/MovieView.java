@@ -3,12 +3,12 @@ package il.cshaifasweng.OCSFMediatorExample.client.data;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.Date;
 
 public class MovieView {
-    private final SimpleStringProperty name;
+    private int id;
+    private final SimpleStringProperty title;
     private final SimpleObjectProperty<Date> releaseDate;
     private final SimpleStringProperty description;
     private final SimpleStringProperty language;
@@ -19,7 +19,7 @@ public class MovieView {
 
 
     public MovieView(String name, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
-        this.name = new SimpleStringProperty(name);
+        this.title = new SimpleStringProperty(name);
         this.releaseDate = new SimpleObjectProperty<>(releaseDate);
         this.description = new SimpleStringProperty(description);
         this.language = new SimpleStringProperty(language);
@@ -31,7 +31,7 @@ public class MovieView {
     }
 
     public MovieView(Movie movie) {
-        this.name = new SimpleStringProperty(movie.getName());
+        this.title = new SimpleStringProperty(movie.getName());
         this.releaseDate = new SimpleObjectProperty<>(movie.getReleaseDate());
         this.description = new SimpleStringProperty(movie.getDescription());
 
@@ -54,7 +54,7 @@ public class MovieView {
     }
 
     // Getter methods for properties
-    public String getName() { return name.get(); }
+    public String getTitle() { return title.get(); }
     public Date getReleaseDate() { return releaseDate.get(); }
     public String getDescription() { return description.get(); }
     public String getLanguage() { return language.get(); }
@@ -65,7 +65,7 @@ public class MovieView {
 
 
     // Property methods for JavaFX bindings
-    public SimpleStringProperty nameProperty() { return name; }
+    public SimpleStringProperty titleProperty() { return title; }
     public SimpleObjectProperty<Date> releaseDateProperty() { return releaseDate; }
     public SimpleStringProperty descriptionProperty() { return description; }
     public SimpleStringProperty languageProperty() { return language; }
