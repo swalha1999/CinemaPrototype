@@ -13,7 +13,7 @@
             <!-- Movie Image -->
             <ImageView fx:id="movieImageView" fitHeight="400.0" fitWidth="270.0" />
 
-            <!-- Movie Details and Screening Times -->
+            <!-- Movie Details and AdminScreening Times -->
             <VBox spacing="20.0">
                 <!-- Movie Title -->
                 <Label fx:id="titleLabel" styleClass="title-label"/>
@@ -26,7 +26,7 @@
                     <Label fx:id="ratingLabel" text="Rating: " styleClass="details-label"/>
                 </VBox>
 
-                <!-- Screening Times -->
+                <!-- AdminScreening Times -->
                 <Label text="Screening Times:" styleClass="section-label"/>
                 <ListView fx:id="screeningTimesListView" prefHeight="150.0" prefWidth="300.0" />
             </VBox>
