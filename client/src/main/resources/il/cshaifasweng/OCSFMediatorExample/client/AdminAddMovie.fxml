@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/AdminAddMovie.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminAddMovieController">
     <children>
-      <AnchorPane layoutX="39.0" layoutY="65.0" prefHeight="694.0" prefWidth="200.0">
+      <AnchorPane layoutX="39.0" layoutY="65.0" prefHeight="603.0" prefWidth="200.0">
          <children>
                <Button fx:id="importButton" layoutX="75.0" layoutY="185.0" onAction="#importImage" styleClass="import-button" text="Import" />
                <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="173.0" layoutX="14.0" layoutY="14.0" />
