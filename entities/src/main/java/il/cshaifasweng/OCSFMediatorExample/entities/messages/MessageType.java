@@ -26,5 +26,9 @@ public enum MessageType implements Serializable {
     REMOVE_USER_PATCH,
     GET_ALL_MOVIES_REQUEST,
     GET_ALL_MOVIES_RESPONSE,
+    ADD_MOVIE_REQUEST,
+    ADD_MOVIE_RESPONSE,
+    ADD_MOVIE_PATCH,
+
 }
 

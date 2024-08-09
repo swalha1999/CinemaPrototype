@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.AddMoviePatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveUserPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
@@ -58,9 +59,6 @@ public class Server extends AbstractServer {
             case "get all movies":
                 handleGetAllMovies(client, response);
                 break;
-            case "add movies":
-                handleAddMovies(request, client, response);
-                break;
             case "update movies":
                 handleUpdateMovies(request, client, response);
                 break;
@@ -109,6 +107,9 @@ public class Server extends AbstractServer {
             case GET_ALL_MOVIES_REQUEST:
                 handleGetAllMoviesRequest(request, client);
                 break;
+            case ADD_MOVIE_REQUEST:
+                handleAddMovieRequest(request, client);
+                break;
 
                 //TODO: add more cases here
 
@@ -130,19 +131,6 @@ public class Server extends AbstractServer {
     private void handleGetAllMovies(ConnectionToClient client, Message response) {
         response.setMovies(database.getMoviesManger().getMovies());
         sendResponse(client, response);
-    }
-
-    //TODO: DEPRECATED REMOVE SAFELY
-    private void handleAddMovies(Message request, ConnectionToClient client, Message response) {
-        if (request.getMovies().isEmpty()) {
-            sendErrorMessage(client, "The list of movies to Add is Empty");
-            return;
-        }
-        for (Movie movie : request.getMovies()) {
-            response.addMovie(database.getMoviesManger().addMovie(movie));
-            System.out.println("Movie added successfully" + movie.getName());
-        }
-        sendToAllClients(response);
     }
 
     //TODO: DEPRECATED REMOVE SAFELY
@@ -432,6 +420,46 @@ public class Server extends AbstractServer {
         System.out.println("Get all movies response: " + getAllMoviesResponse.toString()); //TODO: remove this line debug only
 
         sendResponse(client, new Message(getAllMoviesResponse, MessageType.GET_ALL_MOVIES_RESPONSE));
+    }
+
+    private void handleAddMovieRequest(Message request, ConnectionToClient client) {
+        AddMovieRequest addMovieRequest = (AddMovieRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(addMovieRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        addMovieRequest.setUsername(loggedInUser.getUsername());
+        addMovieRequest.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case CONTENT_MANAGER:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to add movies");
+                return;
+        }
+
+        System.out.println("Add movie request received:" + addMovieRequest.toString()); //TODO: remove this line debug only
+        AddMovieResponse addMovieResponse = database.getMoviesManger().addMovie(addMovieRequest);
+        System.out.println("Add movie response: " + addMovieResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(addMovieResponse, MessageType.ADD_MOVIE_RESPONSE));
+
+        // send a patch to all the logged-in admins to notify them that a new movie has been added
+        if (addMovieResponse.isSuccess()) {
+            AddMoviePatch addMoviePatch = new AddMoviePatch()
+                    .setMessage("Movie added successfully")
+                    .setMovie(addMovieResponse.getMovie());
+        }
+
     }
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {

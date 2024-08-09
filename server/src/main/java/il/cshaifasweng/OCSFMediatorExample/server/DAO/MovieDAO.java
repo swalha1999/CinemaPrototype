@@ -1,7 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetAllMoviesResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -61,12 +63,33 @@ public class MovieDAO {
         return movie;
     }
 
-    public Movie addMovie(Movie addedMovie) {
+    public List<Movie> getMovies() {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Movie> query = builder.createQuery(Movie.class);
+        query.from(Movie.class);
+        return session.createQuery(query).getResultList();
+    }
+
+
+    public GetAllMoviesResponse getAllMovies(GetAllMoviesRequest getAllMoviesRequest) {
+        List<Movie> movies = getMovies();
+        return new GetAllMoviesResponse(movies).setSucceed(true).setMessage("Movies retrieved successfully");
+    }
+
+
+    public AddMovieResponse addMovie(AddMovieRequest addMovieRequest) {
+        Movie movie = new Movie();
+        movie.setDate(addMovieRequest.getReleaseDate());
+        movie.setName(addMovieRequest.getName());
+        movie.setDescription(addMovieRequest.getDescription());
+        movie.setLanguage(addMovieRequest.getLanguage());
+        movie.setGenre(addMovieRequest.getGenre());
+        movie.setCountry(addMovieRequest.getCountry());
+        // TODO: movie.setImageUrl(addMovieRequest.getImageUrl());
+
         Transaction transaction = null;
-        Movie movie = null;
         try {
             transaction = session.beginTransaction();
-            movie = new Movie(addedMovie.getName(), addedMovie.getDate());
             session.save(movie);
             session.flush();
             transaction.commit();
@@ -75,23 +98,9 @@ public class MovieDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
+            return new AddMovieResponse().setSuccess(false).setMessage("Failed to add movie");
         }
-        return movie;
-    }
+        return new AddMovieResponse().setSuccess(true).setMessage("Movie added successfully").setMovie(movie);
 
-    public List<Movie> getMovies() {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Movie> query = builder.createQuery(Movie.class);
-        query.from(Movie.class);
-        return session.createQuery(query).getResultList();
-    }
-
-    public Movie getMovie(int id) {
-        return session.get(Movie.class, id);
-    }
-
-    public GetAllMoviesResponse getAllMovies(GetAllMoviesRequest getAllMoviesRequest) {
-        List<Movie> movies = getMovies();
-        return new GetAllMoviesResponse(movies).setSucceed(true).setMessage("Movies retrieved successfully");
     }
 }
