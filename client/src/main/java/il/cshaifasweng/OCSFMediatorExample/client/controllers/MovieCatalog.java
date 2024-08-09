@@ -47,7 +47,7 @@ public class MovieCatalog {
 
         AnchorPane moviePane = new AnchorPane();
         moviePane.getStyleClass().add("movie-pane");
-        moviePane.setPrefWidth(imageWidth + 25);
+        moviePane.setPrefWidth(400);
 
         ImageView movieImage = new ImageView(new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(imagePath))));
         movieImage.setFitHeight(imageHeight);
@@ -59,6 +59,7 @@ public class MovieCatalog {
         movieTitle.getStyleClass().add("movie-title");
         movieTitle.setLayoutX( (moviePane.getPrefWidth() / 2) - (getLabelWidth(movieTitle) / 2));
         movieTitle.setLayoutY(imageHeight + 20);
+
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
         moviePane.setOnMouseClicked(event -> {
@@ -66,8 +67,8 @@ public class MovieCatalog {
         });
 
         int index = MoviesGrid.getChildren().size();
-        int row = index / 4;
-        int col = index % 4;
+        int row = index / 2;
+        int col = index % 2;
 
         MoviesGrid.add(moviePane, col, row);
     }
@@ -80,8 +81,4 @@ public class MovieCatalog {
         });
     }
 
-//    System.out.println("Received all movies");
-//        event.getMovies().forEach(movie -> {
-//        addMovie(movie.getName(), "images\\movie1.jpg");
-//    });
 }
