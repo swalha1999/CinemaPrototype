@@ -4,12 +4,15 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +20,8 @@ import javafx.scene.layout.GridPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
@@ -27,20 +32,56 @@ public class MovieCatalog {
     private GridPane MoviesGrid;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button allButton, actionButton, comedyButton, dramaButton, sciFiButton;
+
+    private List<Movie> allMovies = new ArrayList<>();
+
+    @FXML
     public void initialize() {
-        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+        EventBus.getDefault().register(this);
 
         GetAllMoviesRequest getAllMoviesRequest = new GetAllMoviesRequest()
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setUsername(SessionKeysStorage.getInstance().getUsername());
         try {
             SimpleClient.getClient().sendToServer(new Message(getAllMoviesRequest, MessageType.GET_ALL_MOVIES_REQUEST));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        // Add listener to search field
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> filterMoviesBySearch(newValue));
+
+        // Add listeners to genre buttons
+        allButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.ALL));
+        actionButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.ACTION));
+        comedyButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.COMEDY));
+        dramaButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.DRAMA));
+        sciFiButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.SCI_FI));
+    }
+
+    public void addMovie(String title, MovieGenre genre, String imagePath) {
+        Movie movie = new Movie(title, genre, imagePath);
+        allMovies.add(movie);
+        renderMovies(allMovies);
+    }
+
+    private void renderMovies(List<Movie> movies) {
+        MoviesGrid.getChildren().clear();
+        int index = 0;
+        for (Movie movie : movies) {
+            AnchorPane moviePane = createMoviePane(movie);
+            int row = index / 2;
+            int col = index % 2;
+            MoviesGrid.add(moviePane, col, row);
+            index++;
         }
     }
 
-    public void addMovie(String title, String imagePath) {
+    private AnchorPane createMoviePane(Movie movie) {
         float scaleFac = 0.19f;
         float imageWidth = scaleFac * 878.0f;
         float imageHeight = scaleFac * 1390.0f;
@@ -49,36 +90,75 @@ public class MovieCatalog {
         moviePane.getStyleClass().add("movie-pane");
         moviePane.setPrefWidth(400);
 
-        ImageView movieImage = new ImageView(new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(imagePath))));
+        ImageView movieImage = new ImageView(new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(movie.getImagePath()))));
         movieImage.setFitHeight(imageHeight);
         movieImage.setFitWidth(imageWidth);
-        movieImage.setLayoutX( (moviePane.getPrefWidth() / 2) - (imageWidth / 2) + 5);
+        movieImage.setLayoutX((moviePane.getPrefWidth() / 2) - (imageWidth / 2) + 5);
         movieImage.setLayoutY(10.0);
 
-        Label movieTitle = new Label(title);
+        Label movieTitle = new Label(movie.getTitle());
         movieTitle.getStyleClass().add("movie-title");
-        movieTitle.setLayoutX( (moviePane.getPrefWidth() / 2) - (getLabelWidth(movieTitle) / 2));
+        movieTitle.setLayoutX((moviePane.getPrefWidth() / 2) - (getLabelWidth(movieTitle) / 2));
         movieTitle.setLayoutY(imageHeight + 20);
 
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
-        moviePane.setOnMouseClicked(event -> {
-            System.out.println("Movie clicked: " + title);
-        });
+        moviePane.setOnMouseClicked(event -> System.out.println("Movie clicked: " + movie.getTitle()));
 
-        int index = MoviesGrid.getChildren().size();
-        int row = index / 2;
-        int col = index % 2;
+        return moviePane;
+    }
 
-        MoviesGrid.add(moviePane, col, row);
+    private void filterMoviesBySearch(String query) {
+        List<Movie> filteredMovies = new ArrayList<>();
+        for (Movie movie : allMovies) {
+            if (movie.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                filteredMovies.add(movie);
+            }
+        }
+        renderMovies(filteredMovies);
+    }
+
+    private void filterMoviesByGenre(MovieGenre genre) {
+        List<Movie> filteredMovies = new ArrayList<>();
+        for (Movie movie : allMovies) {
+            if (genre.equals(MovieGenre.ALL) || movie.getGenre().equals(genre)) {
+                filteredMovies.add(movie);
+            }
+        }
+        renderMovies(filteredMovies);
     }
 
     @Subscribe
     public void onGetAllMoviesEvent(GetAllMoviesEvent event) {
         Platform.runLater(() -> {
-            MoviesGrid.getChildren().clear();
-            event.getMovies().forEach(movie -> addMovie(movie.getTitle(), "images\\movie1.jpg"));
+            allMovies.clear();
+            event.getMovies().forEach(movie -> addMovie(movie.getTitle(), movie.getGenre(), "images\\movie1.jpg"));
         });
     }
 
+    // Inner class to represent a Movie
+    private static class Movie {
+        private final String title;
+        private final MovieGenre genre ;
+        private final String imagePath;
+
+        public Movie(String title, MovieGenre genre, String imagePath) {
+            this.title = title;
+            this.genre = genre;
+            this.imagePath = imagePath;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public MovieGenre getGenre() {
+            return genre == null ? MovieGenre.ALL : genre;
+
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+    }
 }

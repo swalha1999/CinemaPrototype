@@ -15,6 +15,14 @@
     -fx-border-radius: 15;
     -fx-padding: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 0);
+    -fx-pref-height: 250;
+    -fx-pref-width: 200;
+    -fx-alignment: center;
+}
+
+/* Movie image styling */
+.movie-image {
+    -fx-alignment: center;
 }
 
 /* Movie title styling */
@@ -23,5 +31,29 @@
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-alignment: center;
-    -fx-alignment: center;
+}
+
+/* Search field styling */
+.search-field {
+    -fx-background-color: white;
+    -fx-border-color: #34495E;
+    -fx-border-width: 2;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+/* Filter button styling */
+.filter-button {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+}
+
+.filter-button:hover {
+    -fx-background-color: #3D566E;
 }

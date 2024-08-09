@@ -80,6 +80,17 @@ public class Main {
         movies[6] = new Movie("Guardians of the Galaxy Vol. 3", dates[6]);
         movies[7] = new Movie("Indiana Jones 5", dates[7]);
 
+        movies[0].setGenre(MovieGenre.ACTION);
+        movies[1].setGenre(MovieGenre.ADVENTURE);
+        movies[2].setGenre(MovieGenre.FANTASY);
+        movies[3].setGenre(MovieGenre.SCI_FI);
+        movies[4].setGenre(MovieGenre.FANTASY);
+        movies[5].setGenre(MovieGenre.ACTION);
+        movies[6].setGenre(MovieGenre.ACTION);
+        movies[7].setGenre(MovieGenre.ADVENTURE);
+
+
+
         for (Movie movie : movies) {
             // Check if the movie already exists in the database
             Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);
