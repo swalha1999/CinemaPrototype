@@ -100,7 +100,6 @@ public class AdminAddMovieController {
             for (Movie movie : movies) {
                 moviesTable.getItems().add(new MovieView(movie));
             }
-            moviesTable.refresh();
         });
     }
 
