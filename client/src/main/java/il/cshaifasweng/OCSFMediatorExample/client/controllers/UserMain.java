@@ -4,26 +4,22 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.ShowMovieDetailsEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.loadFXMLPane;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
@@ -122,8 +118,8 @@ public class UserMain {
     }
 
     @Subscribe
-    public void onShowMovieDetailsEvent(ShowMovieDetailsEvent event) {
-        loadUI("MovieDetails");
+    public void onShowMovieDetailsEvent(ShowSideUIEvent event) {
+        loadUI(event.getUIName());
     }
 
     public void loadUI(String ui) {

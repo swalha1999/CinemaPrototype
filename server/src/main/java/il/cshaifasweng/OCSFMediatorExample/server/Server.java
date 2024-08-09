@@ -114,12 +114,15 @@ public class Server extends AbstractServer {
             case REMOVE_MOVIE_REQUEST:
                 handleRemoveMovieRequest(request, client);
                 break;
+            case GET_MOVIE_REQUEST:
+                handleGetMovieRequest(request, client);
+                break;
 
 
                 //TODO: add more cases here
 
             default:
-                sendErrorMessage(client, "Error! Unknown message received");
+                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
                 break;
         }
     }
@@ -132,68 +135,68 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    //TODO: DEPRECATED REMOVE SAFELY
-    private void handleGetAllMovies(ConnectionToClient client, Message response) {
-        response.setMovies(database.getMoviesManger().getMovies());
-        sendResponse(client, response);
-    }
+//    //TODO: DEPRECATED REMOVE SAFELY
+//    private void handleGetAllMovies(ConnectionToClient client, Message response) {
+//        response.setMovies(database.getMoviesManger().getMovies());
+//        sendResponse(client, response);
+//    }
 
-    //TODO: DEPRECATED REMOVE SAFELY
-    private void handleUpdateMovies(Message request, ConnectionToClient client, Message response) {
-        if (request.getMovies().isEmpty()) {
-            sendErrorMessage(client, "The list of movies to Edit is Empty");
-            return;
-        }
-        for (Movie movie : request.getMovies()) {
-            response.addMovie(database.getMoviesManger().editMovie(movie));
-            System.out.println("Movie updated successfully" + movie.getName());
-        }
-        sendToAllClients(response);
-    }
+//    //TODO: DEPRECATED REMOVE SAFELY
+//    private void handleUpdateMovies(Message request, ConnectionToClient client, Message response) {
+//        if (request.getMovies().isEmpty()) {
+//            sendErrorMessage(client, "The list of movies to Edit is Empty");
+//            return;
+//        }
+//        for (Movie movie : request.getMovies()) {
+//            response.addMovie(database.getMoviesManger().editMovie(movie));
+//            System.out.println("Movie updated successfully" + movie.getName());
+//        }
+//        sendToAllClients(response);
+//    }
 
-    //TODO: DEPRECATED REMOVE SAFELY
-    private void handleDeleteMovies(Message request, ConnectionToClient client, Message response) {
-        if (request.getMovies().isEmpty()) {
-            sendErrorMessage(client, "The list of movies to delete is Empty");
-            return;
-        }
-        for (Movie movie : request.getMovies()) {
-            response.addMovie(database.getMoviesManger().deleteMovie(movie));
-            System.out.println("Movie deleted successfully" + movie.getName());
-        }
-        sendToAllClients(response);
-    }
+//    //TODO: DEPRECATED REMOVE SAFELY
+//    private void handleDeleteMovies(Message request, ConnectionToClient client, Message response) {
+//        if (request.getMovies().isEmpty()) {
+//            sendErrorMessage(client, "The list of movies to delete is Empty");
+//            return;
+//        }
+//        for (Movie movie : request.getMovies()) {
+//            response.addMovie(database.getMoviesManger().deleteMovie(movie));
+//            System.out.println("Movie deleted successfully" + movie.getName());
+//        }
+//        sendToAllClients(response);
+//    }
 
-    //TODO: DEPRECATED REMOVE SAFELY
-    private void handleRegisterUser(Message request, ConnectionToClient client, Message response) {
-        if (request.getData().isEmpty()) {
-            sendErrorMessage(client, "The data to register a new user is Empty");
-            return;
-        }
-        User user = new User();
-        user.setUsername(request.getUser().getUsername());
-        user.setFirstName(request.getUser().getFirstName());
-        user.setLastName(request.getUser().getLastName());
-        user.setEmail(request.getUser().getEmail());
-        user.setSalt(UserDAO.generateSalt());
-        user.setHashedPassword(UserDAO.hashPassword(request.getData(), user.getSalt()));
-        database.getUsersManager().addUser(user);
-        sendResponse(client, response);
-    }
+//    //TODO: DEPRECATED REMOVE SAFELY
+//    private void handleRegisterUser(Message request, ConnectionToClient client, Message response) {
+//        if (request.getData().isEmpty()) {
+//            sendErrorMessage(client, "The data to register a new user is Empty");
+//            return;
+//        }
+//        User user = new User();
+//        user.setUsername(request.getUser().getUsername());
+//        user.setFirstName(request.getUser().getFirstName());
+//        user.setLastName(request.getUser().getLastName());
+//        user.setEmail(request.getUser().getEmail());
+//        user.setSalt(UserDAO.generateSalt());
+//        user.setHashedPassword(UserDAO.hashPassword(request.getData(), user.getSalt()));
+//        database.getUsersManager().addUser(user);
+//        sendResponse(client, response);
+//    }
 
-	//TODO: DEPRECATED REMOVE SAFELY
-    private void handleLogin(Message request, ConnectionToClient client) {
-        if (request.getData().isEmpty()) {
-            sendErrorMessage(client, "The data to login is Empty");
-            return;
-        }
-        User userToLogin = database.getUsersManager().getUserbyUsername(request.getUser().getUsername());
-        if (userToLogin != null && userToLogin.getHashedPassword().equals(UserDAO.hashPassword(request.getData(), userToLogin.getSalt()))) {
-            sendResponse(client, new Message(200, "Login successful"));
-        } else {
-            sendErrorMessage(client, "Username or password is incorrect");
-        }
-    }
+//	//TODO: DEPRECATED REMOVE SAFELY
+//    private void handleLogin(Message request, ConnectionToClient client) {
+//        if (request.getData().isEmpty()) {
+//            sendErrorMessage(client, "The data to login is Empty");
+//            return;
+//        }
+//        User userToLogin = database.getUsersManager().getUserbyUsername(request.getUser().getUsername());
+//        if (userToLogin != null && userToLogin.getHashedPassword().equals(UserDAO.hashPassword(request.getData(), userToLogin.getSalt()))) {
+//            sendResponse(client, new Message(200, "Login successful"));
+//        } else {
+//            sendErrorMessage(client, "Username or password is incorrect");
+//        }
+//    }
 
     private void handleLoginRequest(Message request, ConnectionToClient client) {
         LoginRequest loginRequest = (LoginRequest) request.getDataObject();

@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminMain;
 import il.cshaifasweng.OCSFMediatorExample.client.controllers.UserMain;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,7 @@ public class SimpleChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
+        loadFXML("MovieDetails");
         scene = new Scene(loadFXML("host"), 1200, 900);
         stage.setScene(scene);
         stage.show();
@@ -98,6 +100,10 @@ public class SimpleChatClient extends Application {
             alert.setHeaderText("New Message:");
             alert.show();
         });
+    }
+
+    public static void showSideUI(String UIName){
+        EventBus.getDefault().post(new ShowSideUIEvent(UIName));
     }
 
 

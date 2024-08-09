@@ -27,6 +27,9 @@ public class Movie implements Serializable {
     private Country country;
     private String imageUrl;
     private String trailerUrl;
+    private String englishTitle;
+    private String hebrewTitle;
+    private int durationInMinutes;
 
     @ManyToMany
     @JoinTable(
@@ -35,6 +38,9 @@ public class Movie implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     private Set<Actor> actors = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Producer producer;
 
     @OneToMany(mappedBy = "movie")
     private Set<Screening> screenings = new HashSet<>();
@@ -51,6 +57,7 @@ public class Movie implements Serializable {
 
     public Movie setName(String name) {
         this.name = name;
+        this.englishTitle = name;
         return this ;
     }
 
@@ -131,6 +138,35 @@ public class Movie implements Serializable {
         actor.removeMovie(this);
     }
 
+    public String getEnglishTitle() {
+        return englishTitle;
+    }
+
+    public Movie setEnglishTitle(String englishTitle) {
+        this.englishTitle = englishTitle;
+        this.name = englishTitle;
+        return this;
+    }
+
+    public String getHebrewTitle() {
+        return hebrewTitle;
+    }
+
+    public Movie setHebrewTitle(String hebrewTitle) {
+        this.hebrewTitle = hebrewTitle;
+        return this;
+    }
+
+    public int getDurationInMinutes() {
+        return durationInMinutes;
+    }
+
+    public Movie setDurationInMinutes(int durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
+        return this;
+    }
+
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -183,4 +219,14 @@ public class Movie implements Serializable {
         this.imageUrl = imageUrl;
         return this;
     }
+
+    public Producer getProducer() {
+        return producer;
+    }
+
+    public Movie setProducer(Producer producer) {
+        this.producer = producer;
+        return this;
+    }
+
 }

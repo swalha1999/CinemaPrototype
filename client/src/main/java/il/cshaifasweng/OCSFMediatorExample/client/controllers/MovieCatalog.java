@@ -4,16 +4,13 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.ShowMovieDetailsEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.LoginResponse;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,12 +21,10 @@ import javafx.scene.layout.GridPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.loadFXML;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
 
 public class MovieCatalog {
@@ -111,7 +106,7 @@ public class MovieCatalog {
 
         moviePane.setOnMouseClicked(event -> {
             System.out.println("Movie clicked: " + movie.getTitle());
-            EventBus.getDefault().post(new ShowMovieDetailsEvent(movie.getId()));
+            EventBus.getDefault().post(new ShowSideUIEvent("MovieDetails", movie.getId()));
         });
 
 

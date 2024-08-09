@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -90,6 +91,12 @@ public class AdminMain {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+
+    @Subscribe
+    public void onShowMovieDetailsEvent(ShowSideUIEvent event) {
+        loadUI(event.getUIName());
     }
 
     public void loadUI(String ui) {

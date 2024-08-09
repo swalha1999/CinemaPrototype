@@ -65,6 +65,9 @@ public class SimpleClient extends AbstractClient {
 				case REMOVE_USER_PATCH:
 					EventBus.getDefault().post( new RemoveUserEvent((RemoveUserPatch) message.getDataObject()));
 					break;
+				case GET_MOVIE_RESPONSE:
+					EventBus.getDefault().post( new GetMovieEvent((GetMovieResponse) message.getDataObject()));
+					break;
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
