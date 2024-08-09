@@ -16,7 +16,7 @@ public class MovieView {
     private final SimpleStringProperty country;
     private final SimpleStringProperty imageUrl;
     private final SimpleStringProperty trailerUrl;
-    private final SimpleBooleanProperty hasScreenings;
+
 
     public MovieView(String name, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
         this.name = new SimpleStringProperty(name);
@@ -27,7 +27,7 @@ public class MovieView {
         this.country = new SimpleStringProperty(country);
         this.imageUrl = new SimpleStringProperty(imageUrl);
         this.trailerUrl = new SimpleStringProperty(trailerUrl);
-        this.hasScreenings = new SimpleBooleanProperty(hasScreenings);
+
     }
 
     public MovieView(Movie movie) {
@@ -50,7 +50,7 @@ public class MovieView {
 
         this.imageUrl = new SimpleStringProperty(movie.getImageUrl());
         this.trailerUrl = new SimpleStringProperty(movie.getTrailerUrl());
-        this.hasScreenings = new SimpleBooleanProperty(movie.getScreenings() != null && !movie.getScreenings().isEmpty());
+
     }
 
     // Getter methods for properties
@@ -62,7 +62,7 @@ public class MovieView {
     public String getCountry() { return country.get(); }
     public String getImageUrl() { return imageUrl.get(); }
     public String getTrailerUrl() { return trailerUrl.get(); }
-    public boolean getHasScreenings() { return hasScreenings.get(); }
+
 
     // Property methods for JavaFX bindings
     public SimpleStringProperty nameProperty() { return name; }
@@ -73,5 +73,5 @@ public class MovieView {
     public SimpleStringProperty countryProperty() { return country; }
     public SimpleStringProperty imageUrlProperty() { return imageUrl; }
     public SimpleStringProperty trailerUrlProperty() { return trailerUrl; }
-    public SimpleBooleanProperty hasScreeningsProperty() { return hasScreenings; }
+
 }
