@@ -458,6 +458,8 @@ public class Server extends AbstractServer {
             AddMoviePatch addMoviePatch = new AddMoviePatch()
                     .setMessage("Movie added successfully")
                     .setMovie(addMovieResponse.getMovie());
+
+            sendToAllClients(new Message(addMoviePatch, MessageType.ADD_MOVIE_PATCH));
         }
 
     }
