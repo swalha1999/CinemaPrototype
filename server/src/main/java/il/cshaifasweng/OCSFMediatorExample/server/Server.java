@@ -481,7 +481,7 @@ public class Server extends AbstractServer {
         removeMovieRequest.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
-            case SYSTEM_MANAGER
+            case SYSTEM_MANAGER:
             case MANAGER_OF_ALL_BRANCHES:
             case CONTENT_MANAGER:
                 break;
