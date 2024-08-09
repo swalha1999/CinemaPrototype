@@ -3,7 +3,9 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -68,6 +70,11 @@ public class MovieCatalog {
     public void addMovie(int id, String title, MovieGenre genre, String imagePath) {
         Movie movie = new Movie(id, title, genre, imagePath);
         allMovies.add(movie);
+        renderMovies(allMovies);
+    }
+
+    public void removeMovie(int id) {
+        allMovies.removeIf(movie -> movie.getId() == id);
         renderMovies(allMovies);
     }
 
@@ -139,6 +146,20 @@ public class MovieCatalog {
         Platform.runLater(() -> {
             allMovies.clear();
             event.getMovies().forEach(movie -> addMovie(movie.getId() ,movie.getTitle(), movie.getGenre(), "images\\movie1.jpg"));
+        });
+    }
+
+    @Subscribe
+    public void onAddMoviesEvent(AddMoviesEvent event) {
+        Platform.runLater(() -> {
+            addMovie(event.getMovie().getId(), event.getMovie().getTitle(), event.getMovie().getGenre(), "images\\movie1.jpg");
+        });
+    }
+
+    @Subscribe
+    public void onRemoveMoviesEvent(RemoveMovieEvent event) {
+        Platform.runLater(() -> {
+            removeMovie(event.getMovie().getId());
         });
     }
 

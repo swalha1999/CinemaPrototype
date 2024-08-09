@@ -11,9 +11,9 @@ public class AddMoviePatch implements Patch{
         this.movie = null;
     }
 
-    public AddMoviePatch(Movie movie) {
-        this.movie = movie;
-        this.Message = "AddMoviePatch";
+    public AddMoviePatch(AddMoviePatch addMoviePatch) {
+        this.Message = addMoviePatch.getMessage();
+        this.movie = addMoviePatch.getMovie();
     }
 
     public Movie getMovie() {

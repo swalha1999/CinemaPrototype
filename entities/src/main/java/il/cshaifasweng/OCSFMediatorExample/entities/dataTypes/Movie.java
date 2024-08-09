@@ -172,12 +172,19 @@ public class Movie implements Serializable {
     public String toString() {
         return "Movie{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", englishTitle='" + englishTitle + '\'' +
+                ", hebrewTitle='" + hebrewTitle + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", description='" + description + '\'' +
                 ", language=" + language +
                 ", genre=" + genre +
                 ", country=" + country +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", trailerUrl='" + trailerUrl + '\'' +
+                ", durationInMinutes=" + durationInMinutes +
+//                ", actors=" + actors +
+//                ", producer=" + producer +
+//                ", screenings=" + screenings +
                 '}';
     }
 

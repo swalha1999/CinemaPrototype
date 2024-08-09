@@ -19,7 +19,8 @@ public class MovieView {
     private final SimpleStringProperty trailerUrl;
 
 
-    public MovieView(String englishTitle,String hebrewTitle, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
+    public MovieView(int id, String englishTitle,String hebrewTitle, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
+        this.id = id;
         this.englishTitle = new SimpleStringProperty(englishTitle);
         this.hebrewTitle = new SimpleStringProperty(hebrewTitle);
         this.releaseDate = new SimpleObjectProperty<>(releaseDate);
@@ -33,6 +34,7 @@ public class MovieView {
     }
 
     public MovieView(Movie movie) {
+        this.id = movie.getId();
         this.englishTitle = new SimpleStringProperty(movie.getEnglishTitle());
         this.hebrewTitle = new SimpleStringProperty(movie.getHebrewTitle());
         this.releaseDate = new SimpleObjectProperty<>(movie.getReleaseDate());
@@ -66,6 +68,7 @@ public class MovieView {
     public String getCountry() { return country.get(); }
     public String getImageUrl() { return imageUrl.get(); }
     public String getTrailerUrl() { return trailerUrl.get(); }
+    public int getId() { return id; }
 
 
     // Property methods for JavaFX bindings
@@ -78,5 +81,6 @@ public class MovieView {
     public SimpleStringProperty countryProperty() { return country; }
     public SimpleStringProperty imageUrlProperty() { return imageUrl; }
     public SimpleStringProperty trailerUrlProperty() { return trailerUrl; }
+    public SimpleStringProperty idProperty() { return new SimpleStringProperty(String.valueOf(id)); }
 
 }

@@ -52,57 +52,83 @@ public class Main {
     private static void generateMovies() throws Exception {
         Movie[] movies = new Movie[8];
         Date[] dates = new Date[8];
-
         Calendar calendar = Calendar.getInstance();
 
-        calendar.set(2024, Calendar.AUGUST, 5);
-        dates[0] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 6);
-        dates[1] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 10);
-        dates[2] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 7);
-        dates[3] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 16);
-        dates[4] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 18);
-        dates[5] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 11);
-        dates[6] = calendar.getTime();
-        calendar.set(2024, Calendar.AUGUST, 6);
-        dates[7] = calendar.getTime();
+        // Helper method to create dates
+        dates[0] = createDate(calendar, 2024, Calendar.AUGUST, 5);
+        dates[1] = createDate(calendar, 2024, Calendar.AUGUST, 6);
+        dates[2] = createDate(calendar, 2024, Calendar.AUGUST, 10);
+        dates[3] = createDate(calendar, 2024, Calendar.AUGUST, 7);
+        dates[4] = createDate(calendar, 2024, Calendar.AUGUST, 16);
+        dates[5] = createDate(calendar, 2024, Calendar.AUGUST, 18);
+        dates[6] = createDate(calendar, 2024, Calendar.AUGUST, 11);
+        dates[7] = createDate(calendar, 2024, Calendar.AUGUST, 6);
 
-        movies[0] = new Movie("Mission: Impossible – Dead Reckoning Part Two", dates[0]);
-        movies[1] = new Movie("Dune: Part Two", dates[1]);
-        movies[2] = new Movie("Avatar 3", dates[2]);
-        movies[3] = new Movie("The Marvels", dates[3]);
-        movies[4] = new Movie("Fantastic Beasts 4", dates[4]);
-        movies[5] = new Movie("Spider-Man: Beyond the Spider-Verse", dates[5]);
-        movies[6] = new Movie("Guardians of the Galaxy Vol. 3", dates[6]);
-        movies[7] = new Movie("Indiana Jones 5", dates[7]);
+        String[] movieTitles = {
+                "Mission: Impossible – Dead Reckoning Part Two",
+                "Dune: Part Two",
+                "Avatar 3",
+                "The Marvels",
+                "Fantastic Beasts 4",
+                "Spider-Man: Beyond the Spider-Verse",
+                "Guardians of the Galaxy Vol. 3",
+                "Indiana Jones 5"
+        };
 
-        movies[0].setGenre(MovieGenre.ACTION);
-        movies[1].setGenre(MovieGenre.ADVENTURE);
-        movies[2].setGenre(MovieGenre.FANTASY);
-        movies[3].setGenre(MovieGenre.SCI_FI);
-        movies[4].setGenre(MovieGenre.FANTASY);
-        movies[5].setGenre(MovieGenre.ACTION);
-        movies[6].setGenre(MovieGenre.ACTION);
-        movies[7].setGenre(MovieGenre.ADVENTURE);
+        String[] hebrewTitles = {
+                "משימה בלתי אפשרית: דין ההרס חלק 2",
+                "חולית: חלק שני",
+                "אווטאר 3",
+                "הפלאים",
+                "חיות הפלא 4",
+                "ספיידרמן: מעבר לעולם העכביש",
+                "שומרי הגלקסיה: חלק 3",
+                "אינדיאנה ג'ונס 5"
+        };
 
+        MovieGenre[] genres = {
+                MovieGenre.ACTION,
+                MovieGenre.ADVENTURE,
+                MovieGenre.FANTASY,
+                MovieGenre.SCI_FI,
+                MovieGenre.FANTASY,
+                MovieGenre.ACTION,
+                MovieGenre.ACTION,
+                MovieGenre.ADVENTURE
+        };
 
+        String[] descriptions = {
+                "Ethan Hunt and his IMF team, along with some familiar allies, face a new and deadly threat.",
+                "The next chapter in the Dune saga continues the story of Paul Atreides.",
+                "The third installment in James Cameron's epic science fiction series.",
+                "Carol Danvers, Kamala Khan, and Monica Rambeau team up for an intergalactic adventure.",
+                "The continuation of Newt Scamander's adventures in the magical world.",
+                "The final chapter of the Spider-Verse trilogy.",
+                "The Guardians face their greatest threat yet in this epic conclusion.",
+                "Indiana Jones returns for one last adventure."
+        };
 
-        for (Movie movie : movies) {
+        for (int i = 0; i < movies.length; i++) {
+            movies[i] = new Movie(movieTitles[i], dates[i]);
+            movies[i].setGenre(genres[i]);
+            movies[i].setHebrewTitle(hebrewTitles[i]);
+            movies[i].setDescription(descriptions[i]);
+
             // Check if the movie already exists in the database
             Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);
-            query.setParameter("name", movie.getName());
+            query.setParameter("name", movies[i].getName());
             List<Movie> existingMovies = query.list();
 
             if (existingMovies.isEmpty()) {
-                session.save(movie);
+                session.save(movies[i]);
                 session.flush();
             }
         }
+    }
+
+    private static Date createDate(Calendar calendar, int year, int month, int day) {
+        calendar.set(year, month, day);
+        return calendar.getTime();
     }
 
     private static void generateAdmin() {

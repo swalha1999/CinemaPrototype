@@ -89,6 +89,7 @@ public class MovieDAO {
         movie.setLanguage(addMovieRequest.getLanguage());
         movie.setGenre(addMovieRequest.getGenre());
         movie.setCountry(addMovieRequest.getCountry());
+        movie.setHebrewTitle(addMovieRequest.getHebrewTitle());
         // TODO: movie.setImageUrl(addMovieRequest.getImageUrl());
 
         Transaction transaction = null;

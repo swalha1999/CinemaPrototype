@@ -10,6 +10,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
@@ -17,6 +18,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -98,8 +100,8 @@ public class AdminAddMovieController {
         moviesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Platform.runLater(()->{
-                    titleEnglishField.setText("i am the problem number 1");
-                    titleHebrewField.setText("i am the problem number 2");
+                    titleEnglishField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
+                    titleHebrewField.setText(moviesTable.getSelectionModel().getSelectedItem().getHebrewTitle());
                     genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
                     descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getGenre());
                 });
@@ -118,34 +120,34 @@ public class AdminAddMovieController {
         });
     }
 
+
+
     @FXML
     void Clear(ActionEvent event) {
 
     }
 
     @FXML
-    void Delete(ActionEvent event) {
+    void Delete(ActionEvent event) throws IOException {
+        RemoveMovieRequest removeMovieRequest = new RemoveMovieRequest()
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setMovieId(moviesTable.getSelectionModel().getSelectedItem().getId());
 
+        SimpleClient.getClient().sendToServer(new Message(removeMovieRequest, MessageType.REMOVE_MOVIE_REQUEST));
     }
 
     @FXML
     void Insert(ActionEvent event) throws IOException {
         AddMovieRequest addMovieRequest = new AddMovieRequest()
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setEnglishTitle(titleEnglishField.toString())
-                .setHebrewTitle(titleHebrewColumn.toString())
+                .setEnglishTitle(titleEnglishField.getText())
+                .setHebrewTitle(titleHebrewColumn.getText())
                 .setGenre(MovieGenre.ALL)
-                .setDescription(descriptionField.toString());
+                .setDescription(descriptionField.getText());
 
         SimpleClient.getClient().sendToServer(new Message(addMovieRequest, MessageType.ADD_MOVIE_REQUEST));
     }
 
-    @Subscribe
-    public void onAddMovieEvent(AddMoviesEvent event){
-        Platform.runLater(()->{
-            moviesTable.getItems().add(new MovieView(event.getMovie()));
-        });
-    }
 
     @FXML
     void Update(ActionEvent event) {
@@ -159,6 +161,25 @@ public class AdminAddMovieController {
     @FXML
     void importImage(ActionEvent event) {
 
+    }
+
+    @Subscribe
+    public void onAddMovieEvent(AddMoviesEvent event){
+        Platform.runLater(()->{
+            moviesTable.getItems().add(new MovieView(event.getMovie()));
+        });
+    }
+
+    @Subscribe
+    public void onRemoveMovieEvent(RemoveMovieEvent event){
+        Platform.runLater(()->{
+            for (MovieView movieView : moviesTable.getItems()) {
+                if(movieView.getId() == event.getMovie().getId()){
+                    moviesTable.getItems().remove(movieView);
+                    break;
+                }
+            }
+        });
     }
 
 }

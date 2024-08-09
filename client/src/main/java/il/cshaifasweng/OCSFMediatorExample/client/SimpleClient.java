@@ -2,7 +2,9 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.AddMoviePatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveMoviePatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveUserPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import org.greenrobot.eventbus.EventBus;
@@ -65,7 +67,12 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post( new GetMovieEvent((GetMovieResponse) message.getDataObject()));
 					break;
 				case ADD_MOVIE_PATCH:
-					EventBus.getDefault().post( new AddMoviesEvent((AddMovieResponse) message.getDataObject()));
+					EventBus.getDefault().post( new AddMoviesEvent((AddMoviePatch) message.getDataObject()));
+					break;
+				case REMOVE_MOVIE_PATCH:
+					EventBus.getDefault().post( new RemoveMovieEvent((RemoveMoviePatch) message.getDataObject()));
+					break;
+
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
