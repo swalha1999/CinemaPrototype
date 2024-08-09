@@ -35,7 +35,7 @@ public class SimpleChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
-        loadFXML("MovieDetails");
+        Pane movieDetails = loadFXMLPane("MovieDetails");
         scene = new Scene(loadFXML("host"), 1200, 900);
         stage.setScene(scene);
         stage.show();
@@ -46,12 +46,19 @@ public class SimpleChatClient extends Application {
     }
 
     // this function is used to load the main scene fxml file
-    public static Parent loadFXML(String fxml) throws IOException {
-        if (!SimpleChatClient.fxml.containsKey(fxml)) {
-            FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
-            SimpleChatClient.fxml.put(fxml, fxmlLoader.load());
+    public static Parent loadFXML(String fxml){
+
+        try {
+            if (!SimpleChatClient.fxml.containsKey(fxml)) {
+                FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
+                SimpleChatClient.fxml.put(fxml, fxmlLoader.load());
+            }
+            return SimpleChatClient.fxml.get(fxml);
+        } catch (IOException e) {
+            System.err.println("Error loading fxml file: " + fxml);
+            e.printStackTrace();
         }
-        return SimpleChatClient.fxml.get(fxml);
+        return null;
     }
 
     // this function is used to load fxml files that are not the main scene

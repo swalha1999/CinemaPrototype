@@ -118,7 +118,7 @@ public class UserMain {
     }
 
     @Subscribe
-    public void onShowMovieDetailsEvent(ShowSideUIEvent event) {
+    public void onShowSideUIEvent(ShowSideUIEvent event) {
         loadUI(event.getUIName());
     }
 

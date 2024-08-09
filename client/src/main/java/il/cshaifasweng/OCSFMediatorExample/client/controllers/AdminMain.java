@@ -95,7 +95,7 @@ public class AdminMain {
 
 
     @Subscribe
-    public void onShowMovieDetailsEvent(ShowSideUIEvent event) {
+    public void onShowSideUIEvent(ShowSideUIEvent event) {
         loadUI(event.getUIName());
     }
 
