@@ -60,7 +60,7 @@ public class AdminMain {
 
     @FXML
     private void ShowScreenings(ActionEvent event) {
-        loadUI("Screening");
+        loadUI("AdminScreening");
     }
 
     @FXML

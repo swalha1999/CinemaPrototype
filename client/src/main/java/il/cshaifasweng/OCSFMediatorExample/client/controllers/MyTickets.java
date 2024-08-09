@@ -34,7 +34,7 @@ public class MyTickets {
         idLabel.setLayoutY(14.0);
         idLabel.getStyleClass().add("ticket-label");
 
-        Label screeningLabel = new Label("Screening: " + screening);
+        Label screeningLabel = new Label("AdminScreening: " + screening);
         screeningLabel.setLayoutX(14.0);
         screeningLabel.setLayoutY(34.0);
         screeningLabel.getStyleClass().add("ticket-label");

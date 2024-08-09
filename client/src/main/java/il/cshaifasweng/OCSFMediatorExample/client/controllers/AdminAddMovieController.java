@@ -7,6 +7,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -92,6 +93,16 @@ public class AdminAddMovieController {
         titleHebrewColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        moviesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                //moviesTable.getSelectionModel().clearSelection();
+                Platform.runLater(()->{
+                    genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getTitle());
+                    descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getGenre());
+                });
+            }
+        });
     }
 
     @Subscribe
@@ -122,6 +133,10 @@ public class AdminAddMovieController {
 
     @FXML
     void Update(ActionEvent event) {
+        MovieView selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
+        if (selectedMovie == null) {
+            return;
+        }
 
     }
 
