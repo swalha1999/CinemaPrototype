@@ -34,12 +34,23 @@ public class MovieView {
         this.name = new SimpleStringProperty(movie.getName());
         this.releaseDate = new SimpleObjectProperty<>(movie.getReleaseDate());
         this.description = new SimpleStringProperty(movie.getDescription());
-        this.language = new SimpleStringProperty(movie.getLanguage().toString());
-        this.genre = new SimpleStringProperty(movie.getGenre().toString());
-        this.country = new SimpleStringProperty(movie.getCountry().toString());
+
+        // Null checks before calling toString()
+        this.language = new SimpleStringProperty(
+                movie.getLanguage() != null ? movie.getLanguage().toString() : "Unknown"
+        );
+
+        this.genre = new SimpleStringProperty(
+                movie.getGenre() != null ? movie.getGenre().toString() : "Unknown"
+        );
+
+        this.country = new SimpleStringProperty(
+                movie.getCountry() != null ? movie.getCountry().toString() : "Unknown"
+        );
+
         this.imageUrl = new SimpleStringProperty(movie.getImageUrl());
         this.trailerUrl = new SimpleStringProperty(movie.getTrailerUrl());
-        this.hasScreenings = new SimpleBooleanProperty(!movie.getScreenings().isEmpty());
+        this.hasScreenings = new SimpleBooleanProperty(movie.getScreenings() != null && !movie.getScreenings().isEmpty());
     }
 
     // Getter methods for properties
