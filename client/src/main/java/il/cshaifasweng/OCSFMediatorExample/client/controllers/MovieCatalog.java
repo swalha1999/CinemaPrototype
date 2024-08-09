@@ -4,12 +4,16 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowMovieDetailsEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.LoginResponse;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,10 +24,12 @@ import javafx.scene.layout.GridPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.loadFXML;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
 
 public class MovieCatalog {
@@ -63,8 +69,8 @@ public class MovieCatalog {
         sciFiButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.SCI_FI));
     }
 
-    public void addMovie(String title, MovieGenre genre, String imagePath) {
-        Movie movie = new Movie(title, genre, imagePath);
+    public void addMovie(int id, String title, MovieGenre genre, String imagePath) {
+        Movie movie = new Movie(id, title, genre, imagePath);
         allMovies.add(movie);
         renderMovies(allMovies);
     }
@@ -103,7 +109,11 @@ public class MovieCatalog {
 
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
-        moviePane.setOnMouseClicked(event -> System.out.println("Movie clicked: " + movie.getTitle()));
+        moviePane.setOnMouseClicked(event -> {
+            System.out.println("Movie clicked: " + movie.getTitle());
+            EventBus.getDefault().post(new ShowMovieDetailsEvent(movie.getId()));
+        });
+
 
         return moviePane;
     }
@@ -132,17 +142,19 @@ public class MovieCatalog {
     public void onGetAllMoviesEvent(GetAllMoviesEvent event) {
         Platform.runLater(() -> {
             allMovies.clear();
-            event.getMovies().forEach(movie -> addMovie(movie.getTitle(), movie.getGenre(), "images\\movie1.jpg"));
+            event.getMovies().forEach(movie -> addMovie(movie.getId() ,movie.getTitle(), movie.getGenre(), "images\\movie1.jpg"));
         });
     }
 
     // Inner class to represent a Movie
     private static class Movie {
+        private final int id;
         private final String title;
         private final MovieGenre genre ;
         private final String imagePath;
 
-        public Movie(String title, MovieGenre genre, String imagePath) {
+        public Movie(int id, String title, MovieGenre genre, String imagePath) {
+            this.id = id;
             this.title = title;
             this.genre = genre;
             this.imagePath = imagePath;
@@ -159,6 +171,10 @@ public class MovieCatalog {
 
         public String getImagePath() {
             return imagePath;
+        }
+
+        public int getId() {
+            return id;
         }
     }
 }

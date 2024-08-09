@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminMain;
+import il.cshaifasweng.OCSFMediatorExample.client.controllers.UserMain;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -38,16 +40,16 @@ public class SimpleChatClient extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        if (!SimpleChatClient.fxml.containsKey(fxml)) {
-            SimpleChatClient.fxml.put(fxml, loadFXML(fxml));
-        }
-        scene.setRoot(SimpleChatClient.fxml.get(fxml));
+        scene.setRoot(loadFXML(fxml));
     }
 
     // this function is used to load the main scene fxml file
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static Parent loadFXML(String fxml) throws IOException {
+        if (!SimpleChatClient.fxml.containsKey(fxml)) {
+            FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
+            SimpleChatClient.fxml.put(fxml, fxmlLoader.load());
+        }
+        return SimpleChatClient.fxml.get(fxml);
     }
 
     // this function is used to load fxml files that are not the main scene

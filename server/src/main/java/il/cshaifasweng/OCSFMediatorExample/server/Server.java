@@ -54,24 +54,24 @@ public class Server extends AbstractServer {
             case "add client":
                 handleAddClient(client, response);
                 break;
-            case "echo all":
-                sendToAllClients(response);
-                break;
-            case "get all movies":
-                handleGetAllMovies(client, response);
-                break;
-            case "update movies":
-                handleUpdateMovies(request, client, response);
-                break;
-            case "delete movies":
-                handleDeleteMovies(request, client, response);
-                break;
-            case "register a new user":
-                handleRegisterUser(request, client, response);
-                break;
-            case "login":
-                handleLogin(request, client);
-                break;
+//            case "echo all":
+//                sendToAllClients(response);
+//                break;
+//            case "get all movies":
+//                handleGetAllMovies(client, response);
+//                break;
+//            case "update movies":
+//                handleUpdateMovies(request, client, response);
+//                break;
+//            case "delete movies":
+//                handleDeleteMovies(request, client, response);
+//                break;
+//            case "register a new user":
+//                handleRegisterUser(request, client, response);
+//                break;
+//            case "login":
+//                handleLogin(request, client);
+//                break;
             default:
                 sendErrorMessage(client, "Error! Unknown message received");
                 break;
@@ -114,6 +114,7 @@ public class Server extends AbstractServer {
             case REMOVE_MOVIE_REQUEST:
                 handleRemoveMovieRequest(request, client);
                 break;
+
 
                 //TODO: add more cases here
 
@@ -507,6 +508,25 @@ public class Server extends AbstractServer {
 
             sendToAllLoggedInUsers(new Message(removeMoviePatch, MessageType.REMOVE_MOVIE_PATCH));
         }
+    }
+
+    private void handleGetMovieRequest(Message request, ConnectionToClient client) {
+        GetMovieRequest getMovieRequest = (GetMovieRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(getMovieRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        getMovieRequest.setUsername(loggedInUser.getUsername());
+        getMovieRequest.setUserId(loggedInUser.getUserId());
+
+        System.out.println("Get movie request received:" + getMovieRequest.toString()); //TODO: remove this line debug only
+        GetMovieResponse getMovieResponse = database.getMoviesManger().getMovie(getMovieRequest);
+        System.out.println("Get movie response: " + getMovieResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(getMovieResponse, MessageType.GET_MOVIE_RESPONSE));
     }
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {

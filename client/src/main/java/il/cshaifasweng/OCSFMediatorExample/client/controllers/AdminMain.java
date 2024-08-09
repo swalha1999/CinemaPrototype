@@ -92,8 +92,13 @@ public class AdminMain {
         });
     }
 
-    private void loadUI(String ui) {
-        mainPane.setCenter(loadFXMLPane(ui));
+    public void loadUI(String ui) {
+        Platform.runLater(() ->
+                {
+                    mainPane.setCenter(loadFXMLPane(ui));
+                }
+        );
+
     }
 
 }

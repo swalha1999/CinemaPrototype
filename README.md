@@ -17,7 +17,6 @@ hight = 900
 ## `Take a Task fom here and do it `
 ###### TODO: add remove movie to movie catalog
 ###### TODO:Link block and unblock user
-###### TODO:Gui for Screening
 ###### TODO:Link admin add movie button
 ###### TODO:Make Req and Res to the Movie DIO
 ###### TODO:Make Req and Res to the Screening DIO
@@ -26,3 +25,4 @@ hight = 900
 
 ## `Done tasks but ur name :)`
 ###### TODO: FIX the remove user button patch not sent DONE BY: **Swalha**
+###### TODO:Gui for Screening DONE BY: **abd**

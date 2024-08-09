@@ -3,9 +3,11 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetAllMoviesResponse;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RemoveMovieResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -130,4 +132,14 @@ public class MovieDAO {
 
         return new RemoveMovieResponse().setSuccess(true).setMessage("Movie removed successfully").setMovie(movie);
     }
+
+    public GetMovieResponse getMovie(GetMovieRequest getMovieRequest) {
+        Movie movie = session.get(Movie.class, getMovieRequest.getMovieId());
+        if (movie != null) {
+            return new GetMovieResponse().setSuccess(true).setMessage("Movie retrieved successfully").setMovie(movie);
+        }
+
+        return new GetMovieResponse().setSuccess(false).setMessage("Movie not found");
+    }
+
 }

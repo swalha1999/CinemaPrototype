@@ -36,13 +36,13 @@
       </AnchorPane>
 
         <!-- Right Side -->
-        <TableView fx:id="moviesTable" layoutX="320.0" layoutY="36.0" prefHeight="619.0" prefWidth="858.0">
+        <TableView fx:id="moviesTable" layoutX="282.0" layoutY="36.0" prefHeight="604.0" prefWidth="896.0">
             <columns>
                 <TableColumn fx:id="titleEnglishColumn" prefWidth="201.0" text="Movie Title In English" />
-            <TableColumn fx:id="titleHebrewColumn" prefWidth="174.0" text="Movie Title In Hebrew" />
-                <TableColumn fx:id="genreColumn" prefWidth="124.0" text="Genre" />
-                <TableColumn fx:id="producerColumn" prefWidth="164.0" text="Producer" />
-                <TableColumn fx:id="descriptionColumn" prefWidth="193.0" text="Description" />
+            <TableColumn fx:id="titleHebrewColumn" prefWidth="179.0" text="Movie Title In Hebrew" />
+                <TableColumn fx:id="genreColumn" prefWidth="126.0" text="Genre" />
+                <TableColumn fx:id="producerColumn" prefWidth="157.0" text="Producer" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="231.0" text="Description" />
             </columns>
         </TableView>
     </children>
