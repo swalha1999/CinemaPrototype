@@ -105,6 +105,10 @@ public class Server extends AbstractServer {
             case REMOVE_USER_REQUEST:
                 handleRemoveUserRequest(request, client);
                 break;
+            case GET_ALL_MOVIES_REQUEST:
+                handleGetAllMoviesRequest(request, client);
+                break;
+
                 //TODO: add more cases here
 
             default:
@@ -261,7 +265,6 @@ public class Server extends AbstractServer {
             return;
         }
 
-
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER :
             case MANAGER_OF_ALL_BRANCHES :
@@ -409,6 +412,25 @@ public class Server extends AbstractServer {
             sendToAllAdmins(new Message(newUserAddedPatch, MessageType.REMOVE_USER_PATCH));
         }
 
+    }
+
+    private void handleGetAllMoviesRequest(Message request, ConnectionToClient client) {
+        GetAllMoviesRequest getAllMoviesRequest = (GetAllMoviesRequest) request.getDataObject();
+        LoggedInUser loggedInUser = sessionKeys.get(getAllMoviesRequest.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        getAllMoviesRequest.setUsername(loggedInUser.getUsername());
+        getAllMoviesRequest.setUserId(loggedInUser.getUserId());
+
+        System.out.println("Get all movies request received:" + getAllMoviesRequest.toString()); //TODO: remove this line debug only
+        GetAllMoviesResponse getAllMoviesResponse = database.getMoviesManger().getAllMovies(getAllMoviesRequest);
+        System.out.println("Get all movies response: " + getAllMoviesResponse.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, new Message(getAllMoviesResponse, MessageType.GET_ALL_MOVIES_RESPONSE));
     }
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {

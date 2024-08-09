@@ -1,6 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetAllMoviesResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -86,5 +88,10 @@ public class MovieDAO {
 
     public Movie getMovie(int id) {
         return session.get(Movie.class, id);
+    }
+
+    public GetAllMoviesResponse getAllMovies(GetAllMoviesRequest getAllMoviesRequest) {
+        List<Movie> movies = getMovies();
+        return new GetAllMoviesResponse(movies).setSucceed(true).setMessage("Movies retrieved successfully");
     }
 }
