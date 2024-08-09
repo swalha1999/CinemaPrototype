@@ -83,7 +83,7 @@ public class UserMain {
 
     @FXML
     void showDashBoard(ActionEvent event) {
-        loadUI("AdminAddMovie");
+        loadUI("UserDashBoard");
     }
 
 
