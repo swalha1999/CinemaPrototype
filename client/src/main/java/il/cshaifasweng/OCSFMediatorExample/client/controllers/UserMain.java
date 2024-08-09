@@ -8,6 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowMovieDetailsEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -120,7 +121,12 @@ public class UserMain {
         });
     }
 
-    private void loadUI(String ui) {
+    @Subscribe
+    public void onShowMovieDetailsEvent(ShowMovieDetailsEvent event) {
+        loadUI("MovieDetails");
+    }
+
+    public void loadUI(String ui) {
         Platform.runLater(() -> {
             mainPane.setCenter(loadFXMLPane(ui));
         });
