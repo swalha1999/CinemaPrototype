@@ -49,48 +49,54 @@ public class Movie implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public Movie setName(String name) {
         this.name = name;
+        return this ;
     }
 
     public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public Movie setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+        return this ;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Movie setDescription(String description) {
         this.description = description;
+        return this ;
     }
 
     public Language getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public Movie setLanguage(Language language) {
         this.language = language;
+        return this ;
     }
 
     public MovieGenre getGenre() {
         return genre;
     }
 
-    public void setGenre(MovieGenre genre) {
+    public Movie setGenre(MovieGenre genre) {
         this.genre = genre;
+        return this ;
     }
 
     public Country getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public Movie setCountry(Country country) {
         this.country = country;
+        return this ;
     }
 
     public int getId() {
@@ -159,13 +165,22 @@ public class Movie implements Serializable {
         return this.getReleaseDate();
     }
 
-    public void setDate(Date date) {
+    public Movie setDate(Date date) {
         this.setReleaseDate(date);
+        return this;
     }
 
     public String getImageUrl() { return imageUrl;
     }
 
     public String getTrailerUrl() { return trailerUrl;
+    }
+    public Movie setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
+        return this;
+    }
+    public Movie setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
     }
 }

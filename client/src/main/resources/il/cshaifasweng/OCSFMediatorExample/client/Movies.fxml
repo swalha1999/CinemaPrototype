@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane stylesheets="@css/AddMovies.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.Movies">
@@ -41,8 +40,6 @@
                 <Label fx:id="Price_Label" layoutX="389.0" layoutY="143.0" styleClass="label" text="Price" />
                 <TextField fx:id="Price_Txt" layoutX="458.0" layoutY="139.0" prefHeight="25.0" prefWidth="155.0" styleClass="text-field" />
                 <Button fx:id="ImportButton" layoutX="851.0" layoutY="91.0" mnemonicParsing="false" onAction="#ImportPicture" styleClass="button" text="Import" />
-                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="768.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view" />
-                <ImageView fitHeight="188.0" fitWidth="200.0" layoutX="768.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view" />
             </children>
         </AnchorPane>
     </children>
