@@ -40,7 +40,7 @@ public class UserView {
     }
 
     // Getter methods for properties
-    public String getUserName() { return userName.get(); }
+    public String getUsername() { return userName.get(); }
     public String getFirstName() { return firstName.get(); }
     public String getLastName() { return lastName.get(); }
     public String getEmail() { return email.get(); }
@@ -60,4 +60,5 @@ public class UserView {
     public SimpleBooleanProperty isLoggedProperty() { return isLogged; }
     public SimpleBooleanProperty isLockedProperty() { return isBlocked; }
     public SimpleBooleanProperty isDeletedProperty() { return isDeleted; }
+
 }

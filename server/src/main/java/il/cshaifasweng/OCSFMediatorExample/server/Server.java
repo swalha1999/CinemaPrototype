@@ -398,6 +398,17 @@ public class Server extends AbstractServer {
         System.out.println("Remove user response: " + removeUserResponse.toString()); //TODO: remove this line debug only
 
         sendResponse(client, new Message(removeUserResponse, MessageType.REMOVE_USER_RESPONSE));
+
+        // send a patch to all the logged-in admins to notify them that a user has been removed
+        if (removeUserResponse.isSuccess()) {
+            NewUserAddedPatch newUserAddedPatch = new NewUserAddedPatch()
+                    .setSuccess(true)
+                    .setMessage("User removed successfully")
+                    .setUser(database.getUsersManager().getUserById(removeUserResponse.getUserId()));
+
+            sendToAllAdmins(new Message(newUserAddedPatch, MessageType.REMOVE_USER_PATCH));
+        }
+
     }
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {

@@ -318,6 +318,7 @@ public class UserDAO {
         User user = null;
         RemoveUserResponse removeUserResponse = new RemoveUserResponse();
 
+        // TODO: bug probably here
         if (removeUserRequest.getUserId() != 0){
             user = getUserById(removeUserRequest.getUserId());
         }else if(!removeUserRequest.getUsername().equals("admin")){
@@ -335,7 +336,8 @@ public class UserDAO {
 
         removeUserResponse
                 .setSuccess(true)
-                .setMessage("User removed successfully");
+                .setMessage("User removed successfully")
+                .setUserId(user.getId());
 
         return removeUserResponse;
     }

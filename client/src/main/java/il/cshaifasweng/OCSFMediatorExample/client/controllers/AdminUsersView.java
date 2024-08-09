@@ -5,11 +5,13 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.NewUserAddedEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllUsersRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveUserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -109,6 +111,18 @@ public class AdminUsersView {
         });
     }
 
+    @Subscribe
+    public void onRemoveUserEvent(RemoveUserEvent event){
+        Platform.runLater(()->{
+            for (UserView userView : Users_Table.getItems()) {
+                if(userView.getUsername().equals(event.getUsername())){
+                    Users_Table.getItems().remove(userView);
+                    break;
+                }
+            }
+        });
+    }
+
     @FXML
     void BlockUser(ActionEvent event) {
 
@@ -118,6 +132,21 @@ public class AdminUsersView {
     }
 
     public void RemoveUser(ActionEvent actionEvent) {
+        // get the selected user
+        UserView selectedUser = Users_Table.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            return;
+        }
+        RemoveUserRequest removeUserRequest = new RemoveUserRequest()
+                .setUsername(SessionKeysStorage.getInstance().getUsername())
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setUsernameToRemove(selectedUser.getUsername());
+        try {
+            SimpleClient.getClient().sendToServer(new Message(removeUserRequest, MessageType.REMOVE_USER_REQUEST));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void UnlockUser(ActionEvent actionEvent) {
