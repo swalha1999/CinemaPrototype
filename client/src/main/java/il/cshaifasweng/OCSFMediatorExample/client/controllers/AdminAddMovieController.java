@@ -64,7 +64,7 @@ public class AdminAddMovieController {
 
     @FXML
     public void initialize() {
-        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+//        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
     }
 
     @FXML
