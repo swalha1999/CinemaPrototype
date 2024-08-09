@@ -453,13 +453,13 @@ public class Server extends AbstractServer {
 
         sendResponse(client, new Message(addMovieResponse, MessageType.ADD_MOVIE_RESPONSE));
 
-        // send a patch to all the logged-in admins to notify them that a new movie has been added
+        // send a patch to all the logged-in users
         if (addMovieResponse.isSuccess()) {
             AddMoviePatch addMoviePatch = new AddMoviePatch()
                     .setMessage("Movie added successfully")
                     .setMovie(addMovieResponse.getMovie());
 
-            sendToAllClients(new Message(addMoviePatch, MessageType.ADD_MOVIE_PATCH));
+            sendToAllLoggedInUsers(new Message(addMoviePatch, MessageType.ADD_MOVIE_PATCH));
         }
 
     }
