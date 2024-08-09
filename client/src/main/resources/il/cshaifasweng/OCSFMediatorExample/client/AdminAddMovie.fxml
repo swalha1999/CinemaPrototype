@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,37 +10,39 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/AdminAddMovie.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminAddMovieController">
     <children>
-      <AnchorPane layoutX="39.0" layoutY="65.0" prefHeight="603.0" prefWidth="200.0">
+      <AnchorPane layoutX="43.0" layoutY="58.0" prefHeight="715.0" prefWidth="200.0">
          <children>
                <Button fx:id="importButton" layoutX="75.0" layoutY="185.0" onAction="#importImage" styleClass="import-button" text="Import" />
                <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="173.0" layoutX="14.0" layoutY="14.0" />
    
-               <Label layoutX="18.0" layoutY="227.0" styleClass="form-label" text="Movie Title:" />
-               <TextField fx:id="titleField" layoutX="17.0" layoutY="247.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Label layoutX="18.0" layoutY="227.0" styleClass="form-label" text="Movie Title in english:" />
+               <TextField fx:id="titleEnglishField" layoutX="17.0" layoutY="247.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
    
-               <Label layoutX="17.0" layoutY="294.0" styleClass="form-label" text="Genre:" />
-               <TextField fx:id="genreField" layoutX="17.0" layoutY="314.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Label layoutX="17.0" layoutY="366.0" styleClass="form-label" text="Genre:" />
+               <TextField fx:id="genreField" layoutX="17.0" layoutY="386.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
    
-               <Label layoutX="17.0" layoutY="363.0" styleClass="form-label" text="Duration:" />
-               <TextField fx:id="durationField" layoutX="17.0" layoutY="383.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Label layoutX="17.0" layoutY="435.0" styleClass="form-label" text="Producer:" />
+               <TextField fx:id="producerField" layoutX="17.0" layoutY="455.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
    
-               <Label layoutX="16.0" layoutY="423.0" styleClass="form-label" text="Showing Date:" />
-               <DatePicker fx:id="showingDatePicker" layoutX="14.0" layoutY="449.0" prefHeight="37.0" prefWidth="173.0" styleClass="form-datepicker" />
-   
-               <Button fx:id="insertButton" layoutX="16.0" layoutY="512.0" onAction="#Insert" styleClass="insert-button" text="Insert" />
-               <Button fx:id="updateButton" layoutX="125.0" layoutY="512.0" onAction="#Update" styleClass="update-button" text="Update" />
-               <Button fx:id="deleteButton" layoutX="14.0" layoutY="563.0" onAction="#Delete" styleClass="delete-button" text="Delete" />
-               <Button fx:id="clearButton" layoutX="127.0" layoutY="563.0" onAction="#Clear" prefHeight="27.0" prefWidth="52.0" styleClass="clear-button" text="Clear" />
+               <Button fx:id="insertButton" layoutX="16.0" layoutY="597.0" onAction="#Insert" styleClass="insert-button" text="Insert" />
+               <Button fx:id="updateButton" layoutX="125.0" layoutY="597.0" onAction="#Update" styleClass="update-button" text="Update" />
+               <Button fx:id="clearButton" layoutX="125.0" layoutY="650.0" onAction="#Clear" prefHeight="27.0" prefWidth="52.0" styleClass="clear-button" text="Clear" />
+            <Label layoutX="17.0" layoutY="494.0" prefHeight="20.0" prefWidth="89.0" styleClass="form-label" text="Description:" />
+            <TextField fx:id="descriptionField" layoutX="17.0" layoutY="522.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Button fx:id="deleteButton" layoutX="14.0" layoutY="650.0" onAction="#Delete" styleClass="delete-button" text="Delete" />
+            <Label layoutX="18.0" layoutY="295.0" styleClass="form-label" text="Movie Title in hebrew:" />
+            <TextField fx:id="titleHebrewField" layoutX="17.0" layoutY="315.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
          </children>
       </AnchorPane>
 
         <!-- Right Side -->
         <TableView fx:id="moviesTable" layoutX="320.0" layoutY="36.0" prefHeight="619.0" prefWidth="858.0">
             <columns>
-                <TableColumn fx:id="titleColumn" prefWidth="243.0" text="Movie Title" />
-                <TableColumn fx:id="genreColumn" prefWidth="150.0" text="Genre" />
-                <TableColumn fx:id="durationColumn" prefWidth="210.0" text="Duration" />
-                <TableColumn fx:id="showingDateColumn" prefWidth="253.0" text="Showing Date" />
+                <TableColumn fx:id="titleEnglishColumn" prefWidth="201.0" text="Movie Title In English" />
+            <TableColumn fx:id="titleHebrewColumn" prefWidth="174.0" text="Movie Title In Hebrew" />
+                <TableColumn fx:id="genreColumn" prefWidth="124.0" text="Genre" />
+                <TableColumn fx:id="producerColumn" prefWidth="164.0" text="Producer" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="193.0" text="Description" />
             </columns>
         </TableView>
     </children>

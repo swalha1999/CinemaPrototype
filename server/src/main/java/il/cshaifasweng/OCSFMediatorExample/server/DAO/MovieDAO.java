@@ -1,8 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetAllMoviesResponse;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RemoveMovieResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -61,12 +65,33 @@ public class MovieDAO {
         return movie;
     }
 
-    public Movie addMovie(Movie addedMovie) {
+    public List<Movie> getMovies() {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Movie> query = builder.createQuery(Movie.class);
+        query.from(Movie.class);
+        return session.createQuery(query).getResultList();
+    }
+
+
+    public GetAllMoviesResponse getAllMovies(GetAllMoviesRequest getAllMoviesRequest) {
+        List<Movie> movies = getMovies();
+        return new GetAllMoviesResponse(movies).setSucceed(true).setMessage("Movies retrieved successfully");
+    }
+
+
+    public AddMovieResponse addMovie(AddMovieRequest addMovieRequest) {
+        Movie movie = new Movie();
+        movie.setDate(addMovieRequest.getReleaseDate());
+        movie.setName(addMovieRequest.getName());
+        movie.setDescription(addMovieRequest.getDescription());
+        movie.setLanguage(addMovieRequest.getLanguage());
+        movie.setGenre(addMovieRequest.getGenre());
+        movie.setCountry(addMovieRequest.getCountry());
+        // TODO: movie.setImageUrl(addMovieRequest.getImageUrl());
+
         Transaction transaction = null;
-        Movie movie = null;
         try {
             transaction = session.beginTransaction();
-            movie = new Movie(addedMovie.getName(), addedMovie.getDate());
             session.save(movie);
             session.flush();
             transaction.commit();
@@ -75,23 +100,34 @@ public class MovieDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
+            return new AddMovieResponse().setSuccess(false).setMessage("Failed to add movie");
         }
-        return movie;
+        return new AddMovieResponse().setSuccess(true).setMessage("Movie added successfully").setMovie(movie);
+
     }
 
-    public List<Movie> getMovies() {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Movie> query = builder.createQuery(Movie.class);
-        query.from(Movie.class);
-        return session.createQuery(query).getResultList();
-    }
+    public RemoveMovieResponse removeMovie(RemoveMovieRequest removeMovieRequest) {
+        // get  the movie to be removed
+        Movie movie = session.get(Movie.class, removeMovieRequest.getMovieId());
+        if (movie == null) {
+            return new RemoveMovieResponse().setSuccess(false).setMessage("Movie not found");
+        }
 
-    public Movie getMovie(int id) {
-        return session.get(Movie.class, id);
-    }
+        // delete the movie
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(movie);
+            session.flush();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return new RemoveMovieResponse().setSuccess(false).setMessage("Failed to remove movie");
+        }
 
-    public GetAllMoviesResponse getAllMovies(GetAllMoviesRequest getAllMoviesRequest) {
-        List<Movie> movies = getMovies();
-        return new GetAllMoviesResponse(movies).setSucceed(true).setMessage("Movies retrieved successfully");
+        return new RemoveMovieResponse().setSuccess(true).setMessage("Movie removed successfully").setMovie(movie);
     }
 }

@@ -6,6 +6,11 @@ public class AddMoviePatch implements Patch{
     Movie movie;
     String Message;
 
+    public AddMoviePatch() {
+        this.Message = "AddMoviePatch";
+        this.movie = null;
+    }
+
     public AddMoviePatch(Movie movie) {
         this.movie = movie;
         this.Message = "AddMoviePatch";
@@ -37,5 +42,4 @@ public class AddMoviePatch implements Patch{
                 ", Message='" + Message + '\'' +
                 '}';
     }
-
 }
