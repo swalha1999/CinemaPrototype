@@ -48,6 +48,7 @@ public class Movie implements Serializable {
     public Movie(){}
     public Movie(String name, Date releaseDate) {
         this.name = name;
+        this.englishTitle = name;
         this.releaseDate = releaseDate;
     }
 
