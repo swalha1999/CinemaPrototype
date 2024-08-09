@@ -49,7 +49,7 @@ public class AdminMain {
 
     @FXML
     private void showMovies(ActionEvent event) {
-        loadUI("Movies");
+        loadUI("AdminAddMovie");
     }
 
     @FXML
