@@ -3,8 +3,10 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetAllMoviesResponse;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RemoveMovieResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -102,5 +104,30 @@ public class MovieDAO {
         }
         return new AddMovieResponse().setSuccess(true).setMessage("Movie added successfully").setMovie(movie);
 
+    }
+
+    public RemoveMovieResponse removeMovie(RemoveMovieRequest removeMovieRequest) {
+        // get  the movie to be removed
+        Movie movie = session.get(Movie.class, removeMovieRequest.getMovieId());
+        if (movie == null) {
+            return new RemoveMovieResponse().setSuccess(false).setMessage("Movie not found");
+        }
+
+        // delete the movie
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(movie);
+            session.flush();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return new RemoveMovieResponse().setSuccess(false).setMessage("Failed to remove movie");
+        }
+
+        return new RemoveMovieResponse().setSuccess(true).setMessage("Movie removed successfully").setMovie(movie);
     }
 }
