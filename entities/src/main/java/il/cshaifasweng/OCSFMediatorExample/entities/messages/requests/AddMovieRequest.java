@@ -22,11 +22,13 @@ public class AddMovieRequest implements Request {
     private Country country;
     private String imageUrl;
     private String trailerUrl;
+    private String englishTitle;
+    private String hebrewTitle;
 
     public AddMovieRequest() {
     }
 
-    public AddMovieRequest(String name, Date releaseDate, String description, Language language, MovieGenre genre, Country country, String imageUrl, String trailerUrl) {
+    public AddMovieRequest(String name, Date releaseDate, String description, Language language, MovieGenre genre, Country country, String imageUrl, String trailerUrl, String englishTitle, String hebrewTitle) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.description = description;
@@ -35,6 +37,8 @@ public class AddMovieRequest implements Request {
         this.country = country;
         this.imageUrl = imageUrl;
         this.trailerUrl = trailerUrl;
+        this.englishTitle = englishTitle;
+        this.hebrewTitle = hebrewTitle;
     }
 
     public String getName() {
@@ -43,6 +47,7 @@ public class AddMovieRequest implements Request {
 
     public AddMovieRequest setName(String name) {
         this.name = name;
+        this.englishTitle = name;
         return this;
     }
 
@@ -109,6 +114,25 @@ public class AddMovieRequest implements Request {
         return this;
     }
 
+    public String getEnglishTitle() {
+        return englishTitle;
+    }
+
+    public AddMovieRequest setEnglishTitle(String englishTitle) {
+        this.englishTitle = englishTitle;
+        this.name = englishTitle;
+        return this;
+    }
+
+    public String getHebrewTitle() {
+        return hebrewTitle;
+    }
+
+    public AddMovieRequest setHebrewTitle(String hebrewTitle) {
+        this.hebrewTitle = hebrewTitle;
+        return this;
+    }
+
     public String getSessionKey() {
         return sessionKey;
     }
@@ -150,6 +174,8 @@ public class AddMovieRequest implements Request {
                 ", country=" + country +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", trailerUrl='" + trailerUrl + '\'' +
+                ", englishTitle='" + englishTitle + '\'' +
+                ", hebrewTitle='" + hebrewTitle + '\'' +
                 '}';
     }
 }

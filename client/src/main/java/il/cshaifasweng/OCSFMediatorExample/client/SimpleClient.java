@@ -27,10 +27,6 @@ public class SimpleClient extends AbstractClient {
 
 		if (message.getVersion() == MessageVersion.V1) {
 			switch (messageContent) {
-				case "add movies":
-				case "get all movies":
-					EventBus.getDefault().post(new AddMoviesEvent(message));
-					break;
 				case "update movies":
 					EventBus.getDefault().post(new UpdateMoviesEvent(message));
 					break;
@@ -68,6 +64,8 @@ public class SimpleClient extends AbstractClient {
 				case GET_MOVIE_RESPONSE:
 					EventBus.getDefault().post( new GetMovieEvent((GetMovieResponse) message.getDataObject()));
 					break;
+				case ADD_MOVIE_PATCH:
+					EventBus.getDefault().post( new AddMoviesEvent((AddMovieResponse) message.getDataObject()));
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));

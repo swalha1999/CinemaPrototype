@@ -8,7 +8,8 @@ import java.util.Date;
 
 public class MovieView {
     private int id;
-    private final SimpleStringProperty title;
+    private final SimpleStringProperty englishTitle;
+    private final SimpleStringProperty hebrewTitle;
     private final SimpleObjectProperty<Date> releaseDate;
     private final SimpleStringProperty description;
     private final SimpleStringProperty language;
@@ -18,8 +19,9 @@ public class MovieView {
     private final SimpleStringProperty trailerUrl;
 
 
-    public MovieView(String name, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
-        this.title = new SimpleStringProperty(name);
+    public MovieView(String englishTitle,String hebrewTitle, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
+        this.englishTitle = new SimpleStringProperty(englishTitle);
+        this.hebrewTitle = new SimpleStringProperty(hebrewTitle);
         this.releaseDate = new SimpleObjectProperty<>(releaseDate);
         this.description = new SimpleStringProperty(description);
         this.language = new SimpleStringProperty(language);
@@ -31,7 +33,8 @@ public class MovieView {
     }
 
     public MovieView(Movie movie) {
-        this.title = new SimpleStringProperty(movie.getName());
+        this.englishTitle = new SimpleStringProperty(movie.getEnglishTitle());
+        this.hebrewTitle = new SimpleStringProperty(movie.getHebrewTitle());
         this.releaseDate = new SimpleObjectProperty<>(movie.getReleaseDate());
         this.description = new SimpleStringProperty(movie.getDescription());
 
@@ -54,7 +57,8 @@ public class MovieView {
     }
 
     // Getter methods for properties
-    public String getTitle() { return title.get(); }
+    public String getEnglishTitle() { return englishTitle.get(); }
+    public String getHebrewTitle() { return hebrewTitle.get(); }
     public Date getReleaseDate() { return releaseDate.get(); }
     public String getDescription() { return description.get(); }
     public String getLanguage() { return language.get(); }
@@ -65,7 +69,8 @@ public class MovieView {
 
 
     // Property methods for JavaFX bindings
-    public SimpleStringProperty titleProperty() { return title; }
+    public SimpleStringProperty hebrewTitleProperty() { return hebrewTitle; }
+    public SimpleStringProperty englishTitleProperty() { return englishTitle; }
     public SimpleObjectProperty<Date> releaseDateProperty() { return releaseDate; }
     public SimpleStringProperty descriptionProperty() { return description; }
     public SimpleStringProperty languageProperty() { return language; }

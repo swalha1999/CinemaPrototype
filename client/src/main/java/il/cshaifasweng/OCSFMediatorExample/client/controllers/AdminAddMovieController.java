@@ -8,10 +8,14 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
+import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -61,9 +65,6 @@ public class AdminAddMovieController {
     @FXML // fx:id="moviesTable"
     private TableView<MovieView> moviesTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="producerColumn"
-    private TableColumn<MovieView, ?> producerColumn; // Value injected by FXMLLoader
-
     @FXML // fx:id="producerField"
     private TextField producerField; // Value injected by FXMLLoader
 
@@ -89,16 +90,17 @@ public class AdminAddMovieController {
         GetAllMoviesRequest getAllMoviesRequest = new GetAllMoviesRequest(SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(getAllMoviesRequest, MessageType.GET_ALL_MOVIES_REQUEST));
 
-        titleEnglishColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        titleHebrewColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleEnglishColumn.setCellValueFactory(new PropertyValueFactory<>("englishTitle"));
+        titleHebrewColumn.setCellValueFactory(new PropertyValueFactory<>("hebrewTitle"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         moviesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                //moviesTable.getSelectionModel().clearSelection();
                 Platform.runLater(()->{
-                    genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getTitle());
+                    titleEnglishField.setText("i am the problem number 1");
+                    titleHebrewField.setText("i am the problem number 2");
+                    genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
                     descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getGenre());
                 });
             }
@@ -127,8 +129,22 @@ public class AdminAddMovieController {
     }
 
     @FXML
-    void Insert(ActionEvent event) {
+    void Insert(ActionEvent event) throws IOException {
+        AddMovieRequest addMovieRequest = new AddMovieRequest()
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setEnglishTitle(titleEnglishField.toString())
+                .setHebrewTitle(titleHebrewColumn.toString())
+                .setGenre(MovieGenre.ALL)
+                .setDescription(descriptionField.toString());
 
+        SimpleClient.getClient().sendToServer(new Message(addMovieRequest, MessageType.ADD_MOVIE_REQUEST));
+    }
+
+    @Subscribe
+    public void onAddMovieEvent(AddMoviesEvent event){
+        Platform.runLater(()->{
+            moviesTable.getItems().add(new MovieView(event.getMovie()));
+        });
     }
 
     @FXML

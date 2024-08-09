@@ -40,9 +40,8 @@
             <columns>
                 <TableColumn fx:id="titleEnglishColumn" prefWidth="201.0" text="Movie Title In English" />
             <TableColumn fx:id="titleHebrewColumn" prefWidth="179.0" text="Movie Title In Hebrew" />
-                <TableColumn fx:id="genreColumn" prefWidth="126.0" text="Genre" />
-                <TableColumn fx:id="producerColumn" prefWidth="157.0" text="Producer" />
-                <TableColumn fx:id="descriptionColumn" prefWidth="231.0" text="Description" />
+                <TableColumn fx:id="genreColumn" prefWidth="127.0" text="Genre" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="387.0" text="Description" />
             </columns>
         </TableView>
     </children>

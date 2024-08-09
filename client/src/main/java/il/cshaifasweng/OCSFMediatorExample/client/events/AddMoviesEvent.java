@@ -1,15 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.client.events;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
 
-public class AddMoviesEvent {
-    private Message message;
+public class AddMoviesEvent extends AddMovieResponse {
 
-    public Message getMessage() {
-        return message;
-    }
 
-    public AddMoviesEvent(Message message) {
-        this.message = message;
+    public AddMoviesEvent(AddMovieResponse addMovieResponse) {
+        super(addMovieResponse);
     }
 }

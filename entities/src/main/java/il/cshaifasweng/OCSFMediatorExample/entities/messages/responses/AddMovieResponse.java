@@ -13,6 +13,12 @@ public class AddMovieResponse implements Response {
         this.success = false;
     }
 
+    public AddMovieResponse(AddMovieResponse addMovieResponse) {
+        this.message = addMovieResponse.getMessage();
+        this.success = addMovieResponse.isSuccess();
+        this.movie = addMovieResponse.getMovie();
+    }
+
     public AddMovieResponse(boolean success) {
         this.message = "AddMovieResponse";
         this.success = success;
