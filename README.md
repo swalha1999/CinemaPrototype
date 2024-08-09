@@ -15,10 +15,16 @@ width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-###### TODO: add remove movie to movie catalog
+###### TODO: finish the movie admin controller `--> omar`
+###### TODO: fix the movie details in the movie catalog
+###### TODO: add screening management `--> omar`
+###### TODO: add actors to the movie view
+###### TODO: add producer to the movie view
+###### TODO: add screening to the movie view
+###### TODO: add cinema entity `--> swalha`
+###### TODO: after the screening is done, we can make online movies view
+###### TODO: add a page to display to packages and how many entrances they have left
 ###### TODO:Link block and unblock user
-###### TODO:Link admin add movie button
-###### TODO:Make Req and Res to the Movie DIO
 ###### TODO:Make Req and Res to the Screening DIO
 
 
@@ -26,3 +32,7 @@ hight = 900
 ## `Done tasks but ur name :)`
 ###### TODO: FIX the remove user button patch not sent DONE BY: **Swalha**
 ###### TODO:Gui for Screening DONE BY: **abd**
+###### TODO: add remove movie to movie catalog DONE BY: **swalha**
+###### TODO:Link admin add movie button **omar**
+###### TODO:Make Req and Res to the Movie DIO **swalha
+
