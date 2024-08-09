@@ -24,8 +24,8 @@ public class SeatPickerController {
     public void initialize() {
         // Example: Creating a 5x5 grid of seats
         Platform.runLater(() -> {
-            int rows = 5;
-            int columns = 5;
+            int rows = 10;
+            int columns = 10;
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < columns; col++) {
                    makeSeat(row, col);

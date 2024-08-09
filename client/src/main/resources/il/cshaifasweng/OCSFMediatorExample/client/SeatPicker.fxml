@@ -6,9 +6,9 @@
 
 <AnchorPane prefHeight="688.0" prefWidth="943.0" stylesheets="@css/SeatPicker.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SeatPickerController">
     <children>
-        <GridPane fx:id="SeatsGrid" hgap="10.0" layoutX="50.0" layoutY="50.0" prefHeight="463.0" prefWidth="830.0" vgap="10.0">
+        <GridPane fx:id="SeatsGrid" hgap="10.0" layoutX="37.0" layoutY="50.0" prefHeight="530.0" prefWidth="855.0" vgap="10.0">
             <!-- Seats will be dynamically added here -->
         </GridPane>
-        <Button fx:id="confirmButton" layoutX="393.0" layoutY="545.0" styleClass="confirm-button" text="Confirm Selection" />
+        <Button fx:id="confirmButton" layoutX="398.0" layoutY="611.0" styleClass="confirm-button" text="Confirm Selection" />
     </children>
 </AnchorPane>
