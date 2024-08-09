@@ -21,6 +21,7 @@ public class Seat implements Serializable {
     private int seatLocationY;
     private int SeatAngle;
     private int SeatNumber;
+    private boolean isAvailable = true;
 
     public Seat() {
         this.seatLocationX = 0;
@@ -70,6 +71,14 @@ public class Seat implements Serializable {
 
     public void setSeatNumber(int SeatNumber) {
         this.SeatNumber = SeatNumber;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
 }
