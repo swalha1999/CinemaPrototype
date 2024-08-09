@@ -83,7 +83,7 @@ public class UserMain {
 
     @FXML
     void showDashBoard(ActionEvent event) {
-        loadUI("UserDashBoard");
+        loadUI("SeatPicker");
     }
 
 
@@ -121,6 +121,8 @@ public class UserMain {
     }
 
     private void loadUI(String ui) {
-        mainPane.setCenter(loadFXMLPane(ui));
+        Platform.runLater(() -> {
+            mainPane.setCenter(loadFXMLPane(ui));
+        });
     }
 }

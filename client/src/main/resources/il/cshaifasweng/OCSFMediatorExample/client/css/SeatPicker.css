@@ -1,0 +1,31 @@
+/* SeatPicker.css */
+
+/* Seat styling */
+.seat {
+    -fx-background-color: green;
+    -fx-border-color: #34495E;
+    -fx-border-width: 2;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-pref-height: 30;
+    -fx-pref-width: 30;
+    -fx-cursor: hand;
+}
+
+.seat.selected {
+    -fx-background-color: blue;
+}
+
+.seat.unavailable {
+    -fx-background-color: black;
+    -fx-cursor: not-allowed;
+}
+
+.confirm-button {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
