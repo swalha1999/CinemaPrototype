@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveUserPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
@@ -404,10 +405,10 @@ public class Server extends AbstractServer {
 
         // send a patch to all the logged-in admins to notify them that a user has been removed
         if (removeUserResponse.isSuccess()) {
-            NewUserAddedPatch newUserAddedPatch = new NewUserAddedPatch()
+            RemoveUserPatch newUserAddedPatch = new RemoveUserPatch()
                     .setSuccess(true)
                     .setMessage("User removed successfully")
-                    .setUser(database.getUsersManager().getUserById(removeUserResponse.getUserId()));
+                    .setUsername(removeUserRequest.getUsernameToRemove());
 
             sendToAllAdmins(new Message(newUserAddedPatch, MessageType.REMOVE_USER_PATCH));
         }

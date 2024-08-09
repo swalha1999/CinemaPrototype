@@ -13,16 +13,14 @@ public class RemoveUserRequest implements Request {
     private int userId;
 
     private String usernameToRemove = "admin"; // we cant remove the admin so we set it as default
-    private int userIdToRemove = 0 ;
 
     public RemoveUserRequest() {
     }
 
-    public RemoveUserRequest(String sessionKey, String username, String usernameToRemove, int userIdToRemove) {
+    public RemoveUserRequest(String sessionKey, String username, String usernameToRemove) {
         this.sessionKey = sessionKey;
         this.username = username;
         this.usernameToRemove = usernameToRemove;
-        this.userIdToRemove = userIdToRemove;
     }
 
     public String getSessionKey() {
@@ -37,10 +35,6 @@ public class RemoveUserRequest implements Request {
         return usernameToRemove;
     }
 
-    public int getUserIdToRemove() {
-        return userIdToRemove;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -50,7 +44,6 @@ public class RemoveUserRequest implements Request {
                 "sessionKey='" + sessionKey + '\'' +
                 ", username='" + username + '\'' +
                 ", usernameToRemove='" + usernameToRemove + '\'' +
-                ", userIdToRemove=" + userIdToRemove +
                 '}';
     }
 
@@ -69,11 +62,7 @@ public class RemoveUserRequest implements Request {
         return this;
     }
 
-    public RemoveUserRequest setUserIdToRemove(int userIdToRemove) {
-        this.userIdToRemove = userIdToRemove;
-        return this;
-    }
-
+    //Deprecated
     public RemoveUserRequest setUserId(int userId) {
         this.userId = userId;
         return this;

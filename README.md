@@ -13,3 +13,15 @@ Pay attention to the three modules:
 ## `WindowSize`
 width = 1200
 hight = 900
+
+## `Take a Task fom here and do it `
+###### TODO: FIX the remove user button patch not sent 
+###### TODO:Link block and unblock user
+###### TODO:Gui for Screening
+###### TODO:Link admin add movie button
+###### TODO:Make Req and Res to the Movie DIO
+###### TODO:Make Req and Res to the Screening DIO
+
+
+
+## `Done tasks but ur name :)`

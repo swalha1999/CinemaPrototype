@@ -1,12 +1,22 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
@@ -18,9 +28,15 @@ public class MovieCatalog {
 
     @FXML
     public void initialize() {
-        // Example: Adding some movies on initialization
-        for (int i = 0; i < 12; i++) {
-            addMovie("Movie " + (i + 1), "images\\movie1.jpg");
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+
+        GetAllMoviesRequest getAllMoviesRequest = new GetAllMoviesRequest()
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setUsername(SessionKeysStorage.getInstance().getUsername());
+        try {
+            SimpleClient.getClient().sendToServer(new Message(getAllMoviesRequest, MessageType.GET_ALL_MOVIES_REQUEST));
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -55,4 +71,17 @@ public class MovieCatalog {
 
         MoviesGrid.add(moviePane, col, row);
     }
+
+    @Subscribe
+    public void onGetAllMoviesEvent(GetAllMoviesEvent event) {
+        Platform.runLater(() -> {
+            MoviesGrid.getChildren().clear();
+            event.getMovies().forEach(movie -> addMovie(movie.getTitle(), "images\\movie1.jpg"));
+        });
+    }
+
+//    System.out.println("Received all movies");
+//        event.getMovies().forEach(movie -> {
+//        addMovie(movie.getName(), "images\\movie1.jpg");
+//    });
 }

@@ -315,15 +315,17 @@ public class UserDAO {
     }
 
     public RemoveUserResponse removeUser(RemoveUserRequest removeUserRequest) {
-        User user = null;
         RemoveUserResponse removeUserResponse = new RemoveUserResponse();
 
         // TODO: bug probably here
-        if (removeUserRequest.getUserId() != 0){
-            user = getUserById(removeUserRequest.getUserId());
-        }else if(!removeUserRequest.getUsername().equals("admin")){
-            user = getUserbyUsername(removeUserRequest.getUsername());
+        if (removeUserRequest.getUsernameToRemove().equals("admin")){
+            removeUserResponse
+                    .setSuccess(false)
+                    .setMessage("Can't remove admin");
+            return removeUserResponse;
         }
+
+        User user = getUserbyUsername(removeUserRequest.getUsernameToRemove());
 
         if (user == null){
             removeUserResponse
@@ -336,7 +338,7 @@ public class UserDAO {
 
         removeUserResponse
                 .setSuccess(true)
-                .setMessage("User removed successfully")
+                .setMessage("User "+removeUserRequest.getUsernameToRemove()+"+ removed successfully")
                 .setUserId(user.getId());
 
         return removeUserResponse;
