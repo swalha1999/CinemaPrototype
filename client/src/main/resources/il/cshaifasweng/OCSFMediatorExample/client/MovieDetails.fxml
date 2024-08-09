@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController" stylesheets="@css/MovieDetails.css">
+    <children>
+        <HBox layoutX="20.0" layoutY="20.0" spacing="20.0">
+            <!-- Movie Image -->
+            <ImageView fx:id="movieImageView" fitHeight="400.0" fitWidth="270.0" />
+
+            <!-- Movie Details and Screening Times -->
+            <VBox spacing="20.0">
+                <!-- Movie Title -->
+                <Label fx:id="titleLabel" styleClass="title-label"/>
+
+                <!-- Movie Details -->
+                <VBox spacing="10.0">
+                    <Label fx:id="genreLabel" text="Genre: " styleClass="details-label"/>
+                    <Label fx:id="durationLabel" text="Duration: " styleClass="details-label"/>
+                    <Label fx:id="releaseDateLabel" text="Release Date: " styleClass="details-label"/>
+                    <Label fx:id="ratingLabel" text="Rating: " styleClass="details-label"/>
+                </VBox>
+
+                <!-- Screening Times -->
+                <Label text="Screening Times:" styleClass="section-label"/>
+                <ListView fx:id="screeningTimesListView" prefHeight="150.0" prefWidth="300.0" />
+            </VBox>
+        </HBox>
+    </children>
+</AnchorPane>
