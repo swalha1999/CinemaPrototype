@@ -15,7 +15,7 @@ width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-###### TODO: FIX the remove user button patch not sent 
+###### TODO: add remove movie to movie catalog
 ###### TODO:Link block and unblock user
 ###### TODO:Gui for Screening
 ###### TODO:Link admin add movie button
@@ -25,3 +25,4 @@ hight = 900
 
 
 ## `Done tasks but ur name :)`
+###### TODO: FIX the remove user button patch not sent DONE BY: **Swalha**
