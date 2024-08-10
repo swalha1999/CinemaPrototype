@@ -58,12 +58,8 @@ public class Server extends AbstractServer {
                 handleGetMyTicketsRequest(request, client);
                 break;
             case BLOCK_USER_REQUEST:
-            case UNBLOCK_USER_REQUEST:
-            case REMOVE_USER_REQUEST:
-            case GET_ALL_MOVIES_REQUEST:
-            case ADD_MOVIE_REQUEST:
-            case REMOVE_MOVIE_REQUEST:
-            case GET_MOVIE_REQUEST:
+                handleBlockUserRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -84,9 +80,6 @@ public class Server extends AbstractServer {
                 break;
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
-                break;
-            case BLOCK_USER_REQUEST:
-                handleBlockUserRequest(request, client);
                 break;
             case UNBLOCK_USER_REQUEST:
                 handleUnblockUserRequest(request, client);
@@ -213,16 +206,16 @@ public class Server extends AbstractServer {
     }
 
     private void handleBlockUserRequest(Message request, ConnectionToClient client) {
-        BlockUserRequest blockUserRequest = (BlockUserRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(blockUserRequest.getSessionKey());
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        blockUserRequest.setUsername(loggedInUser.getUsername());
-        blockUserRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER :
@@ -237,11 +230,11 @@ public class Server extends AbstractServer {
                 return;
         }
 
-        System.out.println("Block user request received:" + blockUserRequest.toString()); //TODO: remove this line debug only
-        BlockUserResponse blockUserResponse = database.getUsersManager().blockUser(blockUserRequest);
-        System.out.println("Block user response: " + blockUserResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Block user request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getUsersManager().blockUser(request);
+        System.out.println("Block user response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(blockUserResponse, MessageType.BLOCK_USER_RESPONSE));
+        sendResponse(client, response);
     }
 
     private void handleUnblockUserRequest(Message request, ConnectionToClient client) {

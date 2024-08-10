@@ -264,31 +264,35 @@ public class UserDAO {
         return response;
     }
 
-    public BlockUserResponse blockUser(BlockUserRequest blockUserRequest) {
-        User user = null;
-        BlockUserResponse blockUserResponse = new BlockUserResponse();
+    public Message blockUser(Message request) {
+        Message response = new Message(MessageType.BLOCK_USER_RESPONSE);
 
-        if (blockUserRequest.getUserIdToBlock() != 0){
-            user = getUserById(blockUserRequest.getUserIdToBlock());
-        }else if(!blockUserRequest.getUsernameToBlock().equals("admin")){
-            user = getUserbyUsername(blockUserRequest.getUsernameToBlock());
+        User userToBlockData = (User) request.getDataObject();
+
+        if (userToBlockData.getUsername().equals("admin")){
+            response
+                    .setSuccess(false)
+                    .setMessage("Can't block admin");
+            return response;
         }
 
+        User user = getUserbyUsername(userToBlockData.getUsername());
+
         if (user == null){
-            blockUserResponse
+            response
                     .setSuccess(false)
                     .setMessage("User not found");
-            return blockUserResponse;
+            return response;
         }
 
         user.setBlocked(true);
         this.updateUser(user);
 
-        blockUserResponse
+        response
                 .setSuccess(true)
                 .setMessage("User blocked successfully");
 
-        return blockUserResponse;
+        return response;
     }
 
     public UnblockUserResponse unblockUser(UnblockUserRequest unblockUserRequest) {
