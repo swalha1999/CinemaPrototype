@@ -7,20 +7,16 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -89,8 +85,10 @@ public class AdminAddMovieController {
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        GetAllMoviesRequest getAllMoviesRequest = new GetAllMoviesRequest(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(new Message(getAllMoviesRequest, MessageType.GET_ALL_MOVIES_REQUEST));
+        Message message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
+        SimpleClient.getClient().sendToServer(message);
 
         titleEnglishColumn.setCellValueFactory(new PropertyValueFactory<>("englishTitle"));
         titleHebrewColumn.setCellValueFactory(new PropertyValueFactory<>("hebrewTitle"));

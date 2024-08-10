@@ -6,7 +6,6 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -48,8 +47,8 @@ public class AdminScreening {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
         //TODO: hey omar this is swalha this the message type is not correct - please fix :)
-        GetAllMoviesRequest GetAllMoviesRequest = new GetAllMoviesRequest(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(new Message(GetAllMoviesRequest, MessageType.GET_ALL_USERS_REQUEST));
+//        GetAllMoviesRequest GetAllMoviesRequest = new GetAllMoviesRequest(SessionKeysStorage.getInstance().getSessionKey());
+//        SimpleClient.getClient().sendToServer(new Message(GetAllMoviesRequest, MessageType.GET_ALL_USERS_REQUEST));
 
         AvailableSeats_Col.setCellValueFactory(new PropertyValueFactory<>("AvailableSeats"));
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("Cinema"));
@@ -60,15 +59,15 @@ public class AdminScreening {
     }
 
     //TODO: hey omar this is swalha this function is not working the event type is not correct - please fix :)
-    @Subscribe
-    public void GetAllMoviesRequest(GetAllUsersEvent response){
-        Platform.runLater(()->{
-            List<User> users = response.getUsers();
-            MoviesTable.getItems().clear();
-            for (User user : users) {
-                //MoviesTable.getItems().add(new MovieView());
-            }
-        });
-    }
+//    @Subscribe
+//    public void GetAllMoviesRequest(GetAllUsersEvent response){
+//        Platform.runLater(()->{
+//            List<User> users = response.getUsers();
+//            MoviesTable.getItems().clear();
+//            for (User user : users) {
+//                //MoviesTable.getItems().add(new MovieView());
+//            }
+//        });
+//    }
 
 }

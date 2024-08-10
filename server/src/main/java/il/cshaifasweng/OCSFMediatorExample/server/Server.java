@@ -66,6 +66,9 @@ public class Server extends AbstractServer {
             case REMOVE_USER_REQUEST:
                 handleRemoveUserRequest(request, client);
                 break;
+            case GET_ALL_MOVIES_REQUEST:
+                handleGetAllMoviesRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -88,9 +91,6 @@ public class Server extends AbstractServer {
                 handleRegisterRequest(request, client);
                 break;
 
-            case GET_ALL_MOVIES_REQUEST:
-                handleGetAllMoviesRequest(request, client);
-                break;
             case ADD_MOVIE_REQUEST:
                 handleAddMovieRequest(request, client);
                 break;
@@ -317,22 +317,22 @@ public class Server extends AbstractServer {
     }
 
     private void handleGetAllMoviesRequest(Message request, ConnectionToClient client) {
-        GetAllMoviesRequest getAllMoviesRequest = (GetAllMoviesRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(getAllMoviesRequest.getSessionKey());
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        getAllMoviesRequest.setUsername(loggedInUser.getUsername());
-        getAllMoviesRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get all movies request received:" + getAllMoviesRequest.toString()); //TODO: remove this line debug only
-        GetAllMoviesResponse getAllMoviesResponse = database.getMoviesManger().getAllMovies(getAllMoviesRequest);
-        System.out.println("Get all movies response: " + getAllMoviesResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Get all movies request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getMoviesManger().getAllMovies(request);
+        System.out.println("Get all movies response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(getAllMoviesResponse, MessageType.GET_ALL_MOVIES_RESPONSE));
+        sendResponse(client, response);
     }
 
     private void handleAddMovieRequest(Message request, ConnectionToClient client) {

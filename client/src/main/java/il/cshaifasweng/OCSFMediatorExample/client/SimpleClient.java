@@ -55,7 +55,7 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
 				case GET_ALL_MOVIES_RESPONSE:
-					EventBus.getDefault().post( new GetAllMoviesEvent((GetAllMoviesResponse) message.getDataObject()));
+					EventBus.getDefault().post( new GetAllMoviesEvent(message));
 					break;
 				case NEW_USER_ADDED_PATCH:
 					EventBus.getDefault().post( new NewUserAddedEvent((NewUserAddedPatch) message.getDataObject()));

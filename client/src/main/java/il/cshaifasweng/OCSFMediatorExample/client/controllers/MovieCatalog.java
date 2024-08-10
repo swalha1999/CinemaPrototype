@@ -10,7 +10,6 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,14 +46,11 @@ public class MovieCatalog {
     public void initialize() {
         EventBus.getDefault().register(this);
 
-        GetAllMoviesRequest getAllMoviesRequest = new GetAllMoviesRequest()
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setUsername(SessionKeysStorage.getInstance().getUsername());
-        try {
-            SimpleClient.getClient().sendToServer(new Message(getAllMoviesRequest, MessageType.GET_ALL_MOVIES_REQUEST));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Send request to get all movies
+        Message message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
+        SimpleClient.getClient().sendToServer(message);
 
         // Add listener to search field
         searchField.textProperty().addListener((observable, oldValue, newValue) -> filterMoviesBySearch(newValue));

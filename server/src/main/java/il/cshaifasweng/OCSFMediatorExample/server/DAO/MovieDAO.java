@@ -1,12 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllMoviesRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetAllMoviesResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RemoveMovieResponse;
 import org.hibernate.Session;
@@ -75,9 +75,10 @@ public class MovieDAO {
     }
 
 
-    public GetAllMoviesResponse getAllMovies(GetAllMoviesRequest getAllMoviesRequest) {
+    public Message getAllMovies(Message request) {
         List<Movie> movies = getMovies();
-        return new GetAllMoviesResponse(movies).setSucceed(true).setMessage("Movies retrieved successfully");
+        return new Message(MessageType.GET_ALL_MOVIES_RESPONSE)
+                .setDataObject(movies);
     }
 
 
