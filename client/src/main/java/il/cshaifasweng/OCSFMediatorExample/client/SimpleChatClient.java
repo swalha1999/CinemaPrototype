@@ -34,10 +34,10 @@ public class SimpleChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
-        //Pane movieDetails = loadFXMLPane("MovieDetails");
+        Pane movieDetails = loadFXMLPane("MovieDetails");
         //TODO: when main starts it runs initialize for "MovieDetails" and in there is a call to server, but there is no client, thus making an exception.
         // for now its turned off.
-        scene = new Scene(loadFXML("host"), 1500, 900);
+        scene = new Scene(loadFXML("Host"), 1300, 900);
         stage.setScene(scene);
         stage.show();
     }
