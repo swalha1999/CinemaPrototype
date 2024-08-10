@@ -125,7 +125,26 @@ public class AdminUsersView {
 
     @FXML
     void BlockUser(ActionEvent event) {
+// Get the selected user from the table
+        UserView selectedUser = Users_Table.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            // If no user is selected, exit the method
+            return;
+        }
 
+        // Create a User object and set its properties
+        User userToBlock = new User()
+                .setUsername(selectedUser.getUsername())
+                .setId(selectedUser.getId())
+                .setBlocked(true); // Assuming setBlocked() accepts a boolean to indicate blocking status
+
+        // Create a Message object for the block user request
+        Message blockUserRequest = new Message(MessageType.BLOCK_USER_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(userToBlock);
+
+        // Send the block user request to the server
+        SimpleClient.getClient().sendToServer(blockUserRequest);
     }
 
     public void MakeAdmin(ActionEvent actionEvent) {
