@@ -29,6 +29,7 @@ public class Movie implements Serializable {
     private String trailerUrl;
     private String englishTitle;
     private String hebrewTitle;
+    private String producer;
     private int durationInMinutes;
 
     @ManyToMany
@@ -39,8 +40,7 @@ public class Movie implements Serializable {
     )
     private Set<Actor> actors = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Producer producer;
+
 
     @OneToMany(mappedBy = "movie")
     private Set<Screening> screenings = new HashSet<>();
@@ -63,9 +63,9 @@ public class Movie implements Serializable {
         this.durationInMinutes = other.durationInMinutes;
 
         //TODO: check if this is the right way to copy the set (this is a relationship ot another table)
-//        this.actors = other.actors;
-//        this.producer = other.producer;
-//        this.screenings = other.screenings;
+    //    this.actors = other.actors;
+    //    this.producer = other.producer;
+    //    this.screenings = other.screenings;
     }
 
     public Movie(String name, Date releaseDate) {
@@ -250,11 +250,11 @@ public class Movie implements Serializable {
         return this;
     }
 
-    public Producer getProducer() {
+    public String getProducer() {
         return producer;
     }
 
-    public Movie setProducer(Producer producer) {
+    public Movie setProducer(String producer) {
         this.producer = producer;
         return this;
     }

@@ -10,6 +10,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -116,8 +117,6 @@ public class AdminAddMovieController {
         });
     }
 
-
-
     @FXML
     void Clear(ActionEvent event) {
         titleEnglishField.setText("");
@@ -155,12 +154,22 @@ public class AdminAddMovieController {
 
     }
 
-
     @FXML
     void Update(ActionEvent event) {
         MovieView selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
         if (selectedMovie != null) {
-            return;
+            Movie movieToRemove = new Movie().setId(moviesTable.getSelectionModel().getSelectedItem().getId())
+                    .setEnglishTitle(titleEnglishField.getText())
+                    .setHebrewTitle(titleHebrewField.getText())
+                    .setGenre(MovieGenre.valueOf(genreField.getText()))
+                    .setDescription(descriptionField.getText())
+                    .setProducer(producerField.getText());
+
+            Message UpdateMovieRequest = new Message(MessageType.UPDATE_MOVIE_REQUEST)
+                    .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                    .setDataObject(movieToRemove);
+
+            SimpleClient.getClient().sendToServer(UpdateMovieRequest);
         }
     }
 
@@ -185,6 +194,13 @@ public class AdminAddMovieController {
                     break;
                 }
             }
+        });
+    }
+
+    @Subscribe
+    public void onUpdateMovieEvent(UpdateMovieEvent event){
+        Platform.runLater(()->{
+            moviesTable.refresh();
         });
     }
 
