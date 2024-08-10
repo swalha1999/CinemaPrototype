@@ -66,10 +66,7 @@ public class MovieDetailsController {
     public void initialize() {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        Message message = new Message( MessageType.GET_ALL_SCREENINGS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
-        SimpleClient.getClient().sendToServer(message);
 
         Screening_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
@@ -95,6 +92,13 @@ public class MovieDetailsController {
                 .setDataObject(movie);
 
         SimpleClient.getClient().sendToServer(getMovieRequest);
+
+
+        Message message = new Message( MessageType.GET_ALL_SCREENINGS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
+        SimpleClient.getClient().sendToServer(message);
+
     }
 
     @Subscribe
