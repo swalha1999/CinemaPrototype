@@ -69,6 +69,8 @@ public class Server extends AbstractServer {
             case GET_MOVIE_REQUEST:
                 handleGetMovieRequest(request, client);
                 break;
+            case UPDATE_MOVIE_REQUEST:
+                handleUpdateMovieRequest(request, client);
 
             //TODO: add more cases here
 
@@ -423,6 +425,43 @@ public class Server extends AbstractServer {
         System.out.println("Get movie response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
+    }
+
+    private void handleUpdateMovieRequest(Message request, ConnectionToClient client) {
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case CONTENT_MANAGER:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to update movies");
+                return;
+        }
+
+        System.out.println("Update movie request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getMoviesManger().updateMovie(request);
+        System.out.println("Update movie response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
+
+        if (response.isSuccess()) {
+            response.setMessageType(MessageType.UPDATE_MOVIE_PATCH);
+            sendToAllLoggedInUsers(response);
+        }
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {
