@@ -1,24 +1,36 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
+
 public class SeatPickerController {
 
-    @FXML
-    private GridPane SeatsGrid;
+    @FXML // fx:id="SeatsGrid"
+    private GridPane SeatsGrid; // Value injected by FXMLLoader
 
-    @FXML
-    private Button confirmButton;
+    @FXML // fx:id="confirmButton"
+    private Button confirmButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="returnBtn"
+    private Button returnBtn; // Value injected by FXMLLoader
 
     private Set<Pane> selectedSeats = new HashSet<>();
+
+    @FXML
+    void returnFunction(ActionEvent event) {
+        Platform.runLater(()->{
+            showSideUI("MovieDetails");
+        });
+    }
 
     @FXML
     public void initialize() {

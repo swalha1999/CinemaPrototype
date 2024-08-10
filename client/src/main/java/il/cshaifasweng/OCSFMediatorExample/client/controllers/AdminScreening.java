@@ -54,8 +54,6 @@ public class AdminScreening {
     @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this);
-
-
         AvailableSeats_Col.setCellValueFactory(new PropertyValueFactory<>("availableSeats"));
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
         Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
