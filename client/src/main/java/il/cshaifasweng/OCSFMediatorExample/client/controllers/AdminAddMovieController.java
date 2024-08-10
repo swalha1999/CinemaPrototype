@@ -120,7 +120,11 @@ public class AdminAddMovieController {
 
     @FXML
     void Clear(ActionEvent event) {
-
+        titleEnglishField.setText("");
+        titleHebrewField.setText("");
+        genreField.setText("");
+        descriptionField.setText("");
+        producerField.setText("");
     }
 
     @FXML
@@ -155,10 +159,9 @@ public class AdminAddMovieController {
     @FXML
     void Update(ActionEvent event) {
         MovieView selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
-        if (selectedMovie == null) {
+        if (selectedMovie != null) {
             return;
         }
-
     }
 
     @FXML
