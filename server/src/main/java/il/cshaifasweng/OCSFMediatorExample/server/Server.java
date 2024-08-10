@@ -60,6 +60,9 @@ public class Server extends AbstractServer {
             case BLOCK_USER_REQUEST:
                 handleBlockUserRequest(request, client);
                 break;
+            case UNBLOCK_USER_REQUEST:
+                handleUnblockUserRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -80,9 +83,6 @@ public class Server extends AbstractServer {
                 break;
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
-                break;
-            case UNBLOCK_USER_REQUEST:
-                handleUnblockUserRequest(request, client);
                 break;
             case REMOVE_USER_REQUEST:
                 handleRemoveUserRequest(request, client);
@@ -238,16 +238,16 @@ public class Server extends AbstractServer {
     }
 
     private void handleUnblockUserRequest(Message request, ConnectionToClient client) {
-        UnblockUserRequest unblockUserRequest = (UnblockUserRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(unblockUserRequest.getSessionKey());
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        unblockUserRequest.setUsername(loggedInUser.getUsername());
-        unblockUserRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER :
@@ -262,11 +262,12 @@ public class Server extends AbstractServer {
                 return;
         }
 
-        System.out.println("Unblock user request received:" + unblockUserRequest.toString()); //TODO: remove this line debug only
-        UnblockUserResponse unblockUserResponse = database.getUsersManager().unblockUser(unblockUserRequest);
-        System.out.println("Unblock user response: " + unblockUserResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Unblock user request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getUsersManager().unblockUser(request);
+        System.out.println("Unblock user response: " + response.toString()); //TODO: remove this line debug only
+        sendResponse(client, response);
 
-        sendResponse(client, new Message(unblockUserResponse, MessageType.UNBLOCK_USER_RESPONSE));
+        //TODO: send a patch to all the logged-in admins to notify them that a user has been unblocked
     }
 
     private void handleRemoveUserRequest(Message request, ConnectionToClient client) {

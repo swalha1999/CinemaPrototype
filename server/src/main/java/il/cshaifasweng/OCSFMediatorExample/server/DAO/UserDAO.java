@@ -295,31 +295,24 @@ public class UserDAO {
         return response;
     }
 
-    public UnblockUserResponse unblockUser(UnblockUserRequest unblockUserRequest) {
-        User user = null;
-        UnblockUserResponse unblockUserResponse = new UnblockUserResponse();
+    public Message unblockUser(Message request) {
+        Message response = new Message(MessageType.UNBLOCK_USER_RESPONSE);
+        User userToUnblockData = (User) request.getDataObject();
 
-        if (unblockUserRequest.getUserIdToUnblock() != 0){
-            user = getUserById(unblockUserRequest.getUserIdToUnblock());
-        }else if(!unblockUserRequest.getUsernameToUnblock().equals("admin")){
-            user = getUserbyUsername(unblockUserRequest.getUsernameToUnblock());
-        }
+        User user = getUserbyUsername(userToUnblockData.getUsername());
 
         if (user == null){
-            unblockUserResponse
+            return response
                     .setSuccess(false)
                     .setMessage("User not found");
-            return unblockUserResponse;
         }
 
         user.setBlocked(false);
         this.updateUser(user);
 
-        unblockUserResponse
+        return response
                 .setSuccess(true)
                 .setMessage("User unblocked successfully");
-
-        return unblockUserResponse;
     }
 
     public RemoveUserResponse removeUser(RemoveUserRequest removeUserRequest) {
