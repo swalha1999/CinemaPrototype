@@ -3,9 +3,9 @@ package il.cshaifasweng.OCSFMediatorExample.client.data;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class ScreeningView {
     private final SimpleIntegerProperty id;
@@ -17,8 +17,9 @@ public class ScreeningView {
     private final SimpleObjectProperty<LocalDateTime> screeningDate;
     private final SimpleIntegerProperty durationInMinutes;
     private final SimpleIntegerProperty endTime;
+    private final SimpleStringProperty movieName;
 
-    public ScreeningView(int id, int availableSeats, int bookedSeats, int cinema, int hall, int movieId, int screeningDate, int startTime, int endTime) {
+    public ScreeningView(int id, int availableSeats, int bookedSeats, int cinema, int hall, int movieId, int screeningDate, int startTime, int endTime, String movieName) {
         this.id = new SimpleIntegerProperty(id);
         this.availableSeats = new SimpleIntegerProperty(availableSeats);
         this.bookedSeats = new SimpleIntegerProperty(bookedSeats);
@@ -28,6 +29,7 @@ public class ScreeningView {
         this.screeningDate = new SimpleObjectProperty<>(LocalDateTime.now());
         this.durationInMinutes = new SimpleIntegerProperty(startTime);
         this.endTime = new SimpleIntegerProperty(endTime);
+        this.movieName = new SimpleStringProperty(movieName);
     }
 
     public ScreeningView(Screening obj) {
@@ -40,6 +42,7 @@ public class ScreeningView {
         this.screeningDate = new SimpleObjectProperty<>(obj.getStartingAt());
         this.durationInMinutes = new SimpleIntegerProperty(obj.getTimeInMinute());
         this.endTime = new SimpleIntegerProperty(obj.getTimeInMinute() + obj.getMovie().getDurationInMinutes());
+        this.movieName = new SimpleStringProperty((obj.getMovie()).getEnglishTitle());
     }
 
     // Getter methods for properties
@@ -63,9 +66,7 @@ public class ScreeningView {
     public SimpleObjectProperty<LocalDateTime> screeningDateProperty() { return screeningDate; }
     public SimpleIntegerProperty durationInMinutesProperty() { return durationInMinutes; }
     public SimpleIntegerProperty endTimeProperty() { return endTime; }
-
-
-
+    public SimpleStringProperty movieNameProperty(){return movieName;}
     @Override
     public String toString() {
         return "ScreeningView{" +

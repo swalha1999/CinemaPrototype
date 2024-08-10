@@ -22,7 +22,6 @@ hight = 900
 7. TODO: add cinema entity `--> swalha`
 8. TODO: after the screening is done, we can make online movies view
 9. TODO: add a page to display to packages and how many entrances they have left
-10. TODO:Link block and unblock user'
 11. TODO:Make Req and Res to the Screening DIO
 
 
