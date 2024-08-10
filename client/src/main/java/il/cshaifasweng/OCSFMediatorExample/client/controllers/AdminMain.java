@@ -4,7 +4,9 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -16,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -27,6 +30,8 @@ import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoo
 
 public class AdminMain {
 
+    NotificationPane notificationPane;
+
     @FXML
     private BorderPane mainPane;
 
@@ -37,9 +42,12 @@ public class AdminMain {
     private Button logoutBtn;
 
     @FXML
+    private StackPane stackPaneMain; // Value injected by FXMLLoader
+
+    @FXML
     public void initialize() {
-//        AdminLabel.setText(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this);
+        notificationPane = new NotificationPane(stackPaneMain);
         loadUI("DashBoard");
     }
 
@@ -85,6 +93,10 @@ public class AdminMain {
         });
     }
 
+    @Subscribe
+    public void onShowNotification(ShowNotificationEvent event) {
+        notificationPane.showNotification(event.getMessage(), event.isSuccessful());
+    }
 
     @Subscribe
     public void onShowSideUIEvent(ShowSideUIEvent event) {

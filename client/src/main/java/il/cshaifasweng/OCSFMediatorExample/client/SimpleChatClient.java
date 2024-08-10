@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -90,22 +91,20 @@ public class SimpleChatClient extends Application {
 
 
     @Subscribe
-    public void onMessageEvent(MessageEvent message) {
+    public void onMessageEvent(MessageEvent messageEvent) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         Platform.runLater(() -> {
-            Alert alert = new Alert(AlertType.INFORMATION,
-                    String.format("Message:\nData: %s\nTimestamp: %s\n",
-                            message.getMessage().getMessage(),
-                            message.getMessage().getTimeStamp().format(dtf))
-            );
-            alert.setTitle("new message");
-            alert.setHeaderText("New Message:");
-            alert.show();
+            showNotification( messageEvent.getMessage().getMessage(), messageEvent.getMessage().isSuccess());
+
         });
     }
 
     public static void showSideUI(String UIName){
         EventBus.getDefault().post(new ShowSideUIEvent(UIName));
+    }
+
+    public static void showNotification(String message, boolean Success){
+        EventBus.getDefault().post(new ShowNotificationEvent(message, Success));
     }
 
 

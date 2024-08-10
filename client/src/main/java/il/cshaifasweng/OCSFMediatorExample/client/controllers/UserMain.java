@@ -7,7 +7,9 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -16,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -24,13 +27,13 @@ import java.io.IOException;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.loadFXMLPane;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
-/**
- * Sample Skeleton for 'UserMain.fxml' Controller Class
- */
+
 
 import javafx.scene.layout.BorderPane;
 
 public class UserMain {
+
+    NotificationPane notificationPane;
 
     @FXML // fx:id="AvailbleMovies_Btn"
     private Button AvailbleMovies_Btn; // Value injected by FXMLLoader
@@ -60,6 +63,17 @@ public class UserMain {
     private Label UserLabel; // Value injected by FXMLLoader
 
     @FXML
+    private StackPane stackPaneMain; // Value injected by FXMLLoader
+
+
+    @FXML
+    public void initialize() {
+        UserLabel.setText(SessionKeysStorage.getInstance().getUsername());
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+        notificationPane = new NotificationPane(stackPaneMain);
+    }
+
+    @FXML
     void ShowMyTickets(ActionEvent event) {
         loadUI("MyTickets");
     }
@@ -81,14 +95,6 @@ public class UserMain {
     @FXML
     void showDashBoard(ActionEvent event) {
         loadUI("SeatPicker");
-    }
-
-
-    @FXML
-    public void initialize() {
-        UserLabel.setText(SessionKeysStorage.getInstance().getUsername());
-        System.out.println(SessionKeysStorage.getInstance().getUsername());
-        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
     }
 
     @FXML
@@ -114,9 +120,15 @@ public class UserMain {
         loadUI(event.getUIName());
     }
 
+    @Subscribe
+    public void onShowNotification(ShowNotificationEvent event) {
+        notificationPane.showNotification(event.getMessage(), event.isSuccessful());
+    }
+
     public void loadUI(String ui) {
         Platform.runLater(() -> {
             mainPane.setCenter(loadFXMLPane(ui));
         });
     }
+
 }

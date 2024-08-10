@@ -4,21 +4,24 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane stylesheets="@css/AdminInterface.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminMain">
-   <left>
-      <VBox alignment="CENTER" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
-         <Label styleClass="sidebar-header" text="Welcome" />
-         <Label fx:id="AdminLabel" prefHeight="32.0" prefWidth="93.0" styleClass="sidebar-subheader" />
-         <Button onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
-         <Button onAction="#showMovies" styleClass="sidebar-button" text="Movies" />
-         <Button onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
-         <Button onAction="#ShowScreenings" styleClass="sidebar-button" text=" Screenings" />
-         <Button onAction="#showCustomers" styleClass="sidebar-button" text="Customers" />
-         <Button onAction="#logOut" styleClass="sidebar-logout-button" text="Log Out" />
-      </VBox>
-   </left>
-   <center>
-      <BorderPane fx:id="mainPane" styleClass="main-pane" />
-   </center>
-</BorderPane>
+<StackPane fx:id="stackPaneMain" stylesheets="@css/AdminInterface.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminMain">
+   <BorderPane fx:id="rootPane">
+      <left>
+         <VBox alignment="CENTER" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
+            <Label styleClass="sidebar-header" text="Welcome" />
+            <Label fx:id="AdminLabel" prefHeight="32.0" prefWidth="93.0" styleClass="sidebar-subheader" />
+            <Button onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
+            <Button onAction="#showMovies" styleClass="sidebar-button" text="Movies" />
+            <Button onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
+            <Button onAction="#ShowScreenings" styleClass="sidebar-button" text=" Screenings" />
+            <Button onAction="#showCustomers" styleClass="sidebar-button" text="Customers" />
+            <Button onAction="#logOut" styleClass="sidebar-logout-button" text="Log Out" />
+         </VBox>
+      </left>
+      <center>
+         <BorderPane fx:id="mainPane" styleClass="main-pane" />
+      </center>
+   </BorderPane>
+</StackPane>
