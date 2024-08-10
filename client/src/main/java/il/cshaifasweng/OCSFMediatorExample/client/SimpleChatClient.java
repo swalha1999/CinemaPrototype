@@ -35,7 +35,7 @@ public class SimpleChatClient extends Application {
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
         Pane movieDetails = loadFXMLPane("MovieDetails");
-        scene = new Scene(loadFXML("host"), 1500, 900);
+        scene = new Scene(loadFXML("host"), 1300, 800);
         stage.setScene(scene);
         stage.show();
     }
