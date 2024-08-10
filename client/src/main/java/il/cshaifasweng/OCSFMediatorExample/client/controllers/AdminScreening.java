@@ -22,6 +22,9 @@ import java.util.List;
 public class AdminScreening {
 
     @FXML
+    private TableColumn<ScreeningView, String> MovieName_Col;
+
+    @FXML
     private TableColumn<ScreeningView, Integer> AvailableSeats_Col;
 
     @FXML
@@ -51,8 +54,6 @@ public class AdminScreening {
     @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this);
-
-
         AvailableSeats_Col.setCellValueFactory(new PropertyValueFactory<>("availableSeats"));
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
         Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
@@ -61,6 +62,7 @@ public class AdminScreening {
         BookedSeats_Col.setCellValueFactory(new PropertyValueFactory<>("bookedSeats"));
 //        EndTime_Col.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         StartTime_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
+        MovieName_Col.setCellValueFactory(new PropertyValueFactory<>("movieName"));
 
         Message message = new Message(MessageType.GET_ALL_SCREENINGS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());

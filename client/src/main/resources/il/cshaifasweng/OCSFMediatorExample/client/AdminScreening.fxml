@@ -8,17 +8,17 @@
     <children>
         <AnchorPane layoutY="3.0" prefHeight="504.0" prefWidth="1008.0" styleClass="anchor-pane">
             <children>
-                <TableView fx:id="ScreeningTable" prefHeight="687.0" prefWidth="1038.0" styleClass="table-view">
+                <TableView fx:id="ScreeningTable" prefHeight="687.0" prefWidth="1096.0" styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="MovieId_Col" prefWidth="87.99999690055847" text="Id" />
-                        <TableColumn fx:id="Cinema_Col" prefWidth="113.60000610351562" text="Cinema" />
-                        <TableColumn fx:id="ScreeningDate_Col" prefWidth="140.7999725341797" text="Screening Date" />
-                        <TableColumn fx:id="Hall_Col" prefWidth="106.4000244140625" text="Hall" />
-                        <TableColumn fx:id="StartTime_Col" prefWidth="122.39996337890625" text="Start Time" />
-                        <TableColumn fx:id="AvailableSeats_Col" prefWidth="132.79998779296875" text="Availble Seats" />
-                        <TableColumn fx:id="BookedSeats_Col" prefWidth="163.199951171875" text="Booked Seats" />
-                  <TableColumn fx:id="EndTime_Col" prefWidth="230.39984130859375" text="End Time" />
-                  <TableColumn prefWidth="75.0" text="Column X" />
+                        <TableColumn fx:id="MovieName_Col" prefWidth="138.0" text="MovieName" />
+                        <TableColumn fx:id="Cinema_Col" prefWidth="120.0" text="Cinema" />
+                        <TableColumn fx:id="ScreeningDate_Col" prefWidth="131.0" text="Screening Date" />
+                        <TableColumn fx:id="Hall_Col" prefWidth="115.0" text="Hall" />
+                        <TableColumn fx:id="StartTime_Col" prefWidth="109.0" text="Start Time" />
+                        <TableColumn fx:id="AvailableSeats_Col" prefWidth="160.0" text="Availble Seats" />
+                        <TableColumn fx:id="BookedSeats_Col" prefWidth="123.0" text="Booked Seats" />
+                  <TableColumn fx:id="EndTime_Col" prefWidth="124.0" text="End Time" />
+                  <TableColumn fx:id="MovieId_Col" prefWidth="75.0" text="Id" />
                     </columns>
                 </TableView>
             </children>

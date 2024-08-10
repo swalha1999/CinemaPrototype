@@ -38,7 +38,6 @@ public class Screening implements Serializable {
     private int price;
     private int availableSeats;
     private int TotalSeats;
-
     private boolean isOnlineScreening = false; //TODO: for future use if the screening is online from home and should send a link for the user
 
     public Screening(Movie movie, Hall hall, LocalDateTime date, int time, int price, int availableSeats, boolean isOnlineScreening) {
