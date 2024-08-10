@@ -1,11 +1,14 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -16,6 +19,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImage;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
@@ -79,8 +84,20 @@ public class MovieDetailsController {
         screeningTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Platform.runLater(()->{
-
+                    showSideUI("SeatPicker");
                 });
+            }
+        });
+    }
+
+    @Subscribe
+    public void onGetAllScreenings(GetAllScreeningsEvent event) {
+        Platform.runLater(()->{
+            List<Screening> screenings = event.getScreenings();
+            screeningTable.getItems().clear();
+            for (Screening screening : screenings) {
+                //TODO: somehow get the current movie so we can filter the screenings instead of adding all screenings
+                screeningTable.getItems().add(new ScreeningView(screening));
             }
         });
     }
@@ -114,7 +131,7 @@ public class MovieDetailsController {
         showSideUI("MovieCatalog");
     }
 
-    //TODO: request the screening times from the server
-    //TODO: display the screening times in the ListView
+    //TODO: request the screening times from the server -=DONE=-
+    //TODO: display the screening times in the ListView -=DONE=-
 
 }

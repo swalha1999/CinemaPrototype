@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ScreeningView {
-    private final SimpleIntegerProperty id;
-    private final SimpleIntegerProperty availableSeats;
-    private final SimpleIntegerProperty bookedSeats;
-    private final SimpleIntegerProperty cinema;
-    private final SimpleIntegerProperty hall;
-    private final SimpleIntegerProperty movieId;
-    private final SimpleObjectProperty<LocalDateTime> screeningDate;
-    private final SimpleIntegerProperty durationInMinutes;
-    private final SimpleIntegerProperty endTime;
+    private SimpleIntegerProperty id;
+    private SimpleIntegerProperty availableSeats;
+    private SimpleIntegerProperty bookedSeats;
+    private SimpleIntegerProperty cinema;
+    private SimpleIntegerProperty hall;
+    private SimpleIntegerProperty movieId;
+    private SimpleObjectProperty<LocalDateTime> screeningDate;
+    private SimpleIntegerProperty durationInMinutes;
+    private SimpleIntegerProperty endTime;
 
     public ScreeningView(int id, int availableSeats, int bookedSeats, int cinema, int hall, int movieId, int screeningDate, int startTime, int endTime) {
         this.id = new SimpleIntegerProperty(id);
@@ -64,6 +64,16 @@ public class ScreeningView {
     public SimpleIntegerProperty durationInMinutesProperty() { return durationInMinutes; }
     public SimpleIntegerProperty endTimeProperty() { return endTime; }
 
+    public ScreeningView copy(Screening screening) {
+        this.id = new SimpleIntegerProperty(screening.getId()) ;
+        this.availableSeats = new SimpleIntegerProperty(screening.getAvailableSeats());
+        this.cinema = new SimpleIntegerProperty(screening.getCinema().getId());
+        this.hall = new SimpleIntegerProperty(screening.getHall().getId());
+        this.movieId = new SimpleIntegerProperty(screening.getMovie().getId());
+        this.screeningDate = new SimpleObjectProperty<>(screening.getStartingAt());
+        this.durationInMinutes = new SimpleIntegerProperty(screening.getTimeInMinute());
+        return this;
+    }
 
 
     @Override
