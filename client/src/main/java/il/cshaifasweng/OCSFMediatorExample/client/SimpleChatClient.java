@@ -1,20 +1,16 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminMain;
-import il.cshaifasweng.OCSFMediatorExample.client.controllers.UserMain;
 import il.cshaifasweng.OCSFMediatorExample.client.events.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
@@ -99,7 +95,6 @@ public class SimpleChatClient extends Application {
         Platform.runLater(() -> {
             Alert alert = new Alert(AlertType.INFORMATION,
                     String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
-                            message.getMessage().getId(),
                             message.getMessage().getMessage(),
                             message.getMessage().getTimeStamp().format(dtf))
             );

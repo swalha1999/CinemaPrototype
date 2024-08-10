@@ -456,7 +456,7 @@ public class Server extends AbstractServer {
 
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
         try {
-            client.sendToClient(new Message(500, errorMessage));
+            client.sendToClient(new Message(errorMessage, MessageType.ERROR));
         } catch (IOException e) {
             System.out.println("Error sending error message: " + e.getMessage());
         }
