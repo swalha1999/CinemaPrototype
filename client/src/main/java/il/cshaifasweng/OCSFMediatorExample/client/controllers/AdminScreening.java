@@ -56,6 +56,8 @@ public class AdminScreening {
         ScreeningDate_Col.setCellValueFactory(new PropertyValueFactory<>("ScreeningDate"));
         StartTime_Col.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
     }
+
+    //TODO: hey omar this is swalha this function is not working the event type is not correct - please fix :)
     @Subscribe
     public void GetAllMoviesRequest(GetAllUsersEvent response){
         Platform.runLater(()->{
