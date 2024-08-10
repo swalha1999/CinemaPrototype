@@ -8,15 +8,15 @@ import java.util.Date;
 
 public class MovieView {
     private int id;
-    private final SimpleStringProperty englishTitle;
-    private final SimpleStringProperty hebrewTitle;
-    private final SimpleObjectProperty<Date> releaseDate;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty language;
-    private final SimpleStringProperty genre;
-    private final SimpleStringProperty country;
-    private final SimpleStringProperty imageUrl;
-    private final SimpleStringProperty trailerUrl;
+    private SimpleStringProperty englishTitle;
+    private SimpleStringProperty hebrewTitle;
+    private SimpleObjectProperty<Date> releaseDate;
+    private SimpleStringProperty description;
+    private SimpleStringProperty language;
+    private SimpleStringProperty genre;
+    private SimpleStringProperty country;
+    private SimpleStringProperty imageUrl;
+    private SimpleStringProperty trailerUrl;
 
 
     public MovieView(int id, String englishTitle,String hebrewTitle, Date releaseDate, String description, String language, String genre, String country, String imageUrl, String trailerUrl, boolean hasScreenings) {
@@ -83,4 +83,28 @@ public class MovieView {
     public SimpleStringProperty trailerUrlProperty() { return trailerUrl; }
     public SimpleStringProperty idProperty() { return new SimpleStringProperty(String.valueOf(id)); }
 
+    public MovieView copy(Movie movie) {
+        this.id = movie.getId();
+        this.englishTitle = new SimpleStringProperty(movie.getEnglishTitle());
+        this.hebrewTitle = new SimpleStringProperty(movie.getHebrewTitle());
+        this.releaseDate = new SimpleObjectProperty<>(movie.getReleaseDate());
+        this.description = new SimpleStringProperty(movie.getDescription());
+
+        // Null checks before calling toString()
+        this.language = new SimpleStringProperty(
+                movie.getLanguage() != null ? movie.getLanguage().toString() : "Unknown"
+        );
+
+        this.genre = new SimpleStringProperty(
+                movie.getGenre() != null ? movie.getGenre().toString() : "Unknown"
+        );
+
+        this.country = new SimpleStringProperty(
+                movie.getCountry() != null ? movie.getCountry().toString() : "Unknown"
+        );
+
+        this.imageUrl = new SimpleStringProperty(movie.getImageUrl());
+        this.trailerUrl = new SimpleStringProperty(movie.getTrailerUrl());
+        return this;
+    }
 }

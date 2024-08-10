@@ -99,8 +99,8 @@ public class AdminAddMovieController {
                 Platform.runLater(()->{
                     titleEnglishField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
                     titleHebrewField.setText(moviesTable.getSelectionModel().getSelectedItem().getHebrewTitle());
-                    genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
-                    descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getGenre());
+                    genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getGenre());
+                    descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getDescription());
                 });
             }
         });
@@ -158,7 +158,7 @@ public class AdminAddMovieController {
     void Update(ActionEvent event) {
         MovieView selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
         if (selectedMovie != null) {
-            Movie movieToRemove = new Movie().setId(moviesTable.getSelectionModel().getSelectedItem().getId())
+            Movie movieToUpdate = new Movie().setId(moviesTable.getSelectionModel().getSelectedItem().getId())
                     .setEnglishTitle(titleEnglishField.getText())
                     .setHebrewTitle(titleHebrewField.getText())
                     .setGenre(MovieGenre.valueOf(genreField.getText()))
@@ -167,7 +167,7 @@ public class AdminAddMovieController {
 
             Message UpdateMovieRequest = new Message(MessageType.UPDATE_MOVIE_REQUEST)
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                    .setDataObject(movieToRemove);
+                    .setDataObject(movieToUpdate);
 
             SimpleClient.getClient().sendToServer(UpdateMovieRequest);
         }
@@ -200,6 +200,11 @@ public class AdminAddMovieController {
     @Subscribe
     public void onUpdateMovieEvent(UpdateMovieEvent event){
         Platform.runLater(()->{
+            for (MovieView movieView : moviesTable.getItems()) {
+                if(movieView.getId() == event.getMovie().getId()){
+                    movieView.copy(event.getMovie());
+                }
+            }
             moviesTable.refresh();
         });
     }
