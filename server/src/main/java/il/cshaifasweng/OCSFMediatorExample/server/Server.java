@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
@@ -69,6 +70,9 @@ public class Server extends AbstractServer {
             case GET_ALL_MOVIES_REQUEST:
                 handleGetAllMoviesRequest(request, client);
                 break;
+            case ADD_MOVIE_REQUEST:
+                handleAddMovieRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -91,9 +95,7 @@ public class Server extends AbstractServer {
                 handleRegisterRequest(request, client);
                 break;
 
-            case ADD_MOVIE_REQUEST:
-                handleAddMovieRequest(request, client);
-                break;
+
             case REMOVE_MOVIE_REQUEST:
                 handleRemoveMovieRequest(request, client);
                 break;
@@ -336,16 +338,16 @@ public class Server extends AbstractServer {
     }
 
     private void handleAddMovieRequest(Message request, ConnectionToClient client) {
-        AddMovieRequest addMovieRequest = (AddMovieRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(addMovieRequest.getSessionKey());
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        addMovieRequest.setUsername(loggedInUser.getUsername());
-        addMovieRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -360,17 +362,18 @@ public class Server extends AbstractServer {
                 return;
         }
 
-        System.out.println("Add movie request received:" + addMovieRequest.toString()); //TODO: remove this line debug only
-        AddMovieResponse addMovieResponse = database.getMoviesManger().addMovie(addMovieRequest);
-        System.out.println("Add movie response: " + addMovieResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Add movie request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getMoviesManger().addMovie(request);
+        System.out.println("Add movie response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(addMovieResponse, MessageType.ADD_MOVIE_RESPONSE));
+        sendResponse(client, response);
 
         // send a patch to all the logged-in users
-        if (addMovieResponse.isSuccess()) {
+        if (response.isSuccess()) {
+            //TODO: update this to V3
             AddMoviePatch addMoviePatch = new AddMoviePatch()
                     .setMessage("Movie added successfully")
-                    .setMovie(addMovieResponse.getMovie());
+                    .setMovie((Movie) response.getDataObject());
 
             sendToAllLoggedInUsers(new Message(addMoviePatch, MessageType.ADD_MOVIE_PATCH));
         }

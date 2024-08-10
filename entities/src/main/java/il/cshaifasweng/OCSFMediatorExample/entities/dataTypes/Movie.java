@@ -46,6 +46,28 @@ public class Movie implements Serializable {
     private Set<Screening> screenings = new HashSet<>();
 
     public Movie(){}
+
+
+    // Warning: don't copy the id of the movie (it's unique)
+    public Movie(Movie other){
+        this.name = other.name;
+        this.releaseDate = other.releaseDate;
+        this.description = other.description;
+        this.language = other.language;
+        this.genre = other.genre;
+        this.country = other.country;
+        this.imageUrl = other.imageUrl;
+        this.trailerUrl = other.trailerUrl;
+        this.englishTitle = other.englishTitle;
+        this.hebrewTitle = other.hebrewTitle;
+        this.durationInMinutes = other.durationInMinutes;
+
+        //TODO: check if this is the right way to copy the set (this is a relationship ot another table)
+//        this.actors = other.actors;
+//        this.producer = other.producer;
+//        this.screenings = other.screenings;
+    }
+
     public Movie(String name, Date releaseDate) {
         this.name = name;
         this.englishTitle = name;

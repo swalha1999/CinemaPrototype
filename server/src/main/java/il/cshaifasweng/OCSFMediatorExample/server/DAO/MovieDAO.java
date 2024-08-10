@@ -3,10 +3,8 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.AddMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetMovieResponse;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RemoveMovieResponse;
 import org.hibernate.Session;
@@ -82,16 +80,10 @@ public class MovieDAO {
     }
 
 
-    public AddMovieResponse addMovie(AddMovieRequest addMovieRequest) {
-        Movie movie = new Movie();
-        movie.setDate(addMovieRequest.getReleaseDate());
-        movie.setName(addMovieRequest.getName());
-        movie.setDescription(addMovieRequest.getDescription());
-        movie.setLanguage(addMovieRequest.getLanguage());
-        movie.setGenre(addMovieRequest.getGenre());
-        movie.setCountry(addMovieRequest.getCountry());
-        movie.setHebrewTitle(addMovieRequest.getHebrewTitle());
-        // TODO: movie.setImageUrl(addMovieRequest.getImageUrl());
+    public Message addMovie(Message request) {
+        Message response = new Message(MessageType.ADD_MOVIE_RESPONSE);
+
+        Movie movie = ((Movie) request.getDataObject());
 
         Transaction transaction = null;
         try {
@@ -103,10 +95,14 @@ public class MovieDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
-            return new AddMovieResponse().setSuccess(false).setMessage("Failed to add movie");
+            System.err.println("Failed to add movie");
+            return response.setSuccess(false).setMessage("Failed to add movie");
         }
-        return new AddMovieResponse().setSuccess(true).setMessage("Movie added successfully").setMovie(movie);
+
+        return response
+                .setSuccess(true)
+                .setMessage("Movie added successfully")
+                .setDataObject(movie);
 
     }
 

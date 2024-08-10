@@ -14,7 +14,6 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.AddMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -136,14 +135,18 @@ public class AdminAddMovieController {
 
     @FXML
     void Insert(ActionEvent event) throws IOException {
-        AddMovieRequest addMovieRequest = new AddMovieRequest()
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+        Movie movieToAdd = new Movie()
                 .setEnglishTitle(titleEnglishField.getText())
-                .setHebrewTitle(titleHebrewColumn.getText())
-                .setGenre(MovieGenre.ALL)
+                .setHebrewTitle(titleHebrewField.getText())
+                .setGenre(MovieGenre.valueOf(genreField.getText()))
                 .setDescription(descriptionField.getText());
 
-        SimpleClient.getClient().sendToServer(new Message(addMovieRequest, MessageType.ADD_MOVIE_REQUEST));
+        Message addMovieRequest = new Message(MessageType.ADD_MOVIE_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(movieToAdd);
+
+        SimpleClient.getClient().sendToServer(addMovieRequest);
+
     }
 
 
