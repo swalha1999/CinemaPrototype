@@ -74,6 +74,8 @@ public class AdminUsersView {
     @FXML // fx:id="logoutBtn"
     private Button logoutBtn; // Value injected by FXMLLoader
 
+
+
     @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
