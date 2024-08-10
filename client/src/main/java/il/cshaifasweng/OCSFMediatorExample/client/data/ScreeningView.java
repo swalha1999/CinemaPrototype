@@ -1,95 +1,83 @@
 package il.cshaifasweng.OCSFMediatorExample.client.data;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieDetails;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class ScreeningView {
-    private final SimpleIntegerProperty movieId;
-    private final SimpleStringProperty cinema;
-    private final SimpleStringProperty screeningDate;
-    private final SimpleStringProperty hall;
-    private final SimpleStringProperty startTime;
+    private final SimpleIntegerProperty id;
     private final SimpleIntegerProperty availableSeats;
     private final SimpleIntegerProperty bookedSeats;
-    private final SimpleStringProperty endTime;
-    ScreeningView(SimpleIntegerProperty movieId, SimpleStringProperty cinema, SimpleStringProperty screeningDate, SimpleStringProperty hall, SimpleStringProperty startTime, SimpleIntegerProperty availableSeats, SimpleIntegerProperty bookedSeats, SimpleStringProperty endTime){
-        this.movieId = movieId;
-        this.cinema = cinema;
-        this.screeningDate = screeningDate;
-        this.hall = hall;
-        this.startTime = startTime;
-        this.availableSeats = availableSeats;
-        this.bookedSeats = bookedSeats;
-        this.endTime = endTime;
+    private final SimpleIntegerProperty cinema;
+    private final SimpleIntegerProperty hall;
+    private final SimpleIntegerProperty movieId;
+    private final SimpleObjectProperty<LocalDateTime> screeningDate;
+    private final SimpleIntegerProperty durationInMinutes;
+    private final SimpleIntegerProperty endTime;
+
+    public ScreeningView(int id, int availableSeats, int bookedSeats, int cinema, int hall, int movieId, int screeningDate, int startTime, int endTime) {
+        this.id = new SimpleIntegerProperty(id);
+        this.availableSeats = new SimpleIntegerProperty(availableSeats);
+        this.bookedSeats = new SimpleIntegerProperty(bookedSeats);
+        this.cinema = new SimpleIntegerProperty(cinema);
+        this.hall = new SimpleIntegerProperty(hall);
+        this.movieId = new SimpleIntegerProperty(movieId);
+        this.screeningDate = new SimpleObjectProperty<>(LocalDateTime.now());
+        this.durationInMinutes = new SimpleIntegerProperty(startTime);
+        this.endTime = new SimpleIntegerProperty(endTime);
     }
-    public ScreeningView(MovieDetails movie){
-        this.movieId = new SimpleIntegerProperty(movie.getMovieId());
-        this.cinema = new SimpleStringProperty(movie.getCinema());
-        this.screeningDate = new SimpleStringProperty(movie.getScreeningDate());
-        this.hall = new SimpleStringProperty(movie.getHall());
-        this.startTime = new SimpleStringProperty(movie.getStartTime());
-        this.availableSeats = new SimpleIntegerProperty(movie.getAvailableSeats());
-        this.bookedSeats = new SimpleIntegerProperty(movie.getBookedSeats());
-        this.endTime = new SimpleStringProperty(movie.getEndTime());
+
+    public ScreeningView(Screening obj) {
+        this.id = new SimpleIntegerProperty(obj.getId());
+        this.availableSeats = new SimpleIntegerProperty(obj.getAvailableSeats());
+        this.bookedSeats = new SimpleIntegerProperty(obj.getTotalSeats() - obj.getAvailableSeats());
+        this.hall = new SimpleIntegerProperty(obj.getHall().getId());
+        this.cinema = new SimpleIntegerProperty(obj.getCinema().getId());
+        this.movieId = new SimpleIntegerProperty(obj.getMovie().getId());
+        this.screeningDate = new SimpleObjectProperty<>(obj.getStartingAt());
+        this.durationInMinutes = new SimpleIntegerProperty(obj.getTimeInMinute());
+        this.endTime = new SimpleIntegerProperty(obj.getTimeInMinute() + obj.getMovie().getDurationInMinutes());
     }
-    ScreeningView(ScreeningView screeningView){
-        this.movieId = screeningView.movieId;
-        this.cinema = screeningView.cinema;
-        this.screeningDate = screeningView.screeningDate;
-        this.hall = screeningView.hall;
-        this.startTime = screeningView.startTime;
-        this.availableSeats = screeningView.availableSeats;
-        this.bookedSeats = screeningView.bookedSeats;
-        this.endTime = screeningView.endTime;
-    }
-    public SimpleIntegerProperty movieIdProperty(){
-        return movieId;
-    }
-    public SimpleStringProperty cinemaProperty(){
-        return cinema;
-    }
-    public SimpleStringProperty screeningDateProperty(){
-        return screeningDate;
-    }
-    public SimpleStringProperty hallProperty(){
-        return hall;
-    }
-    public SimpleStringProperty startTimeProperty(){
-        return startTime;
-    }
-    public SimpleIntegerProperty availableSeatsProperty(){
-        return availableSeats;
-    }
-    public SimpleIntegerProperty bookedSeatsProperty(){
-        return bookedSeats;
-    }
-    public SimpleStringProperty endTimeProperty(){
-        return endTime;
-    }
-    public int getMovieId(){
-        return movieId.get();
-    }
-    public String getCinema(){
-        return cinema.get();
-    }
-    public String getScreeningDate(){
-        return screeningDate.get();
-    }
-    public String getHall(){
-        return hall.get();
-    }
-    public String getStartTime(){
-        return startTime.get();
-    }
-    public int getAvailableSeats(){
-        return availableSeats.get();
-    }
-    public int getBookedSeats(){
-        return bookedSeats.get();
-    }
-    public String getEndTime(){
-        return endTime.get();
+
+    // Getter methods for properties
+    public int getId() { return id.get(); }
+    public int getAvailableSeats() { return availableSeats.get(); }
+    public int getBookedSeats() { return bookedSeats.get(); }
+    public int getCinema() { return cinema.get(); }
+    public int getHall() { return hall.get(); }
+    public int getMovieId() { return movieId.get(); }
+    public LocalDateTime getScreeningDate() { return screeningDate.get(); }
+    public int getDurationInMinutes() { return durationInMinutes.get(); }
+    public int getEndTime() { return endTime.get(); }
+
+    // Property methods for JavaFX bindings
+    public SimpleIntegerProperty idProperty() { return id; }
+    public SimpleIntegerProperty availableSeatsProperty() { return availableSeats; }
+    public SimpleIntegerProperty bookedSeatsProperty() { return bookedSeats; }
+    public SimpleIntegerProperty cinemaProperty() { return cinema; }
+    public SimpleIntegerProperty hallProperty() { return hall; }
+    public SimpleIntegerProperty movieIdProperty() { return movieId; }
+    public SimpleObjectProperty<LocalDateTime> screeningDateProperty() { return screeningDate; }
+    public SimpleIntegerProperty durationInMinutesProperty() { return durationInMinutes; }
+    public SimpleIntegerProperty endTimeProperty() { return endTime; }
+
+
+
+    @Override
+    public String toString() {
+        return "ScreeningView{" +
+                "id=" + id +
+                ", availableSeats=" + availableSeats +
+                ", bookedSeats=" + bookedSeats +
+                ", cinema=" + cinema +
+                ", hall=" + hall +
+                ", movieId=" + movieId +
+                ", screeningDate=" + screeningDate +
+                ", startTime=" + durationInMinutes +
+                ", endTime=" + endTime +
+                '}';
     }
 }

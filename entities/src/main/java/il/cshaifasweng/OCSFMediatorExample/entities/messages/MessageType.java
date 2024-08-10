@@ -38,6 +38,6 @@ public enum MessageType implements Serializable {
     GET_MOVIE_REQUEST,
     GET_MOVIE_RESPONSE,
     GET_ALL_SCREENINGS_REQUEST,
-    GET_ALL_SCREENING_RESPONSE,
+    GET_ALL_SCREENINGS_RESPONSE,
 }
 

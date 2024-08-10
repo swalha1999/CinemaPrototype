@@ -1,7 +1,11 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
+import org.hibernate.type.LocalDateTimeType;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,21 +26,26 @@ public class Screening implements Serializable {
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
+    @ManyToOne
+    @JoinColumn(name = "cinema_id")
+    private Cinema cinema;
+
     @OneToMany(mappedBy = "screening")
     private Set<MovieTicket> tickets = new HashSet<>();
 
-    private String date;
-    private String time;
+    private LocalDateTime startingAt;
+    private int timeInMinute;
     private int price;
     private int availableSeats;
+    private int TotalSeats;
 
     private boolean isOnlineScreening = false; //TODO: for future use if the screening is online from home and should send a link for the user
 
-    public Screening(Movie movie, Hall hall, String date, String time, int price, int availableSeats, boolean isOnlineScreening) {
+    public Screening(Movie movie, Hall hall, LocalDateTime date, int time, int price, int availableSeats, boolean isOnlineScreening) {
         this.movie = movie;
         this.hall = hall;
-        this.date = date;
-        this.time = time;
+        this.startingAt = date;
+        this.timeInMinute = time;
         this.price = price;
         this.availableSeats = availableSeats;
         this.isOnlineScreening = isOnlineScreening;
@@ -46,8 +55,8 @@ public class Screening implements Serializable {
     }
 
     public Screening() {
-        this.date = "";
-        this.time = "";
+        this.startingAt = LocalDateTime.now();
+        this.timeInMinute = 0;
         this.price = 0;
         this.availableSeats = 0;
     }
@@ -56,20 +65,20 @@ public class Screening implements Serializable {
         return id;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getStartingAt() {
+        return startingAt;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartingAt(LocalDateTime date) {
+        this.startingAt = date;
     }
 
-    public String getTime() {
-        return time;
+    public int getTimeInMinute() {
+        return timeInMinute;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimeInMinute(int time) {
+        this.timeInMinute = time;
     }
 
     public int getPrice() {
@@ -139,6 +148,24 @@ public class Screening implements Serializable {
     public void removeTicket(MovieTicket ticket) {
         this.tickets.remove(ticket);
     }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
+    public int getTotalSeats() {
+        return TotalSeats;
+    }
+
+    public void setTotalSeats(int TotalSeats) {
+        this.TotalSeats = TotalSeats;
+    }
+
+
 
 
 

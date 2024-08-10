@@ -72,6 +72,9 @@ public class Server extends AbstractServer {
             case UPDATE_MOVIE_REQUEST:
                 handleUpdateMovieRequest(request, client);
                 break;
+            case GET_ALL_SCREENINGS_REQUEST:
+                handleGetAllScreeningsRequest(request, client);
+                break;
             //TODO: add more cases here
 
             default:
@@ -462,6 +465,37 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.UPDATE_MOVIE_PATCH);
             sendToAllLoggedInUsers(response);
         }
+    }
+
+    private void handleGetAllScreeningsRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+                break;
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to this action");
+                return;
+        }
+
+        System.out.println("Get all screenings request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getScreeningsManager().getAllScreenings(request);
+        System.out.println("Get all screenings response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {

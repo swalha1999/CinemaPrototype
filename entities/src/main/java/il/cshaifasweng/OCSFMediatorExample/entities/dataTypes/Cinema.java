@@ -22,6 +22,9 @@ public class Cinema implements Serializable {
     @OneToMany(mappedBy = "cinema")
     private Set<Hall> halls = new HashSet<>();
 
+    @OneToMany(mappedBy = "cinema")
+    private Set<Hall> screening = new HashSet<>();
+
     @OneToOne
     @JoinColumn(name = "cinema_id")
     private User manager;
@@ -107,6 +110,14 @@ public class Cinema implements Serializable {
         if (manager.getCinema() != this) {
             manager.setCinema(this);
         }
+    }
+
+    public Set<Hall> getScreening() {
+        return screening;
+    }
+
+    public void setScreening(Set<Hall> screening) {
+        this.screening = screening;
     }
 
     @Override
