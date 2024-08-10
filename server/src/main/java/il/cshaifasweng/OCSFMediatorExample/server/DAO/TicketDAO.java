@@ -1,8 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMyTicketsRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetMyTicketsResponse;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -15,11 +15,11 @@ public class TicketDAO {
         this.session = session;
     }
 
-    public GetMyTicketsResponse getMyTickets(GetMyTicketsRequest request) {
+    public Message getMyTickets(Message request) {
         List<MovieTicket> tickets = session.createQuery("from MovieTicket where user = :id", MovieTicket.class)
                 .setParameter("id", request.getUserId())
                 .getResultList();
-        return new GetMyTicketsResponse(tickets);
+        return new Message(MessageType.GET_MY_TICKETS_RESPONSE).setDataObject(tickets);
     }
 
 }

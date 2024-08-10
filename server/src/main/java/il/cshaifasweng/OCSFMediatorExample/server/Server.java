@@ -55,6 +55,8 @@ public class Server extends AbstractServer {
                 handleGetAllUsersRequest(request, client);
                 break;
             case GET_MY_TICKETS_REQUEST:
+                handleGetMyTicketsRequest(request, client);
+                break;
             case BLOCK_USER_REQUEST:
             case UNBLOCK_USER_REQUEST:
             case REMOVE_USER_REQUEST:
@@ -83,12 +85,6 @@ public class Server extends AbstractServer {
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
                 break;
-            case GET_ALL_USERS_REQUEST:
-                handleGetAllUsersRequest(request, client);
-                break;
-            case GET_MY_TICKETS_REQUEST:
-                handleGetMyTicketsRequest(request, client);
-                break;
             case BLOCK_USER_REQUEST:
                 handleBlockUserRequest(request, client);
                 break;
@@ -115,7 +111,7 @@ public class Server extends AbstractServer {
                 //TODO: add more cases here
 
             default:
-                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
+                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it this is not supported in V2");
                 break;
         }
     }
@@ -199,22 +195,21 @@ public class Server extends AbstractServer {
     }
 
     private void handleGetMyTicketsRequest(Message request, ConnectionToClient client) {
-        GetMyTicketsRequest getMyTicketsRequest = (GetMyTicketsRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(getMyTicketsRequest.getSessionKey());
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        getMyTicketsRequest.setUsername(loggedInUser.getUsername());
-        getMyTicketsRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get my tickets request received:" + getMyTicketsRequest.toString()); //TODO: remove this line debug only
-        GetMyTicketsResponse getMyTicketsResponse = database.getTicketsManager().getMyTickets(getMyTicketsRequest);
-        System.out.println("Get my tickets response: " + getMyTicketsResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Get my tickets request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getTicketsManager().getMyTickets(request);
+        System.out.println("Get my tickets response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(getMyTicketsResponse, MessageType.GET_MY_TICKETS_RESPONSE));
+        sendResponse(client, response);
     }
 
     private void handleBlockUserRequest(Message request, ConnectionToClient client) {
