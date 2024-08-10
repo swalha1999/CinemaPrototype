@@ -94,7 +94,7 @@ public class SimpleChatClient extends Application {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         Platform.runLater(() -> {
             Alert alert = new Alert(AlertType.INFORMATION,
-                    String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
+                    String.format("Message:\nData: %s\nTimestamp: %s\n",
                             message.getMessage().getMessage(),
                             message.getMessage().getTimeStamp().format(dtf))
             );
