@@ -37,7 +37,7 @@ public class SimpleChatClient extends Application {
         stage.show();
     }
 
-    public static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) {
         scene.setRoot(loadFXML(fxml));
     }
 

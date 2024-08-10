@@ -1,13 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.AddMoviePatch;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveMoviePatch;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveUserPatch;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
@@ -15,7 +10,6 @@ import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.Session;
-
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -85,7 +79,6 @@ public class Server extends AbstractServer {
     }
 
     private void handleV2Message(Message request, ConnectionToClient client) {
-        Message response;
         switch (request.getType()) {
             case LOGIN_REQUEST:
                 handleLoginRequest(request, client);
@@ -366,11 +359,8 @@ public class Server extends AbstractServer {
         // send a patch to all the logged-in users
         if (response.isSuccess()) {
             //TODO: update this to V3
-            AddMoviePatch addMoviePatch = new AddMoviePatch()
-                    .setMessage("Movie added successfully")
-                    .setMovie((Movie) response.getDataObject());
-
-            sendToAllLoggedInUsers(new Message(addMoviePatch, MessageType.ADD_MOVIE_PATCH));
+            response.setMessageType(MessageType.ADD_MOVIE_PATCH);
+            sendToAllLoggedInUsers(response);
         }
 
     }
@@ -408,11 +398,8 @@ public class Server extends AbstractServer {
         // send a patch to all the logged-in users
         if (response.isSuccess()) {
             //TODO: update this to V3
-            RemoveMoviePatch removeMoviePatch = new RemoveMoviePatch()
-                    .setMessage("Movie removed from the system")
-                    .setMovie((Movie) response.getDataObject());
-
-            sendToAllLoggedInUsers(new Message(removeMoviePatch, MessageType.REMOVE_MOVIE_PATCH));
+            response.setMessageType(MessageType.REMOVE_MOVIE_PATCH);
+            sendToAllLoggedInUsers(response);
         }
     }
 

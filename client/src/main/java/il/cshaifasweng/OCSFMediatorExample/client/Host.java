@@ -35,19 +35,9 @@ public class Host {
         port6= Integer.parseInt(port.getText());
         SimpleClient client = SimpleClient.getClient();
         client.openConnection();
-//        try {
-////            Message message = new Message(0, "add client");
-////            SimpleClient.getClient().sendToServer(message);
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+
         Platform.runLater(()->{
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Login");
         });
     }
 

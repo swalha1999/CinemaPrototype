@@ -2,8 +2,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.events;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.NewUserAddedPatch;
 
 public class NewUserAddedEvent{
 
