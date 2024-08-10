@@ -232,6 +232,11 @@ public class Server extends AbstractServer {
         System.out.println("Block user response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
+        if (response.isSuccess()) {
+            // log out the user
+            logOutUser(((User) request.getDataObject()).getUsername(), "User has been blocked from the system");
+            //TODO: send a patch to all the logged-in admins to notify them that a user has been blocked
+        }
     }
 
     private void handleUnblockUserRequest(Message request, ConnectionToClient client) {
@@ -301,13 +306,9 @@ public class Server extends AbstractServer {
         // send a patch to all the logged-in admins to notify them that a user has been removed
         if (response.isSuccess()) {
             // TODO: update this to lock out the user and remove him from the logged-in users list
-            // TODO: update the patch to V3
-            RemoveUserPatch newUserAddedPatch = new RemoveUserPatch()
-                    .setSuccess(true)
-                    .setMessage("User removed successfully")
-                    .setUsername( ((User) request.getDataObject()).getUsername() );
-
-            sendToAllAdmins(new Message(newUserAddedPatch, MessageType.REMOVE_USER_PATCH));
+            response.setMessageType(MessageType.REMOVE_USER_PATCH);
+            sendToAllAdmins(response);
+            logOutUser(((User) response.getDataObject()).getUsername(), "User has been removed from the system");
         }
 
     }
@@ -482,6 +483,20 @@ public class Server extends AbstractServer {
                     //TODO : indicate the user that he is logged out
 
                 }
+            }
+        }
+    }
+
+    public void logOutUser(String username, String message) {
+        for (LoggedInUser loggedInUser : sessionKeys.values()) {
+            if (loggedInUser.getUsername().equals(username)) {
+                LoggedInUser user = sessionKeys.remove(loggedInUser.getSessionKey());
+                LogoutResponse logoutResponse = new LogoutResponse()
+                        .setSuccess(true)
+                        .setMessage(message);
+
+                sendResponse(user.getClient(), new Message(logoutResponse, MessageType.LOGOUT_RESPONSE));
+
             }
         }
     }

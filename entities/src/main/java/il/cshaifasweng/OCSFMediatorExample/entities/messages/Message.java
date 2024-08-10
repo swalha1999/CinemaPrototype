@@ -125,6 +125,11 @@ public class Message implements Serializable {
         return this;
     }
 
+    public Message setMessageType(MessageType type) {
+        this.type = type;
+        return this;
+    }
+
     public String toString() {
         return "Message{" +
                 ", type=" + type.toString() +
