@@ -73,6 +73,7 @@ public class AdminUsersView {
 
     @FXML // fx:id="logoutBtn"
     private Button logoutBtn; // Value injected by FXMLLoader
+
     @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
@@ -94,8 +95,8 @@ public class AdminUsersView {
     }
 
     @Subscribe
-    public void onGetAllUsersEvent(GetAllUsersEvent response){
-        Platform.runLater(()->{
+    public void onGetAllUsersEvent(GetAllUsersEvent response) {
+        Platform.runLater(() -> {
             List<User> users = response.getUsers();
             Users_Table.getItems().clear();
             for (User user : users) {
@@ -105,17 +106,17 @@ public class AdminUsersView {
     }
 
     @Subscribe
-    public void onNewUserEvent(NewUserAddedEvent event){
-        Platform.runLater(()->{
+    public void onNewUserEvent(NewUserAddedEvent event) {
+        Platform.runLater(() -> {
             Users_Table.getItems().add(new UserView(event.getUser()));
         });
     }
 
     @Subscribe
-    public void onRemoveUserEvent(RemoveUserEvent event){
-        Platform.runLater(()->{
+    public void onRemoveUserEvent(RemoveUserEvent event) {
+        Platform.runLater(() -> {
             for (UserView userView : Users_Table.getItems()) {
-                if(userView.getUsername().equals(event.getUsername())){
+                if (userView.getUsername().equals(event.getUsername())) {
                     Users_Table.getItems().remove(userView);
                     break;
                 }
@@ -166,7 +167,27 @@ public class AdminUsersView {
         SimpleClient.getClient().sendToServer(removeUserRequest);
     }
 
-    public void UnlockUser(ActionEvent actionEvent) {
+    public void UnblockUser(ActionEvent actionEvent) {
+        // Get the selected user from the table
+        UserView selectedUser = Users_Table.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            // If no user is selected, exit the method
+            return;
+        }
 
+        // Create a User object and set its properties
+        User userToUnblock = new User()
+                .setUsername(selectedUser.getUsername())
+                .setId(selectedUser.getId())
+                .setBlocked(false); // Set the blocked status to false to unblock the user
+
+        // Create a Message object for the unblock user request
+        Message unblockUserRequest = new Message(MessageType.UNBLOCK_USER_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(userToUnblock);
+
+        // Send the unblock user request to the server
+        SimpleClient.getClient().sendToServer(unblockUserRequest);
     }
 }
+
