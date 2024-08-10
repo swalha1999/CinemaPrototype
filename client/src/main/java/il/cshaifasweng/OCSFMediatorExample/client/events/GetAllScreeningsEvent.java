@@ -1,19 +1,20 @@
 package il.cshaifasweng.OCSFMediatorExample.client.events;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieDetails;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 
 import java.util.List;
 
-public class GetAllMoviesDetailsEvent {
+public class GetAllScreeningsEvent {
     private final boolean isSuccess;
     private final String message;
-    private final List<MovieDetails> movies;
+    private final List<Screening> screenings;
 
-    public GetAllMoviesDetailsEvent(Message message) {
+    public GetAllScreeningsEvent(Message message) {
         this.isSuccess = message.isSuccess();
         this.message = message.getMessage();
-        this.movies = ((List<MovieDetails>) message.getDataObject());
+        this.screenings = ((List<Screening>) message.getDataObject());
     }
     public boolean isSuccess() {
         return isSuccess;
@@ -23,7 +24,7 @@ public class GetAllMoviesDetailsEvent {
         return message;
     }
 
-    public List<MovieDetails> getMoviesDetails() {
-        return movies;
+    public List<Screening> getScreenings() {
+        return screenings;
     }
 }

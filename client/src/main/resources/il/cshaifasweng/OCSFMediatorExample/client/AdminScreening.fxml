@@ -8,7 +8,7 @@
     <children>
         <AnchorPane layoutY="3.0" prefHeight="504.0" prefWidth="1008.0" styleClass="anchor-pane">
             <children>
-                <TableView fx:id="MoviesTable" prefHeight="687.0" prefWidth="1038.0" styleClass="table-view">
+                <TableView fx:id="ScreeningTable" prefHeight="687.0" prefWidth="1038.0" styleClass="table-view">
                     <columns>
                         <TableColumn fx:id="MovieId_Col" prefWidth="87.99999690055847" text="Id" />
                         <TableColumn fx:id="Cinema_Col" prefWidth="113.60000610351562" text="Cinema" />

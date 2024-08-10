@@ -49,7 +49,9 @@ public class SimpleClient extends AbstractClient {
 				case UPDATE_MOVIE_PATCH:
 					EventBus.getDefault().post( new UpdateMovieEvent(message));
 					break;
-
+				case GET_ALL_SCREENINGS_RESPONSE:
+					EventBus.getDefault().post( new GetAllScreeningsEvent(message));
+					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
