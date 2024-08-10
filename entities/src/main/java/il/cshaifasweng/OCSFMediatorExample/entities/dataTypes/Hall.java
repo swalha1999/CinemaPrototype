@@ -27,9 +27,8 @@ public class Hall implements Serializable {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 
-    public Hall(String name, int rows, int columns) {
+    public Hall(String name) {
         this.name = name;
-
     }
 
     public Hall() {
@@ -98,6 +97,17 @@ public class Hall implements Serializable {
 
     public void removeAllScreenings() {
         this.screenings.clear();
+    }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+        if (!cinema.getHalls().contains(this)) {
+            cinema.addHall(this);
+        }
     }
 
 }

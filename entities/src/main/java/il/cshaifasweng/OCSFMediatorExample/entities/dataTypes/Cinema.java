@@ -120,6 +120,55 @@ public class Cinema implements Serializable {
         this.screening = screening;
     }
 
+    public void addHall(Hall hall) {
+        this.halls.add(hall);
+        if (hall.getCinema() != this) {
+            hall.setCinema(this);
+        }
+    }
+
+    public void addScreening(Hall hall) {
+        this.screening.add(hall);
+        if (hall.getCinema() != this) {
+            hall.setCinema(this);
+        }
+    }
+
+    public void removeHall(Hall hall) {
+        this.halls.remove(hall);
+        if (hall.getCinema() == this) {
+            hall.setCinema(null);
+        }
+    }
+
+    public void removeScreening(Hall hall) {
+        this.screening.remove(hall);
+        if (hall.getCinema() == this) {
+            hall.setCinema(null);
+        }
+    }
+
+    public void removeAllHalls() {
+        for (Hall hall : halls) {
+            hall.setCinema(null);
+        }
+        this.halls.clear();
+    }
+
+    public void removeAllScreenings() {
+        for (Hall hall : screening) {
+            hall.setCinema(null);
+        }
+        this.screening.clear();
+    }
+
+    public void removeManager(User manager) {
+        this.manager = null;
+        if (manager.getCinema() == this) {
+            manager.setCinema(null);
+        }
+    }
+
     @Override
     public String toString() {
         return "Cinema{" +

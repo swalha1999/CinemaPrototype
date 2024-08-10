@@ -13,6 +13,7 @@ import org.hibernate.service.ServiceRegistry;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -107,11 +108,24 @@ public class Main {
                 "Indiana Jones returns for one last adventure."
         };
 
+        String[] images = {
+                "images\\movie1.jpg",
+                "images\\movie2.jpeg",
+                "images\\movie3.jpeg",
+                "images\\movie4.jpeg",
+                "images\\movie5.jpeg",
+                "images\\movie6.jpeg",
+                "images\\movie7.jpeg",
+                "images\\movie8.jpeg",
+                "images\\movie9.jpeg"
+        };
+
         for (int i = 0; i < movies.length; i++) {
             movies[i] = new Movie(movieTitles[i], dates[i]);
             movies[i].setGenre(genres[i]);
             movies[i].setHebrewTitle(hebrewTitles[i]);
             movies[i].setDescription(descriptions[i]);
+            movies[i].setImageUrl(images[i]);
 
             // Check if the movie already exists in the database
             Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);
@@ -121,9 +135,30 @@ public class Main {
             if (existingMovies.isEmpty()) {
                 session.save(movies[i]);
                 session.flush();
+            } else {
+                movies[i] = existingMovies.get(0); // Use the existing movie
             }
         }
+
+        // Create and save Cinema and Hall entities
+        Cinema cinema = new Cinema("Cinema City Glilot", City.TEL_AVIV, "HaBarzel St 30, Tel Aviv-Yafo", "03-543-5444", "m@m.com");
+        session.save(cinema);
+        session.flush(); // Ensure cinema is saved before associating with Hall
+
+        Hall hall = new Hall("Hall 1");
+        hall.setCinema(cinema);
+        session.save(hall);
+        session.flush(); // Ensure hall is saved before associating with Screening
+
+        // Add Screenings
+        for (Movie movie : movies) {
+            Screening screening = new Screening(movie, hall, LocalDateTime.now(), 120, 50, 100, false).setCinema(cinema);
+            session.save(screening);
+        }
+
+        session.flush();
     }
+
 
     private static Date createDate(Calendar calendar, int year, int month, int day) {
         calendar.set(year, month, day);

@@ -89,12 +89,16 @@ public class MovieCatalog {
         float scaleFac = 0.19f;
         float imageWidth = scaleFac * 878.0f;
         float imageHeight = scaleFac * 1390.0f;
-
+        ImageView movieImage;
         AnchorPane moviePane = new AnchorPane();
         moviePane.getStyleClass().add("movie-pane");
         moviePane.setPrefWidth(400);
 
-        ImageView movieImage = new ImageView(new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(movie.getImagePath()))));
+        if (movie.getImagePath() == null || movie.getImagePath().isEmpty() || SimpleChatClient.class.getResource(movie.getImagePath()) == null) {
+            movieImage = new ImageView(new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream("images\\movie1.jpg"))));
+        }else {
+            movieImage = new ImageView(new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(movie.getImagePath()))));
+        }
         movieImage.setFitHeight(imageHeight);
         movieImage.setFitWidth(imageWidth);
         movieImage.setLayoutX((moviePane.getPrefWidth() / 2) - (imageWidth / 2) + 5);

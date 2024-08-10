@@ -153,8 +153,9 @@ public class Screening implements Serializable {
         return cinema;
     }
 
-    public void setCinema(Cinema cinema) {
+    public Screening setCinema(Cinema cinema) {
         this.cinema = cinema;
+        return this;
     }
 
     public int getTotalSeats() {
