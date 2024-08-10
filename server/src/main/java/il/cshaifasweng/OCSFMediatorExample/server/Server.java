@@ -38,8 +38,8 @@ public class Server extends AbstractServer {
         System.out.println("--------------------------------------------------------------------------------------------------------------");
         System.out.println("Message received: " + request.toString());
 
-        if (request.getVersion() == MessageVersion.V1) {
-            handleV1Message(request, client);
+        if (request.getVersion() == MessageVersion.V3) {
+            handleV3Message(request, client);
         } else if (request.getVersion() == MessageVersion.V2) {
 			handleV2Message(request, client);
         } else {
@@ -47,14 +47,24 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleV1Message(Message request, ConnectionToClient client) {
-        Message response = new Message(200, request.getMessage());
-        switch (request.getMessage()) {
-            case "add client":
-                handleAddClient(client, response);
-                break;
+    private void handleV3Message(Message request, ConnectionToClient client) {
+        Message response;
+        switch (request.getType()) {
+
+            case GET_ALL_USERS_REQUEST:
+            case GET_MY_TICKETS_REQUEST:
+            case BLOCK_USER_REQUEST:
+            case UNBLOCK_USER_REQUEST:
+            case REMOVE_USER_REQUEST:
+            case GET_ALL_MOVIES_REQUEST:
+            case ADD_MOVIE_REQUEST:
+            case REMOVE_MOVIE_REQUEST:
+            case GET_MOVIE_REQUEST:
+
+            //TODO: add more cases here
+
             default:
-                sendErrorMessage(client, "Error! Unknown message received");
+                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
                 break;
         }
     }
@@ -108,14 +118,6 @@ public class Server extends AbstractServer {
         }
     }
 
-    //TODO: DEPRECATED REMOVE SAFELY
-    private void handleAddClient(ConnectionToClient client, Message response) {
-        SubscribedClient connection = new SubscribedClient(client);
-        openClients.add(connection);
-        response.setMessage("client added successfully");
-        sendResponse(client, response);
-    }
-
     private void handleLoginRequest(Message request, ConnectionToClient client) {
         LoginRequest loginRequest = (LoginRequest) request.getDataObject();
         System.out.println("Login request received:" + loginRequest.toString()); //TODO: remove this line debug only
@@ -160,14 +162,6 @@ public class Server extends AbstractServer {
                     .setUser(database.getUsersManager().getUserById(registerResponse.getUserId()));
 
             sendToAllAdmins(new Message(newUserAddedPatch, MessageType.NEW_USER_ADDED_PATCH));
-        }
-    }
-
-    private void sendResponse(ConnectionToClient client, Message response) {
-        try {
-            client.sendToClient(response);
-        } catch (IOException e) {
-            System.out.println("Error sending message: " + e.getMessage());
         }
     }
 
@@ -450,26 +444,21 @@ public class Server extends AbstractServer {
         sendResponse(client, new Message(getMovieResponse, MessageType.GET_MOVIE_RESPONSE));
     }
 
+    private boolean sendResponse(ConnectionToClient client, Message response) {
+        try {
+            client.sendToClient(response);
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error sending message: " + e.getMessage());
+            return false;
+        }
+    }
+
     private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
         try {
             client.sendToClient(new Message(500, errorMessage));
         } catch (IOException e) {
             System.out.println("Error sending error message: " + e.getMessage());
-        }
-    }
-
-    public void sendToAllClients(Message message) {
-        // here we send to all the clients that registered to our server
-        for (SubscribedClient SubscribedClient : openClients) {
-            try {
-                SubscribedClient.getClient().sendToClient(message);
-                System.out.println("Sent to client: " + SubscribedClient.getClient().getName() + " the message: " + message.getMessage());
-            } catch (IOException e1) {
-                System.out.println("Error sending message to this client: " + e1.getMessage());
-
-				// if the user fail to respond we will remove him from the openClients  users list
-				openClients.remove(SubscribedClient);
-            }
         }
     }
 

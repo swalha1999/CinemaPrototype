@@ -11,7 +11,8 @@ import java.io.Serializable;
  */
 public enum MessageVersion implements Serializable {
     V1, // TODO: this needs to DEPRECATED and every new message should be the newish version
-    V2  // THE NEWEST VERSION
+    V2,  // THE NEWEST VERSION
+    V3,  // TESTING
 }
 
 
