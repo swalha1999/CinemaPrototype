@@ -136,24 +136,34 @@ public class Main {
                 session.save(movies[i]);
                 session.flush();
             } else {
-                movies[i] = existingMovies.get(0); // Use the existing movie
+                movies[i] = existingMovies.getFirst(); // Use the existing movie
             }
         }
 
         // Create and save Cinema and Hall entities
-        Cinema cinema = new Cinema("Cinema City Glilot", City.TEL_AVIV, "HaBarzel St 30, Tel Aviv-Yafo", "03-543-5444", "m@m.com");
-        session.save(cinema);
-        session.flush(); // Ensure cinema is saved before associating with Hall
+        for (City city : City.values()) {
+            Cinema cinema = new Cinema("Cinema City " + city.toString() , city, "Rothschild 1", "03-1234567", "email");
 
-        Hall hall = new Hall("Hall 1");
-        hall.setCinema(cinema);
-        session.save(hall);
-        session.flush(); // Ensure hall is saved before associating with Screening
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Cinema> criteria = builder.createQuery(Cinema.class);
+            Root<Cinema> root = criteria.from(Cinema.class);
+            criteria.select(root).where(builder.equal(root.get("city"), city));
+            List<Cinema> cinemas = session.createQuery(criteria).getResultList();
 
-        // Add Screenings
-        for (Movie movie : movies) {
-            Screening screening = new Screening(movie, hall, LocalDateTime.now(), 120, 50, 100, false).setCinema(cinema);
-            session.save(screening);
+            if (!cinemas.isEmpty()) {
+                cinema = cinemas.getFirst();
+            } else {
+                session.save(cinema);
+                session.flush();
+            }
+
+            int numberOfHalls = cinema.getHalls().size();
+
+            for (int i = numberOfHalls; i <= 10; i++) {
+                Hall hall = new Hall("Hall" + i).setCinema(cinema);
+                session.save(hall);
+                session.flush();
+            }
         }
 
         session.flush();

@@ -103,11 +103,12 @@ public class Hall implements Serializable {
         return cinema;
     }
 
-    public void setCinema(Cinema cinema) {
+    public Hall setCinema(Cinema cinema) {
         this.cinema = cinema;
         if (!cinema.getHalls().contains(this)) {
             cinema.addHall(this);
         }
+        return this;
     }
 
 }

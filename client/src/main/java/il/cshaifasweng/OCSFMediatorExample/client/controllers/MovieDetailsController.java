@@ -3,9 +3,11 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -16,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImage;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
@@ -111,6 +115,17 @@ public class MovieDetailsController {
             // TODO :    fix :)
             ratingLabel.setText(event.getMovie().getId() + "/10");
             movieImageView.setImage(getImage(event.getMovie().getImageUrl()));
+        });
+    }
+
+    @Subscribe
+    public void onGetAllScreeningsEvent(GetAllScreeningsEvent event){
+        Platform.runLater(() -> {
+            screeningTable.getItems().clear();
+            List<Screening> screenings = event.getScreenings();
+            for (Screening screening : screenings) {
+                screeningTable.getItems().add(new ScreeningView(screening));
+            }
         });
     }
 
