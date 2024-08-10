@@ -46,6 +46,8 @@ public class AdminScreening {
 
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+
+        //TODO: hey omar this is swalha this the message type is not correct - please fix :)
         GetAllMoviesRequest GetAllMoviesRequest = new GetAllMoviesRequest(SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(GetAllMoviesRequest, MessageType.GET_ALL_USERS_REQUEST));
 
