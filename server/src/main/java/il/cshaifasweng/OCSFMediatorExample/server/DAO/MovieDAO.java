@@ -141,4 +141,36 @@ public class MovieDAO {
         return response.setSuccess(false).setMessage("Movie not found");
     }
 
+    public Message updateMovie(Message request) {
+        Message response = new Message(MessageType.UPDATE_MOVIE_RESPONSE);
+        Movie movie;
+        Movie updatedMovie = ((Movie) request.getDataObject());
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            movie = session.get(Movie.class, updatedMovie.getMovieId());
+
+
+            if (movie != null) {
+                movie.copy(updatedMovie); // copy the none null fields from updatedMovie to movie
+                session.update(movie);
+                session.flush();
+            }
+            else {
+                return response.setSuccess(false).setMessage("Movie not found");
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.err.println("Failed to update movie");
+            return response.setSuccess(false).setMessage("Failed to update movie");
+        }
+
+        return response
+                .setSuccess(true)
+                .setMessage("Movie updated successfully")
+                .setDataObject(movie);
+    }
 }

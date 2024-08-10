@@ -268,6 +268,24 @@ public class Movie implements Serializable {
         return id;
     }
 
+    public Movie copy(Movie movie ) {
+        this.name = movie.name == null ? this.name : movie.name;
+        this.releaseDate = movie.releaseDate == null ? this.releaseDate : movie.releaseDate;
+        this.description = movie.description == null ? this.description : movie.description;
+        this.language = movie.language == null ? this.language : movie.language;
+        this.genre = movie.genre == null ? this.genre : movie.genre;
+        this.country = movie.country == null ? this.country : movie.country;
+        this.imageUrl = movie.imageUrl == null ? this.imageUrl : movie.imageUrl;
+        this.trailerUrl = movie.trailerUrl == null ? this.trailerUrl : movie.trailerUrl;
+        this.englishTitle = movie.englishTitle == null ? this.englishTitle : movie.englishTitle;
+        this.hebrewTitle = movie.hebrewTitle == null ? this.hebrewTitle : movie.hebrewTitle;
+        this.durationInMinutes = movie.durationInMinutes == 0 ? this.durationInMinutes : movie.durationInMinutes;
+        this.producer = movie.producer == null ? this.producer : movie.producer;
+        this.actors = movie.actors == null ? this.actors : movie.actors;
+        this.screenings = movie.screenings == null ? this.screenings : movie.screenings;
+        return this;
+    }
+
 
 
 
