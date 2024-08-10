@@ -12,6 +12,10 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 
 public class UserDAO {
@@ -338,20 +342,30 @@ public class UserDAO {
 
         return response
                 .setSuccess(true)
-                .setMessage("User "+ user +"+ removed successfully")
+                .setMessage("User "+ user.getUsername() +" removed successfully")
                 .setDataObject(user); // the user object is returned so the client can update the UI
     }
 
-    static public String generateSalt(){
-        StringBuilder salt = new StringBuilder();
-        for (int i = 0; i < 10; i++) {
-            salt.append((char) (Math.random() * 26 + 'a'));
-        }
-        return salt.toString();
+    static public String generateSalt() {
+        SecureRandom sr = new SecureRandom();
+        byte[] salt = new byte[16];
+        sr.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt);
     }
 
     static public String hashPassword(String password, String salt) {
-        return password + salt;
+        try {
+            // Create a MessageDigest instance for SHA-256
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // Add the salt to the digest
+            md.update(salt.getBytes());
+            // Hash the password
+            byte[] hashedPassword = md.digest(password.getBytes());
+            // Convert the byte array to a Base64-encoded string
+            return Base64.getEncoder().encodeToString(hashedPassword);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error hashing password", e);
+        }
     }
 
     static public boolean checkPassword(String password, User user) {

@@ -7,6 +7,8 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LoginRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -15,6 +17,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +25,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.showNotification;
 
 public class Login {
 
@@ -44,8 +48,14 @@ public class Login {
     private Button registerBtn; // Value injected by FXMLLoader
 
     @FXML
+    private StackPane stackPaneMain; // Value injected by FXMLLoader
+
+    NotificationPane notificationPane;
+
+    @FXML
     public void initialize() {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+        notificationPane = new NotificationPane(stackPaneMain);
     }
 
     @FXML
@@ -72,6 +82,7 @@ public class Login {
         System.out.println(SessionKeysStorage.getInstance().toString());
 
         Platform.runLater(()->{
+
             if (response.isSuccess()) {
                 if( response.getRole() == UserRole.USER){
                     setRoot("UserMain");
@@ -79,16 +90,16 @@ public class Login {
                     setRoot("AdminMain");
                 }
             }
-            else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Login Failed");
-                alert.setHeaderText("Login Failed");
-                alert.setContentText(response.getMessage());
-                alert.show();
-            }
+
+            showNotification(response.getMessage(), response.isSuccess());
+
         });
     }
 
+    @Subscribe
+    public void onShowNotification(ShowNotificationEvent event) {
+        notificationPane.showNotification(event.getMessage(), event.isSuccessful());
+    }
 }
 
 
