@@ -15,7 +15,7 @@
                         <TableColumn fx:id="ScreeningDate_Col" prefWidth="140.7999725341797" text="Screening Date" />
                         <TableColumn fx:id="Hall_Col" prefWidth="106.4000244140625" text="Hall" />
                         <TableColumn fx:id="StartTime_Col" prefWidth="122.39996337890625" text="Start Time" />
-                        <TableColumn fx:id="AvailvleSeats_Col" prefWidth="132.79998779296875" text="Availble Seats" />
+                        <TableColumn fx:id="AvailableSeats_Col" prefWidth="132.79998779296875" text="Availble Seats" />
                         <TableColumn fx:id="BookedSeats_Col" prefWidth="163.199951171875" text="Booked Seats" />
                   <TableColumn prefWidth="230.39984130859375" text="End Time" />
                   <TableColumn prefWidth="75.0" text="Column X" />

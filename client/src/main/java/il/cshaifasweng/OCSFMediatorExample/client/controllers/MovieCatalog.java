@@ -140,14 +140,14 @@ public class MovieCatalog {
     public void onGetAllMoviesEvent(GetAllMoviesEvent event) {
         Platform.runLater(() -> {
             allMovies.clear();
-            event.getMovies().forEach(movie -> addMovie(movie.getId() ,movie.getTitle(), movie.getGenre(), "images\\movie1.jpg"));
+            event.getMovies().forEach(movie -> addMovie(movie.getId() ,movie.getTitle(), movie.getGenre(), movie.getImageUrl()));
         });
     }
 
     @Subscribe
     public void onAddMoviesEvent(AddMoviesEvent event) {
         Platform.runLater(() -> {
-            addMovie(event.getMovie().getId(), event.getMovie().getTitle(), event.getMovie().getGenre(), "images\\movie1.jpg");
+            addMovie(event.getMovie().getId(), event.getMovie().getTitle(), event.getMovie().getGenre(), event.getMovie().getImageUrl());
         });
     }
 
