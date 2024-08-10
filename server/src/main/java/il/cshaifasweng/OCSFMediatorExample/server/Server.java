@@ -52,6 +52,8 @@ public class Server extends AbstractServer {
         switch (request.getType()) {
 
             case GET_ALL_USERS_REQUEST:
+                handleGetAllUsersRequest(request, client);
+                break;
             case GET_MY_TICKETS_REQUEST:
             case BLOCK_USER_REQUEST:
             case UNBLOCK_USER_REQUEST:
@@ -166,9 +168,8 @@ public class Server extends AbstractServer {
     }
 
     private void handleGetAllUsersRequest(Message request, ConnectionToClient client) {
-        GetAllUsersRequest getAllUsersRequset = (GetAllUsersRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(getAllUsersRequset.getSessionKey());
 
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
@@ -183,17 +184,17 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to get all users");
+                sendErrorMessage(client, "Error! User does not have permission for this action");
                 return;
         }
 
+        request.setUsername(sessionKeys.get(request.getSessionKey()).getUsername()); // add the username for faster access
+        request.setUserId(sessionKeys.get(request.getSessionKey()).getUserId()); // add the user id for faster access
 
-        getAllUsersRequset.setUsername(sessionKeys.get(getAllUsersRequset.getSessionKey()).getUsername()); // add the username for faster access
-
-        System.out.println("Get all users request received:" + getAllUsersRequset.toString()); //TODO: remove this line debug only
-        GetAllUsersResponse getAllUsersResponse = database.getUsersManager().getAllUsers(getAllUsersRequset);
-        System.out.println("Get all users response: " + getAllUsersResponse.toString()); //TODO: remove this line debug only
-        sendResponse(client, new Message(getAllUsersResponse, MessageType.GET_ALL_USERS_RESPONSE));
+        System.out.println("Get all users request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getUsersManager().getAllUsers(request);
+        System.out.println("Get all users response: " + response.toString()); //TODO: remove this line debug only
+        sendResponse(client, response);
 
     }
 

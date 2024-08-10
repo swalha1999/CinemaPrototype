@@ -8,7 +8,6 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.NewUserAddedEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetAllUsersRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveUserRequest;
@@ -79,8 +78,10 @@ public class AdminUsersView {
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        GetAllUsersRequest getAllUsersRequset = new GetAllUsersRequest(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(new Message(getAllUsersRequset, MessageType.GET_ALL_USERS_REQUEST));
+
+        Message message = new Message(MessageType.GET_ALL_USERS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        SimpleClient.getClient().sendToServer(message);
 
         UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
         FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));

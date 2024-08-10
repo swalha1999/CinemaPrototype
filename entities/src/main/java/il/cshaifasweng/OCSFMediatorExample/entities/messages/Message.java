@@ -13,8 +13,19 @@ public class Message implements Serializable {
     MessageType type = MessageType.NONE;
     MessageVersion version = MessageVersion.V1;
     LocalDateTime timeStamp = LocalDateTime.now();
+
+    // the user that sent the message
+    String SessionKey;
+    String username;
+    int userId;
+
+    // the data sent in the message
     String message = "no message";
     Object dataObject = "No data";
+    String dataType = "No data type";
+
+    //indecators for the client
+    boolean success = false;
 
 
     public Message(Object dataObject, MessageType type) {
@@ -22,11 +33,19 @@ public class Message implements Serializable {
         this.type = type;
         this.timeStamp = LocalDateTime.now();
         this.dataObject = dataObject;
+        this.dataType = dataObject.getClass().getSimpleName();
     }
 
     public Message(MessageType type, MessageVersion version) {
         this.type = type;
         this.version = version;
+        this.timeStamp = LocalDateTime.now();
+    }
+
+    // This is only for the V3 version of the message
+    public Message(MessageType type) {
+        this.type = type;
+        this.version = MessageVersion.V3;
         this.timeStamp = LocalDateTime.now();
     }
 
@@ -54,6 +73,7 @@ public class Message implements Serializable {
 
     public Message setDataObject(Object dataObject) {
         this.dataObject = dataObject;
+        this.dataType = dataObject.getClass().getSimpleName();
         return this;
     }
 
@@ -65,14 +85,59 @@ public class Message implements Serializable {
         return version;
     }
 
+    public String getSessionKey() {
+        return SessionKey;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public Message setSessionKey(String SessionKey) {
+        this.SessionKey = SessionKey;
+        return this;
+    }
+
+    public Message setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public Message setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public Message setSuccess(boolean success) {
+        this.success = success;
+        return this;
+    }
+
     public String toString() {
         return "Message{" +
                 ", type=" + type.toString() +
                 ", version=" + version.toString() +
                 ", timeStamp=" + timeStamp.format( java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") ) +
+                ", SessionKey='" + SessionKey + '\'' +
+                ", username='" + username + '\'' +
+                ", userId=" + userId +
                 ", message='" + message + '\'' +
+                ", dataType='" + dataType + '\'' +
                 ", dataObject=" + dataObject.toString() +
                 '}';
     }
+
 
 }

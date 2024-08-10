@@ -40,7 +40,7 @@ public class SimpleClient extends AbstractClient {
 					break;
 			}
 		}
-		else if (message.getVersion() == MessageVersion.V2){
+		else if (message.getVersion() == MessageVersion.V2 || message.getVersion() == MessageVersion.V3) {
 			switch (message.getType()){
 				case LOGIN_RESPONSE:
 					EventBus.getDefault().post(new LoginEvent((LoginResponse) message.getDataObject()));
@@ -52,7 +52,7 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post( new LogoutEvent((LogoutResponse) message.getDataObject()));
 					break;
 				case GET_ALL_USERS_RESPONSE:
-					EventBus.getDefault().post( new GetAllUsersEvent((GetAllUsersResponse) message.getDataObject()));
+					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
 				case GET_ALL_MOVIES_RESPONSE:
 					EventBus.getDefault().post( new GetAllMoviesEvent((GetAllMoviesResponse) message.getDataObject()));
@@ -78,6 +78,9 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
 			}
+		}
+		else {
+			System.out.println("Unsupported message version received");
 		}
 	}
 

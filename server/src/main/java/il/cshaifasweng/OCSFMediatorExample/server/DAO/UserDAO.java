@@ -1,6 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageVersion;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import org.hibernate.Session;
@@ -242,22 +245,23 @@ public class UserDAO {
         return logoutResponse;
     }
 
-    public GetAllUsersResponse getAllUsers(GetAllUsersRequest getAllUsersRequset) {
-        GetAllUsersResponse getAllUsersResponse = new GetAllUsersResponse();
+    public Message getAllUsers(Message request) {
+        Message response = new Message(MessageType.GET_ALL_USERS_RESPONSE, MessageVersion.V3);
         List<User> users = getUsers();
+
         if (users.isEmpty()){
-            getAllUsersResponse
-                    .setSucceed(false)
+            response
+                    .setSuccess(false)
                     .setMessage("No users found");
-            return getAllUsersResponse;
+            return response;
         }
 
-        getAllUsersResponse
-                .setSucceed(true)
+        response
+                .setSuccess(true)
                 .setMessage("Users found")
-                .setUsers(users);
+                .setDataObject(users);
 
-        return getAllUsersResponse;
+        return response;
     }
 
     public BlockUserResponse blockUser(BlockUserRequest blockUserRequest) {
