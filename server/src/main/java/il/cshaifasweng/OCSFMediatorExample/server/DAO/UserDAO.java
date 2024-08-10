@@ -212,8 +212,11 @@ public class UserDAO {
             return loginResponse;
         }
 
-        // TODO: check if the user is already logged in and return an error if they are
-        // TODO: check the user if they are blocked and return an error if they are
+        if (user.isBlocked()){
+            return loginResponse
+                    .setSuccess(false)
+                    .setMessage("User is blocked");
+        }
 
         // mark the user as logged in
         user.setLoggedIn();

@@ -25,27 +25,15 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.showNotification;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 
 public class Login {
 
-    @FXML // fx:id="LoginBtn"
-    private Button LoginBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="LoginText"
-    private Text LoginText; // Value injected by FXMLLoader
-
-    @FXML // fx:id="Password"
+    @FXML
     private PasswordField Password; // Value injected by FXMLLoader
 
-    @FXML // fx:id="UserNameTxt"
+    @FXML
     private TextField UserNameTxt; // Value injected by FXMLLoader
-
-    @FXML // fx:id="forgotPassword"
-    private Hyperlink forgotPassword; // Value injected by FXMLLoader
-
-    @FXML // fx:id="registerBtn"
-    private Button registerBtn; // Value injected by FXMLLoader
 
     @FXML
     private StackPane stackPaneMain; // Value injected by FXMLLoader
@@ -82,7 +70,6 @@ public class Login {
         System.out.println(SessionKeysStorage.getInstance().toString());
 
         Platform.runLater(()->{
-
             if (response.isSuccess()) {
                 if( response.getRole() == UserRole.USER){
                     setRoot("UserMain");
@@ -90,9 +77,7 @@ public class Login {
                     setRoot("AdminMain");
                 }
             }
-
             showNotification(response.getMessage(), response.isSuccess());
-
         });
     }
 

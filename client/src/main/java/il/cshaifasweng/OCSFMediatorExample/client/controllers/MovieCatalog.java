@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.showSideUI;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
 
 public class MovieCatalog {

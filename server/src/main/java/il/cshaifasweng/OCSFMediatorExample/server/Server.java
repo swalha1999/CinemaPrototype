@@ -99,6 +99,9 @@ public class Server extends AbstractServer {
     private void handleLoginRequest(Message request, ConnectionToClient client) {
         LoginRequest loginRequest = (LoginRequest) request.getDataObject();
         System.out.println("Login request received:" + loginRequest.toString()); //TODO: remove this line debug only
+
+        logOutUser(loginRequest.getUsername(), "User has logged in from another device");
+
         LoginResponse loginResponse = database.getUsersManager().loginUser(loginRequest);
         if (loginResponse.isSuccess()) {
             LoggedInUser loggedInUser = new LoggedInUser(
@@ -449,8 +452,8 @@ public class Server extends AbstractServer {
             } catch (IOException e1) {
                 System.out.println("Error sending message to this client: " + e1.getMessage());
 
-                // if the user fail to respond we will remove him from the logged-in users list
-                sessionKeys.remove(loggedInUser.getSessionKey());
+                LogoutRequest logoutRequest = new LogoutRequest(loggedInUser.getSessionKey());
+                handleLogoutRequest(new Message(logoutRequest, MessageType.LOGOUT_REQUEST), loggedInUser.getClient());
             }
         }
     }
@@ -474,16 +477,12 @@ public class Server extends AbstractServer {
         }
     }
 
+    //TODO: the message dosn't reach the client
     public void logOutUser(String username, String message) {
         for (LoggedInUser loggedInUser : sessionKeys.values()) {
             if (loggedInUser.getUsername().equals(username)) {
-                LoggedInUser user = sessionKeys.remove(loggedInUser.getSessionKey());
-                LogoutResponse logoutResponse = new LogoutResponse()
-                        .setSuccess(true)
-                        .setMessage(message);
-
-                sendResponse(user.getClient(), new Message(logoutResponse, MessageType.LOGOUT_RESPONSE));
-
+                LogoutRequest logoutRequest = new LogoutRequest(loggedInUser.getSessionKey());
+                handleLogoutRequest(new Message(logoutRequest, MessageType.LOGOUT_REQUEST), loggedInUser.getClient());
             }
         }
     }
