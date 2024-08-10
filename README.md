@@ -13,7 +13,7 @@ width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-1. TODO: finish the import function in movie admin controller
+1. 
 2. TODO: fix the movie details in the movie catalog
 3. TODO: add screening management `--> omar`
 4. TODO: add actors to the movie view
@@ -35,4 +35,5 @@ hight = 900
 5. DONE:Make Req and Res to the Movie DIO `DONE BY: swalha`
 6. DONE: add cinema entity `DONE BY: swalha`
 7. DONE: finish the movie admin controller `DONE BY: omar`
+8. DONE: finish the import function in movie admin controller
 

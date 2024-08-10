@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,28 +11,29 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/AdminAddMovie.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminAddMovieController">
     <children>
-      <AnchorPane layoutX="43.0" layoutY="58.0" prefHeight="715.0" prefWidth="200.0">
+      <AnchorPane layoutX="43.0" layoutY="58.0" prefHeight="802.0" prefWidth="200.0">
          <children>
-               <Button fx:id="importButton" layoutX="75.0" layoutY="185.0" onAction="#importImage" styleClass="import-button" text="Import" />
-               <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="173.0" layoutX="14.0" layoutY="14.0" />
+               <ImageView fx:id="movieImageView" fitHeight="218.0" fitWidth="173.0" layoutX="14.0" layoutY="14.0" />
    
-               <Label layoutX="18.0" layoutY="227.0" styleClass="form-label" text="Movie Title in english:" />
-               <TextField fx:id="titleEnglishField" layoutX="17.0" layoutY="247.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Label layoutX="16.0" layoutY="322.0" styleClass="form-label" text="Movie Title in english:" />
+               <TextField fx:id="titleEnglishField" layoutX="15.0" layoutY="342.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
    
-               <Label layoutX="17.0" layoutY="366.0" styleClass="form-label" text="Genre:" />
-               <TextField fx:id="genreField" layoutX="17.0" layoutY="386.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Label layoutX="15.0" layoutY="461.0" styleClass="form-label" text="Genre:" />
    
-               <Label layoutX="17.0" layoutY="435.0" styleClass="form-label" text="Producer:" />
-               <TextField fx:id="producerField" layoutX="17.0" layoutY="455.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Label layoutX="15.0" layoutY="530.0" styleClass="form-label" text="Producer:" />
+               <TextField fx:id="producerField" layoutX="15.0" layoutY="550.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
    
-               <Button fx:id="insertButton" layoutX="16.0" layoutY="597.0" onAction="#Insert" styleClass="insert-button" text="Insert" />
-               <Button fx:id="updateButton" layoutX="125.0" layoutY="597.0" onAction="#Update" styleClass="update-button" text="Update" />
-               <Button fx:id="clearButton" layoutX="125.0" layoutY="650.0" onAction="#Clear" prefHeight="27.0" prefWidth="52.0" styleClass="clear-button" text="Clear" />
-            <Label layoutX="17.0" layoutY="494.0" prefHeight="20.0" prefWidth="89.0" styleClass="form-label" text="Description:" />
-            <TextField fx:id="descriptionField" layoutX="17.0" layoutY="522.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
-               <Button fx:id="deleteButton" layoutX="14.0" layoutY="650.0" onAction="#Delete" styleClass="delete-button" text="Delete" />
-            <Label layoutX="18.0" layoutY="295.0" styleClass="form-label" text="Movie Title in hebrew:" />
-            <TextField fx:id="titleHebrewField" layoutX="17.0" layoutY="315.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Button fx:id="insertButton" layoutX="14.0" layoutY="692.0" onAction="#Insert" styleClass="insert-button" text="Insert" />
+               <Button fx:id="updateButton" layoutX="123.0" layoutY="692.0" onAction="#Update" styleClass="update-button" text="Update" />
+               <Button fx:id="clearButton" layoutX="123.0" layoutY="745.0" onAction="#Clear" prefHeight="27.0" prefWidth="52.0" styleClass="clear-button" text="Clear" />
+            <Label layoutX="15.0" layoutY="589.0" prefHeight="20.0" prefWidth="89.0" styleClass="form-label" text="Description:" />
+            <TextField fx:id="descriptionField" layoutX="15.0" layoutY="617.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+               <Button fx:id="deleteButton" layoutX="12.0" layoutY="745.0" onAction="#Delete" styleClass="delete-button" text="Delete" />
+            <Label layoutX="16.0" layoutY="390.0" styleClass="form-label" text="Movie Title in hebrew:" />
+            <TextField fx:id="titleHebrewField" layoutX="15.0" layoutY="410.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+            <ComboBox fx:id="genreComboBox" layoutX="16.0" layoutY="481.0" prefHeight="29.0" prefWidth="173.0" />
+            <Label layoutX="24.0" layoutY="254.0" styleClass="form-label" text="Image Url:" />
+            <TextField fx:id="imageUrlField" layoutX="15.0" layoutY="274.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
          </children>
       </AnchorPane>
 

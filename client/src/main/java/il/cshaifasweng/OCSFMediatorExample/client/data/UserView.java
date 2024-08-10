@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.data;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -41,6 +42,7 @@ public class UserView {
         this.isBlocked = new SimpleBooleanProperty(user.isBlocked());
         this.isDeleted = new SimpleBooleanProperty(user.isDeleted());
     }
+
 
     // Getter methods for properties
     public String getUsername() { return userName.get(); }
