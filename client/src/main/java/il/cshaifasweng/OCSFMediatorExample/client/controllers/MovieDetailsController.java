@@ -1,7 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
@@ -11,49 +11,78 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Objects;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImage;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class MovieDetailsController {
 
-    @FXML
-    private ImageView movieImageView;
+    @FXML // fx:id="AvailableSeat_Col"
+    private TableColumn<ScreeningView, ?> AvailableSeat_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private Label titleLabel;
+    @FXML // fx:id="Cinema_Col"
+    private TableColumn<ScreeningView, ?> Cinema_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private Label genreLabel;
+    @FXML // fx:id="Hall_Col"
+    private TableColumn<ScreeningView, ?> Hall_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private Label durationLabel;
+    @FXML // fx:id="Price_Col"
+    private TableColumn<ScreeningView, ?> Price_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private Label releaseDateLabel;
+    @FXML // fx:id="Screening_Col"
+    private TableColumn<ScreeningView, ?> Screening_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private Label ratingLabel;
+    @FXML // fx:id="durationLabel"
+    private Label durationLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="genreLabel"
+    private Label genreLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="movieImageView"
+    private ImageView movieImageView; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ratingLabel"
+    private Label ratingLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="releaseDateLabel"
+    private Label releaseDateLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="returnBtn"
     private Button returnBtn; // Value injected by FXMLLoader
 
-    @FXML
-    private ListView<String> screeningTimesListView;
+    @FXML // fx:id="screeningTable"
+    private TableView<ScreeningView> screeningTable; // Value injected by FXMLLoader
+
+    @FXML // fx:id="titleLabel"
+    private Label titleLabel; // Value injected by FXMLLoader
+
 
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
+        Message message = new Message( MessageType.GET_ALL_SCREENINGS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
+        SimpleClient.getClient().sendToServer(message);
+
+        Screening_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
+        Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
+        Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
+        //Price_Col.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        screeningTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                Platform.runLater(()->{
+
+                });
+            }
+        });
     }
 
     @Subscribe
@@ -78,7 +107,6 @@ public class MovieDetailsController {
             // TODO :    fix :)
             ratingLabel.setText(event.getMovie().getId() + "/10");
             movieImageView.setImage(getImage(event.getMovie().getImageUrl()));
-
         });
     }
 
