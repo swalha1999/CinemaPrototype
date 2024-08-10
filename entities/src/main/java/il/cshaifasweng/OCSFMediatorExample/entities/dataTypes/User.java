@@ -1,13 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
@@ -35,6 +28,9 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets;
+
+    @OneToOne(mappedBy = "manager")
+    private Cinema cinema; //this is used for the manager of the cinema
 
     private int remainingTicketsPurchasedByBundle;
 
@@ -202,6 +198,68 @@ public class User implements Serializable {
         return this;
     }
 
+    public User removeTicket(MovieTicket ticket) {
+        this.tickets.remove(ticket);
+        ticket.setUser(null);
+        return this;
+    }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public User setCinema(Cinema cinema) {
+        this.cinema = cinema;
+        return this;
+    }
+
+    public int getRemainingTicketsPurchasedByBundle() {
+        return remainingTicketsPurchasedByBundle;
+    }
+
+    public User setRemainingTicketsPurchasedByBundle(int remainingTicketsPurchasedByBundle) {
+        this.remainingTicketsPurchasedByBundle = remainingTicketsPurchasedByBundle;
+        return this;
+    }
+
+    public boolean isAgeRestricted() {
+        return isAgeRestricted;
+    }
+
+    public User setAgeRestricted(boolean ageRestricted) {
+        isAgeRestricted = ageRestricted;
+        return this;
+    }
+
+    public int getNumberOfTicketsPurchased() {
+        return NumberOfTicketsPurchased;
+    }
+
+    public User setNumberOfTicketsPurchased(int numberOfTicketsPurchased) {
+        NumberOfTicketsPurchased = numberOfTicketsPurchased;
+        return this;
+    }
+
+    public int getNumberOfBundlePurchased() {
+        return NumberOfBundlePurchased;
+    }
+
+
+    public User setNumberOfBundlePurchased(int numberOfBundlePurchased) {
+        NumberOfBundlePurchased = numberOfBundlePurchased;
+        return this;
+    }
+
+    public int getNumberOfOnlineScreeningsPurchased() {
+        return NumberOfOnlineScreeningsPurchased;
+    }
+
+    public User setNumberOfOnlineScreeningsPurchased(int numberOfOnlineScreeningsPurchased) {
+        NumberOfOnlineScreeningsPurchased = numberOfOnlineScreeningsPurchased;
+        return this;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -234,6 +292,9 @@ public class User implements Serializable {
                 ", NumberOfTicketsPurchased=" + NumberOfTicketsPurchased +
                 ", NumberOfBundlePurchased=" + NumberOfBundlePurchased +
                 ", NumberOfOnlineScreeningsPurchased=" + NumberOfOnlineScreeningsPurchased +
+                ", tickets=" + tickets +
+                ", cinema=" + cinema +
+                ", remainingTicketsPurchasedByBundle=" + remainingTicketsPurchasedByBundle +
                 '}';
     }
 }

@@ -21,10 +21,104 @@ public class Cinema implements Serializable {
     @OneToMany(mappedBy = "cinema")
     private Set<Hall> halls;
 
+    @OneToOne(mappedBy = "cinema")
+    private User manager;
+
+    public Cinema(String name, City city, String address, String phoneNumber, String email) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public Cinema() {
+        this.name = "";
+        this.city = City.TEL_AVIV;
+        this.address = "";
+        this.phoneNumber = "";
+        this.email = "";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Hall> getHalls() {
+        return halls;
+    }
+
+    public void setHalls(Set<Hall> halls) {
+        this.halls = halls;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public String toString() {
+        return "Cinema{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", city=" + city +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", halls=" + halls +
+                ", manager=" + manager +
+                '}';
+    }
 
 
-//    private User manager; // TODO: For future use
-//    private Set<User> employees;
 
 
 }
