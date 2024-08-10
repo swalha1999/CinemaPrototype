@@ -22,5 +22,5 @@
     <Button fx:id="MakeAdmin" layoutX="20.0" layoutY="740.0" mnemonicParsing="false" onAction="#MakeAdmin" styleClass="action-button" text="Make Admin" />
     <Button fx:id="RemoveUser" layoutX="200.0" layoutY="740.0" mnemonicParsing="false" onAction="#RemoveUser" styleClass="action-button" text="Remove User" />
     <Button fx:id="BlockUser" layoutX="380.0" layoutY="740.0" mnemonicParsing="false" onAction="#BlockUser" styleClass="action-button" text="Block User" />
-    <Button fx:id="UnlockUser" layoutX="560.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnBlockUser" styleClass="action-button" text="UnBlock User" />
+    <Button fx:id="UnlockUser" layoutX="560.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnblockUser" styleClass="action-button" text="UnBlock User" />
 </AnchorPane>

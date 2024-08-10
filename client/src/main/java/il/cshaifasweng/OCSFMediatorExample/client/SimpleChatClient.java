@@ -20,6 +20,8 @@ import java.util.Objects;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
+
 public class SimpleChatClient extends Application {
 
     private static Scene scene;
@@ -95,16 +97,7 @@ public class SimpleChatClient extends Application {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         Platform.runLater(() -> {
             showNotification( messageEvent.getMessage().getMessage(), messageEvent.getMessage().isSuccess());
-
         });
-    }
-
-    public static void showSideUI(String UIName){
-        EventBus.getDefault().post(new ShowSideUIEvent(UIName));
-    }
-
-    public static void showNotification(String message, boolean Success){
-        EventBus.getDefault().post(new ShowNotificationEvent(message, Success));
     }
 
 
