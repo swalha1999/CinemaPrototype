@@ -138,12 +138,15 @@ public class AdminUsersView {
         if (selectedUser == null) {
             return;
         }
-        RemoveUserRequest removeUserRequest = new RemoveUserRequest()
-                .setUsername(SessionKeysStorage.getInstance().getUsername())
+
+        User userToRemove = new User().setUsername(selectedUser.getUsername()).setId(selectedUser.getId());
+
+        Message removeUserRequest = new Message(MessageType.REMOVE_USER_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setUsernameToRemove(selectedUser.getUsername());
+                .setDataObject(userToRemove);
+
         try {
-            SimpleClient.getClient().sendToServer(new Message(removeUserRequest, MessageType.REMOVE_USER_REQUEST));
+            SimpleClient.getClient().sendToServer(removeUserRequest);
         }
         catch (IOException e) {
             e.printStackTrace();

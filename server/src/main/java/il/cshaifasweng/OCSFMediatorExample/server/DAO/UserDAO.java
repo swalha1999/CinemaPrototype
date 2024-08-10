@@ -315,34 +315,31 @@ public class UserDAO {
                 .setMessage("User unblocked successfully");
     }
 
-    public RemoveUserResponse removeUser(RemoveUserRequest removeUserRequest) {
-        RemoveUserResponse removeUserResponse = new RemoveUserResponse();
+    public Message removeUser(Message request) {
+        Message response = new Message(MessageType.REMOVE_USER_RESPONSE);
+        User userToRemoveData = (User) request.getDataObject();
 
-        // TODO: bug probably here
-        if (removeUserRequest.getUsernameToRemove().equals("admin")){
-            removeUserResponse
+        if (userToRemoveData.getUsername().equals("admin")){
+            return response
                     .setSuccess(false)
                     .setMessage("Can't remove admin");
-            return removeUserResponse;
         }
 
-        User user = getUserbyUsername(removeUserRequest.getUsernameToRemove());
+        User user = getUserbyUsername(userToRemoveData.getUsername());
 
         if (user == null){
-            removeUserResponse
+            return response
                     .setSuccess(false)
                     .setMessage("User not found");
-            return removeUserResponse;
         }
 
+        //TODO: make this inline this is error prone
         deleteUser(user);
 
-        removeUserResponse
+        return response
                 .setSuccess(true)
-                .setMessage("User "+removeUserRequest.getUsernameToRemove()+"+ removed successfully")
-                .setUserId(user.getId());
-
-        return removeUserResponse;
+                .setMessage("User "+ user +"+ removed successfully")
+                .setDataObject(user); // the user object is returned so the client can update the UI
     }
 
     static public String generateSalt(){

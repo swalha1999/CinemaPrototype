@@ -63,6 +63,9 @@ public class Server extends AbstractServer {
             case UNBLOCK_USER_REQUEST:
                 handleUnblockUserRequest(request, client);
                 break;
+            case REMOVE_USER_REQUEST:
+                handleRemoveUserRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -84,9 +87,7 @@ public class Server extends AbstractServer {
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
                 break;
-            case REMOVE_USER_REQUEST:
-                handleRemoveUserRequest(request, client);
-                break;
+
             case GET_ALL_MOVIES_REQUEST:
                 handleGetAllMoviesRequest(request, client);
                 break;
@@ -271,16 +272,16 @@ public class Server extends AbstractServer {
     }
 
     private void handleRemoveUserRequest(Message request, ConnectionToClient client) {
-        RemoveUserRequest removeUserRequest = (RemoveUserRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(removeUserRequest.getSessionKey());
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        removeUserRequest.setUsername(loggedInUser.getUsername());
-        removeUserRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -295,18 +296,20 @@ public class Server extends AbstractServer {
                 return;
         }
 
-        System.out.println("Remove user request received:" + removeUserRequest.toString()); //TODO: remove this line debug only
-        RemoveUserResponse removeUserResponse = database.getUsersManager().removeUser(removeUserRequest);
-        System.out.println("Remove user response: " + removeUserResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Remove user request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getUsersManager().removeUser(request);
+        System.out.println("Remove user response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(removeUserResponse, MessageType.REMOVE_USER_RESPONSE));
+        sendResponse(client,response);
 
         // send a patch to all the logged-in admins to notify them that a user has been removed
-        if (removeUserResponse.isSuccess()) {
+        if (response.isSuccess()) {
+            // TODO: update this to lock out the user and remove him from the logged-in users list
+            // TODO: update the patch to V3
             RemoveUserPatch newUserAddedPatch = new RemoveUserPatch()
                     .setSuccess(true)
                     .setMessage("User removed successfully")
-                    .setUsername(removeUserRequest.getUsernameToRemove());
+                    .setUsername( ((User) request.getDataObject()).getUsername() );
 
             sendToAllAdmins(new Message(newUserAddedPatch, MessageType.REMOVE_USER_PATCH));
         }

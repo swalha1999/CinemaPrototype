@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class UserView {
+    private final int id;
     private final SimpleStringProperty userName;
     private final SimpleStringProperty firstName;
     private final SimpleStringProperty lastName;
@@ -15,7 +16,8 @@ public class UserView {
     private final SimpleBooleanProperty isBlocked;
     private final SimpleBooleanProperty isDeleted;
 
-    public UserView(String userName, String firstName, String lastName, String email, String phone, String role, boolean isLogged, boolean isBlocked, boolean isDeleted) {
+    public UserView(int id, String userName, String firstName, String lastName, String email, String phone, String role, boolean isLogged, boolean isBlocked, boolean isDeleted) {
+        this.id = id;
         this.userName = new SimpleStringProperty(userName);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
@@ -28,6 +30,7 @@ public class UserView {
     }
 
     public UserView(User user) {
+        this.id = user.getId();
         this.userName = new SimpleStringProperty(user.getUsername());
         this.firstName = new SimpleStringProperty(user.getFirstName());
         this.lastName = new SimpleStringProperty(user.getLastName());
@@ -49,6 +52,7 @@ public class UserView {
     public boolean getIsLogged() { return isLogged.get(); }
     public boolean getIsLocked() { return isBlocked.get(); }
     public boolean getIsDeleted() { return isDeleted.get(); }
+    public int getId() { return id; }
 
     // Property methods for JavaFX bindings
     public SimpleStringProperty userNameProperty() { return userName; }
