@@ -169,13 +169,19 @@ public abstract class AbstractClient implements Runnable
    * @param msg   The message to be sent.
    * @exception IOException if an I/O error occurs when sending
    */
-  public void sendToServer(Object msg) throws IOException
+  public void sendToServer(Object msg)
   {
     if (clientSocket == null || output == null) {
-      throw new SocketException("socket does not exist");
+      System.err.println("Client: sendToServer: Socket is null make sure the connection is open");
+      System.err.println("Didn't send the message: " + msg);
     }
-    output.reset();
-    output.writeObject(msg);
+    try {
+      output.reset();
+      output.writeObject(msg);
+    } catch (IOException e) {
+      System.err.println("Client: sendToServer: Socket is closed");
+      System.err.println("Didn't send the message: " + msg);
+    }
   }
 
 

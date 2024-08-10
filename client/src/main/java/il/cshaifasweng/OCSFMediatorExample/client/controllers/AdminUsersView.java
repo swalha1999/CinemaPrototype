@@ -145,12 +145,7 @@ public class AdminUsersView {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(userToRemove);
 
-        try {
-            SimpleClient.getClient().sendToServer(removeUserRequest);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        SimpleClient.getClient().sendToServer(removeUserRequest);
     }
 
     public void UnlockUser(ActionEvent actionEvent) {
