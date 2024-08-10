@@ -41,7 +41,7 @@ public class UiUtil {
 
     public static Image getImage(String url){
         if (url == null || url.isEmpty() || SimpleChatClient.class.getResource(url) == null) {
-            return new  Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream("images\\movie1.jpg")));
+            return new  Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream("images\\no.jpeg")));
         }else {
             return new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(url)));
         }
