@@ -71,7 +71,7 @@ public class Server extends AbstractServer {
                 break;
             case UPDATE_MOVIE_REQUEST:
                 handleUpdateMovieRequest(request, client);
-
+                break;
             //TODO: add more cases here
 
             default:
