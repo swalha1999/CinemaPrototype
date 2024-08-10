@@ -79,6 +79,11 @@ public class UserMain {
     }
 
     @FXML
+    public void ShowMyInbox(ActionEvent actionEvent) {
+        loadUI("MyInbox");
+    }
+
+    @FXML
     void showAvailableMovies(ActionEvent event) {
         loadUI("MovieCatalog");
     }
@@ -130,5 +135,6 @@ public class UserMain {
             mainPane.setCenter(loadFXMLPane(ui));
         });
     }
+
 
 }

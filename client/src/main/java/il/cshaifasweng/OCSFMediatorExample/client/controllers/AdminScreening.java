@@ -1,84 +1,37 @@
+/**
+ * Sample Skeleton for 'AdminScreening.fxml' Controller Class
+ */
+
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieDetails;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.awt.*;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class AdminScreening {
 
-    @FXML
-    private TableColumn<ScreeningView, Integer> AvailableSeats_Col;
+    @FXML // fx:id="AvailableSeats_Col"
+    private TableColumn<?, ?> AvailableSeats_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, Integer> BookedSeats_Col;
+    @FXML // fx:id="BookedSeats_Col"
+    private TableColumn<?, ?> BookedSeats_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, String> Cinema_Col;
+    @FXML // fx:id="Cinema_Col"
+    private TableColumn<?, ?> Cinema_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, String> Hall_Col;
+    @FXML // fx:id="Hall_Col"
+    private TableColumn<?, ?> Hall_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, String> MovieId_Col;
+    @FXML // fx:id="MovieId_Col"
+    private TableColumn<?, ?> MovieId_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableView<ScreeningView> ScreeningTable;
+    @FXML // fx:id="MoviesTable"
+    private TableView<?> MoviesTable; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, String> ScreeningDate_Col;
+    @FXML // fx:id="ScreeningDate_Col"
+    private TableColumn<?, ?> ScreeningDate_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, LocalDateTime> StartTime_Col;
+    @FXML // fx:id="StartTime_Col"
+    private TableColumn<?, ?> StartTime_Col; // Value injected by FXMLLoader
 
-    @FXML
-    private TableColumn<ScreeningView, String> EndTime_Col;
-
-    @FXML
-    public void initialize() throws IOException {
-        EventBus.getDefault().register(this);
-
-
-        AvailableSeats_Col.setCellValueFactory(new PropertyValueFactory<>("availableSeats"));
-        Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
-        Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
-        MovieId_Col.setCellValueFactory(new PropertyValueFactory<>("movieId"));
-        ScreeningDate_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
-        BookedSeats_Col.setCellValueFactory(new PropertyValueFactory<>("bookedSeats"));
-//        EndTime_Col.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        StartTime_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
-
-        Message message = new Message(MessageType.GET_ALL_SCREENINGS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(message);
-
-    }
-
-
-    @Subscribe
-    public void onGetAllScreenings(GetAllScreeningsEvent response) {
-        Platform.runLater(() -> {
-            List<Screening> screenings = response.getScreenings();
-            for (Screening screening : screenings) {
-                ScreeningTable.getItems().add(new ScreeningView(screening));
-            }
-            ScreeningTable.refresh();
-        });
-    }
 }
