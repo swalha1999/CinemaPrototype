@@ -3,8 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMovieRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetMovieResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
