@@ -39,6 +39,9 @@ public class SimpleClient extends AbstractClient {
 				case GET_MOVIE_RESPONSE:
 					EventBus.getDefault().post( new GetMovieEvent(message));
 					break;
+				case NEW_USER_ADDED_PATCH:
+					EventBus.getDefault().post( new NewUserAddedEvent(message));
+					break;
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
@@ -56,9 +59,7 @@ public class SimpleClient extends AbstractClient {
 				case LOGOUT_RESPONSE:
 					EventBus.getDefault().post( new LogoutEvent((LogoutResponse) message.getDataObject()));
 					break;
-				case NEW_USER_ADDED_PATCH:
-					EventBus.getDefault().post( new NewUserAddedEvent((NewUserAddedPatch) message.getDataObject()));
-					break;
+
 				case REMOVE_USER_PATCH:
 					EventBus.getDefault().post( new RemoveUserEvent((RemoveUserPatch) message.getDataObject()));
 					break;

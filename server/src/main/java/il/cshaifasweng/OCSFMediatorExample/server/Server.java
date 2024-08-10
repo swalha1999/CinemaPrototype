@@ -134,6 +134,8 @@ public class Server extends AbstractServer {
     }
 
     private void handleRegisterRequest(Message request, ConnectionToClient client) {
+
+        // V2 request
         RegisterRequest registerRequest = (RegisterRequest) request.getDataObject();
         System.out.println("Register request received:" + registerRequest.toString()); //TODO: remove this line debug only
         RegisterResponse registerResponse = database.getUsersManager().registerUser(registerRequest);
@@ -141,12 +143,13 @@ public class Server extends AbstractServer {
 
         // send a patch to all the logged-in admins to notify them that a new user has been added
         if (registerResponse.isSuccess()) {
-            NewUserAddedPatch newUserAddedPatch = new NewUserAddedPatch()
+            // V3 patch
+            Message newUserAddedPatch = new Message(MessageType.NEW_USER_ADDED_PATCH)
                     .setSuccess(true)
                     .setMessage("New user added successfully")
-                    .setUser(database.getUsersManager().getUserById(registerResponse.getUserId()));
+                    .setDataObject(database.getUsersManager().getUserById(registerResponse.getUserId()));
 
-            sendToAllAdmins(new Message(newUserAddedPatch, MessageType.NEW_USER_ADDED_PATCH));
+            sendToAllAdmins(newUserAddedPatch);
         }
     }
 
