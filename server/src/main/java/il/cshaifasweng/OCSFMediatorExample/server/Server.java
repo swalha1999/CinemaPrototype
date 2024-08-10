@@ -72,6 +72,9 @@ public class Server extends AbstractServer {
             case REMOVE_MOVIE_REQUEST:
                 handleRemoveMovieRequest(request, client);
                 break;
+            case GET_MOVIE_REQUEST:
+                handleGetMovieRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -93,13 +96,6 @@ public class Server extends AbstractServer {
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
                 break;
-
-            case GET_MOVIE_REQUEST:
-                handleGetMovieRequest(request, client);
-                break;
-
-
-                //TODO: add more cases here
 
             default:
                 sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it this is not supported in V2");
@@ -417,22 +413,22 @@ public class Server extends AbstractServer {
     }
 
     private void handleGetMovieRequest(Message request, ConnectionToClient client) {
-        GetMovieRequest getMovieRequest = (GetMovieRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(getMovieRequest.getSessionKey());
+
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        getMovieRequest.setUsername(loggedInUser.getUsername());
-        getMovieRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get movie request received:" + getMovieRequest.toString()); //TODO: remove this line debug only
-        GetMovieResponse getMovieResponse = database.getMoviesManger().getMovie(getMovieRequest);
-        System.out.println("Get movie response: " + getMovieResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Get movie request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getMoviesManger().getMovie(request);
+        System.out.println("Get movie response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(getMovieResponse, MessageType.GET_MOVIE_RESPONSE));
+        sendResponse(client, response);
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {

@@ -27,20 +27,25 @@ public class SimpleClient extends AbstractClient {
 		System.out.println("The message is: " + message);
 		String messageContent = message.getMessage();
 
-		if (message.getVersion() == MessageVersion.V1) {
-			switch (messageContent) {
-				case "update movies":
-					EventBus.getDefault().post(new UpdateMoviesEvent(message));
+		if (message.getVersion() == MessageVersion.V3) {
+			switch (message.getType()){
+
+				case GET_ALL_USERS_RESPONSE:
+					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
-				case "delete movies":
-					EventBus.getDefault().post(new DeleteMoviesEvent(message));
+				case GET_ALL_MOVIES_RESPONSE:
+					EventBus.getDefault().post( new GetAllMoviesEvent(message));
 					break;
+				case GET_MOVIE_RESPONSE:
+					EventBus.getDefault().post( new GetMovieEvent(message));
+					break;
+
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
 			}
 		}
-		else if (message.getVersion() == MessageVersion.V2 || message.getVersion() == MessageVersion.V3) {
+		else if (message.getVersion() == MessageVersion.V2 ) {
 			switch (message.getType()){
 				case LOGIN_RESPONSE:
 					EventBus.getDefault().post(new LoginEvent((LoginResponse) message.getDataObject()));
@@ -51,20 +56,11 @@ public class SimpleClient extends AbstractClient {
 				case LOGOUT_RESPONSE:
 					EventBus.getDefault().post( new LogoutEvent((LogoutResponse) message.getDataObject()));
 					break;
-				case GET_ALL_USERS_RESPONSE:
-					EventBus.getDefault().post(new GetAllUsersEvent(message));
-					break;
-				case GET_ALL_MOVIES_RESPONSE:
-					EventBus.getDefault().post( new GetAllMoviesEvent(message));
-					break;
 				case NEW_USER_ADDED_PATCH:
 					EventBus.getDefault().post( new NewUserAddedEvent((NewUserAddedPatch) message.getDataObject()));
 					break;
 				case REMOVE_USER_PATCH:
 					EventBus.getDefault().post( new RemoveUserEvent((RemoveUserPatch) message.getDataObject()));
-					break;
-				case GET_MOVIE_RESPONSE:
-					EventBus.getDefault().post( new GetMovieEvent((GetMovieResponse) message.getDataObject()));
 					break;
 				case ADD_MOVIE_PATCH:
 					EventBus.getDefault().post( new AddMoviesEvent((AddMoviePatch) message.getDataObject()));

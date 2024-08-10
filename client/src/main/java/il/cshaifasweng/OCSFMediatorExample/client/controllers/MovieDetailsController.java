@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMovieRequest;
@@ -45,17 +46,14 @@ public class MovieDetailsController {
 
     @Subscribe
     public void setMovieDetails(ShowSideUIEvent event) {
-        GetMovieRequest getMovieRequest = new GetMovieRequest()
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setUsername(SessionKeysStorage.getInstance().getUsername())
-                .setMovieId(event.getMovieId());
 
-        try {
-            SimpleClient.getClient().sendToServer(new Message(getMovieRequest, MessageType.GET_MOVIE_REQUEST));
-            System.out.println("Sent request to get movie details");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Movie movie = new Movie().setId(event.getMovieId());
+
+        Message getMovieRequest = new Message(MessageType.GET_MOVIE_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(movie);
+
+        SimpleClient.getClient().sendToServer(getMovieRequest);
     }
 
     @Subscribe
@@ -64,8 +62,9 @@ public class MovieDetailsController {
             titleLabel.setText(event.getMovie().getTitle());
             genreLabel.setText(event.getMovie().getGenre().toString());
             releaseDateLabel.setText(event.getMovie().getReleaseDate().toString());
-//            durationLabel.setText(event.getMovie().getDuration() + " minutes");
-//            ratingLabel.setText(event.getMovie().getRating() + "/10");
+            durationLabel.setText(event.getMovie().getDurationInMinutes() + " minutes");
+            // TODO :    fix :)
+            ratingLabel.setText(event.getMovie().getId() + "/10");
 
         });
     }

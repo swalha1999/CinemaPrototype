@@ -131,13 +131,16 @@ public class MovieDAO {
         return response.setSuccess(true).setMessage("Movie removed successfully").setDataObject(movie);
     }
 
-    public GetMovieResponse getMovie(GetMovieRequest getMovieRequest) {
-        Movie movie = session.get(Movie.class, getMovieRequest.getMovieId());
+    public Message getMovie(Message getMovieRequest) {
+        Message response = new Message(MessageType.GET_MOVIE_RESPONSE);
+
+        Movie movie = session.get(Movie.class, ((Movie) getMovieRequest.getDataObject()).getMovieId() );
+
         if (movie != null) {
-            return new GetMovieResponse().setSuccess(true).setMessage("Movie retrieved successfully").setMovie(movie);
+            return response.setSuccess(true).setMessage("Movie found").setDataObject(movie);
         }
 
-        return new GetMovieResponse().setSuccess(false).setMessage("Movie not found");
+        return response.setSuccess(false).setMessage("Movie not found");
     }
 
 }
