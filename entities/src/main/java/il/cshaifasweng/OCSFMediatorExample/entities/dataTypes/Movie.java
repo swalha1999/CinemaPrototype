@@ -40,8 +40,6 @@ public class Movie implements Serializable {
     )
     private Set<Actor> actors = new HashSet<>();
 
-
-
     @OneToMany(mappedBy = "movie")
     private Set<Screening> screenings = new HashSet<>();
 
