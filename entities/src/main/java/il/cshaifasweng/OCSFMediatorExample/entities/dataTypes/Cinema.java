@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,9 +20,10 @@ public class Cinema implements Serializable {
     private String email;
 
     @OneToMany(mappedBy = "cinema")
-    private Set<Hall> halls;
+    private Set<Hall> halls = new HashSet<>();
 
-    @OneToOne(mappedBy = "cinema")
+    @OneToOne
+    @JoinColumn(name = "cinema_id")
     private User manager;
 
     public Cinema(String name, City city, String address, String phoneNumber, String email) {
@@ -102,6 +104,9 @@ public class Cinema implements Serializable {
 
     public void setManager(User manager) {
         this.manager = manager;
+        if (manager.getCinema() != this) {
+            manager.setCinema(this);
+        }
     }
 
     @Override
@@ -117,8 +122,4 @@ public class Cinema implements Serializable {
                 ", manager=" + manager +
                 '}';
     }
-
-
-
-
 }

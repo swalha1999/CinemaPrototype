@@ -29,19 +29,20 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets;
 
-    @OneToOne(mappedBy = "manager")
-    private Cinema cinema; //this is used for the manager of the cinema
+    @OneToOne
+    @JoinColumn(name = "manager_id")
+    private Cinema cinema; // This is used for the manager of the cinema
 
     private int remainingTicketsPurchasedByBundle;
 
     private boolean isLogged;
     private boolean isBlocked;
     private boolean isDeleted;
-    private boolean isAgeRestricted; //TODO: For future use
+    private boolean isAgeRestricted; // TODO: For future use
 
-    private int NumberOfTicketsPurchased; //TODO: For future use in statistics
-    private int NumberOfBundlePurchased; //TODO: For future use in statistics
-    private int NumberOfOnlineScreeningsPurchased; //TODO: For future use in statistics
+    private int NumberOfTicketsPurchased; // TODO: For future use in statistics
+    private int NumberOfBundlePurchased; // TODO: For future use in statistics
+    private int NumberOfOnlineScreeningsPurchased; // TODO: For future use in statistics
 
     public User(String username, String password, UserRole role, String email, String phone, String creditCard) {
         this.username = username;
@@ -210,6 +211,9 @@ public class User implements Serializable {
 
     public User setCinema(Cinema cinema) {
         this.cinema = cinema;
+        if (cinema.getManager() != this) {
+            cinema.setManager(this);
+        }
         return this;
     }
 
@@ -273,6 +277,7 @@ public class User implements Serializable {
         return id;
     }
 
+    @Override
     public String toString(){
         return "User{" +
                 "id=" + id +
