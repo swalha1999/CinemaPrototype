@@ -259,4 +259,16 @@ public class Movie implements Serializable {
         return this;
     }
 
+    public Movie setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public int getMovieId() {
+        return id;
+    }
+
+
+
+
 }

@@ -4,9 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.GetMovieRequest;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.GetMovieResponse;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.RemoveMovieResponse;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -106,11 +104,13 @@ public class MovieDAO {
 
     }
 
-    public RemoveMovieResponse removeMovie(RemoveMovieRequest removeMovieRequest) {
-        // get  the movie to be removed
-        Movie movie = session.get(Movie.class, removeMovieRequest.getMovieId());
+    public Message removeMovie(Message request) {
+        Message response = new Message(MessageType.REMOVE_MOVIE_RESPONSE);
+
+        Movie movie = session.get(Movie.class, ((Movie) request.getDataObject()).getMovieId());
+
         if (movie == null) {
-            return new RemoveMovieResponse().setSuccess(false).setMessage("Movie not found");
+            return response.setSuccess(false).setMessage("Movie not found");
         }
 
         // delete the movie
@@ -124,11 +124,11 @@ public class MovieDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
-            return new RemoveMovieResponse().setSuccess(false).setMessage("Failed to remove movie");
+            System.err.println("Failed to remove movie");
+            return response.setSuccess(false).setMessage("Failed to remove movie");
         }
 
-        return new RemoveMovieResponse().setSuccess(true).setMessage("Movie removed successfully").setMovie(movie);
+        return response.setSuccess(true).setMessage("Movie removed successfully").setDataObject(movie);
     }
 
     public GetMovieResponse getMovie(GetMovieRequest getMovieRequest) {

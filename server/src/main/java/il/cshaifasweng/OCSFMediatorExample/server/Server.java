@@ -11,20 +11,16 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.patchs.RemoveUserPa
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
-import il.cshaifasweng.OCSFMediatorExample.server.DAO.UserDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
-import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 import org.hibernate.Session;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Server extends AbstractServer {
-    private static final ArrayList<SubscribedClient> openClients = new ArrayList<>(); //TODO: deprecated do not needed
     private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>(); //this will be used to store the session keys for the logged-in users
     private final DatabaseController database;
 
@@ -49,7 +45,7 @@ public class Server extends AbstractServer {
     }
 
     private void handleV3Message(Message request, ConnectionToClient client) {
-        Message response;
+
         switch (request.getType()) {
 
             case GET_ALL_USERS_REQUEST:
@@ -73,6 +69,9 @@ public class Server extends AbstractServer {
             case ADD_MOVIE_REQUEST:
                 handleAddMovieRequest(request, client);
                 break;
+            case REMOVE_MOVIE_REQUEST:
+                handleRemoveMovieRequest(request, client);
+                break;
 
             //TODO: add more cases here
 
@@ -95,10 +94,6 @@ public class Server extends AbstractServer {
                 handleRegisterRequest(request, client);
                 break;
 
-
-            case REMOVE_MOVIE_REQUEST:
-                handleRemoveMovieRequest(request, client);
-                break;
             case GET_MOVIE_REQUEST:
                 handleGetMovieRequest(request, client);
                 break;
@@ -381,16 +376,15 @@ public class Server extends AbstractServer {
     }
 
     private void handleRemoveMovieRequest(Message request, ConnectionToClient client) {
-        RemoveMovieRequest removeMovieRequest = (RemoveMovieRequest) request.getDataObject();
-        LoggedInUser loggedInUser = sessionKeys.get(removeMovieRequest.getSessionKey());
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
             sendErrorMessage(client, "Error! User is not logged in");
             return;
         }
 
-        removeMovieRequest.setUsername(loggedInUser.getUsername());
-        removeMovieRequest.setUserId(loggedInUser.getUserId());
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -405,17 +399,18 @@ public class Server extends AbstractServer {
                 return;
         }
 
-        System.out.println("Remove movie request received:" + removeMovieRequest.toString()); //TODO: remove this line debug only
-        RemoveMovieResponse removeMovieResponse = database.getMoviesManger().removeMovie(removeMovieRequest);
-        System.out.println("Remove movie response: " + removeMovieResponse.toString()); //TODO: remove this line debug only
+        System.out.println("Remove movie request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getMoviesManger().removeMovie(request);
+        System.out.println("Remove movie response: " + response.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(removeMovieResponse, MessageType.REMOVE_MOVIE_RESPONSE));
+        sendResponse(client, response);
 
         // send a patch to all the logged-in users
-        if (removeMovieResponse.isSuccess()) {
+        if (response.isSuccess()) {
+            //TODO: update this to V3
             RemoveMoviePatch removeMoviePatch = new RemoveMoviePatch()
                     .setMessage("Movie removed from the system")
-                    .setMovie(removeMovieResponse.getMovie());
+                    .setMovie((Movie) response.getDataObject());
 
             sendToAllLoggedInUsers(new Message(removeMoviePatch, MessageType.REMOVE_MOVIE_PATCH));
         }

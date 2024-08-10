@@ -14,7 +14,6 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
-import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.RemoveMovieRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -125,12 +124,15 @@ public class AdminAddMovieController {
     }
 
     @FXML
-    void Delete(ActionEvent event) throws IOException {
-        RemoveMovieRequest removeMovieRequest = new RemoveMovieRequest()
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setMovieId(moviesTable.getSelectionModel().getSelectedItem().getId());
+    void Delete(ActionEvent event) {
 
-        SimpleClient.getClient().sendToServer(new Message(removeMovieRequest, MessageType.REMOVE_MOVIE_REQUEST));
+        Movie movieToRemove = new Movie().setId(moviesTable.getSelectionModel().getSelectedItem().getId());
+
+        Message removeMovieRequest = new Message(MessageType.REMOVE_MOVIE_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(movieToRemove);
+
+        SimpleClient.getClient().sendToServer(removeMovieRequest);
     }
 
     @FXML
