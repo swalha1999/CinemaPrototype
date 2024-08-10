@@ -57,11 +57,7 @@ public class Login {
     @FXML
     void createNewAccount(ActionEvent event) {
         Platform.runLater(()->{
-            try {
-                setRoot("Register");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Register");
         });
     }
 
@@ -76,24 +72,19 @@ public class Login {
         System.out.println(SessionKeysStorage.getInstance().toString());
 
         Platform.runLater(()->{
-            try {
-                if (response.isSuccess()) {
-                    if( response.getRole() == UserRole.USER){
-                        setRoot("UserMain");
-                    } else {
-                        setRoot("AdminMain");
-                    }
+            if (response.isSuccess()) {
+                if( response.getRole() == UserRole.USER){
+                    setRoot("UserMain");
+                } else {
+                    setRoot("AdminMain");
                 }
-                else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Login Failed");
-                    alert.setHeaderText("Login Failed");
-                    alert.setContentText(response.getMessage());
-                    alert.show();
-                }
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Failed");
+                alert.setHeaderText("Login Failed");
+                alert.setContentText(response.getMessage());
+                alert.show();
             }
         });
     }

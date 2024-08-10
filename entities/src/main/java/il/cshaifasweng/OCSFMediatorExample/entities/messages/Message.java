@@ -24,7 +24,7 @@ public class Message implements Serializable {
     Object dataObject = "No data";
     String dataType = "No data type";
 
-    //indecators for the client
+    // for the V3 version of the message
     boolean success = false;
 
 

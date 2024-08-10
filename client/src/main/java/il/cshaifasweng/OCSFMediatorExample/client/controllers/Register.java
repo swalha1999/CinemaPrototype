@@ -116,11 +116,7 @@ public class Register {
     @FXML
     void returnLogin(ActionEvent event) {
         Platform.runLater(()->{
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Login");
         });
     }
 
@@ -132,12 +128,7 @@ public class Register {
                 alert.setTitle("Success");
                 alert.setHeaderText("User registered successfully");
                 alert.show();
-
-                try {
-                    setRoot("Login");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                setRoot("Login");
             }
 
             else {

@@ -97,11 +97,7 @@ public class UserMain {
         int x=0;
         SimpleClient.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(()->{
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Login");
         });
     }
 
@@ -109,11 +105,7 @@ public class UserMain {
     public void onLogoutEvent(LogoutEvent response) {
         SessionKeysStorage.getInstance().clearSession();
         Platform.runLater(()->{
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Login");
         });
     }
 

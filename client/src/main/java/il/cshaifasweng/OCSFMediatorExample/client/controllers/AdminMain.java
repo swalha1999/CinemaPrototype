@@ -73,11 +73,7 @@ public class AdminMain {
         LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
         SimpleClient.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(() -> {
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Login");
         });
     }
 
@@ -85,11 +81,7 @@ public class AdminMain {
     public void onLogoutEvent(LogoutEvent response) {
         SessionKeysStorage.getInstance().clearSession();
         Platform.runLater(() -> {
-            try {
-                setRoot("Login");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            setRoot("Login");
         });
     }
 
