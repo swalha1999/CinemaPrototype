@@ -1,5 +1,10 @@
+/**
+ * Sample Skeleton for 'AdminScreening.fxml' Controller Class
+ */
+
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+<<<<<<< HEAD
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
@@ -8,18 +13,15 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieDetails;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
+=======
+>>>>>>> f784a9508229c5781e8eb43efbc5c51ac6c5c04e
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.io.IOException;
-import java.util.List;
 
 public class AdminScreening {
 
+<<<<<<< HEAD
     @FXML
     private TableColumn<ScreeningView, Integer> AvailableSeats_Col;
 
@@ -73,4 +75,30 @@ public class AdminScreening {
             }
         });
     }
+=======
+    @FXML // fx:id="AvailableSeats_Col"
+    private TableColumn<?, ?> AvailableSeats_Col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="BookedSeats_Col"
+    private TableColumn<?, ?> BookedSeats_Col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Cinema_Col"
+    private TableColumn<?, ?> Cinema_Col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="Hall_Col"
+    private TableColumn<?, ?> Hall_Col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MovieId_Col"
+    private TableColumn<?, ?> MovieId_Col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="MoviesTable"
+    private TableView<?> MoviesTable; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ScreeningDate_Col"
+    private TableColumn<?, ?> ScreeningDate_Col; // Value injected by FXMLLoader
+
+    @FXML // fx:id="StartTime_Col"
+    private TableColumn<?, ?> StartTime_Col; // Value injected by FXMLLoader
+
+>>>>>>> f784a9508229c5781e8eb43efbc5c51ac6c5c04e
 }

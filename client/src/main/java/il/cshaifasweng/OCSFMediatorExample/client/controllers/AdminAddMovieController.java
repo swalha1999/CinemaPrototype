@@ -4,6 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
@@ -18,17 +19,17 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class AdminAddMovieController {
 
@@ -47,8 +48,8 @@ public class AdminAddMovieController {
     @FXML // fx:id="genreColumn"
     private TableColumn<MovieView, ?> genreColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="genreField"
-    private TextField genreField; // Value injected by FXMLLoader
+    @FXML // fx:id="genreComboBox"
+    private ComboBox<MovieGenre> genreComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="importButton"
     private Button importButton; // Value injected by FXMLLoader
@@ -77,8 +78,8 @@ public class AdminAddMovieController {
     @FXML // fx:id="titleHebrewField"
     private TextField titleHebrewField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="updateButton"
-    private Button updateButton; // Value injected by FXMLLoader
+    @FXML // fx:id="imageUrlField"
+    private TextField imageUrlField; // Value injected by FXMLLoader
 
     @FXML
     public void initialize() throws IOException {
@@ -88,6 +89,12 @@ public class AdminAddMovieController {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
         SimpleClient.getClient().sendToServer(message);
+
+        for (MovieGenre genre : MovieGenre.values()) {
+            genreComboBox.getItems().add(genre);
+        }
+
+        imageUrlField.textProperty().addListener((observable, oldValue, newValue) -> updateImageView(newValue));
 
         titleEnglishColumn.setCellValueFactory(new PropertyValueFactory<>("englishTitle"));
         titleHebrewColumn.setCellValueFactory(new PropertyValueFactory<>("hebrewTitle"));
@@ -99,8 +106,9 @@ public class AdminAddMovieController {
                 Platform.runLater(()->{
                     titleEnglishField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
                     titleHebrewField.setText(moviesTable.getSelectionModel().getSelectedItem().getHebrewTitle());
-                    genreField.setText(moviesTable.getSelectionModel().getSelectedItem().getEnglishTitle());
-                    descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getGenre());
+                    genreComboBox.getSelectionModel().select(moviesTable.getSelectionModel().getSelectedItem().getGenre());
+                    descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getDescription());
+                    imageUrlField.setText(moviesTable.getSelectionModel().getSelectedItem().getImageUrl());
                 });
             }
         });
@@ -119,9 +127,10 @@ public class AdminAddMovieController {
 
     @FXML
     void Clear(ActionEvent event) {
+        imageUrlField.setText("");
         titleEnglishField.setText("");
         titleHebrewField.setText("");
-        genreField.setText("");
+        genreComboBox.getSelectionModel().clearSelection();
         descriptionField.setText("");
         producerField.setText("");
     }
@@ -143,8 +152,9 @@ public class AdminAddMovieController {
         Movie movieToAdd = new Movie()
                 .setEnglishTitle(titleEnglishField.getText())
                 .setHebrewTitle(titleHebrewField.getText())
-                .setGenre(MovieGenre.valueOf(genreField.getText()))
-                .setDescription(descriptionField.getText());
+                .setGenre(genreComboBox.getSelectionModel().getSelectedItem())
+                .setDescription(descriptionField.getText())
+                .setImageUrl(imageUrlField.getText());
 
         Message addMovieRequest = new Message(MessageType.ADD_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
@@ -158,16 +168,17 @@ public class AdminAddMovieController {
     void Update(ActionEvent event) {
         MovieView selectedMovie = moviesTable.getSelectionModel().getSelectedItem();
         if (selectedMovie != null) {
-            Movie movieToRemove = new Movie().setId(moviesTable.getSelectionModel().getSelectedItem().getId())
+            Movie movieToUpdate = new Movie().setId(moviesTable.getSelectionModel().getSelectedItem().getId())
                     .setEnglishTitle(titleEnglishField.getText())
                     .setHebrewTitle(titleHebrewField.getText())
-                    .setGenre(MovieGenre.valueOf(genreField.getText()))
+                    .setGenre(genreComboBox.getSelectionModel().getSelectedItem())
                     .setDescription(descriptionField.getText())
-                    .setProducer(producerField.getText());
+                    .setProducer(producerField.getText())
+                    .setImageUrl(imageUrlField.getText());
 
             Message UpdateMovieRequest = new Message(MessageType.UPDATE_MOVIE_REQUEST)
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                    .setDataObject(movieToRemove);
+                    .setDataObject(movieToUpdate);
 
             SimpleClient.getClient().sendToServer(UpdateMovieRequest);
         }
@@ -200,8 +211,18 @@ public class AdminAddMovieController {
     @Subscribe
     public void onUpdateMovieEvent(UpdateMovieEvent event){
         Platform.runLater(()->{
+            for (MovieView movieView : moviesTable.getItems()) {
+                if(movieView.getId() == event.getMovie().getId()){
+                    movieView.copy(event.getMovie());
+                }
+            }
             moviesTable.refresh();
         });
     }
 
+    public void updateImageView(String event) {
+        System.out.println("Changed movie view");
+
+        movieImageView.setImage(new Image(SimpleChatClient.class.getResourceAsStream(event)));
+    }
 }
