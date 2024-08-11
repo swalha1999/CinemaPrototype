@@ -178,17 +178,19 @@ public class Main {
 
         // for every movie genrate 3 screenings
         List<Movie> movies = session.createQuery("from Movie").list();
-        List<Hall> halls = session.createQuery("from Hall").list();
+        List<Cinema> cinemas = session.createQuery("from Cinema").list();
+
         Date[] dates = new Date[8];
         Calendar calendar = Calendar.getInstance();
 
-        for (int i = 0; i < 8; i++) {
+        for (Movie movie : movies) {
             for (int j = 0; j < 3; j++) {
                 Screening screening = new Screening();
-                screening.setMovie(movies.get(i));
-                screening.setHall(halls.get(j));
+                screening.setMovie(movie);
+                screening.setCinema(cinemas.get(j % cinemas.size()));
+                screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().getFirst());
                 screening.setStartingAt(LocalDateTime.now());
-                screening.setPrice(30);
+                screening.setPrice(45);
                 session.save(screening);
                 session.flush();
             }
