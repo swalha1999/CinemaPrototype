@@ -1,6 +1,14 @@
 /* Purchase.css */
 
-/* Style for the Header Section */
+/* Style for Text Fields */
+.text-field {
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ddd;
+}
+
+/* Style for Header Section */
 .label-header {
     -fx-font-size: 24px;
     -fx-text-fill: darkblue;
@@ -39,13 +47,6 @@
     -fx-font-size: 20px;
     -fx-text-fill: darkred;
     -fx-font-weight: bold;
-}
-
-.text-field {
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
-    -fx-background-color: #f0f0f0;
-    -fx-border-color: #ddd;
 }
 
 /* Style for Order Summary Section */
