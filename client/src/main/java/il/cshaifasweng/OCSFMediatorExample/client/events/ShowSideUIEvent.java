@@ -1,38 +1,31 @@
 package il.cshaifasweng.OCSFMediatorExample.client.events;
 
 public class ShowSideUIEvent {
-    private String UIName;
-    private int movieId;
+    private final String UIName;
+    private final Object dataForPage;
 
     public ShowSideUIEvent(String UIName) {
         this.UIName = UIName;
+        this.dataForPage = null;
     }
 
-    public ShowSideUIEvent(String UIName, int movieId) {
+    public ShowSideUIEvent(String UIName, Object dataForPage) {
         this.UIName = UIName;
-        this.movieId = movieId;
+        this.dataForPage = dataForPage;
     }
 
     public String getUIName() {
         return UIName;
     }
 
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setUIName(String UIName) {
-        this.UIName = UIName;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+    public Object getDataForPage() {
+        return dataForPage;
     }
 
     public String toString() {
         return "ShowSideUIEvent{" +
                 "UIName='" + UIName + '\'' +
-                ", movieId='" + movieId + '\'' +
+                ", dataForPage=" + dataForPage +
                 '}';
     }
 

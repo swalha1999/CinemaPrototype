@@ -6,6 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMovieEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -66,6 +67,7 @@ public class MovieDetailsController {
     @FXML // fx:id="titleLabel"
     private Label titleLabel; // Value injected by FXMLLoader
 
+    private Movie movieToDisplay;
 
     @FXML
     public void initialize() {
@@ -101,38 +103,29 @@ public class MovieDetailsController {
 
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
+        Movie movie = (Movie) event.getDataForPage();
 
-        Movie movie = new Movie().setId(event.getMovieId());
-
-        Message getMovieRequest = new Message(MessageType.GET_MOVIE_REQUEST)
+        Message message = new Message( MessageType.GET_SCREENING_FOR_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(movie);
 
-        SimpleClient.getClient().sendToServer(getMovieRequest);
-
-
-        Message message = new Message( MessageType.GET_ALL_SCREENINGS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-
         SimpleClient.getClient().sendToServer(message);
 
-    }
-
-    @Subscribe
-    public void setMovieDetails(GetMovieEvent event) {
         Platform.runLater(() -> {
-            titleLabel.setText(event.getMovie().getTitle());
-            genreLabel.setText(event.getMovie().getGenre().toString());
-            releaseDateLabel.setText(event.getMovie().getReleaseDate().toString());
-            durationLabel.setText(event.getMovie().getDurationInMinutes() + " minutes");
+            titleLabel.setText(movie.getTitle());
+            genreLabel.setText(movie.getGenre().toString());
+            releaseDateLabel.setText(movie.getReleaseDate().toString());
+            durationLabel.setText(movie.getDurationInMinutes() + " minutes");
             // TODO :    fix :)
-            ratingLabel.setText(event.getMovie().getId() + "/10");
-            movieImageView.setImage(getImage(event.getMovie().getImageUrl()));
+            ratingLabel.setText(movie.getId() + "/10");
+            movieImageView.setImage(getImage(movie.getImageUrl()));
         });
+
+
     }
 
     @Subscribe
-    public void onGetAllScreeningsEvent(GetAllScreeningsEvent event){
+    public void onGetScreeningsForMovieEvent(GetScreeningForMovieEvent event){
         Platform.runLater(() -> {
             screeningTable.getItems().clear();
             List<Screening> screenings = event.getScreenings();

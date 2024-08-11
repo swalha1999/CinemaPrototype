@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -63,8 +64,7 @@ public class MovieCatalog {
         sciFiButton.setOnAction(event -> filterMoviesByGenre(MovieGenre.SCI_FI));
     }
 
-    public void addMovie(int id, String title, MovieGenre genre, String imagePath) {
-        Movie movie = new Movie(id, title, genre, imagePath);
+    public void addMovie(Movie movie) {
         allMovies.add(movie);
         renderMovies(allMovies);
     }
@@ -95,7 +95,7 @@ public class MovieCatalog {
         moviePane.getStyleClass().add("movie-pane");
         moviePane.setPrefWidth(400);
 
-        ImageView movieImage = new ImageView(getImage(movie.getImagePath()));
+        ImageView movieImage = new ImageView(getImage(movie.getImageUrl()));
 
         movieImage.setFitHeight(imageHeight);
         movieImage.setFitWidth(imageWidth);
@@ -111,7 +111,7 @@ public class MovieCatalog {
 
         moviePane.setOnMouseClicked(event -> {
             System.out.println("Movie clicked: " + movie.getTitle());
-            EventBus.getDefault().post(new ShowSideUIEvent("MovieDetails", movie.getId()));
+            EventBus.getDefault().post(new ShowSideUIEvent("MovieDetails", movie));
         });
 
 
@@ -142,14 +142,14 @@ public class MovieCatalog {
     public void onGetAllMoviesEvent(GetAllMoviesEvent event) {
         Platform.runLater(() -> {
             allMovies.clear();
-            event.getMovies().forEach(movie -> addMovie(movie.getId() ,movie.getTitle(), movie.getGenre(), movie.getImageUrl()));
+            event.getMovies().forEach(this::addMovie);
         });
     }
 
     @Subscribe
     public void onAddMoviesEvent(AddMoviesEvent event) {
         Platform.runLater(() -> {
-            addMovie(event.getMovie().getId(), event.getMovie().getTitle(), event.getMovie().getGenre(), event.getMovie().getImageUrl());
+            addMovie(event.getMovie());
         });
     }
 
@@ -158,37 +158,5 @@ public class MovieCatalog {
         Platform.runLater(() -> {
             removeMovie(event.getMovie().getId());
         });
-    }
-
-    // Inner class to represent a Movie
-    private static class Movie {
-        private final int id;
-        private final String title;
-        private final MovieGenre genre ;
-        private final String imagePath;
-
-        public Movie(int id, String title, MovieGenre genre, String imagePath) {
-            this.id = id;
-            this.title = title;
-            this.genre = genre;
-            this.imagePath = imagePath;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public MovieGenre getGenre() {
-            return genre == null ? MovieGenre.ALL : genre;
-
-        }
-
-        public String getImagePath() {
-            return imagePath;
-        }
-
-        public int getId() {
-            return id;
-        }
     }
 }

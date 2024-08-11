@@ -75,7 +75,11 @@ public class Server extends AbstractServer {
             case GET_ALL_SCREENINGS_REQUEST:
                 handleGetAllScreeningsRequest(request, client);
                 break;
-            //TODO: add more cases here
+            case GET_SCREENING_FOR_MOVIE_REQUEST:
+                handleGetScreeningForMovieRequest(request, client);
+                break;
+
+                //TODO: add the rest of the cases here
 
             default:
                 sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
@@ -494,6 +498,24 @@ public class Server extends AbstractServer {
         System.out.println("Get all screenings request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getScreeningsManager().getAllScreenings(request);
         System.out.println("Get all screenings response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
+    }
+
+    private void handleGetScreeningForMovieRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        System.out.println("Get all screenings for movie request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getScreeningsManager().getAllScreeningsForMovie(request);
+        System.out.println("Get all screenings for movie response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
     }
