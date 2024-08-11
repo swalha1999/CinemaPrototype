@@ -1,11 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
@@ -73,8 +71,6 @@ public class MovieDetailsController {
     public void initialize() {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-
-
         Screening_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
         Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
@@ -90,19 +86,12 @@ public class MovieDetailsController {
     }
 
     @Subscribe
-    public void onGetAllScreenings(GetAllScreeningsEvent event) {
-        Platform.runLater(()->{
-            List<Screening> screenings = event.getScreenings();
-            screeningTable.getItems().clear();
-            for (Screening screening : screenings) {
-                //TODO: somehow get the current movie so we can filter the screenings instead of adding all screenings
-                screeningTable.getItems().add(new ScreeningView(screening));
-            }
-        });
-    }
-
-    @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
+        // this line is to make sure that the event is for this controller
+        if (!event.getUIName().equals("MovieDetails")) {
+            return;
+        }
+
         Movie movie = (Movie) event.getDataForPage();
 
         Message message = new Message( MessageType.GET_SCREENING_FOR_MOVIE_REQUEST)
@@ -120,7 +109,6 @@ public class MovieDetailsController {
             ratingLabel.setText(movie.getId() + "/10");
             movieImageView.setImage(getImage(movie.getImageUrl()));
         });
-
 
     }
 
