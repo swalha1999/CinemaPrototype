@@ -32,8 +32,7 @@ public class Message implements Serializable {
         this.version = MessageVersion.V2;
         this.type = type;
         this.timeStamp = LocalDateTime.now();
-        this.dataObject = dataObject;
-        this.dataType = dataObject.getClass().getSimpleName();
+        setDataObject(dataObject);
     }
 
     public Message(MessageType type, MessageVersion version) {
@@ -73,7 +72,7 @@ public class Message implements Serializable {
 
     public Message setDataObject(Object dataObject) {
         this.dataObject = dataObject;
-        this.dataType = dataObject.getClass().getSimpleName();
+        this.dataType = dataObject == null ? "null" :  dataObject.getClass().getSimpleName();
         return this;
     }
 

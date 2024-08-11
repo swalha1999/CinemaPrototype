@@ -169,6 +169,26 @@ public class Main {
         session.flush();
     }
 
+    private static void generateScreening(){
+        // for every movie genrate 3 screenings
+        List<Movie> movies = session.createQuery("from Movie").list();
+        List<Hall> halls = session.createQuery("from Hall").list();
+        Date[] dates = new Date[8];
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 3; j++) {
+                Screening screening = new Screening();
+                screening.setMovie(movies.get(i));
+                screening.setHall(halls.get(j));
+                screening.setStartingAt(LocalDateTime.now());
+                screening.setPrice(30);
+                session.save(screening);
+                session.flush();
+            }
+        }
+    }
+
 
     private static Date createDate(Calendar calendar, int year, int month, int day) {
         calendar.set(year, month, day);
@@ -178,7 +198,7 @@ public class Main {
     private static void generateAdmin() {
         User admin = new User()
             .setUsername("admin")
-            .setSalt("salt");
+            .setSalt(UserDAO.generateSalt());
 
         admin.setHashedPassword(UserDAO.hashPassword("admin", admin.getSalt()));
         admin.setRole(UserRole.SYSTEM_MANAGER);
@@ -201,7 +221,7 @@ public class Main {
     private static void generateTestUser(){
         User user = new User()
             .setUsername("user")
-            .setSalt("salt");
+            .setSalt(UserDAO.generateSalt());
 
         user.setHashedPassword(UserDAO.hashPassword("user", user.getSalt()));
         user.setRole(UserRole.USER);
@@ -230,6 +250,7 @@ public class Main {
             generateMovies();
             generateAdmin();
             generateTestUser();
+            generateScreening();
             session.getTransaction().commit();
 
             // Start the server
