@@ -1,0 +1,35 @@
+.label-header {
+    -fx-font-size: 28px;
+    -fx-text-fill: darkblue;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+}
+
+.button-nav {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+}
+
+.button-action {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+}
+
+.button-action:hover {
+    -fx-background-color: #34495E;
+}
+
+.table-view {
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.table-column {
+    -fx-font-size: 16px;
+}

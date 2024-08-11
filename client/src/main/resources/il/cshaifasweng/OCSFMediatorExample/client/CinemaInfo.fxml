@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="859.0" prefWidth="1252.0" stylesheets="@css/CinemaInfo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CinemaInfoController">
+    <!-- Header Section -->
+    <VBox alignment="CENTER" layoutX="10.0" prefHeight="115.0" prefWidth="1232.0" spacing="15.0">
+        <children>
+            <Label styleClass="label-header" text="Cinema Information" />
+            <HBox alignment="CENTER" spacing="20.0">
+                <Button fx:id="HomeBtn" onAction="#returnHome" styleClass="button-nav" text="Home" />
+                <Button fx:id="BackBtn" onAction="#returnBack" styleClass="button-nav" text="Back" />
+            </HBox>
+        </children>
+    </VBox>
+
+    <!-- Tables Section -->
+    <HBox layoutX="53.0" layoutY="140.0" prefHeight="530.0" prefWidth="1146.0" spacing="20.0">
+        <!-- Cinema List Table -->
+        <TableView fx:id="cinemaTable" prefHeight="623.0" prefWidth="560.0">
+            <columns>
+                <TableColumn fx:id="cinemaNameColumn" prefWidth="200.0" text="Cinema Name" />
+                <TableColumn fx:id="cityColumn" prefWidth="200.0" text="City" />
+                <TableColumn fx:id="managerColumn" prefWidth="158.0" text="Manager" />
+            </columns>
+        </TableView>
+
+        <!-- Cinema Details Table -->
+        <VBox prefHeight="614.0" prefWidth="560.0">
+         <children>
+               <TableView fx:id="detailsTable" prefHeight="606.0" prefWidth="560.0">
+                   <columns>
+                       <TableColumn fx:id="hallColumn" prefWidth="269.0" text="Hall" />
+                       <TableColumn fx:id="seatsColumn" prefWidth="290.0" text="Number of Seats" />
+                   </columns>
+               </TableView>
+         </children>
+        </VBox>
+    </HBox>
+       <Button fx:id="AddCinemaBtn" layoutX="203.0" layoutY="718.0" onAction="#addCinema" styleClass="button-action" text="Add Cinema" />
+       <Button fx:id="EditCinemaBtn" layoutX="62.0" layoutY="718.0" onAction="#editCinema" styleClass="button-action" text="Edit Cinema" />
+</AnchorPane>
