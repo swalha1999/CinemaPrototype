@@ -3,7 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;

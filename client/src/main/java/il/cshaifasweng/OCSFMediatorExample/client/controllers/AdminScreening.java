@@ -60,9 +60,8 @@ public class AdminScreening {
         MovieId_Col.setCellValueFactory(new PropertyValueFactory<>("movieId"));
         ScreeningDate_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
         BookedSeats_Col.setCellValueFactory(new PropertyValueFactory<>("bookedSeats"));
-//        EndTime_Col.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         StartTime_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
-        MovieName_Col.setCellValueFactory(new PropertyValueFactory<>("movieName"));
+
 
         Message message = new Message(MessageType.GET_ALL_SCREENINGS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());

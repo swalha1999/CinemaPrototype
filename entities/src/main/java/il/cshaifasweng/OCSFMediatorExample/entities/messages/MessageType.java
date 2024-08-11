@@ -3,44 +3,49 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serializable;
 
 public enum MessageType implements Serializable {
-    NONE,
-    ERROR,
-    STRING,
-    LOGIN_REQUEST,
-    LOGIN_RESPONSE,
-    LOGOUT_REQUEST,
-    LOGOUT_RESPONSE,
-    REGISTER_REQUEST,
-    REGISTER_RESPONSE,
-    GET_ALL_USERS_REQUEST,
-    GET_ALL_USERS_RESPONSE,
-    GET_MY_TICKETS_REQUEST,
-    GET_MY_TICKETS_RESPONSE,
-    BLOCK_USER_REQUEST,
-    BLOCK_USER_RESPONSE,
-    UNBLOCK_USER_REQUEST,
-    UNBLOCK_USER_RESPONSE,
-    REMOVE_USER_REQUEST,
-    REMOVE_USER_RESPONSE,
-    NEW_USER_ADDED_PATCH,
-    REMOVE_USER_PATCH,
-    GET_ALL_MOVIES_REQUEST,
-    GET_ALL_MOVIES_RESPONSE,
-    ADD_MOVIE_REQUEST,
-    ADD_MOVIE_RESPONSE,
-    ADD_MOVIE_PATCH,
-    REMOVE_MOVIE_REQUEST,
-    REMOVE_MOVIE_RESPONSE,
-    REMOVE_MOVIE_PATCH,
-    UPDATE_MOVIE_REQUEST,
-    UPDATE_MOVIE_RESPONSE,
-    UPDATE_MOVIE_PATCH,
-    GET_MOVIE_REQUEST,
-    GET_MOVIE_RESPONSE,
-    GET_ALL_SCREENINGS_REQUEST,
-    GET_ALL_SCREENINGS_RESPONSE,
-    GET_SCREENING_FOR_MOVIE_REQUEST,
-    GET_SCREENING_FOR_MOVIE_RESPONSE,
+    NONE, //DONE on server
+    ERROR, //DONE on server
+    STRING, //DONE on server
+    LOGIN_REQUEST, // DONE on server and client
+    LOGIN_RESPONSE, // DONE on server and client
+    LOGOUT_REQUEST, // DONE on server and client
+    LOGOUT_RESPONSE, // DONE on server and client
+    REGISTER_REQUEST, // DONE on server and client
+    REGISTER_RESPONSE, // DONE on server and client
+    GET_ALL_USERS_REQUEST, // DONE on server and client
+    GET_ALL_USERS_RESPONSE, // DONE on server and client
+    GET_MY_TICKETS_REQUEST, // TODO
+    GET_MY_TICKETS_RESPONSE, // TODO
+    BLOCK_USER_REQUEST, // DONE on server and client
+    BLOCK_USER_RESPONSE, // DONE on server and client
+    UNBLOCK_USER_REQUEST, // DONE on server and client
+    UNBLOCK_USER_RESPONSE, // DONE on server and client
+    REMOVE_USER_REQUEST, // DONE on server and client
+    REMOVE_USER_RESPONSE, // DONE on server and client
+    NEW_USER_ADDED_PATCH, // DONE on server and client
+    REMOVE_USER_PATCH, // DONE on server and client
+    GET_ALL_MOVIES_REQUEST, // DONE on server and client
+    GET_ALL_MOVIES_RESPONSE, // DONE on server and client
+    ADD_MOVIE_REQUEST, // DONE on server and client
+    ADD_MOVIE_RESPONSE, // DONE on server and client
+    ADD_MOVIE_PATCH, // DONE on server and client
+    REMOVE_MOVIE_REQUEST, // DONE on server and client
+    REMOVE_MOVIE_RESPONSE, // DONE on server and client
+    REMOVE_MOVIE_PATCH, // DONE on server and client
+    UPDATE_MOVIE_REQUEST, // DONE on server and client
+    UPDATE_MOVIE_RESPONSE, // DONE on server and client
+    UPDATE_MOVIE_PATCH, // DONE on server TODO: check on client
+    GET_MOVIE_REQUEST,  // DONE on server and client
+    GET_MOVIE_RESPONSE, // DONE on server and client
+    GET_ALL_SCREENINGS_REQUEST, // DONE on server and client
+    GET_ALL_SCREENINGS_RESPONSE, // DONE on server and client
+    GET_SCREENING_FOR_MOVIE_REQUEST, // DONE on server and client
+    GET_SCREENING_FOR_MOVIE_RESPONSE, // DONE on server and client
+    GET_ALL_CINEMAS_REQUEST, // TODO: do on the server and client
+    GET_ALL_CINEMAS_RESPONSE, // TODO: do on the server and client
+    ADD_CINEMA_REQUEST, // TODO: do on the server and client
+    ADD_CINEMA_RESPONSE, // TODO: do on the server and client
+    ADD_CINEMA_PATCH, // TODO: do on the server and client
 
 }
 
