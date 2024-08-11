@@ -75,6 +75,7 @@ public class SeatPickerController {
     private void confirmSelection() {
         // Handle the confirmation of selected seats
         System.out.println("Selected seats: " + selectedSeats.size());
+        showSideUI("Purchase");
         // Implement the logic to proceed with booking these seats
     }
 }
