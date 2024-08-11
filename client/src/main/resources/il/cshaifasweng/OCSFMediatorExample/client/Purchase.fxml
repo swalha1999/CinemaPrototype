@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/Purchase.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.Purchase">
@@ -26,16 +25,16 @@
     <VBox layoutX="14.0" layoutY="145.0" prefWidth="1160.0" spacing="15.0">
         <children>
             <HBox spacing="10.0">
-                <Label fx:id="MovieTitleLabel" text="Movie Title:" />
-                <TextField fx:id="MovieTitle_txt" promptText="Enter movie title" styleClass="text-field" />
+                <Label text="Movie Title:" />
+                <Label fx:id="MovieTitleLabel" text="[Title of the Movie]" styleClass="label-info" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Duration:" />
-                <TextField fx:id="Duration_Txt" promptText="Enter duration" styleClass="text-field" />
+                <Label fx:id="DurationLabel" text="[Duration of the Movie]" styleClass="label-info" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Showtime:" />
-                <TextField fx:id="MovieTime_Txt" promptText="Enter showtime" styleClass="text-field" />
+                <Label fx:id="MovieTimeLabel" text="[Showtime of the Movie]" styleClass="label-info" />
             </HBox>
         </children>
     </VBox>
@@ -45,15 +44,15 @@
         <children>
             <HBox spacing="10.0">
                 <Label text="Seat Number:" />
-                <TextField fx:id="SeatNumber_Txt" promptText="Enter seat number" styleClass="text-field" />
+                <Label fx:id="SeatNumberLabel" text="[Selected Seat Number]" styleClass="label-info" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Price per Seat:" />
-                <TextField fx:id="PricePerSeat_Txt" promptText="Enter price per seat" styleClass="text-field" />
+                <Label fx:id="PricePerSeatLabel" text="[Price per Seat]" styleClass="label-info" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Total Price:" />
-                <TextField fx:id="TotalPrice_Txt" promptText="Enter total price" styleClass="text-field" />
+                <Label fx:id="TotalPriceLabel" text="[Total Price]" styleClass="label-info" />
             </HBox>
         </children>
     </VBox>
@@ -74,9 +73,6 @@
                 <TextField fx:id="expiryDate" promptText="MM/YY" styleClass="text-field" />
                 <Label text="CVV:" />
                 <TextField fx:id="CVV_Txt" promptText="Enter CVV" styleClass="text-field" />
-                <rowConstraints>
-                    <RowConstraints />
-                </rowConstraints>
             </GridPane>
         </children>
     </VBox>
@@ -88,19 +84,18 @@
             <VBox spacing="10.0" styleClass="summary-box">
                 <HBox spacing="10.0">
                     <Label text="Order ID:" />
-                    <TextField fx:id="OrderId_Txt" promptText="Enter order ID" styleClass="text-field" />
+                    <Label fx:id="OrderIdLabel" text="[Order ID]" styleClass="label-info" />
                 </HBox>
                 <HBox spacing="10.0">
                     <Label text="Items Purchased:" />
-                    <TextField fx:id="NumberItemPurch_Txt" promptText="Enter number of items" styleClass="text-field" />
+                    <Label fx:id="NumberItemPurchLabel" text="[Number of Items]" styleClass="label-info" />
                 </HBox>
                 <HBox spacing="10.0">
                     <Label text="Total Amount:" />
-                    <TextField fx:id="TotalAmount_Txt" promptText="Enter total amount" styleClass="text-field" />
+                    <Label fx:id="TotalAmountLabel" text="[Total Amount]" styleClass="label-info" />
                 </HBox>
             </VBox>
-            <Button fx:id="ConfrimPurchaseBtn" onAction="#ConfromPurchase" styleClass="button-confirm" text="Confirm Purchase" />
+            <Button fx:id="ConfirmPurchaseBtn" onAction="#ConfirmPurchase" styleClass="button-confirm" text="Confirm Purchase" />
         </children>
     </VBox>
-      <Label fx:id="MovieDetailsLabel" layoutX="47.0" layoutY="90.0" styleClass="label-movie" text="Movie Details" />
 </AnchorPane>
