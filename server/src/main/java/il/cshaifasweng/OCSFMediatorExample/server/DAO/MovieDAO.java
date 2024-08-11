@@ -173,4 +173,8 @@ public class MovieDAO {
                 .setMessage("Movie updated successfully")
                 .setDataObject(movie);
     }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
 }

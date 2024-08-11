@@ -14,8 +14,8 @@ public enum MessageType implements Serializable {
     REGISTER_RESPONSE, // DONE on server and client
     GET_ALL_USERS_REQUEST, // DONE on server and client
     GET_ALL_USERS_RESPONSE, // DONE on server and client
-    GET_MY_TICKETS_REQUEST, // TODO
-    GET_MY_TICKETS_RESPONSE, // TODO
+    GET_MY_TICKETS_REQUEST, // DONE on server TODO on client
+    GET_MY_TICKETS_RESPONSE, // DONE on server TODO on client
     BLOCK_USER_REQUEST, // DONE on server and client
     BLOCK_USER_RESPONSE, // DONE on server and client
     UNBLOCK_USER_REQUEST, // DONE on server and client
@@ -41,11 +41,19 @@ public enum MessageType implements Serializable {
     GET_ALL_SCREENINGS_RESPONSE, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_REQUEST, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_RESPONSE, // DONE on server and client
-    GET_ALL_CINEMAS_REQUEST, // TODO: do on the server and client
-    GET_ALL_CINEMAS_RESPONSE, // TODO: do on the server and client
+    GET_ALL_CINEMAS_REQUEST, // Done on Server TODO: client
+    GET_ALL_CINEMAS_RESPONSE, // Done on Server TODO: client
     ADD_CINEMA_REQUEST, // TODO: do on the server and client
     ADD_CINEMA_RESPONSE, // TODO: do on the server and client
     ADD_CINEMA_PATCH, // TODO: do on the server and client
+    REMOVE_CINEMA_REQUEST, // TODO: do on the server and client
+    REMOVE_CINEMA_RESPONSE, // TODO: do on the server and client
+    REMOVE_CINEMA_PATCH, // TODO: do on the server and client
+    UPDATE_CINEMA_REQUEST, // TODO: do on the server and client
+    UPDATE_CINEMA_RESPONSE, // TODO: do on the server and client
+    UPDATE_CINEMA_PATCH, // TODO: do on the server and client
+    GET_CINEMA_HALLS_REQUEST, // Done on server TODO on client
+    GET_CINEMA_HALLS_RESPONSE, // Done on server TODO on client
 
 }
 

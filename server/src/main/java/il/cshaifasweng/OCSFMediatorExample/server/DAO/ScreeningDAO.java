@@ -47,4 +47,7 @@ public class ScreeningDAO {
     }
 
 
+    public void setSession(Session session) {
+        this.session = session;
+    }
 }

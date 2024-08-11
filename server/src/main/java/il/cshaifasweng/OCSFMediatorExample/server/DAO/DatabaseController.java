@@ -6,10 +6,11 @@ import org.hibernate.Session;
 public class DatabaseController {
 
     private Session session;
-    private MovieDAO movies;
-    private UserDAO users;
-    private TicketDAO tickets;
-    private ScreeningDAO screenings;
+    private final MovieDAO movies;
+    private final UserDAO users;
+    private final TicketDAO tickets;
+    private final ScreeningDAO screenings;
+    private final CinemaDAO cinemas;
 
     public DatabaseController(Session session) {
         this.session = session;
@@ -17,6 +18,7 @@ public class DatabaseController {
         this.users = new UserDAO(session);
         this.tickets = new TicketDAO(session);
         this.screenings = new ScreeningDAO(session);
+        this.cinemas = new CinemaDAO(session);
     }
 
     public MovieDAO getMoviesManger() {
@@ -39,13 +41,18 @@ public class DatabaseController {
         return screenings;
     }
 
+    public CinemaDAO getCinemasManager() {
+        return cinemas;
+    }
+
 
     public void setSession(Session session) {
         this.session = session;
-        this.movies = new MovieDAO(session);
-        this.users = new UserDAO(session);
-        this.tickets = new TicketDAO(session);
-        this.screenings = new ScreeningDAO(session);
+        this.movies.setSession(session);
+        this.users.setSession(session);
+        this.tickets.setSession(session);
+        this.screenings.setSession(session);
+        this.cinemas.setSession(session);
         // add more DAOs here
     }
 

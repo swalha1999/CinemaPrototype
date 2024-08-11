@@ -20,7 +20,7 @@ import java.util.List;
 
 public class UserDAO {
 
-    private final Session session;
+    private Session session;
 
     public UserDAO(Session session) {
         this.session = session;
@@ -375,4 +375,7 @@ public class UserDAO {
         return user.getHashedPassword().equals(hashPassword(password , user.getSalt()));
     }
 
+    public void setSession(Session session) {
+        this.session = session;
+    }
 }

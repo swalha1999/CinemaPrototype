@@ -78,6 +78,12 @@ public class Server extends AbstractServer {
             case GET_SCREENING_FOR_MOVIE_REQUEST:
                 handleGetScreeningForMovieRequest(request, client);
                 break;
+            case GET_ALL_CINEMAS_REQUEST:
+                handleGetAllCinemasRequest(request, client);
+                break;
+            case GET_CINEMA_HALLS_REQUEST:
+                handleGetCinemaHallsRequest(request, client);
+                break;
 
                 //TODO: add the rest of the cases here
 
@@ -520,6 +526,68 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
+    private void handleGetAllCinemasRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+                break;
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to this action");
+                return;
+        }
+
+        System.out.println("Get all cinemas request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getCinemasManager().getAllCinemas(request);
+        System.out.println("Get all cinemas response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
+    }
+
+    private void handleGetCinemaHallsRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+                break;
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to this action");
+                return;
+        }
+
+        System.out.println("Get cinema halls request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getCinemasManager().getCinemaHalls(request);
+        System.out.println("Get cinema halls response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
+    }
+
     private boolean sendResponse(ConnectionToClient client, Message response) {
         try {
             client.sendToClient(response);
@@ -572,7 +640,7 @@ public class Server extends AbstractServer {
         }
     }
 
-    //TODO: the message dosn't reach the client
+    //TODO: the message doesn't reach the client
     public void logOutUser(String username, String message) {
         for (LoggedInUser loggedInUser : sessionKeys.values()) {
             if (loggedInUser.getUsername().equals(username)) {

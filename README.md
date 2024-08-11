@@ -13,16 +13,18 @@ width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-1. 
-2. TODO: fix the movie details in the movie catalog
-3. TODO: add screening management `--> omar`
-4. TODO: add actors to the movie view
-5. TODO: add producer to the movie view
-6. TODO: add screening to the movie view
-7. TODO: add cinema entity `--> swalha`
-8. TODO: after the screening is done, we can make online movies view
-9. TODO: add a page to display to packages and how many entrances they have left
-11. TODO:Make Req and Res to the Screening DIO
+1. TODO: make a page to add Cinema 
+2. TODO: make a page to add Hall
+3. TODO: make a page to add Screening
+4. 
+2. TODO: add screening management `--> omar`
+3. TODO: add actors to the movie view
+4. TODO: add producer to the movie view
+5. TODO: add screening to the movie view
+6. TODO: add cinema entity `--> swalha`
+7. TODO: after the screening is done, we can make online movies view
+8. TODO: add a page to display to packages and how many entrances they have left
+9. TODO:Make Req and Res to the Screening DIO
 
 
 
@@ -35,4 +37,5 @@ hight = 900
 6. DONE: add cinema entity `DONE BY: swalha`
 7. DONE: finish the movie admin controller `DONE BY: omar`
 8. DONE: finish the import function in movie admin controller
+9. TODO: fix the movie details in the movie catalog `DONE BY: omar`
 
