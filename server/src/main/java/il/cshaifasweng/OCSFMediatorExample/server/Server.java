@@ -84,6 +84,16 @@ public class Server extends AbstractServer {
             case GET_CINEMA_HALLS_REQUEST:
                 handleGetCinemaHallsRequest(request, client);
                 break;
+            case ADD_CINEMA_REQUEST:
+                handleAddCinemaRequest(request, client);
+                break;
+            case REMOVE_CINEMA_REQUEST:
+                handleRemoveCinemaRequest(request, client);
+                break;
+            case UPDATE_CINEMA_REQUEST:
+                handleUpdateCinemaRequest(request, client);
+                break;
+
 
                 //TODO: add the rest of the cases here
 
@@ -586,6 +596,113 @@ public class Server extends AbstractServer {
         System.out.println("Get cinema halls response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
+    }
+
+    private void handleAddCinemaRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to add cinemas");
+                return;
+        }
+
+        System.out.println("Add cinema request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getCinemasManager().addCinema(request);
+        System.out.println("Add cinema response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
+
+        // send a patch to all the logged-in admin
+        if (response.isSuccess()) {
+            response.setMessageType(MessageType.ADD_CINEMA_PATCH);
+            sendToAllAdmins(response);
+        }
+    }
+
+    private void handleRemoveCinemaRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to add cinemas");
+                return;
+        }
+
+        System.out.println("Remove cinema request received:" + request.toString()); //TODO: remove this line debug only
+        Message response = database.getCinemasManager().removeCinema(request);
+        System.out.println("Remove cinema response: " + response.toString()); //TODO: remove this line debug only
+
+        sendResponse(client, response);
+
+        // send a patch to all the logged-in admin
+        if (response.isSuccess()) {
+            response.setMessageType(MessageType.REMOVE_CINEMA_PATCH);
+            sendToAllAdmins(response);
+        }
+    }
+
+    private void handleUpdateCinemaRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to add cinemas");
+                return;
+        }
+
+        sendResponse(client, database.getCinemasManager().updateCinema(request));
+
+        // send a patch to all the logged-in admin
+        if (request.isSuccess()) {
+            request.setMessageType(MessageType.UPDATE_CINEMA_PATCH);
+            sendToAllAdmins(request);
+        }
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {
