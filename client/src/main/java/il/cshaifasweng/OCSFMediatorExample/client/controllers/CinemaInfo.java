@@ -6,10 +6,12 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
+import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -25,6 +27,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.List;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 
 public class CinemaInfo {
 
@@ -50,16 +54,16 @@ public class CinemaInfo {
     private TableColumn<CinemaView, String> cityColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="detailsTable"
-    private TableView<?> detailsTable; // Value injected by FXMLLoader
+    private TableView<HallView> hallTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="hallColumn"
-    private TableColumn<?, ?> hallColumn; // Value injected by FXMLLoader
+    @FXML // fx:id="hallName_Col"
+    private TableColumn<HallView, String> hallName_Col; // Value injected by FXMLLoader
 
     @FXML // fx:id="managerColumn"
-    private TableColumn<?, ?> managerColumn; // Value injected by FXMLLoader
+    private TableColumn<CinemaView, String> managerColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="seatsColumn"
-    private TableColumn<?, ?> seatsColumn; // Value injected by FXMLLoader
+    private TableColumn<HallView, Integer> seatsColumn; // Value injected by FXMLLoader
 
     @FXML
     public void initialize() throws IOException {
@@ -71,12 +75,25 @@ public class CinemaInfo {
         SimpleClient.getClient().sendToServer(message);
    cinemaNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
    cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
-   hallColumn.setCellValueFactory(new PropertyValueFactory<>("hall"));
+   hallName_Col.setCellValueFactory(new PropertyValueFactory<>("name"));
+   managerColumn.setCellValueFactory(new PropertyValueFactory<>("managerName"));
+seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
+
+
+
+        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection)->{
+                hallTable.getItems().clear();
+                for(Hall hall : newSelection.getCinema().getHalls()) {
+                    hallTable.getItems().add(new HallView(hall));
+                }
+        });
     }
 
     @FXML
     void addCinema(ActionEvent event) {
-
+        Platform.runLater(() -> {
+            setRoot("AddHall");
+        });
     }
 
     @FXML

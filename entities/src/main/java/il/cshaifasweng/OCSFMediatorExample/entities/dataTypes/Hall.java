@@ -17,6 +17,8 @@ public class Hall implements Serializable {
     @Column(name = "name")
     private String name;
 
+    private int SeatsNum;
+
     @OneToMany(mappedBy = "hall")
     private Set<Screening> screenings = new HashSet<>();
 
@@ -111,4 +113,11 @@ public class Hall implements Serializable {
         return this;
     }
 
+    public int getSeatsNum() {
+        return SeatsNum;
+    }
+
+    public void setSeatsNum(int seatsNum) {
+        SeatsNum = seatsNum;
+    }
 }

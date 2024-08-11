@@ -34,9 +34,9 @@
         <!-- Cinema Details Table -->
         <VBox prefHeight="614.0" prefWidth="560.0">
          <children>
-               <TableView fx:id="detailsTable" prefHeight="606.0" prefWidth="560.0">
+               <TableView fx:id="hallTable" prefHeight="606.0" prefWidth="560.0">
                    <columns>
-                       <TableColumn fx:id="hallColumn" prefWidth="269.0" text="Hall" />
+                       <TableColumn fx:id="hallName_Col" prefWidth="269.0" text="Hall" />
                        <TableColumn fx:id="seatsColumn" prefWidth="290.0" text="Number of Seats" />
                    </columns>
                </TableView>

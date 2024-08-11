@@ -7,33 +7,38 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class CinemaView {
+    private final Cinema cinema;
     private final SimpleIntegerProperty id;
     private final SimpleStringProperty name;
     private final SimpleObjectProperty<City> city;
     private final SimpleStringProperty address;
     private final SimpleStringProperty phoneNumber;
     private final SimpleStringProperty email;
+    private  final SimpleStringProperty managerName;
 
 
    public CinemaView(Cinema cinema) {
+       this.cinema = cinema;
        id = new SimpleIntegerProperty(cinema.getId());
        name = new SimpleStringProperty(cinema.getName());
        city = new SimpleObjectProperty<>(cinema.getCity());
        address = new SimpleStringProperty(cinema.getAddress());
        phoneNumber = new SimpleStringProperty(cinema.getPhoneNumber());
        email = new SimpleStringProperty(cinema.getEmail());
+       this.managerName = new SimpleStringProperty((cinema.getManager().getUsername()));
    }
 
 
     // Parameterized Constructor
-    public CinemaView(int id, String name, City city, String address, String phoneNumber, String email) {
+    public CinemaView(Cinema cinema, int id, String name, City city, String address, String phoneNumber, String email, String managerName) {
+        this.cinema = cinema;
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.city = new SimpleObjectProperty<>(city);
         this.address = new SimpleStringProperty(address);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
         this.email = new SimpleStringProperty(email);
-
+        this.managerName = new SimpleStringProperty(managerName);
     }
     // Copy method
     public CinemaView copy(Cinema other) {
@@ -119,4 +124,20 @@ public class CinemaView {
         this.email.set(email);
         return this;
     }
+
+    public String getManagerName() {
+        return managerName.get();
+    }
+    public SimpleStringProperty managerNameProperty() {
+       return managerName;
+    }
+    public CinemaView setManagerName(String managerName) {
+       this.managerName.set(managerName);
+       return this;
+    }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
 }
