@@ -29,6 +29,11 @@ public class CinemaDAO {
         Message message = new Message(MessageType.GET_ALL_CINEMAS_RESPONSE);
         List<Cinema> cinemas = session.createQuery("from Cinema", Cinema.class).list();
 
+        //add the user manager to the cinema
+        for (Cinema cinema : cinemas) {
+            cinema.setManager(session.get(Cinema.class, cinema.getId()).getManager());
+        }
+
         return message.setSuccess(true)
                 .setMessage("All cinemas fetched successfully")
                 .setDataObject(cinemas);
