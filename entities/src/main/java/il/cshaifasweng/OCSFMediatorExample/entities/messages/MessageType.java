@@ -54,6 +54,19 @@ public enum MessageType implements Serializable {
     UPDATE_CINEMA_PATCH, // Done on the server TODO: client
     GET_CINEMA_HALLS_REQUEST, // Done on server TODO on client
     GET_CINEMA_HALLS_RESPONSE, // Done on server TODO on client
+    ADD_HALL_REQUEST, // TODO on server and client
+    ADD_HALL_RESPONSE, // TODO on server and client
+    ADD_HALL_PATCH, // TODO on server and client
+    REMOVE_HALL_REQUEST, // TODO on server and client
+    REMOVE_HALL_RESPONSE, // TODO on server and client
+    REMOVE_HALL_PATCH, // TODO on server and client
+    UPDATE_HALL_REQUEST, // TODO on server and client
+    UPDATE_HALL_RESPONSE, // TODO on server and client
+    UPDATE_HALL_PATCH, // TODO on server and client
+    GET_ALL_HALLS_REQUEST, //TODO on server TODO on client
+    GET_ALL_HALLS_RESPONSE, //TODO on server TODO on client
+    GET_HALL_REQUEST, // TODO on server TODO on client
+    GET_HALL_RESPONSE, // TODO on server TODO on client
 
 }
 
