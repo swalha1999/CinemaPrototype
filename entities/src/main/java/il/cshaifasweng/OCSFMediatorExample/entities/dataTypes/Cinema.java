@@ -23,10 +23,9 @@ public class Cinema implements Serializable {
     private Set<Hall> halls = new HashSet<>();
 
     @OneToMany(mappedBy = "cinema")
-    private Set<Hall> screening = new HashSet<>();
+    private Set<Screening> screening = new HashSet<>();
 
     @OneToOne
-    @JoinColumn(name = "cinema_id")
     private User manager;
 
     public Cinema(String name, City city, String address, String phoneNumber, String email) {
@@ -107,16 +106,13 @@ public class Cinema implements Serializable {
 
     public void setManager(User manager) {
         this.manager = manager;
-        if (manager.getCinema() != this) {
-            manager.setCinema(this);
-        }
     }
 
-    public Set<Hall> getScreening() {
+    public Set<Screening> getScreening() {
         return screening;
     }
 
-    public void setScreening(Set<Hall> screening) {
+    public void setScreening(Set<Screening> screening) {
         this.screening = screening;
     }
 
@@ -127,10 +123,10 @@ public class Cinema implements Serializable {
         }
     }
 
-    public void addScreening(Hall hall) {
-        this.screening.add(hall);
-        if (hall.getCinema() != this) {
-            hall.setCinema(this);
+    public void addScreening(Screening screening) {
+        this.screening.add(screening);
+        if (screening.getCinema() != this) {
+            screening.setCinema(this);
         }
     }
 
@@ -142,10 +138,7 @@ public class Cinema implements Serializable {
     }
 
     public void removeScreening(Hall hall) {
-        this.screening.remove(hall);
-        if (hall.getCinema() == this) {
-            hall.setCinema(null);
-        }
+        hall.setCinema(null);
     }
 
     public void removeAllHalls() {
@@ -156,17 +149,17 @@ public class Cinema implements Serializable {
     }
 
     public void removeAllScreenings() {
-        for (Hall hall : screening) {
-            hall.setCinema(null);
+        for (Screening screening : screening) {
+            screening.setCinema(null);
         }
         this.screening.clear();
     }
 
     public void removeManager(User manager) {
         this.manager = null;
-        if (manager.getCinema() == this) {
-            manager.setCinema(null);
-        }
+//        if (manager.getCinema() == this) {
+//            manager.setCinema(null);
+//        }
     }
 
     @Override

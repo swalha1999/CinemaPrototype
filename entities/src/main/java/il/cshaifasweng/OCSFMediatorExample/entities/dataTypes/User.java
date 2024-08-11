@@ -29,9 +29,8 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets;
 
-    @OneToOne
-    @JoinColumn(name = "manager_id")
-    private Cinema cinema; // This is used for the manager of the cinema
+//    @OneToOne
+//    private Cinema cinema; // This is used for the manager of the cinema
 
     private int remainingTicketsPurchasedByBundle;
 
@@ -205,17 +204,14 @@ public class User implements Serializable {
         return this;
     }
 
-    public Cinema getCinema() {
-        return cinema;
-    }
-
-    public User setCinema(Cinema cinema) {
-        this.cinema = cinema;
-        if (cinema.getManager() != this) {
-            cinema.setManager(this);
-        }
-        return this;
-    }
+//    public Cinema getCinema() {
+//        return cinema;
+//    }
+//
+//    public User setCinema(Cinema cinema) {
+//        this.cinema = cinema;
+//        return this;
+//    }
 
     public int getRemainingTicketsPurchasedByBundle() {
         return remainingTicketsPurchasedByBundle;
@@ -298,7 +294,6 @@ public class User implements Serializable {
                 ", NumberOfBundlePurchased=" + NumberOfBundlePurchased +
                 ", NumberOfOnlineScreeningsPurchased=" + NumberOfOnlineScreeningsPurchased +
                 ", tickets=" + tickets +
-                ", cinema=" + cinema +
                 ", remainingTicketsPurchasedByBundle=" + remainingTicketsPurchasedByBundle +
                 '}';
     }

@@ -153,6 +153,18 @@ public class Main {
             if (!cinemas.isEmpty()) {
                 cinema = cinemas.getFirst();
             } else {
+
+                User manager = new User()
+                        .setUsername("manager" + city.toString())
+                        .setSalt(UserDAO.generateSalt());
+
+                manager.setHashedPassword(UserDAO.hashPassword("password", manager.getSalt()));
+                manager.setRole(UserRole.BRANCH_MANAGER);
+                manager.setBlocked(false);
+                session.save(manager);
+                session.flush();
+
+                cinema.setManager(manager);
                 session.save(cinema);
                 session.flush();
             }
