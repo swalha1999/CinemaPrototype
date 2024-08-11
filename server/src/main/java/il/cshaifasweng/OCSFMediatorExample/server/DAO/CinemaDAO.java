@@ -28,6 +28,11 @@ public class CinemaDAO {
     public Message getAllCinemas(Message request) {
         Message message = new Message(MessageType.GET_ALL_CINEMAS_RESPONSE);
         List<Cinema> cinemas = session.createQuery("from Cinema", Cinema.class).list();
+
+        for (Cinema cinema : cinemas) {
+            cinema.setManager(cinema.getManager());
+        }
+
         return message.setSuccess(true)
                 .setMessage("All cinemas fetched successfully")
                 .setDataObject(cinemas);
@@ -71,7 +76,7 @@ public class CinemaDAO {
         cinema.setAddress(cinemaFromUser.getAddress() == null ? cinema.getAddress() : cinemaFromUser.getAddress());
         cinema.setPhoneNumber(cinemaFromUser.getPhoneNumber() == null ? cinema.getPhoneNumber() : cinemaFromUser.getPhoneNumber());
         cinema.setEmail(cinemaFromUser.getEmail() == null ? cinema.getEmail() : cinemaFromUser.getEmail());
-        
+
         session.update(cinema);
         return new Message(MessageType.UPDATE_CINEMA_RESPONSE)
                 .setSuccess(true)
