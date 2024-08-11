@@ -170,6 +170,12 @@ public class Main {
     }
 
     private static void generateScreening(){
+        // check if there is screening in the system
+        List<Screening> screenings = session.createQuery("from Screening").list();
+        if(screenings.size() > 0){
+            return;
+        }
+
         // for every movie genrate 3 screenings
         List<Movie> movies = session.createQuery("from Movie").list();
         List<Hall> halls = session.createQuery("from Hall").list();
