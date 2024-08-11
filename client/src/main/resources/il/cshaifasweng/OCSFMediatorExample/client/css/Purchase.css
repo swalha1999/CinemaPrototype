@@ -1,0 +1,78 @@
+/* Purchase.css */
+
+/* Style for the Header Section */
+.label-header {
+    -fx-font-size: 24px;
+    -fx-text-fill: darkblue;
+    -fx-font-weight: bold;
+}
+
+.button-nav {
+    -fx-font-size: 14px;
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button-nav:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Style for Movie Details Section */
+.label-movie {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+
+/* Style for Seat Information Section */
+.label-seat {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkorange;
+    -fx-font-weight: bold;
+}
+
+/* Style for Payment Information Section */
+.label-payment {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkred;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ddd;
+}
+
+/* Style for Order Summary Section */
+.label-summary {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkpurple;
+    -fx-font-weight: bold;
+}
+
+.summary-box {
+    -fx-background-color: lightyellow;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+}
+
+.button-confirm {
+    -fx-font-size: 16px;
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-margin: 20px 0 0 0;
+}
+
+.button-confirm:hover {
+    -fx-background-color: #218838;
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.Purchase" stylesheets="@css/Purchase.css">
+    <!-- Header Section -->
+    <VBox alignment="CENTER" spacing="10.0" layoutX="20.0" layoutY="20.0" prefWidth="1160.0">
+        <children>
+            <Label text="Complete Your Purchase" styleClass="label-header"/>
+            <HBox alignment="CENTER" spacing="20.0">
+                <Button text="Home" styleClass="button-nav"/>
+                <Button text="Back" styleClass="button-nav"/>
+            </HBox>
+        </children>
+    </VBox>
+
+    <!-- Movie Details Section -->
+    <VBox spacing="15.0" layoutX="20.0" layoutY="80.0" prefWidth="1160.0">
+        <children>
+            <Label text="Movie Details" styleClass="label-movie"/>
+            <Label text="Movie Title: [Title of the Movie]" />
+            <Label text="Duration: [Duration of the Movie]" />
+            <Label text="Showtime: [Showtime of the Movie]" />
+        </children>
+    </VBox>
+
+    <!-- Seat Information Section -->
+    <VBox spacing="15.0" layoutX="20.0" layoutY="200.0" prefWidth="1160.0">
+        <children>
+            <Label text="Seat Information" styleClass="label-seat"/>
+            <Label text="Seat Number: [Selected Seat Number]" />
+            <Label text="Price per Seat: [Price]" />
+            <Label text="Total Price: [Total Price]" />
+        </children>
+    </VBox>
+
+    <!-- Payment Information Section -->
+    <VBox spacing="20.0" layoutX="20.0" layoutY="320.0" prefWidth="1160.0">
+        <children>
+            <Label text="Payment Information" styleClass="label-payment"/>
+            <GridPane hgap="20.0" vgap="15.0">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" />
+                    <ColumnConstraints halignment="LEFT" />
+                </columnConstraints>
+
+                <Label text="Card Number:" />
+                <TextField fx:id="cardNumber" promptText="Enter card number" styleClass="text-field"/>
+                <Label text="Expiration Date:" />
+                <TextField fx:id="expiryDate" promptText="MM/YY" styleClass="text-field"/>
+                <Label text="CVV:" />
+                <TextField fx:id="cvv" promptText="Enter CVV" styleClass="text-field"/>
+            </GridPane>
+        </children>
+    </VBox>
+
+    <!-- Order Summary Section -->
+    <VBox spacing="20.0" layoutX="20.0" layoutY="600.0" prefWidth="1160.0">
+        <children>
+            <Label text="Order Summary" styleClass="label-summary"/>
+            <VBox spacing="10.0" styleClass="summary-box">
+                <children>
+                    <Label text="Order ID: [Order ID]" />
+                    <Label text="Items Purchased: [Number of Items]" />
+                    <Label text="Total Amount: [Total Amount]" />
+                </children>
+            </VBox>
+            <Button text="Confirm Purchase" styleClass="button-confirm"/>
+        </children>
+    </VBox>
+</AnchorPane>
