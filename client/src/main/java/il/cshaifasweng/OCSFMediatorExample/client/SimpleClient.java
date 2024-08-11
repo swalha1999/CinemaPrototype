@@ -55,7 +55,8 @@ public class SimpleClient extends AbstractClient {
 				case GET_SCREENING_FOR_MOVIE_RESPONSE:
 					EventBus.getDefault().post( new GetScreeningForMovieEvent(message));
 					break;
-
+				case GET_ALL_CINEMAS_RESPONSE:
+					EventBus.getDefault().post( new GetAllCinemasEvent(message));
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
