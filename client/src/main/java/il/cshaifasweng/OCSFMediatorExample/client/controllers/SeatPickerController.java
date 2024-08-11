@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import java.util.HashSet;
 import java.util.Set;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class SeatPickerController {

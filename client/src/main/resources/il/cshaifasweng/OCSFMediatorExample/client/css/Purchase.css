@@ -52,7 +52,7 @@
 /* Style for Order Summary Section */
 .label-summary {
     -fx-font-size: 20px;
-    -fx-text-fill: darkpurple;
+    -fx-text-fill: darkblue;
     -fx-font-weight: bold;
 }
 
