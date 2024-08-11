@@ -157,10 +157,16 @@ public class Main {
                 session.flush();
             }
 
+            User manager = generateManger("manager" + city.toString(), "password", "email.com");
+            cinema.setManager(manager);
+
             int numberOfHalls = cinema.getHalls().size();
 
             for (int i = numberOfHalls; i <= 10; i++) {
                 Hall hall = new Hall("Hall" + i).setCinema(cinema);
+                cinema.addHall(hall);
+                session.update(cinema);
+                session.flush();
                 session.save(hall);
                 session.flush();
             }
@@ -224,6 +230,31 @@ public class Main {
 
         session.save(admin);
         session.flush();
+    }
+
+    private static User generateManger(String username, String password, String email){
+        User manager = new User()
+            .setUsername(username)
+            .setSalt(UserDAO.generateSalt());
+
+        manager.setHashedPassword(UserDAO.hashPassword(password, manager.getSalt()));
+        manager.setRole(UserRole.BRANCH_MANAGER);
+        manager.setBlocked(false);
+        manager.setEmail(email);
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
+        criteria.select(root).where(builder.equal(root.get("username"), username));
+        List<User> users = session.createQuery(criteria).getResultList();
+
+        if (!users.isEmpty()) {
+            return users.get(0);
+        }
+
+        session.save(manager);
+        session.flush();
+        return manager;
     }
 
     private static void generateTestUser(){
