@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="859.0" prefWidth="1252.0" stylesheets="@css/CinemaInfo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CinemaInfo">
+<AnchorPane prefHeight="859.0" prefWidth="1293.0" stylesheets="@css/CinemaInfo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.CinemaInfo">
     <!-- Header Section -->
     <VBox alignment="CENTER" layoutX="10.0" prefHeight="115.0" prefWidth="1232.0" spacing="15.0">
         <children>
@@ -21,27 +21,27 @@
     </VBox>
 
     <!-- Tables Section -->
-    <HBox layoutX="53.0" layoutY="140.0" prefHeight="530.0" prefWidth="1146.0" spacing="20.0">
+    <HBox layoutX="14.0" layoutY="165.0" prefHeight="530.0" prefWidth="1267.0" spacing="20.0">
         <!-- Cinema List Table -->
-        <TableView fx:id="cinemaTable" prefHeight="623.0" prefWidth="560.0">
+        <TableView fx:id="cinemaTable" prefHeight="530.0" prefWidth="363.0">
             <columns>
-                <TableColumn fx:id="cinemaNameColumn" prefWidth="200.0" text="Cinema Name" />
-                <TableColumn fx:id="cityColumn" prefWidth="200.0" text="City" />
-                <TableColumn fx:id="managerColumn" prefWidth="158.0" text="Manager" />
+                <TableColumn fx:id="cityColumn" prefWidth="191.0" text="City" />
+                <TableColumn fx:id="managerColumn" prefWidth="165.0" text="Manager" />
             </columns>
         </TableView>
-
-        <!-- Cinema Details Table -->
-        <VBox prefHeight="614.0" prefWidth="560.0">
-         <children>
-               <TableView fx:id="hallTable" prefHeight="606.0" prefWidth="560.0">
-                   <columns>
-                       <TableColumn fx:id="hallName_Col" prefWidth="269.0" text="Hall" />
-                       <TableColumn fx:id="seatsColumn" prefWidth="290.0" text="Number of Seats" />
-                   </columns>
-               </TableView>
-         </children>
-        </VBox>
+         <TableView fx:id="hallTable" prefHeight="530.0" prefWidth="313.0">
+             <columns>
+                 <TableColumn fx:id="hallName_Col" prefWidth="159.0" text="Hall" />
+                 <TableColumn fx:id="seatsColumn" prefWidth="151.0" text="Hall Capacity" />
+             </columns>
+         </TableView>
+      <TableView fx:id="ScreeningTable" prefHeight="530.0" prefWidth="553.0">
+        <columns>
+          <TableColumn fx:id="MovieName_Col" prefWidth="259.0" text="Movie Name" />
+          <TableColumn fx:id="Start_Col" prefWidth="175.0" text="Start" />
+            <TableColumn fx:id="End_Col" prefWidth="116.0" text="End" />
+        </columns>
+      </TableView>
     </HBox>
        <Button fx:id="AddCinemaBtn" layoutX="203.0" layoutY="718.0" onAction="#addCinema" styleClass="button-action" text="Add Cinema" />
        <Button fx:id="EditCinemaBtn" layoutX="62.0" layoutY="718.0" onAction="#editCinema" styleClass="button-action" text="Edit Cinema" />
