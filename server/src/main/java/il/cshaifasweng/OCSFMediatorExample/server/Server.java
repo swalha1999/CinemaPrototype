@@ -555,6 +555,7 @@ public class Server extends AbstractServer {
                 break;
             case CONTENT_MANAGER:
             case USER:
+            case NOT_LOGGED_IN:
             default:
                 sendErrorMessage(client, "Error! User does not have permission to this action");
                 return;
@@ -765,6 +766,16 @@ public class Server extends AbstractServer {
                 handleLogoutRequest(new Message(logoutRequest, MessageType.LOGOUT_REQUEST), loggedInUser.getClient());
             }
         }
+    }
+
+    public UserRole addInfoToRequest(Message request) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+        if (loggedInUser == null) {
+            return UserRole.NOT_LOGGED_IN;
+        }
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+        return loggedInUser.getRole();
     }
 
 }

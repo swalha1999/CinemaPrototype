@@ -4,7 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RegisterEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 
 public class Register {
 
@@ -109,7 +109,7 @@ public class Register {
                 .setPassword(PasswordText.getText()).setEmail(EmailText.getText());
 
 
-        SimpleClient.getClient().sendToServer(new Message(registerRequest, MessageType.REGISTER_REQUEST));
+        Client.getClient().sendToServer(new Message(registerRequest, MessageType.REGISTER_REQUEST));
 
     }
 

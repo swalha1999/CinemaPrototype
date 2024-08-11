@@ -4,8 +4,8 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.CinemaMain;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.MovieView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
@@ -23,13 +23,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class AdminAddMovieController {
 
@@ -88,7 +86,7 @@ public class AdminAddMovieController {
         Message message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
-        SimpleClient.getClient().sendToServer(message);
+        Client.getClient().sendToServer(message);
 
         for (MovieGenre genre : MovieGenre.values()) {
             genreComboBox.getItems().add(genre);
@@ -144,7 +142,7 @@ public class AdminAddMovieController {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(movieToRemove);
 
-        SimpleClient.getClient().sendToServer(removeMovieRequest);
+        Client.getClient().sendToServer(removeMovieRequest);
     }
 
     @FXML
@@ -160,7 +158,7 @@ public class AdminAddMovieController {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(movieToAdd);
 
-        SimpleClient.getClient().sendToServer(addMovieRequest);
+        Client.getClient().sendToServer(addMovieRequest);
 
     }
 
@@ -180,7 +178,7 @@ public class AdminAddMovieController {
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                     .setDataObject(movieToUpdate);
 
-            SimpleClient.getClient().sendToServer(UpdateMovieRequest);
+            Client.getClient().sendToServer(UpdateMovieRequest);
         }
     }
 
@@ -223,6 +221,6 @@ public class AdminAddMovieController {
     public void updateImageView(String event) {
         System.out.println("Changed movie view");
 
-        movieImageView.setImage(new Image(SimpleChatClient.class.getResourceAsStream(event)));
+        movieImageView.setImage(new Image(CinemaMain.class.getResourceAsStream(event)));
     }
 }

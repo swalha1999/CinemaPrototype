@@ -1,11 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.client.utils;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
+import il.cshaifasweng.OCSFMediatorExample.client.CinemaMain;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,10 +39,10 @@ public class UiUtil {
 
 
     public static Image getImage(String url){
-        if (url == null || url.isEmpty() || SimpleChatClient.class.getResource(url) == null) {
-            return new  Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream("images\\no.jpeg")));
+        if (url == null || url.isEmpty() || CinemaMain.class.getResource(url) == null) {
+            return new  Image(Objects.requireNonNull(CinemaMain.class.getResourceAsStream("images\\no.jpeg")));
         }else {
-            return new Image(Objects.requireNonNull(SimpleChatClient.class.getResourceAsStream(url)));
+            return new Image(Objects.requireNonNull(CinemaMain.class.getResourceAsStream(url)));
         }
     }
 }

@@ -4,7 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +12,9 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleClient.host;
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleClient.port6;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.Client.host;
+import static il.cshaifasweng.OCSFMediatorExample.client.Client.port6;
 
 public class Host {
 
@@ -33,7 +33,7 @@ public class Host {
     void updatePort(ActionEvent event) throws IOException {
         host=ipAdd.getText();
         port6= Integer.parseInt(port.getText());
-        SimpleClient client = SimpleClient.getClient();
+        Client client = Client.getClient();
         client.openConnection();
 
         Platform.runLater(()->{

@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForMovieEvent;
@@ -97,7 +97,7 @@ public class MovieDetailsController {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(movie);
 
-        SimpleClient.getClient().sendToServer(message);
+        Client.getClient().sendToServer(message);
 
         Platform.runLater(() -> {
             titleLabel.setText(movie.getTitle());

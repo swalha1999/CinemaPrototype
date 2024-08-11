@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
@@ -49,7 +48,7 @@ public class MovieCatalog {
         Message message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
-        SimpleClient.getClient().sendToServer(message);
+        Client.getClient().sendToServer(message);
 
         // Add listener to search field
         searchField.textProperty().addListener((observable, oldValue, newValue) -> filterMoviesBySearch(newValue));

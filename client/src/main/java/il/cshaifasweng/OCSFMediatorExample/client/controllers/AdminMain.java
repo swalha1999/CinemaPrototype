@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient;
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
@@ -13,20 +12,17 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.util.Objects;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.loadFXMLPane;
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 
 public class AdminMain {
 
@@ -79,7 +75,7 @@ public class AdminMain {
     @FXML
     void logOut(ActionEvent event) throws IOException {
         LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
+        Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(() -> {
             setRoot("Login");
         });

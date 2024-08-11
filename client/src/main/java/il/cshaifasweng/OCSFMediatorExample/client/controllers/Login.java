@@ -4,7 +4,7 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LoginEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
@@ -18,13 +18,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.SimpleChatClient.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 
 public class Login {
@@ -49,7 +48,7 @@ public class Login {
     @FXML
     void LoginAccount(ActionEvent event) throws IOException {
         LoginRequest loginRequest = new LoginRequest(UserNameTxt.getText(), Password.getText());
-        SimpleClient.getClient().sendToServer(new Message(loginRequest, MessageType.LOGIN_REQUEST));
+        Client.getClient().sendToServer(new Message(loginRequest, MessageType.LOGIN_REQUEST));
     }
 
     @FXML

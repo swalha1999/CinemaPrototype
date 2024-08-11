@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
@@ -83,7 +83,7 @@ public class AdminUsersView {
 
         Message message = new Message(MessageType.GET_ALL_USERS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(message);
+        Client.getClient().sendToServer(message);
 
         UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
         FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -147,7 +147,7 @@ public class AdminUsersView {
                 .setDataObject(userToBlock);
 
         // Send the block user request to the server
-        SimpleClient.getClient().sendToServer(blockUserRequest);
+        Client.getClient().sendToServer(blockUserRequest);
     }
 
     public void MakeAdmin(ActionEvent actionEvent) {
@@ -166,7 +166,7 @@ public class AdminUsersView {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(userToRemove);
 
-        SimpleClient.getClient().sendToServer(removeUserRequest);
+        Client.getClient().sendToServer(removeUserRequest);
     }
 
     public void UnblockUser(ActionEvent actionEvent) {
@@ -189,7 +189,7 @@ public class AdminUsersView {
                 .setDataObject(userToUnblock);
 
         // Send the unblock user request to the server
-        SimpleClient.getClient().sendToServer(unblockUserRequest);
+        Client.getClient().sendToServer(unblockUserRequest);
     }
 }
 

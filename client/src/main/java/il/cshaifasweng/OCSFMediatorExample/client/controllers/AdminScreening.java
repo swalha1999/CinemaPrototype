@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllScreeningsEvent;
@@ -65,7 +65,7 @@ public class AdminScreening {
 
         Message message = new Message(MessageType.GET_ALL_SCREENINGS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        SimpleClient.getClient().sendToServer(message);
+        Client.getClient().sendToServer(message);
 
     }
 
