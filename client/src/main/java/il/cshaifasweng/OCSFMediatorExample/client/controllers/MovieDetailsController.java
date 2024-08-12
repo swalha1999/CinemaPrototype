@@ -20,8 +20,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImage;
-import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.*;
 
 public class MovieDetailsController {
 
@@ -89,12 +88,17 @@ public class MovieDetailsController {
 
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
-        // this line is to make sure that the event is for this controller
-        if (!event.getUIName().equals("MovieDetails")) {
+        // this line is to make sure that the event is for this controller only and if we expect data from the event
+        if (!event.getUIName().equals("MovieDetails") || event.getDataForPage() == null) {
             return;
         }
 
         Movie movie = (Movie) event.getDataForPage();
+
+        if (movie == null) {
+            showNotification("ERROR: we expected to get data with the UI change with the Type Movie", false);
+            return;
+        }
 
         Message message = new Message( MessageType.GET_SCREENING_FOR_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
@@ -105,11 +109,11 @@ public class MovieDetailsController {
         Platform.runLater(() -> {
             titleLabel.setText(movie.getTitle());
             genreLabel.setText(movie.getGenre().toString());
-            releaseDateLabel.setText(movie.getReleaseDate().toString());
+            releaseDateLabel.setText(movie.getReleaseDate() == null ? "N/A" : movie.getReleaseDate().toString());
             durationLabel.setText(movie.getDurationInMinutes() + " minutes");
-            // TODO :    fix :)
+            // TODO :    fix the rating label :)
             ratingLabel.setText(movie.getId() + "/10");
-            movieImageView.setImage(getImage(movie.getImageUrl()));
+            movieImageView.setImage(movie.getImageBytes() == null ? getImage("default-movie.png") : getImageFromBytes(movie.getImageBytes()));
         });
 
     }

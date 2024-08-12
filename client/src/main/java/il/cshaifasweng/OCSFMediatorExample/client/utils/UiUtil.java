@@ -47,7 +47,7 @@ public class UiUtil {
         }
     }
 
-    public static Image getImageViewFromBytes(byte[] imageBytes) {
+    public static Image getImageFromBytes(byte[] imageBytes) {
         ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
         return new Image(bis);
     }

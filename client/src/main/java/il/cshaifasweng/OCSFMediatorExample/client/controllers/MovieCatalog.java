@@ -9,6 +9,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,6 +34,8 @@ public class MovieCatalog {
 
     @FXML
     private Button allButton, actionButton, comedyButton, dramaButton, sciFiButton;
+
+    int index = 0;
 
     private List<Movie> allMovies = new ArrayList<>();
 
@@ -92,7 +95,7 @@ public class MovieCatalog {
         if(movie.getImageBytes() == null){
             movieImage = new ImageView(getImage(movie.getImageUrl()));
         }else{
-            movieImage = new ImageView(getImageViewFromBytes(movie.getImageBytes()));
+            movieImage = new ImageView(getImageFromBytes(movie.getImageBytes()));
         }
 
         movieImage.setFitHeight(imageHeight);
@@ -108,9 +111,18 @@ public class MovieCatalog {
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
         moviePane.setOnMouseClicked(event -> {
-            System.out.println("Movie clicked: " + movie.getTitle());
+            System.out.println(event.toString());
             EventBus.getDefault().post(new ShowSideUIEvent("MovieDetails", movie));
         });
+
+        moviePane.setOnMouseEntered(event -> {
+            moviePane.setCursor(Cursor.HAND);  // Change to hand cursor
+        });
+
+        moviePane.setOnMouseExited(event -> {
+            moviePane.setCursor(Cursor.DEFAULT);  // Change back to default cursor
+        });
+
 
 
         return moviePane;

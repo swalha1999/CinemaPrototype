@@ -192,9 +192,6 @@ public class Main {
         List<Movie> movies = session.createQuery("from Movie").list();
         List<Cinema> cinemas = session.createQuery("from Cinema").list();
 
-        Date[] dates = new Date[8];
-        Calendar calendar = Calendar.getInstance();
-
         for (Movie movie : movies) {
             for (int j = 0; j < 3; j++) {
                 Screening screening = new Screening();

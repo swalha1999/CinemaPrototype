@@ -12,7 +12,6 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.UpdateMovieEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -22,13 +21,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,7 +33,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImage;
-import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImageViewFromBytes;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImageFromBytes;
 
 public class AdminAddMovieController {
 
@@ -101,7 +98,7 @@ public class AdminAddMovieController {
                     if (moviesTable.getSelectionModel().getSelectedItem().getImageUrl() != null && !moviesTable.getSelectionModel().getSelectedItem().getImageUrl().isEmpty()) {
                         updateImageView(moviesTable.getSelectionModel().getSelectedItem().getImageUrl());
                     }else if(moviesTable.getSelectionModel().getSelectedItem().getMovie().getImageBytes() != null){
-                        movieImageView.setImage(getImageViewFromBytes(moviesTable.getSelectionModel().getSelectedItem().getMovie().getImageBytes()));
+                        movieImageView.setImage(getImageFromBytes(moviesTable.getSelectionModel().getSelectedItem().getMovie().getImageBytes()));
                     }else{
                         updateImageView(null);
                     }
@@ -228,7 +225,7 @@ public class AdminAddMovieController {
         if (selectedFile != null) {
             System.out.println("File selected: " + selectedFile.getAbsolutePath());
             byte[] imageBytes = Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath()));
-            movieImageView.setImage(getImageViewFromBytes(imageBytes));
+            movieImageView.setImage(getImageFromBytes(imageBytes));
             movieToSend.setImageBytes(imageBytes);
 
         } else {
