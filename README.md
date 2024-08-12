@@ -13,18 +13,18 @@ width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-1. TODO: make a page to add Cinema 
-2. TODO: make a page to add Hall
-3. TODO: make a page to add Screening
-4. 
-2. TODO: add screening management `--> omar`
-3. TODO: add actors to the movie view
-4. TODO: add producer to the movie view
-5. TODO: add screening to the movie view
-6. TODO: add cinema entity `--> swalha`
-7. TODO: after the screening is done, we can make online movies view
-8. TODO: add a page to display to packages and how many entrances they have left
-9. TODO:Make Req and Res to the Screening DIO
+1. TODO change the way we display the image in the movie details page
+2. TODO: make a page to add [Cinema]() 
+3. TODO: make a page to add Hall
+4. TODO: make a page to add Screening
+5. TODO: add screening management `--> omar`
+6. TODO: add actors to the movie view
+7. TODO: add producer to the movie view
+8. TODO: add screening to the movie view
+9. TODO: add cinema entity `--> swalha`
+10. TODO: after the screening is done, we can make online movies view
+11. TODO: add a page to display to packages and how many entrances they have left
+12. TODO:Make Req and Res to the Screening DIO
 
 
 

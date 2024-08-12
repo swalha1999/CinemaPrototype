@@ -125,7 +125,7 @@ public class Main {
             movies[i].setGenre(genres[i]);
             movies[i].setHebrewTitle(hebrewTitles[i]);
             movies[i].setDescription(descriptions[i]);
-            movies[i].setImageUrl(images[i]);
+
 
             // Check if the movie already exists in the database
             Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);

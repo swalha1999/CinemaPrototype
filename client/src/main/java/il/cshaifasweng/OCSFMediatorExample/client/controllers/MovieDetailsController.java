@@ -84,6 +84,9 @@ public class MovieDetailsController {
         });
     }
 
+
+    //TODO change the way we display the image in the movie details page
+
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
         // this line is to make sure that the event is for this controller

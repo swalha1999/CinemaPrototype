@@ -2,10 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.AddMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveMovieEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieGenre;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -24,8 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getImage;
-import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.getLabelWidth;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.*;
 
 public class MovieCatalog {
 
@@ -92,7 +88,12 @@ public class MovieCatalog {
         moviePane.getStyleClass().add("movie-pane");
         moviePane.setPrefWidth(400);
 
-        ImageView movieImage = new ImageView(getImage(movie.getImageUrl()));
+        ImageView movieImage;
+        if(movie.getImageBytes() == null){
+            movieImage = new ImageView(getImage(movie.getImageUrl()));
+        }else{
+            movieImage = new ImageView(getImageViewFromBytes(movie.getImageBytes()));
+        }
 
         movieImage.setFitHeight(imageHeight);
         movieImage.setFitWidth(imageWidth);
@@ -154,6 +155,19 @@ public class MovieCatalog {
     public void onRemoveMoviesEvent(RemoveMovieEvent event) {
         Platform.runLater(() -> {
             removeMovie(event.getMovie().getId());
+        });
+    }
+
+    @Subscribe
+    public void onUpdateMoviesEvent(UpdateMovieEvent event) {
+        Platform.runLater(() -> {
+            for (Movie movie : allMovies) {
+                if (movie.getId() == event.getMovie().getId()) {
+                    movie.copy(event.getMovie());
+                    break;
+                }
+            }
+            renderMovies(allMovies);
         });
     }
 }

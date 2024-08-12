@@ -24,12 +24,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
-
-
 
 import javafx.scene.layout.BorderPane;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
 
 public class UserMain {
 
@@ -71,6 +69,8 @@ public class UserMain {
         UserLabel.setText(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
         notificationPane = new NotificationPane(stackPaneMain);
+        loadUI("MovieCatalog");
+        preLoadPages();
     }
 
     @FXML
@@ -134,6 +134,15 @@ public class UserMain {
         Platform.runLater(() -> {
             mainPane.setCenter(loadFXMLPane(ui));
         });
+    }
+
+    public void preLoadPages() {
+        loadFXML("MyTickets");
+        loadFXML("MyInbox");
+        loadFXML("MovieCatalog");
+        loadFXML("UpcomingMovies");
+        loadFXML("OnlineMovies");
+        loadFXML("SeatPicker");
     }
 
 

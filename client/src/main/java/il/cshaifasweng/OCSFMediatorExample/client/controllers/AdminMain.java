@@ -21,8 +21,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXML;
 
 public class AdminMain {
 
@@ -45,6 +45,7 @@ public class AdminMain {
         EventBus.getDefault().register(this);
         notificationPane = new NotificationPane(stackPaneMain);
         loadUI("DashBoard");
+        preLoadPages();
     }
 
     @FXML
@@ -106,6 +107,15 @@ public class AdminMain {
                 }
         );
 
+    }
+
+    public void preLoadPages() {
+        loadFXMLPane("AdminAddMovie");
+        loadFXMLPane("AdminUsersView");
+        loadFXMLPane("CinemaInfo");
+        loadFXMLPane("DashBoard");
+        loadFXMLPane("MovieCatalog");
+        loadFXMLPane("Purchase");
     }
 
 }

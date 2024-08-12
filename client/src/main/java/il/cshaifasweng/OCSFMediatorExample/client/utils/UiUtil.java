@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
 public class UiUtil {
@@ -44,5 +45,10 @@ public class UiUtil {
         }else {
             return new Image(Objects.requireNonNull(CinemaMain.class.getResourceAsStream(url)));
         }
+    }
+
+    public static Image getImageViewFromBytes(byte[] imageBytes) {
+        ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+        return new Image(bis);
     }
 }

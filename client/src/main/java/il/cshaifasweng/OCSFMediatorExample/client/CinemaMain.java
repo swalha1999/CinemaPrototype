@@ -27,8 +27,11 @@ public class CinemaMain extends Application {
     private static final Hashtable<String, Parent> fxml = new Hashtable<String, Parent>();
     private static final Hashtable<String, Pane> fxmlScenes = new Hashtable<String, Pane>();
 
+    public static Stage cinemaStage;
+
     @Override
     public void start(Stage stage) throws IOException {
+        cinemaStage = stage;
         EventBus.getDefault().register(this);
         Pane movieDetails = loadFXMLPane("MovieDetails");
         //TODO: when main starts it runs initialize for "MovieDetails" and in there is a call to server, but there is no client, thus making an exception.

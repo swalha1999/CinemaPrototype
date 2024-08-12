@@ -3,10 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "movies")
@@ -25,6 +22,11 @@ public class Movie implements Serializable {
     private MovieGenre genre;
     private Country country;
     private String imageUrl;
+
+    @Lob
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
+    private byte[] imageBytes = null;
+
     private String trailerUrl;
     private String englishTitle;
     private String hebrewTitle;
@@ -44,7 +46,6 @@ public class Movie implements Serializable {
 
     public Movie(){}
 
-
     // Warning: don't copy the id of the movie (it's unique)
     public Movie(Movie other){
         this.name = other.name;
@@ -53,16 +54,11 @@ public class Movie implements Serializable {
         this.language = other.language;
         this.genre = other.genre;
         this.country = other.country;
-        this.imageUrl = other.imageUrl;
+        this.imageBytes = other.imageBytes;
         this.trailerUrl = other.trailerUrl;
         this.englishTitle = other.englishTitle;
         this.hebrewTitle = other.hebrewTitle;
         this.durationInMinutes = other.durationInMinutes;
-
-        //TODO: check if this is the right way to copy the set (this is a relationship ot another table)
-    //    this.actors = other.actors;
-    //    this.producer = other.producer;
-    //    this.screenings = other.screenings;
     }
 
     public Movie(String name, Date releaseDate) {
@@ -71,6 +67,7 @@ public class Movie implements Serializable {
         this.releaseDate = releaseDate;
     }
 
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -186,9 +183,69 @@ public class Movie implements Serializable {
         return this;
     }
 
+    public byte[] getImageBytes() {
+        return imageBytes;
+    }
+
+    public Movie setImageBytes(byte[] image) {
+        this.imageBytes = image;
+        return this;
+    }
+
+    public String getTrailerUrl() {
+        return trailerUrl;
+    }
+
+    public Movie setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
+        return this;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public Movie setProducer(String producer) {
+        this.producer = producer;
+        return this;
+    }
+
+    public Movie setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public int getMovieId() {
+        return id;
+    }
+
+    public Movie copy(Movie movie ) {
+        this.name = movie.name == null ? this.name : movie.name;
+        this.releaseDate = movie.releaseDate == null ? this.releaseDate : movie.releaseDate;
+        this.description = movie.description == null ? this.description : movie.description;
+        this.language = movie.language == null ? this.language : movie.language;
+        this.genre = movie.genre == null ? this.genre : movie.genre;
+        this.country = movie.country == null ? this.country : movie.country;
+        this.imageBytes = movie.imageBytes == null ? this.imageBytes : movie.imageBytes;
+        this.trailerUrl = movie.trailerUrl == null ? this.trailerUrl : movie.trailerUrl;
+        this.englishTitle = movie.englishTitle == null ? this.englishTitle : movie.englishTitle;
+        this.hebrewTitle = movie.hebrewTitle == null ? this.hebrewTitle : movie.hebrewTitle;
+        this.durationInMinutes = movie.durationInMinutes == 0 ? this.durationInMinutes : movie.durationInMinutes;
+        this.producer = movie.producer == null ? this.producer : movie.producer;
+        this.actors = movie.actors == null ? this.actors : movie.actors;
+        this.screenings = movie.screenings == null ? this.screenings : movie.screenings;
+        this.imageBytes = movie.imageBytes;
+        return this;
+    }
 
     @Override
     public String toString() {
+        String imageString;
+        if (imageBytes == null) {
+            imageString = "null";
+        } else {
+            imageString = "byte[" + imageBytes.length + "]";
+        }
         return "Movie{" +
                 "id=" + id +
                 ", englishTitle='" + englishTitle + '\'' +
@@ -198,12 +255,13 @@ public class Movie implements Serializable {
                 ", language=" + language +
                 ", genre=" + genre +
                 ", country=" + country +
+                ", durationInMinutes=" + durationInMinutes +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", trailerUrl='" + trailerUrl + '\'' +
-                ", durationInMinutes=" + durationInMinutes +
-//                ", actors=" + actors +
-//                ", producer=" + producer +
-//                ", screenings=" + screenings +
+                ", producer='" + producer + '\'' +
+                ", actors=" + actors +
+                ", screenings=" + screenings +
+                ", imageBytes=" + imageString  +
                 '}';
     }
 
@@ -233,57 +291,13 @@ public class Movie implements Serializable {
         return this;
     }
 
-    public String getImageUrl() { return imageUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getTrailerUrl() { return trailerUrl;
-    }
-    public Movie setTrailerUrl(String trailerUrl) {
-        this.trailerUrl = trailerUrl;
-        return this;
-    }
     public Movie setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
-
-    public String getProducer() {
-        return producer;
-    }
-
-    public Movie setProducer(String producer) {
-        this.producer = producer;
-        return this;
-    }
-
-    public Movie setId(int id) {
-        this.id = id;
-        return this;
-    }
-
-    public int getMovieId() {
-        return id;
-    }
-
-    public Movie copy(Movie movie ) {
-        this.name = movie.name == null ? this.name : movie.name;
-        this.releaseDate = movie.releaseDate == null ? this.releaseDate : movie.releaseDate;
-        this.description = movie.description == null ? this.description : movie.description;
-        this.language = movie.language == null ? this.language : movie.language;
-        this.genre = movie.genre == null ? this.genre : movie.genre;
-        this.country = movie.country == null ? this.country : movie.country;
-        this.imageUrl = movie.imageUrl == null ? this.imageUrl : movie.imageUrl;
-        this.trailerUrl = movie.trailerUrl == null ? this.trailerUrl : movie.trailerUrl;
-        this.englishTitle = movie.englishTitle == null ? this.englishTitle : movie.englishTitle;
-        this.hebrewTitle = movie.hebrewTitle == null ? this.hebrewTitle : movie.hebrewTitle;
-        this.durationInMinutes = movie.durationInMinutes == 0 ? this.durationInMinutes : movie.durationInMinutes;
-        this.producer = movie.producer == null ? this.producer : movie.producer;
-        this.actors = movie.actors == null ? this.actors : movie.actors;
-        this.screenings = movie.screenings == null ? this.screenings : movie.screenings;
-        return this;
-    }
-
-
-
 
 }
