@@ -4,12 +4,12 @@ FROM openjdk:22
 # Copy the JAR file into the container
 COPY dockerOut/server.jar /app/application.jar
 
-# Expose ports for MySQL and the application
+# Expose ports for the application
 EXPOSE 3306 8080 3000
 
-# Create an entrypoint script to start MySQL and the Java application
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Add a health check to monitor the application
+#HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+#  CMD curl --fail http://localhost:8080/health || exit 1
 
-# Set the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+# Command to run the Java application
+CMD ["java", "-jar", "/app/application.jar"]
