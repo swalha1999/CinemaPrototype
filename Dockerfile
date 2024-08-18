@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/l
 COPY dockerOut/server.jar /app/application.jar
 COPY healthCheck.sh /app/healthCheck.sh
 
-RUN chmod +x /app/HealthCheck.sh
+RUN chmod +x /app/healthCheck.sh
 
 # Expose ports for the application
 EXPOSE 3000
