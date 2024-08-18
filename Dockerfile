@@ -1,8 +1,8 @@
 # Use an official OpenJDK runtime as a parent image
 FROM openjdk:22
 
-# Install netcat
-RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
+# Install netcat (nc) using apk
+RUN apk add --no-cache netcat-openbsd
 
 # Copy the JAR file into the container
 COPY dockerOut/server.jar /app/application.jar
