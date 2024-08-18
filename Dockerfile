@@ -1,8 +1,8 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:22
+# Use an OpenJDK runtime based on Debian as a parent image
+FROM openjdk:22-jdk-slim
 
-# Install netcat (nc) using apk
-RUN apk add --no-cache netcat-openbsd
+# Install netcat using apt-get
+RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
 
 # Copy the JAR file into the container
 COPY dockerOut/server.jar /app/application.jar
