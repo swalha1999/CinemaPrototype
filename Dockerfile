@@ -18,5 +18,5 @@ CMD ["java", "-jar", "/app/application.jar"]
 
 # Health check: Try to connect to the server on port 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD /app/HealthCheck.sh
+  CMD /app/healthCheck.sh
 
