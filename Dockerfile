@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-alpine
+FROM openjdk:22-jdk-alpine
 
 # Copy the JAR file into the container
 COPY dockerOut/server.jar /app/application.jar
