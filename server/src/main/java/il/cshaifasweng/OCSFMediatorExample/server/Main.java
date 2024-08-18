@@ -26,10 +26,10 @@ public class Main {
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Enter password for MYSQL DB connection:");
-        String password = myObj.nextLine();  // Read user input
-        myObj.close();
-        configuration.setProperty("hibernate.connection.password", password);
+//        System.out.println("Enter password for MYSQL DB connection:");
+//        String password = myObj.nextLine();  // Read user input
+//        myObj.close();
+//        configuration.setProperty("hibernate.connection.password", password);
 
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(User.class);
