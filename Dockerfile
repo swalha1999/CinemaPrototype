@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:22-jdk-slim
+FROM openjdk:21-jdk-slim
 
 # Install netcat-openbsd using apt-get
 #RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/lists/*
