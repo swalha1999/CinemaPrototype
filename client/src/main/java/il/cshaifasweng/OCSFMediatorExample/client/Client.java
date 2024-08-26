@@ -70,6 +70,10 @@ public class Client extends AbstractClient {
 				case GET_ALL_CINEMAS_RESPONSE:
 					EventBus.getDefault().post( new GetAllCinemasEvent(message));
 					break;
+				case UPDATED_USER_PATCH:
+					EventBus.getDefault().post( new UpdatedUserEvent(message));
+					break;
+
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;

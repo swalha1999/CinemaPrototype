@@ -367,7 +367,8 @@ public class UserDAO {
 
         return response
                 .setSuccess(true)
-                .setMessage("User role changed successfully");
+                .setMessage("User role changed successfully")
+                .setDataObject(user);
     }
 
     static public String generateSalt() {

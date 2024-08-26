@@ -43,6 +43,18 @@ public class UserView {
         this.isDeleted = new SimpleBooleanProperty(user.isDeleted());
     }
 
+    public void copyUser(User user) {
+        this.userName.set(user.getUsername());
+        this.firstName.set(user.getFirstName());
+        this.lastName.set(user.getLastName());
+        this.email.set(user.getEmail());
+        this.phone.set(user.getPhone());
+        this.role.set(user.getRole().toString());
+        this.isLogged.set(user.isLogged());
+        this.isBlocked.set(user.isBlocked());
+        this.isDeleted.set(user.isDeleted());
+    }
+
 
     // Getter methods for properties
     public String getUsername() { return userName.get(); }
