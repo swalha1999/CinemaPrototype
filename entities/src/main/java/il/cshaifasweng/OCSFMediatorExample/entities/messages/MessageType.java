@@ -28,7 +28,7 @@ public enum MessageType implements Serializable {
     REMOVE_USER_PATCH, // DONE on server and client
     UPDATED_USER_PATCH, // DONE on server TODO: client
     CHANGE_USER_ROLE_REQUEST, // Done on server TODO client
-    CHANGE_USER_ROLE_RESPONSE, //Done on server TODO client
+    CHANGE_USER_ROLE_RESPONSE, //Done on server TODO: DONE!!!
 
     // MOVIES
     GET_ALL_MOVIES_REQUEST, // DONE on server and client
