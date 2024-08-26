@@ -93,6 +93,9 @@ public class Server extends AbstractServer {
             case UPDATE_CINEMA_REQUEST:
                 handleUpdateCinemaRequest(request, client);
                 break;
+            case CHANGE_USER_ROLE_REQUEST:
+                handleChangeUserRoleRequest(request, client);
+                break;
 
 
                 //TODO: add the rest of the cases here
@@ -121,10 +124,8 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleLoginRequest(Message request, ConnectionToClient client) {
+    private Message handleLoginRequest(Message request, ConnectionToClient client) {
         LoginRequest loginRequest = (LoginRequest) request.getDataObject();
-        System.out.println("Login request received:" + loginRequest.toString()); //TODO: remove this line debug only
-
         logOutUser(loginRequest.getUsername(), "User has logged in from another device");
 
         LoginResponse loginResponse = database.getUsersManager().loginUser(loginRequest);
@@ -138,29 +139,33 @@ public class Server extends AbstractServer {
             );
             sessionKeys.put(loginResponse.getSessionKey(), loggedInUser);
         }
-		System.out.println("Login response: " + loginResponse.toString()); //TODO: remove this line debug only
-        sendResponse(client, new Message(loginResponse, MessageType.LOGIN_RESPONSE));
+
+        Message response = new Message(loginResponse, MessageType.LOGIN_RESPONSE);
+		sendResponse(client, response);
+
+        return response;
     }
 
-    private void handleLogoutRequest(Message request, ConnectionToClient client) {
+    private Message handleLogoutRequest(Message request, ConnectionToClient client) {
         LogoutRequest logoutRequest = (LogoutRequest) request.getDataObject();
         logoutRequest.setUsername(sessionKeys.get(logoutRequest.getSessionKey()).getUsername());
 
-        System.out.println("Logout request received:" + logoutRequest.toString()); //TODO: remove this line debug only
         LogoutResponse logoutResponse = database.getUsersManager().logoutUser(logoutRequest);
         sessionKeys.remove(logoutRequest.getSessionKey());
-        System.out.println("Logout response: " + logoutResponse.toString()); //TODO: remove this line debug only
 
-        sendResponse(client, new Message(logoutResponse, MessageType.LOGOUT_RESPONSE));
+        Message response = new Message(logoutResponse, MessageType.LOGOUT_RESPONSE);
+        sendResponse(client, response);
+        return response;
+
     }
 
-    private void handleRegisterRequest(Message request, ConnectionToClient client) {
+    private Message handleRegisterRequest(Message request, ConnectionToClient client) {
 
         // V2 request
         RegisterRequest registerRequest = (RegisterRequest) request.getDataObject();
-        System.out.println("Register request received:" + registerRequest.toString()); //TODO: remove this line debug only
         RegisterResponse registerResponse = database.getUsersManager().registerUser(registerRequest);
-        sendResponse(client, new Message(registerResponse, MessageType.REGISTER_RESPONSE));
+        Message response = new Message(registerResponse, MessageType.REGISTER_RESPONSE);
+        sendResponse(client,response);
 
         // send a patch to all the logged-in admins to notify them that a new user has been added
         if (registerResponse.isSuccess()) {
@@ -172,14 +177,15 @@ public class Server extends AbstractServer {
 
             sendToAllAdmins(newUserAddedPatch);
         }
+
+        return response;
     }
 
-    private void handleGetAllUsersRequest(Message request, ConnectionToClient client) {
+    private Message handleGetAllUsersRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         switch (loggedInUser.getRole()) {
@@ -191,8 +197,7 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission for this action");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission for this action");
         }
 
         request.setUsername(sessionKeys.get(request.getSessionKey()).getUsername()); // add the username for faster access
@@ -203,9 +208,10 @@ public class Server extends AbstractServer {
         System.out.println("Get all users response: " + response.toString()); //TODO: remove this line debug only
         sendResponse(client, response);
 
+        return response;
     }
 
-    private void handleGetMyTicketsRequest(Message request, ConnectionToClient client) {
+    private Message handleGetMyTicketsRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -223,7 +229,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleBlockUserRequest(Message request, ConnectionToClient client) {
+    private Message handleBlockUserRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -256,11 +262,13 @@ public class Server extends AbstractServer {
         if (response.isSuccess()) {
             // log out the user
             logOutUser(((User) request.getDataObject()).getUsername(), "User has been blocked from the system");
-            //TODO: send a patch to all the logged-in admins to notify them that a user has been blocked
+
+            response.setMessageType(MessageType.UPDATED_USER_PATCH);
+            sendToAllAdmins(response);
         }
     }
 
-    private void handleUnblockUserRequest(Message request, ConnectionToClient client) {
+    private Message handleUnblockUserRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -290,10 +298,13 @@ public class Server extends AbstractServer {
         System.out.println("Unblock user response: " + response.toString()); //TODO: remove this line debug only
         sendResponse(client, response);
 
-        //TODO: send a patch to all the logged-in admins to notify them that a user has been unblocked
+        if (response.isSuccess()) {
+            response.setMessageType(MessageType.UPDATED_USER_PATCH);
+            sendToAllAdmins(response);
+        }
     }
 
-    private void handleRemoveUserRequest(Message request, ConnectionToClient client) {
+    private Message handleRemoveUserRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -334,7 +345,7 @@ public class Server extends AbstractServer {
 
     }
 
-    private void handleGetAllMoviesRequest(Message request, ConnectionToClient client) {
+    private Message handleGetAllMoviesRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -353,7 +364,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleAddMovieRequest(Message request, ConnectionToClient client) {
+    private Message handleAddMovieRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -393,7 +404,7 @@ public class Server extends AbstractServer {
 
     }
 
-    private void handleRemoveMovieRequest(Message request, ConnectionToClient client) {
+    private Message handleRemoveMovieRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -431,7 +442,7 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleGetMovieRequest(Message request, ConnectionToClient client) {
+    private Message handleGetMovieRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -450,7 +461,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleUpdateMovieRequest(Message request, ConnectionToClient client) {
+    private Message handleUpdateMovieRequest(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
@@ -487,7 +498,7 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleGetAllScreeningsRequest(Message request, ConnectionToClient client) {
+    private Message handleGetAllScreeningsRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -518,7 +529,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleGetScreeningForMovieRequest(Message request, ConnectionToClient client) {
+    private Message handleGetScreeningForMovieRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -536,7 +547,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleGetAllCinemasRequest(Message request, ConnectionToClient client) {
+    private Message handleGetAllCinemasRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -568,7 +579,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleGetCinemaHallsRequest(Message request, ConnectionToClient client) {
+    private Message handleGetCinemaHallsRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -599,7 +610,7 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
     }
 
-    private void handleAddCinemaRequest(Message request, ConnectionToClient client) {
+    private Message handleAddCinemaRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -636,7 +647,7 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleRemoveCinemaRequest(Message request, ConnectionToClient client) {
+    private Message handleRemoveCinemaRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -673,7 +684,7 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleUpdateCinemaRequest(Message request, ConnectionToClient client) {
+    private Message handleUpdateCinemaRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
@@ -697,13 +708,49 @@ public class Server extends AbstractServer {
                 return;
         }
 
-        sendResponse(client, database.getCinemasManager().updateCinema(request));
+        Message response = database.getCinemasManager().updateCinema(request);
+        sendResponse(client, response);
 
         // send a patch to all the logged-in admin
-        if (request.isSuccess()) {
-            request.setMessageType(MessageType.UPDATE_CINEMA_PATCH);
+        if (response.isSuccess()) {
+            response.setMessageType(MessageType.UPDATE_CINEMA_PATCH);
             sendToAllAdmins(request);
         }
+    }
+
+    private Message handleChangeUserRoleRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            sendErrorMessage(client, "Error! User is not logged in");
+            return;
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+                break;
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                sendErrorMessage(client, "Error! User does not have permission to change user roles");
+                return;
+        }
+
+        Message response = database.getUsersManager().changeUserRole(request);
+        sendResponse(client, response);
+
+        // send a patch to all the logged-in admin
+        if (response.isSuccess()) {
+            response.setMessageType(MessageType.UPDATED_USER_PATCH);
+            sendToAllAdmins(request);
+        }
+
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {
@@ -716,12 +763,14 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void sendErrorMessage(ConnectionToClient client, String errorMessage) {
+    private Message sendErrorMessage(ConnectionToClient client, String errorMessage) {
+        Message response = new Message(errorMessage, MessageType.ERROR);
         try {
-            client.sendToClient(new Message(errorMessage, MessageType.ERROR));
+            client.sendToClient(response);
         } catch (IOException e) {
             System.out.println("Error sending error message: " + e.getMessage());
         }
+        return response;
     }
 
     public void sendToAllLoggedInUsers(Message message) {
