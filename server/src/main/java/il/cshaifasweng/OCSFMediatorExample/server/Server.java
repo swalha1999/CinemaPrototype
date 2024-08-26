@@ -80,7 +80,6 @@ public class Server extends AbstractServer {
             case CHANGE_USER_ROLE_REQUEST:
                 return handleChangeUserRoleRequest(request, client);
 
-
                 //TODO: add the rest of the cases here
 
             default:

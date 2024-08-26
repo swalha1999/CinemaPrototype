@@ -28,10 +28,11 @@ public enum MessageType implements Serializable {
     REMOVE_USER_RESPONSE, // DONE on server and client
     NEW_USER_ADDED_PATCH, // DONE on server and client
     REMOVE_USER_PATCH, // DONE on server and client
-    UPDATED_USER_PATCH, // DONE on server and client
-    CHANGE_USER_ROLE_REQUEST, // TODO on server and client
-    CHANGE_USER_ROLE_RESPONSE, // TODO on server and client
+    UPDATED_USER_PATCH, // DONE on server TODO: client
+    CHANGE_USER_ROLE_REQUEST, // Done on server TODO client
+    CHANGE_USER_ROLE_RESPONSE, //Done on server TODO client
 
+    // MOVIES
     GET_ALL_MOVIES_REQUEST, // DONE on server and client
     GET_ALL_MOVIES_RESPONSE, // DONE on server and client
     ADD_MOVIE_REQUEST, // DONE on server and client
@@ -45,10 +46,13 @@ public enum MessageType implements Serializable {
     UPDATE_MOVIE_PATCH, // DONE on server TODO: check on client
     GET_MOVIE_REQUEST,  // DONE on server and client
     GET_MOVIE_RESPONSE, // DONE on server and client
+
+    // SCREENINGS
     GET_ALL_SCREENINGS_REQUEST, // DONE on server and client
     GET_ALL_SCREENINGS_RESPONSE, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_REQUEST, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_RESPONSE, // DONE on server and client
+
     GET_ALL_CINEMAS_REQUEST, // Done on Server TODO: client
     GET_ALL_CINEMAS_RESPONSE, // Done on Server TODO: client
     ADD_CINEMA_REQUEST, // Done one server TODO: client

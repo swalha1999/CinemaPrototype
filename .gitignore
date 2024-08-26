@@ -2,5 +2,6 @@ target/
 
 #for the hibernate.properties file
 server/src/main/resources/*
+server/src/main/resources/hibernate.properties
 
 
