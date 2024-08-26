@@ -57,6 +57,7 @@ public class Client extends AbstractClient {
 					break;
 				case GET_ALL_CINEMAS_RESPONSE:
 					EventBus.getDefault().post( new GetAllCinemasEvent(message));
+					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
