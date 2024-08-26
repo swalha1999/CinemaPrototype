@@ -6,12 +6,16 @@ public enum MessageType implements Serializable {
     NONE, //DONE on server
     ERROR, //DONE on server
     STRING, //DONE on server
+
+    //AUTH
     LOGIN_REQUEST, // DONE on server and client
     LOGIN_RESPONSE, // DONE on server and client
     LOGOUT_REQUEST, // DONE on server and client
     LOGOUT_RESPONSE, // DONE on server and client
     REGISTER_REQUEST, // DONE on server and client
     REGISTER_RESPONSE, // DONE on server and client
+
+    // USERS
     GET_ALL_USERS_REQUEST, // DONE on server and client
     GET_ALL_USERS_RESPONSE, // DONE on server and client
     GET_MY_TICKETS_REQUEST, // DONE on server TODO: client
@@ -24,6 +28,10 @@ public enum MessageType implements Serializable {
     REMOVE_USER_RESPONSE, // DONE on server and client
     NEW_USER_ADDED_PATCH, // DONE on server and client
     REMOVE_USER_PATCH, // DONE on server and client
+    UPDATED_USER_PATCH, // DONE on server and client
+    CHANGE_USER_ROLE_REQUEST, // TODO on server and client
+    CHANGE_USER_ROLE_RESPONSE, // TODO on server and client
+
     GET_ALL_MOVIES_REQUEST, // DONE on server and client
     GET_ALL_MOVIES_RESPONSE, // DONE on server and client
     ADD_MOVIE_REQUEST, // DONE on server and client

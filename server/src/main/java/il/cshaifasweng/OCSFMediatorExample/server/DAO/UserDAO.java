@@ -349,6 +349,27 @@ public class UserDAO {
                 .setDataObject(user); // the user object is returned so the client can update the UI
     }
 
+
+    public Message changeUserRole(Message request) {
+        Message response = new Message(MessageType.CHANGE_USER_ROLE_RESPONSE);
+        User userToChangeRoleData = (User) request.getDataObject();
+
+        User user = getUserbyUsername(userToChangeRoleData.getUsername());
+
+        if (user == null){
+            return response
+                    .setSuccess(false)
+                    .setMessage("User not found");
+        }
+
+        user.setRole(userToChangeRoleData.getRole());
+        this.updateUser(user);
+
+        return response
+                .setSuccess(true)
+                .setMessage("User role changed successfully");
+    }
+
     static public String generateSalt() {
         SecureRandom sr = new SecureRandom();
         byte[] salt = new byte[16];
