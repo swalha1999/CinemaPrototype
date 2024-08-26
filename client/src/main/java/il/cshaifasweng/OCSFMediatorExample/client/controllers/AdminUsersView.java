@@ -6,6 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.NewUserAddedEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -152,8 +153,6 @@ public class AdminUsersView {
         Client.getClient().sendToServer(blockUserRequest);
     }
 
-    public void MakeAdmin(ActionEvent actionEvent) {
-    }
 
     public void RemoveUser(ActionEvent actionEvent) {
         // get the selected user
@@ -193,5 +192,32 @@ public class AdminUsersView {
         // Send the unblock user request to the server
         Client.getClient().sendToServer(unblockUserRequest);
     }
+    @FXML
+    void ChangeRole(ActionEvent event) {
+        UserView selectedUser = Users_Table.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            return;
+        }
+
+        // Create a User object with all relevant details from the selected user
+        User userToUpdate = new User()
+                .setId(selectedUser.getId())
+                .setFirstName(selectedUser.getFirstName())
+                .setLastName(selectedUser.getLastName())
+                .setEmail(selectedUser.getEmail())
+                .setRole(Customer_Role.getValue())
+                .setUsername(selectedUser.getUsername());
+
+        // Create a message with the user update request
+        Message ChangeUserRoleRequest = new Message(MessageType.CHANGE_USER_ROLE_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(userToUpdate);
+
+        // Send the message to the server
+        Client.getClient().sendToServer(ChangeUserRoleRequest);
+    }
+
+
+
 }
 
