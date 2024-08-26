@@ -18,8 +18,6 @@ public enum MessageType implements Serializable {
     // USERS
     GET_ALL_USERS_REQUEST, // DONE on server and client
     GET_ALL_USERS_RESPONSE, // DONE on server and client
-    GET_MY_TICKETS_REQUEST, // DONE on server TODO: client
-    GET_MY_TICKETS_RESPONSE, // DONE on server TODO: client
     BLOCK_USER_REQUEST, // DONE on server and client
     BLOCK_USER_RESPONSE, // DONE on server and client
     UNBLOCK_USER_REQUEST, // DONE on server and client
@@ -52,6 +50,11 @@ public enum MessageType implements Serializable {
     GET_ALL_SCREENINGS_RESPONSE, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_REQUEST, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_RESPONSE, // DONE on server and client
+
+    // TICKETS
+    GET_MY_TICKETS_REQUEST, // DONE on server TODO: client
+    GET_MY_TICKETS_RESPONSE, // DONE on server TODO: client
+
 
     GET_ALL_CINEMAS_REQUEST, // Done on Server TODO: client
     GET_ALL_CINEMAS_RESPONSE, // Done on Server TODO: client
