@@ -19,7 +19,7 @@ public enum MessageType implements Serializable {
     GET_ALL_USERS_REQUEST, // DONE on server and client
     GET_ALL_USERS_RESPONSE, // DONE on server and client
     GET_MY_TICKETS_REQUEST, // DONE on server TODO: client
-    GET_MY_TICKETS_RESPONSE, // DONE on server TODO: client
+    GET_MY_TICKETS_RESPONSE, // DONE on server TODO: DONE!!!
     BLOCK_USER_REQUEST, // DONE on server and client
     BLOCK_USER_RESPONSE, // DONE on server and client
     UNBLOCK_USER_REQUEST, // DONE on server and client
