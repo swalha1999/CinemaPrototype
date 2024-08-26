@@ -28,6 +28,18 @@ public class Client extends AbstractClient {
 				case GET_ALL_USERS_RESPONSE:
 					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
+				case UPDATE_CINEMA_RESPONSE:
+					EventBus.getDefault().post(new UpdateCinemaEvent(message));
+					break;
+				case REMOVE_CINEMA_RESPONSE:
+					EventBus.getDefault().post(new RemoveCinemaEvent(message));
+					break;
+				case GET_CINEMA_HALLS_RESPONSE:
+					EventBus.getDefault().post(new GetCinemaHallsEvent(message));
+					break;
+				case ADD_CINEMA_RESPONSE:
+					EventBus.getDefault().post(new AddCinemaEvent(message));
+					break;
 				case GET_ALL_MOVIES_RESPONSE:
 					EventBus.getDefault().post( new GetAllMoviesEvent(message));
 					break;
