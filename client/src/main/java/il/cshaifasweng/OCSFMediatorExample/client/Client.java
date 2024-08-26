@@ -25,6 +25,9 @@ public class Client extends AbstractClient {
 		if (message.getVersion() == MessageVersion.V3) {
 			switch (message.getType()){
 
+				case GET_MY_TICKETS_RESPONSE:
+					EventBus.getDefault().post(new GetMyTicketsEvent(message));
+					break;
 				case GET_ALL_USERS_RESPONSE:
 					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
