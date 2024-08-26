@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
@@ -54,14 +53,5 @@ public class TicketDAO {
 
     public void setSession(Session session) {
         this.session = session;
-    }
-
-    public void copyTicket(MovieTicket ticket1 , MovieTicket ticket2){ {
-        ticket1.setScreening(ticket2.getScreening());
-        ticket1.setUser(ticket2.getUser());
-        ticket1.setSeatNumber(ticket2.getSeatNumber());
-        ticket1.setIsUsed(ticket2.getIsUsed());
-        ticket1.setIsRefunded(ticket2.getIsRefunded());
-        ticket1.setIsBundleTicket(ticket2.getIsBundleTicket());
     }
 }
