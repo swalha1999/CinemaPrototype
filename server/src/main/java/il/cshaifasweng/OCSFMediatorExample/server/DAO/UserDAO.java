@@ -362,6 +362,12 @@ public class UserDAO {
                     .setMessage("User not found");
         }
 
+        if (user.getUsername() == "admin"){
+            return response
+                    .setSuccess(false)
+                    .setMessage("Can't change admin role");
+        }
+
         user.setRole(userToChangeRoleData.getRole());
         this.updateUser(user);
 
