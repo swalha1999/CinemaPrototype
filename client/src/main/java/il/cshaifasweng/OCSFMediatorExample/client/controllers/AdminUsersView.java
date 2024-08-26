@@ -13,15 +13,11 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -43,6 +39,9 @@ public class AdminUsersView {
 
     @FXML // fx:id="LastName_col"
     private TableColumn<UserView, String> LastName_col; // Value injected by FXMLLoader
+
+    @FXML
+    private ComboBox<UserRole> Customer_Role;
 
     @FXML // fx:id="MakeAdmin"
     private Button MakeAdmin; // Value injected by FXMLLoader
@@ -94,6 +93,9 @@ public class AdminUsersView {
         IsLogged_col.setCellValueFactory(new PropertyValueFactory<>("isLogged"));
         IsBlocked_col.setCellValueFactory(new PropertyValueFactory<>("isLocked"));
         isDeleted_col.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
+        for (UserRole role : UserRole.values()) {
+            Customer_Role.getItems().add(role);
+        }
     }
 
     @Subscribe
