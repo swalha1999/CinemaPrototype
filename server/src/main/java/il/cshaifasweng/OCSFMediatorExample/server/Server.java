@@ -691,6 +691,7 @@ public class Server extends AbstractServer {
 
         // send a patch to all the logged-in admin
         if (response.isSuccess()) {
+            logOutUser(((User) request.getDataObject()).getUsername(), "User role has been changed");
             response.setMessageType(MessageType.UPDATED_USER_PATCH);
             sendToAllAdmins(response);
         }
