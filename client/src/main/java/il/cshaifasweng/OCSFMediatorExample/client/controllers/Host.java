@@ -41,4 +41,15 @@ public class Host {
         });
     }
 
+    public void localPort(ActionEvent actionEvent) throws IOException {
+        host ="localhost";
+        port6= Integer.parseInt(port.getText());
+        Client client = Client.getClient();
+        client.openConnection();
+
+        Platform.runLater(()->{
+            setRoot("Login");
+        });
+
+    }
 }
