@@ -710,7 +710,8 @@ public class Server extends AbstractServer {
     }
 
     private Message sendErrorMessage(ConnectionToClient client, String errorMessage) {
-        Message response = new Message(errorMessage, MessageType.ERROR);
+        Message response = new Message(MessageType.ERROR);
+        response.setMessage(errorMessage);
         try {
             client.sendToClient(response);
         } catch (IOException e) {
