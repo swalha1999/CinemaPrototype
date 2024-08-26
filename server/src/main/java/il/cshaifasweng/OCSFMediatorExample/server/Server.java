@@ -695,7 +695,7 @@ public class Server extends AbstractServer {
         // send a patch to all the logged-in admin
         if (response.isSuccess()) {
             response.setMessageType(MessageType.UPDATED_USER_PATCH);
-            sendToAllAdmins(request);
+            sendToAllAdmins(response);
         }
 
         return response.setMessageType(MessageType.CHANGE_USER_ROLE_RESPONSE);
