@@ -30,7 +30,8 @@ public class Server extends AbstractServer {
         System.out.println("Message received: " + request.toString());
 
         if (request.getVersion() == MessageVersion.V3) {
-            handleV3Message(request, client);
+            Message res = handleV3Message(request, client);
+            System.out.println("Message response: " + res.toString());
         } else if (request.getVersion() == MessageVersion.V2) {
 			handleV2Message(request, client);
         } else {
@@ -38,71 +39,52 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void handleV3Message(Message request, ConnectionToClient client) {
+    private Message handleV3Message(Message request, ConnectionToClient client) {
 
         switch (request.getType()) {
 
             case GET_ALL_USERS_REQUEST:
-                handleGetAllUsersRequest(request, client);
-                break;
+                return handleGetAllUsersRequest(request, client);
             case GET_MY_TICKETS_REQUEST:
-                handleGetMyTicketsRequest(request, client);
-                break;
+                return handleGetMyTicketsRequest(request, client);
             case BLOCK_USER_REQUEST:
-                handleBlockUserRequest(request, client);
-                break;
+                return handleBlockUserRequest(request, client);
             case UNBLOCK_USER_REQUEST:
-                handleUnblockUserRequest(request, client);
-                break;
+                return handleUnblockUserRequest(request, client);
             case REMOVE_USER_REQUEST:
-                handleRemoveUserRequest(request, client);
-                break;
+                return handleRemoveUserRequest(request, client);
             case GET_ALL_MOVIES_REQUEST:
-                handleGetAllMoviesRequest(request, client);
-                break;
+                return handleGetAllMoviesRequest(request, client);
             case ADD_MOVIE_REQUEST:
-                handleAddMovieRequest(request, client);
-                break;
+                return handleAddMovieRequest(request, client);
             case REMOVE_MOVIE_REQUEST:
-                handleRemoveMovieRequest(request, client);
-                break;
+                return handleRemoveMovieRequest(request, client);
             case GET_MOVIE_REQUEST:
-                handleGetMovieRequest(request, client);
-                break;
+                return handleGetMovieRequest(request, client);
             case UPDATE_MOVIE_REQUEST:
-                handleUpdateMovieRequest(request, client);
-                break;
+                return handleUpdateMovieRequest(request, client);
             case GET_ALL_SCREENINGS_REQUEST:
-                handleGetAllScreeningsRequest(request, client);
-                break;
+                return handleGetAllScreeningsRequest(request, client);
             case GET_SCREENING_FOR_MOVIE_REQUEST:
-                handleGetScreeningForMovieRequest(request, client);
-                break;
+                return handleGetScreeningForMovieRequest(request, client);
             case GET_ALL_CINEMAS_REQUEST:
-                handleGetAllCinemasRequest(request, client);
-                break;
+                return handleGetAllCinemasRequest(request, client);
             case GET_CINEMA_HALLS_REQUEST:
-                handleGetCinemaHallsRequest(request, client);
-                break;
+                return handleGetCinemaHallsRequest(request, client);
             case ADD_CINEMA_REQUEST:
-                handleAddCinemaRequest(request, client);
-                break;
+                return handleAddCinemaRequest(request, client);
             case REMOVE_CINEMA_REQUEST:
-                handleRemoveCinemaRequest(request, client);
-                break;
+                return handleRemoveCinemaRequest(request, client);
             case UPDATE_CINEMA_REQUEST:
-                handleUpdateCinemaRequest(request, client);
-                break;
+                return handleUpdateCinemaRequest(request, client);
             case CHANGE_USER_ROLE_REQUEST:
-                handleChangeUserRoleRequest(request, client);
-                break;
+                return handleChangeUserRoleRequest(request, client);
 
 
                 //TODO: add the rest of the cases here
 
             default:
-                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
-                break;
+                return sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         }
     }
 
@@ -215,8 +197,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -227,6 +208,7 @@ public class Server extends AbstractServer {
         System.out.println("Get my tickets response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
+        return response;
     }
 
     private Message handleBlockUserRequest(Message request, ConnectionToClient client) {
@@ -234,8 +216,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -250,8 +231,7 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to block users");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to block users");
         }
 
         System.out.println("Block user request received:" + request.toString()); //TODO: remove this line debug only
@@ -266,6 +246,8 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.UPDATED_USER_PATCH);
             sendToAllAdmins(response);
         }
+
+        return response.setMessageType(MessageType.BLOCK_USER_RESPONSE);
     }
 
     private Message handleUnblockUserRequest(Message request, ConnectionToClient client) {
@@ -273,8 +255,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -289,8 +270,7 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to unblock users");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to unblock users");
         }
 
         System.out.println("Unblock user request received:" + request.toString()); //TODO: remove this line debug only
@@ -302,6 +282,8 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.UPDATED_USER_PATCH);
             sendToAllAdmins(response);
         }
+
+        return response.setMessageType(MessageType.UNBLOCK_USER_RESPONSE);
     }
 
     private Message handleRemoveUserRequest(Message request, ConnectionToClient client) {
@@ -309,8 +291,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -325,13 +306,10 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to remove users");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to remove users");
         }
 
-        System.out.println("Remove user request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getUsersManager().removeUser(request);
-        System.out.println("Remove user response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client,response);
 
@@ -343,6 +321,8 @@ public class Server extends AbstractServer {
             logOutUser(((User) response.getDataObject()).getUsername(), "User has been removed from the system");
         }
 
+        return response.setMessageType(MessageType.REMOVE_USER_RESPONSE);
+
     }
 
     private Message handleGetAllMoviesRequest(Message request, ConnectionToClient client) {
@@ -350,18 +330,15 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get all movies request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getMoviesManger().getAllMovies(request);
-        System.out.println("Get all movies response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
+        return response;
     }
 
     private Message handleAddMovieRequest(Message request, ConnectionToClient client) {
@@ -369,8 +346,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -385,22 +361,20 @@ public class Server extends AbstractServer {
             case CUSTOMER_SERVICE:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to add movies");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to add movies");
         }
 
-        System.out.println("Add movie request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getMoviesManger().addMovie(request);
-        System.out.println("Add movie response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
 
         // send a patch to all the logged-in users
         if (response.isSuccess()) {
-            //TODO: update this to V3
             response.setMessageType(MessageType.ADD_MOVIE_PATCH);
             sendToAllLoggedInUsers(response);
         }
+
+        return response.setMessageType(MessageType.ADD_MOVIE_RESPONSE);
 
     }
 
@@ -408,8 +382,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -424,22 +397,20 @@ public class Server extends AbstractServer {
             case CUSTOMER_SERVICE:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to remove movies");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to remove movies");
         }
 
-        System.out.println("Remove movie request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getMoviesManger().removeMovie(request);
-        System.out.println("Remove movie response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
 
         // send a patch to all the logged-in users
         if (response.isSuccess()) {
-            //TODO: update this to V3
             response.setMessageType(MessageType.REMOVE_MOVIE_PATCH);
             sendToAllLoggedInUsers(response);
         }
+
+        return response.setMessageType(MessageType.REMOVE_MOVIE_RESPONSE);
     }
 
     private Message handleGetMovieRequest(Message request, ConnectionToClient client) {
@@ -447,18 +418,16 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get movie request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getMoviesManger().getMovie(request);
-        System.out.println("Get movie response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
+
+        return response;
     }
 
     private Message handleUpdateMovieRequest(Message request, ConnectionToClient client) {
@@ -466,8 +435,7 @@ public class Server extends AbstractServer {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -482,28 +450,24 @@ public class Server extends AbstractServer {
             case CUSTOMER_SERVICE:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to update movies");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to update movies");
         }
 
-        System.out.println("Update movie request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getMoviesManger().updateMovie(request);
-        System.out.println("Update movie response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
 
         if (response.isSuccess()) {
             response.setMessageType(MessageType.UPDATE_MOVIE_PATCH);
             sendToAllLoggedInUsers(response);
         }
+        return response.setMessageType(MessageType.UPDATE_MOVIE_RESPONSE);
     }
 
     private Message handleGetAllScreeningsRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -518,41 +482,36 @@ public class Server extends AbstractServer {
                 break;
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to this action");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to this action");
         }
 
-        System.out.println("Get all screenings request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getScreeningsManager().getAllScreenings(request);
-        System.out.println("Get all screenings response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
+
+        return response;
     }
 
     private Message handleGetScreeningForMovieRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get all screenings for movie request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getScreeningsManager().getAllScreeningsForMovie(request);
-        System.out.println("Get all screenings for movie response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
+
+        return response;
     }
 
     private Message handleGetAllCinemasRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -568,23 +527,20 @@ public class Server extends AbstractServer {
             case USER:
             case NOT_LOGGED_IN:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to this action");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to this action");
         }
 
-        System.out.println("Get all cinemas request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getCinemasManager().getAllCinemas(request);
-        System.out.println("Get all cinemas response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
+
+        return response;
     }
 
     private Message handleGetCinemaHallsRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -599,23 +555,19 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to this action");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to this action");
         }
 
-        System.out.println("Get cinema halls request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getCinemasManager().getCinemaHalls(request);
-        System.out.println("Get cinema halls response: " + response.toString()); //TODO: remove this line debug only
-
         sendResponse(client, response);
+        return response;
     }
 
     private Message handleAddCinemaRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -630,13 +582,10 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to add cinemas");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to add cinemas");
         }
 
-        System.out.println("Add cinema request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getCinemasManager().addCinema(request);
-        System.out.println("Add cinema response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
 
@@ -645,14 +594,15 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.ADD_CINEMA_PATCH);
             sendToAllAdmins(response);
         }
+
+        return response.setMessageType(MessageType.ADD_CINEMA_RESPONSE);
     }
 
     private Message handleRemoveCinemaRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -667,13 +617,10 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to add cinemas");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to add cinemas");
         }
 
-        System.out.println("Remove cinema request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getCinemasManager().removeCinema(request);
-        System.out.println("Remove cinema response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
 
@@ -682,14 +629,15 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.REMOVE_CINEMA_PATCH);
             sendToAllAdmins(response);
         }
+
+        return response.setMessageType(MessageType.REMOVE_CINEMA_RESPONSE);
     }
 
     private Message handleUpdateCinemaRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -704,8 +652,7 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to add cinemas");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to add cinemas");
         }
 
         Message response = database.getCinemasManager().updateCinema(request);
@@ -716,14 +663,15 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.UPDATE_CINEMA_PATCH);
             sendToAllAdmins(request);
         }
+
+        return response.setMessageType(MessageType.UPDATE_CINEMA_RESPONSE);
     }
 
     private Message handleChangeUserRoleRequest(Message request, ConnectionToClient client) {
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
         if (loggedInUser == null) {
-            sendErrorMessage(client, "Error! User is not logged in");
-            return;
+            return sendErrorMessage(client, "Error! User is not logged in");
         }
 
         request.setUsername(loggedInUser.getUsername());
@@ -738,8 +686,8 @@ public class Server extends AbstractServer {
             case CONTENT_MANAGER:
             case USER:
             default:
-                sendErrorMessage(client, "Error! User does not have permission to change user roles");
-                return;
+                return sendErrorMessage(client, "Error! User does not have permission to change user roles");
+
         }
 
         Message response = database.getUsersManager().changeUserRole(request);
@@ -751,6 +699,7 @@ public class Server extends AbstractServer {
             sendToAllAdmins(request);
         }
 
+        return response.setMessageType(MessageType.CHANGE_USER_ROLE_RESPONSE);
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {
