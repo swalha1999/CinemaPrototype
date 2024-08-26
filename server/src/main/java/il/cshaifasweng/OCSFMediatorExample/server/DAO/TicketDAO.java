@@ -1,6 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
@@ -23,7 +26,42 @@ public class TicketDAO {
         return new Message(MessageType.GET_MY_TICKETS_RESPONSE).setDataObject(tickets);
     }
 
+    public Message purchaseTicket(Message request) {
+        MovieTicket ticketToBuy = (MovieTicket) request.getDataObject();
+
+        // check if the user exists
+        User user = session.get(User.class, ticketToBuy.getUser().getId());
+        if (user == null) {
+            return new Message(MessageType.ERROR).setMessage("User does not exist to purchase ticket");
+        }
+
+        // check if the screening exists
+        Screening screening = session.get(Screening.class, ticketToBuy.getScreening().getId());
+        if (screening == null) {
+            return new Message(MessageType.ERROR).setMessage("Screening does not exist to purchase ticket");
+        }
+
+        // TODO: check if the seat is available
+
+        MovieTicket ticket = new MovieTicket();
+        ticket.setUser(user);
+        ticket.setScreening(screening);
+
+        session.save(ticket);
+
+        return new Message(MessageType.PURCHASE_TICKET_REQUEST).setDataObject(ticket);
+    }
+
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public void copyTicket(MovieTicket ticket1 , MovieTicket ticket2){ {
+        ticket1.setScreening(ticket2.getScreening());
+        ticket1.setUser(ticket2.getUser());
+        ticket1.setSeatNumber(ticket2.getSeatNumber());
+        ticket1.setIsUsed(ticket2.getIsUsed());
+        ticket1.setIsRefunded(ticket2.getIsRefunded());
+        ticket1.setIsBundleTicket(ticket2.getIsBundleTicket());
     }
 }

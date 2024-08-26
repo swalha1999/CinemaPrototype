@@ -54,6 +54,7 @@ public enum MessageType implements Serializable {
     // TICKETS
     GET_MY_TICKETS_REQUEST, // DONE on server TODO: client
     GET_MY_TICKETS_RESPONSE, // DONE on server TODO: client
+    PURCHASE_TICKET_REQUEST, // DONE on server TODO: client
 
 
     GET_ALL_CINEMAS_REQUEST, // Done on Server TODO: client

@@ -76,6 +76,36 @@ public class MovieTicket implements Serializable {
         this.seatNumber = seatNumber;
     }
 
+    public void setRefunded(boolean isRefunded) {
+        this.isRefunded = isRefunded;
+    }
+
+    public void setBundleTicket(boolean isBundleTicket) {
+        this.isBundleTicket = isBundleTicket;
+    }
+
+    public boolean getIsRefunded() {
+        return isRefunded;
+    }
+
+    public boolean getIsBundleTicket() {
+        return isBundleTicket;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIsRefunded(boolean isRefunded) {
+        this.isRefunded = isRefunded;
+    }
+
+    public void setIsBundleTicket(boolean isBundleTicket) {
+        this.isBundleTicket = isBundleTicket;
+    }
+
+
+
     @Override
     public String toString() {
         return "MovieTicket{" +
