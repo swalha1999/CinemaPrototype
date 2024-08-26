@@ -297,7 +297,8 @@ public class UserDAO {
 
         response
                 .setSuccess(true)
-                .setMessage("User blocked successfully");
+                .setMessage("User blocked successfully")
+                .setDataObject(user);
 
         return response;
     }
@@ -319,7 +320,8 @@ public class UserDAO {
 
         return response
                 .setSuccess(true)
-                .setMessage("User unblocked successfully");
+                .setMessage("User unblocked successfully")
+                .setDataObject(user);
     }
 
     public Message removeUser(Message request) {

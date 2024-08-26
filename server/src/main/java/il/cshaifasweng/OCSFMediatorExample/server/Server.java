@@ -233,15 +233,12 @@ public class Server extends AbstractServer {
                 return sendErrorMessage(client, "Error! User does not have permission to block users");
         }
 
-        System.out.println("Block user request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getUsersManager().blockUser(request);
-        System.out.println("Block user response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
         if (response.isSuccess()) {
-            // log out the user
-            logOutUser(((User) request.getDataObject()).getUsername(), "User has been blocked from the system");
 
+            logOutUser(((User) request.getDataObject()).getUsername(), "User has been blocked from the system");
             response.setMessageType(MessageType.UPDATED_USER_PATCH);
             sendToAllAdmins(response);
         }
