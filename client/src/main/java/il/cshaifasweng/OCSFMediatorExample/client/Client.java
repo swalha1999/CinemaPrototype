@@ -25,6 +25,9 @@ public class Client extends AbstractClient {
 		if (message.getVersion() == MessageVersion.V3) {
 			switch (message.getType()){
 
+				case CHANGE_USER_ROLE_RESPONSE:
+					EventBus.getDefault().post(new ChangeUserRoleEvent(message));
+					break;
 				case GET_ALL_USERS_RESPONSE:
 					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
