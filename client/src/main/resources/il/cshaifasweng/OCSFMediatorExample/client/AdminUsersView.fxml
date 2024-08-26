@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="785.0" prefWidth="1084.0" stylesheets="@css/CustomersList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminUsersView">
+<AnchorPane prefHeight="884.0" prefWidth="1172.0" stylesheets="@css/CustomersList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminUsersView">
     <TableView fx:id="Users_Table" prefHeight="588.0" prefWidth="1044.0" styleClass="table-view" AnchorPane.bottomAnchor="177.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
         <columns>
             <TableColumn fx:id="UserName_col" prefWidth="120" styleClass="table-column" text="UserName" />
@@ -19,8 +20,9 @@
             <TableColumn fx:id="isDeleted_col" prefWidth="100" styleClass="table-column" text="IsDeleted" />
         </columns>
     </TableView>
-    <Button fx:id="MakeAdmin" layoutX="20.0" layoutY="740.0" mnemonicParsing="false" onAction="#MakeAdmin" styleClass="action-button" text="Make Admin" />
-    <Button fx:id="RemoveUser" layoutX="200.0" layoutY="740.0" mnemonicParsing="false" onAction="#RemoveUser" styleClass="action-button" text="Remove User" />
-    <Button fx:id="BlockUser" layoutX="380.0" layoutY="740.0" mnemonicParsing="false" onAction="#BlockUser" styleClass="action-button" text="Block User" />
-    <Button fx:id="UnlockUser" layoutX="560.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnblockUser" styleClass="action-button" text="UnBlock User" />
+    <Button fx:id="MakeAdmin" layoutX="299.0" layoutY="740.0" mnemonicParsing="false" onAction="#MakeAdmin" styleClass="action-button" text="Change Role" />
+    <Button fx:id="RemoveUser" layoutX="551.0" layoutY="740.0" mnemonicParsing="false" onAction="#RemoveUser" styleClass="action-button" text="Remove User" />
+    <Button fx:id="BlockUser" layoutX="770.0" layoutY="740.0" mnemonicParsing="false" onAction="#BlockUser" styleClass="action-button" text="Block User" />
+    <Button fx:id="UnlockUser" layoutX="962.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnblockUser" styleClass="action-button" text="UnBlock User" />
+   <ComboBox fx:id="Customer_Role" layoutX="80.0" layoutY="749.0" prefWidth="150.0" />
 </AnchorPane>

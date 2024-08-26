@@ -130,7 +130,6 @@ public class Register {
                 alert.show();
                 setRoot("Login");
             }
-
             else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
