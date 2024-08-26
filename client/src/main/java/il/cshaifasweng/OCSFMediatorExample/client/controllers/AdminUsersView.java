@@ -6,6 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllUsersEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.NewUserAddedEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveUserEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.UpdatedUserEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
@@ -129,33 +130,39 @@ public class AdminUsersView {
         });
     }
 
+    @Subscribe
+    public void onUpdatedUserEvent(UpdatedUserEvent event) {
+        Platform.runLater(() -> {
+            for (UserView userView : Users_Table.getItems()) {
+                if (userView.getId() == event.getUpdatedUser().getId()) {
+                    userView.copyUser(event.getUpdatedUser());
+                    break;
+                }
+            }
+        });
+    }
+
     @FXML
     void BlockUser(ActionEvent event) {
-// Get the selected user from the table
         UserView selectedUser = Users_Table.getSelectionModel().getSelectedItem();
         if (selectedUser == null) {
-            // If no user is selected, exit the method
             return;
         }
 
-        // Create a User object and set its properties
         User userToBlock = new User()
                 .setUsername(selectedUser.getUsername())
                 .setId(selectedUser.getId())
-                .setBlocked(true); // Assuming setBlocked() accepts a boolean to indicate blocking status
+                .setBlocked(true);
 
-        // Create a Message object for the block user request
         Message blockUserRequest = new Message(MessageType.BLOCK_USER_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(userToBlock);
 
-        // Send the block user request to the server
         Client.getClient().sendToServer(blockUserRequest);
     }
 
 
     public void RemoveUser(ActionEvent actionEvent) {
-        // get the selected user
         UserView selectedUser = Users_Table.getSelectionModel().getSelectedItem();
         if (selectedUser == null) {
             return;
