@@ -236,7 +236,12 @@ public class CinemaInfo {
     @Subscribe
     public void onGetScreeningForHall(GetScreeningForHallEvent event) {
         Platform.runLater(() -> {
-            Hall hall = event.getScreenings().getFirst().getHall();
+          if (event.getScreenings().isEmpty()) {
+                return;
+          }
+
+          Hall hall = event.getScreenings().getFirst().getHall();
+
             if (hallTable.getSelectionModel().getSelectedItem().getHall().getId() == hall.getId()) {
 
                 hallTable.getSelectionModel().getSelectedItem().getHall().setScreenings(new HashSet<>(event.getScreenings()));

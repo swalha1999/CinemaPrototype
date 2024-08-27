@@ -105,8 +105,7 @@ public class MovieCatalog {
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
         moviePane.setOnMouseClicked(event -> {
-            System.out.println(event.toString());
-            EventBus.getDefault().post(new ShowSideUIEvent("MovieDetails", movie));
+            showSideUI("MovieDetails", movie);
         });
 
         moviePane.setOnMouseEntered(event -> {

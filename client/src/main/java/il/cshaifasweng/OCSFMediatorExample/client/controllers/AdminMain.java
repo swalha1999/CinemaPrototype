@@ -116,16 +116,17 @@ public class AdminMain {
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("Purchase");
         loadFXMLPane("AdminAddMovie");
+        loadFXMLPane("AddScreening");
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
-        message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
+        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
-        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
+        message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
