@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class AddCinema {
 
@@ -26,7 +27,7 @@ public class AddCinema {
     @FXML
     void handleBack(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("CinemaInfo");
+            showSideUI("CinemaInfo");
         });
     }
 

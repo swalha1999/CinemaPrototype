@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class CinemaInfo {
 
@@ -107,28 +108,30 @@ public class CinemaInfo {
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
         Client.getClient().sendToServer(message);
 
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
-        hallName_Col.setCellValueFactory(new PropertyValueFactory<>("name"));
         managerColumn.setCellValueFactory(new PropertyValueFactory<>("managerName"));
-        seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
 
-        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection == null) {
-                return;
-            }
-            hallTable.getItems().clear();
-            for (Hall hall : newSelection.getCinema().getHalls()) {
-                hallTable.getItems().add(new HallView(hall));
-            }
-        });
+//        hallName_Col.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
+
+//        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (newSelection == null) {
+//                return;
+//            }
+//            hallTable.getItems().clear();
+//            for (Hall hall : newSelection.getCinema().getHalls()) {
+//                hallTable.getItems().add(new HallView(hall));
+//            }
+//        });
     }
 
     @FXML
     void addCinema(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("AddCinema");
+            showSideUI("AddCinema");
         });
     }
 
@@ -154,7 +157,7 @@ public class CinemaInfo {
     @FXML
     void addHall(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("AddHall");
+            showSideUI("AddHall");
         });
     }
 
@@ -178,7 +181,7 @@ public class CinemaInfo {
     @FXML
     void addScreening(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("AddScreening");
+            showSideUI("AddScreening");
         });
     }
 

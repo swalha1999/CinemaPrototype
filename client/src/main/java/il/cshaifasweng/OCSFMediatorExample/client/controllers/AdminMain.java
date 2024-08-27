@@ -110,12 +110,12 @@ public class AdminMain {
     }
 
     public void preLoadPages() {
-        loadFXMLPane("AdminAddMovie");
-        loadFXMLPane("AdminUsersView");
         loadFXMLPane("CinemaInfo");
+        loadFXMLPane("AdminUsersView");
         loadFXMLPane("DashBoard");
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("Purchase");
+        loadFXMLPane("AdminAddMovie");
     }
 
 }
