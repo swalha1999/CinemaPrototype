@@ -2,8 +2,9 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import org.hibernate.Session;
 
-// this call is the holder of the session and all the DAOs
 public class DatabaseController {
+
+    private static DatabaseController instance;
 
     private Session session;
     private final MovieDAO movies;
@@ -13,7 +14,7 @@ public class DatabaseController {
     private final CinemaDAO cinemas;
     private final HallDAO halls;
 
-    public DatabaseController(Session session) {
+    private DatabaseController(Session session) {
         this.session = session;
         this.movies = new MovieDAO(session);
         this.users = new UserDAO(session);
@@ -23,7 +24,18 @@ public class DatabaseController {
         this.halls = new HallDAO(session);
     }
 
-    public MovieDAO getMoviesManger() {
+    public static synchronized DatabaseController getInstance(Session session) {
+        if (instance == null) {
+            instance = new DatabaseController(session);
+        }
+        return instance;
+    }
+
+    public static synchronized DatabaseController getInstance() {
+        return instance;
+    }
+
+    public MovieDAO getMoviesManager() {
         return movies;
     }
 
@@ -51,7 +63,6 @@ public class DatabaseController {
         return halls;
     }
 
-
     public void setSession(Session session) {
         this.session = session;
         this.movies.setSession(session);
@@ -60,8 +71,6 @@ public class DatabaseController {
         this.screenings.setSession(session);
         this.cinemas.setSession(session);
         this.halls.setSession(session);
-        // add more DAOs here
+        // add more DAOs here if needed
     }
-
-
 }

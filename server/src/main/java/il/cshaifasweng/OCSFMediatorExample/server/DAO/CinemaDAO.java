@@ -52,12 +52,11 @@ public class CinemaDAO {
     }
 
     public Message addCinema(Message request) {
+        //TODO: There is fucking bug here
         Cinema cinemaFromUser = (Cinema) request.getDataObject();
 
         // Get the user manager from the database by username
-        User manager = session.createQuery("from User where username = :username", User.class)
-                .setParameter("username", cinemaFromUser.getManager().getUsername())
-                .uniqueResult();
+        User manager = DatabaseController.getInstance(session).getUsersManager().getUserbyUsername(cinemaFromUser.getManager().getUsername());
 
         if (manager == null) {
             return new Message(MessageType.ADD_CINEMA_RESPONSE)
