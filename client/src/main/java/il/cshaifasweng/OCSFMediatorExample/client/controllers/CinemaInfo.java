@@ -21,10 +21,15 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -148,8 +153,10 @@ public class CinemaInfo {
     }
 
     @FXML
-    void editCinema(ActionEvent event) {
-        // TODO: Implement edit cinema functionality
+    private void editCinema() {
+        Platform.runLater(() -> {
+            showSideUI("EditCinema");
+        });
     }
 
     @FXML
