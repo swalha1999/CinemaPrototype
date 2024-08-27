@@ -44,6 +44,7 @@ public class AddHall {
         Hall hallToAdd = new Hall();
         hallToAdd.setName(hallNameField.getText());
         hallToAdd.setSeatsNum(Integer.parseInt(seatsNumberField.getText()));
+        hallToAdd.setCinema(cinema);
 
         msg.setDataObject(hallToAdd);
         Client.getClient().sendToServer(msg);
