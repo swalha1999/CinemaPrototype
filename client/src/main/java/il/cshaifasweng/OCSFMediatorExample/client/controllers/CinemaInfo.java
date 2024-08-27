@@ -5,13 +5,11 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
-import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.data.*;
 import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -151,9 +149,13 @@ public class CinemaInfo {
 
     @FXML
     private void editCinema() {
-        Platform.runLater(() -> {
-            showSideUI("EditCinema");
-        });
+       CinemaView selectedCinema = cinemaTable.getSelectionModel().getSelectedItem();
+        if (selectedCinema != null) {
+            Platform.runLater(() -> {
+                showSideUI("EditCinema", selectedCinema.getCinema());
+            });
+        }
+
     }
 
     @FXML
