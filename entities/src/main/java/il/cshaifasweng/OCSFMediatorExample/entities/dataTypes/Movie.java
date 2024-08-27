@@ -249,19 +249,8 @@ public class Movie implements Serializable {
         return "Movie{" +
                 "id=" + id +
                 ", englishTitle='" + englishTitle + '\'' +
-                ", hebrewTitle='" + hebrewTitle + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", description='" + description + '\'' +
-                ", language=" + language +
                 ", genre=" + genre +
-                ", country=" + country +
-                ", durationInMinutes=" + durationInMinutes +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", trailerUrl='" + trailerUrl + '\'' +
-                ", producer='" + producer + '\'' +
-                ", actors=" + actors +
-                ", screenings=" + screenings +
-                ", imageBytes=" + imageString  +
+                ", imageBytes=" + imageString +
                 '}';
     }
 

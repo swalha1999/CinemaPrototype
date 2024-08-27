@@ -174,7 +174,7 @@ public class Cinema implements Serializable {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", halls=" + halls +
-                ", manager=" + manager +
+                ", manager=" + manager.getUsername() +
                 '}';
     }
 }
