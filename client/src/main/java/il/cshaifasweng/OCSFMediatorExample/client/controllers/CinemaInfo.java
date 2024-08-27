@@ -5,23 +5,26 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
-import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
-import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.data.*;
 import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -145,8 +148,14 @@ public class CinemaInfo {
     }
 
     @FXML
-    void editCinema(ActionEvent event) {
-        // TODO: Implement edit cinema functionality
+    private void editCinema() {
+       CinemaView selectedCinema = cinemaTable.getSelectionModel().getSelectedItem();
+        if (selectedCinema != null) {
+            Platform.runLater(() -> {
+                showSideUI("EditCinema", selectedCinema.getCinema());
+            });
+        }
+
     }
 
     @FXML
