@@ -8,6 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.Set;
 
 public class CinemaDAO {
 
@@ -76,12 +77,28 @@ public class CinemaDAO {
     }
 
     public Message removeCinema(Message request) {
-        Cinema cinema = (Cinema) request.getDataObject();
+        Cinema cinemaToDelete = (Cinema) request.getDataObject();
+
+        Cinema cinema = session.get(Cinema.class, cinemaToDelete.getId());
+        if (cinema == null) {
+            return new Message(MessageType.REMOVE_CINEMA_RESPONSE)
+                    .setSuccess(false)
+                    .setMessage("Cinema not found")
+                    .setDataObject(null);
+        }
+
+        // get all the halls of the cinema
+        Set<Hall> halls = cinema.getHalls();
+        for (Hall hall : halls) {
+            session.delete(hall);
+        }
+
         session.delete(cinema);
         return new Message(MessageType.REMOVE_CINEMA_RESPONSE)
                 .setSuccess(true)
                 .setMessage("Cinema removed successfully")
                 .setDataObject(cinema);
+
     }
 
     public Message updateCinema(Message request) {

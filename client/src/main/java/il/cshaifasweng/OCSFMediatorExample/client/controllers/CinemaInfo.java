@@ -10,6 +10,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddCinemaEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveCinemaEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -32,125 +33,77 @@ import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 public class CinemaInfo {
 
     @FXML
-    public TableView<?> ScreeningTable;
-
-    @FXML
-    public TableColumn<?,?> MovieName_Col;
-
-    @FXML
-    public TableColumn<?,?> Start_Col;
-
-    @FXML
-    public TableColumn<?,?> End_Col;
-
-    @FXML // fx:id="AddCinemaBtn"
-    private Button AddCinemaBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="BackBtn"
-    private Button BackBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="EditCinemaBtn"
-    private Button EditCinemaBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="HomeBtn"
-    private Button HomeBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="cinemaTable"
     private TableView<CinemaView> cinemaTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="cityColumn"
+    @FXML
     private TableColumn<CinemaView, String> cityColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="detailsTable"
-    private TableView<HallView> hallTable; // Value injected by FXMLLoader
-
-    @FXML // fx:id="hallName_Col"
-    private TableColumn<HallView, String> hallName_Col; // Value injected by FXMLLoader
-
-    @FXML // fx:id="managerColumn"
+    @FXML
     private TableColumn<CinemaView, String> managerColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="seatsColumn"
+    @FXML
+    private TableView<HallView> hallTable; // Value injected by FXMLLoader
+
+    @FXML
+    private TableColumn<HallView, String> hallName_Col; // Value injected by FXMLLoader
+
+    @FXML
     private TableColumn<HallView, Integer> seatsColumn; // Value injected by FXMLLoader
 
+    @FXML
+    private TableView<?> ScreeningTable;
 
-        @FXML
-        private Button AddCinemaBtn1;
+    @FXML
+    private TableColumn<?, ?> MovieName_Col;
 
-        @FXML
-        private Button AddHallBtn;
+    @FXML
+    private TableColumn<?, ?> Start_Col;
 
-        @FXML
-        private Button AddScreeningBtn;
+    @FXML
+    private TableColumn<?, ?> End_Col;
 
+    @FXML
+    private TableColumn<?, ?> ScreeningName_Col;
 
-        @FXML
-        private Button EditHallBtn;
+    @FXML
+    private Button AddCinemaBtn; // Value injected by FXMLLoader
 
-        @FXML
-        private Button EditScreeningBtn;
+    @FXML
+    private Button BackBtn; // Value injected by FXMLLoader
 
-        @FXML
-        private Button RemoveCienmaBtn;
+    @FXML
+    private Button EditCinemaBtn; // Value injected by FXMLLoader
 
-        @FXML
-        private Button RemoveHallBtn;
+    @FXML
+    private Button HomeBtn; // Value injected by FXMLLoader
 
-        @FXML
-        private Button RemoveScreeningBtn;
+    @FXML
+    private Button AddCinemaBtn1;
 
-        @FXML
-        private TableColumn<?, ?> ScreeningName_Col;
+    @FXML
+    private Button AddHallBtn;
 
+    @FXML
+    private Button AddScreeningBtn;
 
-        @FXML
-        void RemoveCinema(ActionEvent event) {
+    @FXML
+    private Button EditHallBtn;
 
-        }
+    @FXML
+    private Button EditScreeningBtn;
 
-        @FXML
-        void addHall(ActionEvent event) {
-            Platform.runLater(() -> {
-                setRoot("AddHall");
-            });
-        }
+    @FXML
+    private Button RemoveCienmaBtn;
 
-        @FXML
-        void addScreening(ActionEvent event) {
-            Platform.runLater(() -> {
-                setRoot("AddScreening");
-            });
-        }
+    @FXML
+    private Button RemoveHallBtn;
 
-        @FXML
-        void editHall(ActionEvent event) {
-            Platform.runLater(() -> {
-                setRoot("EditHall");
-            });
-        }
-
-        @FXML
-        void editScreening(ActionEvent event) {
-            Platform.runLater(() -> {
-                setRoot("EditScreening");
-            });
-        }
-
-        @FXML
-        void removeHall(ActionEvent event) {
-
-        }
-
-        @FXML
-        void removeScreening(ActionEvent event) {
-
-        }
-
+    @FXML
+    private Button RemoveScreeningBtn;
 
     @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
-
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
@@ -161,14 +114,14 @@ public class CinemaInfo {
         managerColumn.setCellValueFactory(new PropertyValueFactory<>("managerName"));
         seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
 
-        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection)->{
-                if (newSelection == null) {
-                    return;
-                }
-                hallTable.getItems().clear();
-                for(Hall hall : newSelection.getCinema().getHalls()) {
-                    hallTable.getItems().add(new HallView(hall));
-                }
+        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection == null) {
+                return;
+            }
+            hallTable.getItems().clear();
+            for (Hall hall : newSelection.getCinema().getHalls()) {
+                hallTable.getItems().add(new HallView(hall));
+            }
         });
     }
 
@@ -181,19 +134,73 @@ public class CinemaInfo {
 
     @FXML
     void editCinema(ActionEvent event) {
+        // TODO: Implement edit cinema functionality
+    }
+
+    @FXML
+    void RemoveCinema(ActionEvent event) {
+        // get the selected cinema
+        Cinema selectedCinema = cinemaTable.getSelectionModel().getSelectedItem().getCinema();
+
+        // send a message to the server to remove the selected cinema
+        Message message = new Message(MessageType.REMOVE_CINEMA_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(selectedCinema);
+
+        Client.getClient().sendToServer(message);
+
+    }
+
+    @FXML
+    void addHall(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("EditCinema");
+            setRoot("AddHall");
         });
     }
 
     @FXML
+    void editHall(ActionEvent event) {
+        // TODO: Implement edit hall functionality
+    }
+
+    @FXML
+    void removeHall(ActionEvent event) {
+        Hall selectedHall = hallTable.getSelectionModel().getSelectedItem().getHall();
+
+        // send a message to the server to remove the selected hall
+        Message message = new Message(MessageType.REMOVE_HALL_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(selectedHall);
+
+    }
+
+
+    @FXML
+    void addScreening(ActionEvent event) {
+        Platform.runLater(() -> {
+            setRoot("AddScreening");
+        });
+    }
+
+    @FXML
+    void editScreening(ActionEvent event) {
+        // TODO Implement edit screening functionality
+    }
+
+
+    @FXML
+    void removeScreening(ActionEvent event) {
+        // TODO: Implement remove screening functionality
+    }
+
+    @FXML
     void returnBack(ActionEvent event) {
-        //TODO: use this
+        // TODO: Implement return back functionality
     }
 
     @FXML
     void returnHome(ActionEvent event) {
-        //TODO: this
+        // TODO: Implement return home functionality
     }
 
     @Subscribe
@@ -201,7 +208,7 @@ public class CinemaInfo {
         Platform.runLater(() -> {
             List<Cinema> cinemas = event.getCinemas();
             cinemaTable.getItems().clear();
-            for (Cinema cinema :cinemas ) {
+            for (Cinema cinema : cinemas) {
                 cinemaTable.getItems().add(new CinemaView(cinema));
             }
         });
@@ -215,4 +222,15 @@ public class CinemaInfo {
         });
     }
 
+    @Subscribe
+    public void onRemoveCinema(RemoveCinemaEvent event) {
+        Platform.runLater(() -> {
+            for (CinemaView cinemaView : cinemaTable.getItems()) {
+                if (cinemaView.getCinema().getId() == event.getCinema().getId()) {
+                    cinemaTable.getItems().remove(cinemaView);
+                    break;
+                }
+            }
+        });
+    }
 }
