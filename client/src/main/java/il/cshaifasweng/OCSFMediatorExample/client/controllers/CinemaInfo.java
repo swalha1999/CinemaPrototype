@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -59,10 +60,10 @@ public class CinemaInfo {
     private TableView<ScreeningView> ScreeningTable;
 
     @FXML
-    private TableColumn<ScreeningView, ?> Start_Col;
+    private TableColumn<ScreeningView, LocalDateTime> Start_Col;
 
     @FXML
-    private TableColumn<ScreeningView, ?> End_Col;
+    private TableColumn<ScreeningView, Integer> Duration_Col;
 
     @FXML
     private TableColumn<ScreeningView, String> ScreeningName_Col;
@@ -105,6 +106,9 @@ public class CinemaInfo {
         seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
 
         ScreeningName_Col.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
+        Start_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
+        Duration_Col.setCellValueFactory(new PropertyValueFactory<>("durationInMinutes"));
+
 
         cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection == null) {
@@ -114,15 +118,17 @@ public class CinemaInfo {
             for (Hall hall : newSelection.getCinema().getHalls()) {
                 hallTable.getItems().add(new HallView(hall));
             }
+
+            //select the first hall
+            hallTable.getSelectionModel().selectFirst();
         });
 
         hallTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection == null) {
                 return;
             }
-            //TODO: implement screening table
+            ScreeningTable.getItems().clear();
             try {
-                ScreeningTable.getItems().clear();
                 for (Screening screening : newSelection.getHall().getScreenings()) {
                     ScreeningTable.getItems().add(new ScreeningView(screening));
                 }
@@ -131,8 +137,6 @@ public class CinemaInfo {
                         .setSessionKey(SessionKeysStorage.getInstance().getSessionKey()).setDataObject(newSelection.getHall());
                 Client.getClient().sendToServer(message);
             }
-
-
         });
     }
 

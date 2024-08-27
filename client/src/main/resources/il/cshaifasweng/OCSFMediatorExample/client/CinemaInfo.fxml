@@ -39,7 +39,7 @@
             <columns>
                 <TableColumn fx:id="ScreeningName_Col" prefWidth="259.0" text="Screening Name" />
                 <TableColumn fx:id="Start_Col" prefWidth="175.0" text="Start" />
-                <TableColumn fx:id="End_Col" prefWidth="116.0" text="End" />
+                <TableColumn fx:id="Duration_Col" prefWidth="116.0" text="Duration" />
             </columns>
         </TableView>
     </HBox>
