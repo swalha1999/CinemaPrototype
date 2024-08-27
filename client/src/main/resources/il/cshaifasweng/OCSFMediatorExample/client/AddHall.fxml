@@ -19,17 +19,17 @@
     <GridPane hgap="10" layoutX="20" layoutY="50" vgap="10">
         <Label text="Hall Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <TextField fx:id="hallNameField" promptText="Enter hall name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
+   
         <Label text="Number of Seats:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <TextField fx:id="seatsNumberField" promptText="Enter number of seats" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-        </rowConstraints>
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 
     <!-- Buttons -->

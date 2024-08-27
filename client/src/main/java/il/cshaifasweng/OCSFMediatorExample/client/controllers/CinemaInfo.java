@@ -117,14 +117,14 @@ public class CinemaInfo {
         @FXML
         void addScreening(ActionEvent event) {
             Platform.runLater(() -> {
-                setRoot("EditScreening");
+                setRoot("AddScreening");
             });
         }
 
         @FXML
         void editHall(ActionEvent event) {
             Platform.runLater(() -> {
-                setRoot("AddHall");
+                setRoot("EditHall");
             });
         }
 
@@ -178,7 +178,7 @@ public class CinemaInfo {
     @FXML
     void editCinema(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("AddCinema");
+            setRoot("EditCinema");
         });
     }
 

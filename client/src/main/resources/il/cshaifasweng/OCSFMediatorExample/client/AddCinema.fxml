@@ -9,19 +9,19 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="271.0" prefWidth="365.0" stylesheets="@css/AddHall.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AddHall">
+<AnchorPane prefHeight="271.0" prefWidth="365.0" stylesheets="@css/AddCinema.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AddCinema">
     <!-- ToolBar at the top -->
     <ToolBar styleClass="toolbar">
-        <Label styleClass="toolbar-label" text=" Hall" />
+        <Label styleClass="toolbar-label" text=" Cinema" />
     </ToolBar>
 
     <!-- GridPane for form inputs -->
     <GridPane hgap="10" layoutX="20" layoutY="50" vgap="10">
-        <Label text="Hall Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="hallNameField" promptText="Enter hall name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label text="City:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="cityField" promptText="Enter city" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-        <Label text="Number of Seats:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="seatsNumberField" promptText="Enter number of seats" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Manager:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="managerField" promptText="Enter manager name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />

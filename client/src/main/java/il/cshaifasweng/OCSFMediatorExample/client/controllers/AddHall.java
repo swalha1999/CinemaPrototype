@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'EditHall.fxml' Controller Class
+ * Sample Skeleton for 'AddHall.fxml' Controller Class
  */
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;

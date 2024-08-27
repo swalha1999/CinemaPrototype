@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'EditScreening.fxml' Controller Class
+ * Sample Skeleton for 'AddScreening.fxml' Controller Class
  */
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 
-public class EditScreening {
+public class AddScreening {
 
     @FXML // fx:id="endTimeField"
     private TextField endTimeField; // Value injected by FXMLLoader
