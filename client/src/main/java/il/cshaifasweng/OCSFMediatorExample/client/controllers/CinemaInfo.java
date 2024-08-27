@@ -106,26 +106,21 @@ public class CinemaInfo {
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-
-        Client.getClient().sendToServer(message);
-
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         managerColumn.setCellValueFactory(new PropertyValueFactory<>("managerName"));
 
-//        hallName_Col.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
+        hallName_Col.setCellValueFactory(new PropertyValueFactory<>("name"));
+        seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
 
-//        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection == null) {
-//                return;
-//            }
-//            hallTable.getItems().clear();
-//            for (Hall hall : newSelection.getCinema().getHalls()) {
-//                hallTable.getItems().add(new HallView(hall));
-//            }
-//        });
+        cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection == null) {
+                return;
+            }
+            hallTable.getItems().clear();
+            for (Hall hall : newSelection.getCinema().getHalls()) {
+                hallTable.getItems().add(new HallView(hall));
+            }
+        });
     }
 
     @FXML
@@ -156,9 +151,7 @@ public class CinemaInfo {
 
     @FXML
     void addHall(ActionEvent event) {
-        Platform.runLater(() -> {
-            showSideUI("AddHall", cinemaTable.getSelectionModel().getSelectedItem().getCinema());
-        });
+        showSideUI("AddHall", cinemaTable.getSelectionModel().getSelectedItem().getCinema());
     }
 
     @FXML
@@ -170,19 +163,16 @@ public class CinemaInfo {
     void removeHall(ActionEvent event) {
         Hall selectedHall = hallTable.getSelectionModel().getSelectedItem().getHall();
 
-        // send a message to the server to remove the selected hall
         Message message = new Message(MessageType.REMOVE_HALL_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(selectedHall);
 
+        Client.getClient().sendToServer(message);
     }
-
 
     @FXML
     void addScreening(ActionEvent event) {
-        Platform.runLater(() -> {
-            showSideUI("AddScreening");
-        });
+        showSideUI("AddScreening");
     }
 
     @FXML
