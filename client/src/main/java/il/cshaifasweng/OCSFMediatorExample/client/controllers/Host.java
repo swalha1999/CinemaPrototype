@@ -26,7 +26,7 @@ public class Host {
 
     public void initialize() {
         port.setText("3000");
-        ipAdd.setText("server.swalha1999.com");
+        ipAdd.setText("cinema.swalha1999.com");
     }
 
     @FXML
