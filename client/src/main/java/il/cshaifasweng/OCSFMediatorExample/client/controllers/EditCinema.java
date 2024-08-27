@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Objects;
@@ -38,6 +39,11 @@ public class EditCinema {
     private TextField phoneField; // Value injected by FXMLLoader
 
     private Cinema cinema;
+
+    @FXML
+    public void initialize() {
+        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
+    }
 
     @FXML
     void cancelEdit(ActionEvent event) {
@@ -66,10 +72,12 @@ public class EditCinema {
 
     @Subscribe
     public void onSideUiChange (ShowSideUIEvent event){
+        System.out.println("i GOT HERE!!!!");
         if(!Objects.equals(event.getUIName(), "EditCinema")){
             return;
         }
         cinema = (Cinema) event.getFirstObj();
+
         addressField.setText(cinema.getAddress());
         cityField.setText(cinema.getCity());
         emailField.setText(cinema.getEmail());

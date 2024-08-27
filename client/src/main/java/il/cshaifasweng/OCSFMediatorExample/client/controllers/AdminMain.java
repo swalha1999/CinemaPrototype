@@ -117,6 +117,8 @@ public class AdminMain {
         loadFXMLPane("Purchase");
         loadFXMLPane("AdminAddMovie");
         loadFXMLPane("AddScreening");
+        loadFXMLPane("EditCinema");
+
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
