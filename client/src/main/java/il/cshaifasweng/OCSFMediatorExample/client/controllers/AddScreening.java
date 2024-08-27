@@ -1,27 +1,25 @@
-/**
- * Sample Skeleton for 'AddScreening.fxml' Controller Class
- */
+
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class AddScreening {
 
-    @FXML // fx:id="endTimeField"
-    private TextField endTimeField; // Value injected by FXMLLoader
+    @FXML // fx:id="movieDate"
+    private DatePicker movieDate; // Value injected by FXMLLoader
 
-    @FXML // fx:id="screeningNameField"
-    private TextField screeningNameField; // Value injected by FXMLLoader
+    @FXML // fx:id="movieNameCombobox"
+    private ComboBox<?> movieNameCombobox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="startTimeField"
-    private TextField startTimeField; // Value injected by FXMLLoader
+
+
 
     @FXML
     void handleBack(ActionEvent event) {
