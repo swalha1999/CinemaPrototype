@@ -193,16 +193,6 @@ public class CinemaInfo {
         // TODO: Implement remove screening functionality
     }
 
-    @FXML
-    void returnBack(ActionEvent event) {
-        // TODO: Implement return back functionality
-    }
-
-    @FXML
-    void returnHome(ActionEvent event) {
-        // TODO: Implement return home functionality
-    }
-
     @Subscribe
     public void onGetAllCinemas(GetAllCinemasEvent event) {
         Platform.runLater(() -> {
