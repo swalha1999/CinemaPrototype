@@ -50,51 +50,31 @@ public class Server extends AbstractServer {
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
-        switch (request.getType()) {
-            case GET_ALL_USERS_REQUEST:
-                return handleGetAllUsersRequest(request, client);
-            case GET_MY_TICKETS_REQUEST:
-                return handleGetMyTicketsRequest(request, client);
-            case BLOCK_USER_REQUEST:
-                return handleBlockUserRequest(request, client);
-            case UNBLOCK_USER_REQUEST:
-                return handleUnblockUserRequest(request, client);
-            case REMOVE_USER_REQUEST:
-                return handleRemoveUserRequest(request, client);
-            case GET_ALL_MOVIES_REQUEST:
-                return handleGetAllMoviesRequest(request, client);
-            case ADD_MOVIE_REQUEST:
-                return handleAddMovieRequest(request, client);
-            case REMOVE_MOVIE_REQUEST:
-                return handleRemoveMovieRequest(request, client);
-            case GET_MOVIE_REQUEST:
-                return handleGetMovieRequest(request, client);
-            case UPDATE_MOVIE_REQUEST:
-                return handleUpdateMovieRequest(request, client);
-            case GET_ALL_SCREENINGS_REQUEST:
-                return handleGetAllScreeningsRequest(request, client);
-            case GET_SCREENING_FOR_MOVIE_REQUEST:
-                return handleGetScreeningForMovieRequest(request, client);
-            case GET_ALL_CINEMAS_REQUEST:
-                return handleGetAllCinemasRequest(request, client);
-            case GET_CINEMA_HALLS_REQUEST:
-                return handleGetCinemaHallsRequest(request, client);
-            case ADD_CINEMA_REQUEST:
-                return handleAddCinemaRequest(request, client);
-            case REMOVE_CINEMA_REQUEST:
-                return handleRemoveCinemaRequest(request, client);
-            case UPDATE_CINEMA_REQUEST:
-                return handleUpdateCinemaRequest(request, client);
-            case CHANGE_USER_ROLE_REQUEST:
-                return handleChangeUserRoleRequest(request, client);
-            case GET_SCREENING_FOR_HALL_REQUEST:
-                return handleGetScreeningForHallRequest(request, client);
+        return switch (request.getType()) {
+            case GET_ALL_USERS_REQUEST -> handleGetAllUsersRequest(request, client,loggedInUser);
+            case GET_MY_TICKETS_REQUEST -> handleGetMyTicketsRequest(request, client, loggedInUser);
+            case BLOCK_USER_REQUEST -> handleBlockUserRequest(request, client, loggedInUser);
+            case UNBLOCK_USER_REQUEST -> handleUnblockUserRequest(request, client, loggedInUser);
+            case REMOVE_USER_REQUEST -> handleRemoveUserRequest(request, client, loggedInUser);
+            case GET_ALL_MOVIES_REQUEST -> handleGetAllMoviesRequest(request, client, loggedInUser);
+            case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
+            case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
+            case GET_MOVIE_REQUEST -> handleGetMovieRequest(request, client, loggedInUser);
+            case UPDATE_MOVIE_REQUEST -> handleUpdateMovieRequest(request, client, loggedInUser);
+            case GET_ALL_SCREENINGS_REQUEST -> handleGetAllScreeningsRequest(request, client, loggedInUser);
+            case GET_SCREENING_FOR_MOVIE_REQUEST -> handleGetScreeningForMovieRequest(request, client, loggedInUser);
+            case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
+            case GET_CINEMA_HALLS_REQUEST -> handleGetCinemaHallsRequest(request, client, loggedInUser);
+            case ADD_CINEMA_REQUEST -> handleAddCinemaRequest(request, client, loggedInUser);
+            case REMOVE_CINEMA_REQUEST -> handleRemoveCinemaRequest(request, client, loggedInUser);
+            case UPDATE_CINEMA_REQUEST -> handleUpdateCinemaRequest(request, client, loggedInUser);
+            case CHANGE_USER_ROLE_REQUEST -> handleChangeUserRoleRequest(request, client, loggedInUser);
+            case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
 
-                //TODO: add the rest of the cases here
+            //TODO: add the rest of the cases here
 
-            default:
-                return sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
-        }
+            default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
+        };
     }
 
     private void handleV2Message(Message request, ConnectionToClient client) {
@@ -172,12 +152,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleGetAllUsersRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
+    private Message handleGetAllUsersRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER :
@@ -202,13 +177,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleGetMyTicketsRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
+    private Message handleGetMyTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
@@ -218,16 +187,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleBlockUserRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleBlockUserRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER :
@@ -254,16 +214,8 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.BLOCK_USER_RESPONSE);
     }
 
-    private Message handleUnblockUserRequest(Message request, ConnectionToClient client) {
+    private Message handleUnblockUserRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER :
@@ -290,16 +242,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.UNBLOCK_USER_RESPONSE);
     }
 
-    private Message handleRemoveUserRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleRemoveUserRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -329,32 +272,13 @@ public class Server extends AbstractServer {
 
     }
 
-    private Message handleGetAllMoviesRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
-
+    private Message handleGetAllMoviesRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response = database.getMoviesManger().getAllMovies(request);
         sendResponse(client, response);
         return response;
     }
 
-    private Message handleAddMovieRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleAddMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -382,15 +306,7 @@ public class Server extends AbstractServer {
 
     }
 
-    private Message handleRemoveMovieRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleRemoveMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -405,7 +321,6 @@ public class Server extends AbstractServer {
         }
 
         Message response = database.getMoviesManger().removeMovie(request);
-
         sendResponse(client, response);
 
         // send a patch to all the logged-in users
@@ -417,16 +332,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.REMOVE_MOVIE_RESPONSE);
     }
 
-    private Message handleGetMovieRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleGetMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         Message response = database.getMoviesManger().getMovie(request);
         sendResponse(client, response);
@@ -434,16 +340,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleUpdateMovieRequest(Message request, ConnectionToClient client) {
-
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleUpdateMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -467,15 +364,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.UPDATE_MOVIE_RESPONSE);
     }
 
-    private Message handleGetAllScreeningsRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleGetAllScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -495,15 +384,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleGetScreeningForMovieRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleGetScreeningForMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         Message response = database.getScreeningsManager().getAllScreeningsForMovie(request);
         sendResponse(client, response);
@@ -511,15 +392,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleGetAllCinemasRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleGetAllCinemasRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -540,15 +413,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleGetCinemaHallsRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleGetCinemaHallsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -567,15 +432,7 @@ public class Server extends AbstractServer {
         return response;
     }
 
-    private Message handleAddCinemaRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleAddCinemaRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -602,15 +459,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.ADD_CINEMA_RESPONSE);
     }
 
-    private Message handleRemoveCinemaRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleRemoveCinemaRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -637,15 +486,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.REMOVE_CINEMA_RESPONSE);
     }
 
-    private Message handleUpdateCinemaRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleUpdateCinemaRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -671,15 +512,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.UPDATE_CINEMA_RESPONSE);
     }
 
-    private Message handleChangeUserRoleRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleChangeUserRoleRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         switch (loggedInUser.getRole()) {
             case SYSTEM_MANAGER:
@@ -707,15 +540,7 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.CHANGE_USER_ROLE_RESPONSE);
     }
 
-    private Message handleGetScreeningForHallRequest(Message request, ConnectionToClient client) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-
-        if (loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User is not logged in");
-        }
-
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
+    private Message handleGetScreeningForHallRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
         Message response = database.getScreeningsManager().getScreeningForHall(request);
         sendResponse(client, response);
