@@ -179,9 +179,7 @@ public class Server extends AbstractServer {
         request.setUsername(sessionKeys.get(request.getSessionKey()).getUsername()); // add the username for faster access
         request.setUserId(sessionKeys.get(request.getSessionKey()).getUserId()); // add the user id for faster access
 
-        System.out.println("Get all users request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getUsersManager().getAllUsers(request);
-        System.out.println("Get all users response: " + response.toString()); //TODO: remove this line debug only
         sendResponse(client, response);
 
         return response;
@@ -239,9 +237,7 @@ public class Server extends AbstractServer {
                 return sendErrorMessage(client, "Error! User does not have permission to unblock users");
         }
 
-        System.out.println("Unblock user request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getUsersManager().unblockUser(request);
-        System.out.println("Unblock user response: " + response.toString()); //TODO: remove this line debug only
         sendResponse(client, response);
 
         if (response.isSuccess()) {

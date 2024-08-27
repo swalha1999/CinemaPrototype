@@ -58,6 +58,7 @@ public class HallDAO
         hall.setSeatsNum(100); //default value
 
         session.save(hall);
+        session.flush();
         return new Message(MessageType.ADD_HALL_RESPONSE)
                 .setSuccess(true)
                 .setMessage("Hall added successfully")
