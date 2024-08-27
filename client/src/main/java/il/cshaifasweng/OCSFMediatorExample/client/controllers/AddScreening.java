@@ -9,8 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Date;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
@@ -25,6 +28,8 @@ public class AddScreening {
 
     void initialize() {
         EventBus.getDefault().register(this);
+
+        movieNameCombobox.getItems().add(new Movie("Hello", new Date()));
     }
 
     @FXML

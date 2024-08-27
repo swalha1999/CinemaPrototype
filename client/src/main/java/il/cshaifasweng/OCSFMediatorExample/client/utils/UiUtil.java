@@ -38,6 +38,10 @@ public class UiUtil {
         EventBus.getDefault().post(new ShowSideUIEvent(UIName, dataForPage));
     }
 
+    public static void showSideUI(String UIName, Object dataForPage, Object dataForPage2){
+        EventBus.getDefault().post(new ShowSideUIEvent(UIName, dataForPage, dataForPage2));
+    }
+
     public static void showNotification(String message, boolean Success){
         EventBus.getDefault().post(new ShowNotificationEvent(message, Success));
     }

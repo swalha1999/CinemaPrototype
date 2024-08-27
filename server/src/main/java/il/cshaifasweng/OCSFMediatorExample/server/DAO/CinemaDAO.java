@@ -67,8 +67,13 @@ public class CinemaDAO {
 
         Cinema cinema = new Cinema(cinemaFromUser.getName(), cinemaFromUser.getCity(), cinemaFromUser.getAddress(), cinemaFromUser.getPhoneNumber(), cinemaFromUser.getEmail());
         cinema.setManager(manager);
+        cinema.setName("yes planet");
+        cinema.setAddress("iksal");
+        cinema.setEmail("email");
+        cinema.setPhoneNumber("902109841091");
 
         session.save(cinema);
+        session.flush();
         return new Message(MessageType.ADD_CINEMA_RESPONSE)
                 .setSuccess(true)
                 .setMessage("Cinema added successfully")
@@ -90,9 +95,11 @@ public class CinemaDAO {
         Set<Hall> halls = cinema.getHalls();
         for (Hall hall : halls) {
             session.delete(hall);
+            session.flush();
         }
 
         session.delete(cinema);
+        session.flush();
         return new Message(MessageType.REMOVE_CINEMA_RESPONSE)
                 .setSuccess(true)
                 .setMessage("Cinema removed successfully")
@@ -111,6 +118,7 @@ public class CinemaDAO {
         cinema.setEmail(cinemaFromUser.getEmail() == null ? cinema.getEmail() : cinemaFromUser.getEmail());
 
         session.update(cinema);
+        session.flush();
         return new Message(MessageType.UPDATE_CINEMA_RESPONSE)
                 .setSuccess(true)
                 .setMessage("Cinema updated successfully")

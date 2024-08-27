@@ -126,6 +126,10 @@ public class AdminMain {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
+        message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
         message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);

@@ -9,10 +9,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.AddCinemaEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForHallEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveCinemaEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -263,6 +260,23 @@ public class CinemaInfo {
             Hall hallToUpdate = getHallFromData(hall);
             if (hallToUpdate != null) {
                 hallToUpdate.setScreenings(new HashSet<>(event.getScreenings()));
+            }
+        });
+    }
+
+    @Subscribe
+    public void onAddHall(AddHallEvent event) {
+        Platform.runLater(() -> {
+            Hall hall = event.getHall();
+            Cinema cinema = hall.getCinema();
+            for (CinemaView cinemaView : cinemaTable.getItems()) {
+                if (cinemaView.getCinema().getId() == cinema.getId()) {
+                    cinemaView.getCinema().getHalls().add(hall);
+                    break;
+                }
+            }
+            if (cinemaTable.getSelectionModel().getSelectedItem().getCinema().getId() == cinema.getId()) {
+                hallTable.getItems().add(new HallView(hall));
             }
         });
     }

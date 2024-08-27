@@ -80,6 +80,9 @@ public class Server extends AbstractServer {
             case REMOVE_CINEMA_REQUEST -> handleRemoveCinemaRequest(request, client, loggedInUser);
             case UPDATE_CINEMA_REQUEST -> handleUpdateCinemaRequest(request, client, loggedInUser);
 
+            //HALLS
+            case ADD_HALL_REQUEST -> handleAddHallRequest(request, client, loggedInUser);
+
 
             //TODO: add the rest of the cases here
 
@@ -179,9 +182,7 @@ public class Server extends AbstractServer {
         request.setUsername(sessionKeys.get(request.getSessionKey()).getUsername()); // add the username for faster access
         request.setUserId(sessionKeys.get(request.getSessionKey()).getUserId()); // add the user id for faster access
 
-        System.out.println("Get all users request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getUsersManager().getAllUsers(request);
-        System.out.println("Get all users response: " + response.toString()); //TODO: remove this line debug only
         sendResponse(client, response);
 
         return response;
@@ -239,9 +240,7 @@ public class Server extends AbstractServer {
                 return sendErrorMessage(client, "Error! User does not have permission to unblock users");
         }
 
-        System.out.println("Unblock user request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getUsersManager().unblockUser(request);
-        System.out.println("Unblock user response: " + response.toString()); //TODO: remove this line debug only
         sendResponse(client, response);
 
         if (response.isSuccess()) {
@@ -555,6 +554,26 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
 
         return response;
+    }
+
+    private Message handleAddHallRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+
+            switch (loggedInUser.getRole()) {
+                case SYSTEM_MANAGER:
+                case MANAGER_OF_ALL_BRANCHES:
+                case BRANCH_MANAGER:
+                    break;
+                case CUSTOMER_SERVICE:
+                case CONTENT_MANAGER:
+                case USER:
+                default:
+                    return sendErrorMessage(client, "Error! User does not have permission to add halls");
+            }
+
+            Message response = database.getHallsManager().addHall(request);
+            sendResponse(client, response);
+
+            return response;
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {
