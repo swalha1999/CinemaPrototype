@@ -50,6 +50,5 @@ public class Host {
         Platform.runLater(()->{
             setRoot("Login");
         });
-
     }
 }

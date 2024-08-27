@@ -50,13 +50,16 @@ public enum MessageType implements Serializable {
     GET_ALL_SCREENINGS_RESPONSE, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_REQUEST, // DONE on server and client
     GET_SCREENING_FOR_MOVIE_RESPONSE, // DONE on server and client
+    GET_SCREENING_FOR_HALL_REQUEST, // DONE
+    GET_SCREENING_FOR_HALL_RESPONSE, // TODO
+
 
     // TICKETS
     GET_MY_TICKETS_REQUEST, // DONE on server TODO: client
     GET_MY_TICKETS_RESPONSE, // DONE on server TODO: client
     PURCHASE_TICKET_REQUEST, // DONE on server TODO: client
 
-
+    // CINEMAS
     GET_ALL_CINEMAS_REQUEST, // Done on Server TODO: client
     GET_ALL_CINEMAS_RESPONSE, // Done on Server and client
     ADD_CINEMA_REQUEST, // Done one server TODO: client
@@ -70,6 +73,8 @@ public enum MessageType implements Serializable {
     UPDATE_CINEMA_PATCH, // Done on the server TODO: client
     GET_CINEMA_HALLS_REQUEST, // Done on server TODO on client
     GET_CINEMA_HALLS_RESPONSE, // Done on client TODO on server
+
+    // HALLS
     ADD_HALL_REQUEST, // TODO on server and client
     ADD_HALL_RESPONSE, // TODO on server and client
     ADD_HALL_PATCH, // TODO on server and client

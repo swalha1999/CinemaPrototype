@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -39,6 +40,19 @@ public class ScreeningDAO {
 
         Query<Screening> query = session.createQuery("from Screening where movie = :movie", Screening.class);
         query.setParameter("movie", movie);
+        List<Screening> allScreening = query.getResultList();
+
+        return response.setSuccess(true)
+                .setMessage("All screenings fetched successfully")
+                .setDataObject(allScreening);
+    }
+
+    public Message getScreeningForHall(Message request) {
+        Message response = new Message(MessageType.GET_SCREENING_FOR_HALL_RESPONSE);
+        Hall hall = (Hall) request.getDataObject();
+
+        Query<Screening> query = session.createQuery("from Screening where hall = :hall", Screening.class);
+        query.setParameter("hall", hall);
         List<Screening> allScreening = query.getResultList();
 
         return response.setSuccess(true)

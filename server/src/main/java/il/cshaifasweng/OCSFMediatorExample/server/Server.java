@@ -41,8 +41,16 @@ public class Server extends AbstractServer {
 
     private Message handleV3Message(Message request, ConnectionToClient client) {
 
-        switch (request.getType()) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
+        if (loggedInUser == null) {
+            return sendErrorMessage(client, "Error! User is not logged in");
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        switch (request.getType()) {
             case GET_ALL_USERS_REQUEST:
                 return handleGetAllUsersRequest(request, client);
             case GET_MY_TICKETS_REQUEST:
@@ -79,6 +87,8 @@ public class Server extends AbstractServer {
                 return handleUpdateCinemaRequest(request, client);
             case CHANGE_USER_ROLE_REQUEST:
                 return handleChangeUserRoleRequest(request, client);
+            case GET_SCREENING_FOR_HALL_REQUEST:
+                return handleGetScreeningForHallRequest(request, client);
 
                 //TODO: add the rest of the cases here
 
@@ -202,9 +212,7 @@ public class Server extends AbstractServer {
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
-        System.out.println("Get my tickets request received:" + request.toString()); //TODO: remove this line debug only
         Message response = database.getTicketsManager().getMyTickets(request);
-        System.out.println("Get my tickets response: " + response.toString()); //TODO: remove this line debug only
 
         sendResponse(client, response);
         return response;
@@ -697,6 +705,22 @@ public class Server extends AbstractServer {
         }
 
         return response.setMessageType(MessageType.CHANGE_USER_ROLE_RESPONSE);
+    }
+
+    private Message handleGetScreeningForHallRequest(Message request, ConnectionToClient client) {
+        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
+
+        if (loggedInUser == null) {
+            return sendErrorMessage(client, "Error! User is not logged in");
+        }
+
+        request.setUsername(loggedInUser.getUsername());
+        request.setUserId(loggedInUser.getUserId());
+
+        Message response = database.getScreeningsManager().getScreeningForHall(request);
+        sendResponse(client, response);
+
+        return response;
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {

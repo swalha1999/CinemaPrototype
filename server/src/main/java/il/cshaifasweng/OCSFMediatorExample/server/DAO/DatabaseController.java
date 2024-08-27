@@ -11,6 +11,7 @@ public class DatabaseController {
     private final TicketDAO tickets;
     private final ScreeningDAO screenings;
     private final CinemaDAO cinemas;
+    private final HallDAO halls;
 
     public DatabaseController(Session session) {
         this.session = session;
@@ -19,6 +20,7 @@ public class DatabaseController {
         this.tickets = new TicketDAO(session);
         this.screenings = new ScreeningDAO(session);
         this.cinemas = new CinemaDAO(session);
+        this.halls = new HallDAO(session);
     }
 
     public MovieDAO getMoviesManger() {
@@ -45,6 +47,10 @@ public class DatabaseController {
         return cinemas;
     }
 
+    public HallDAO getHallsManager() {
+        return halls;
+    }
+
 
     public void setSession(Session session) {
         this.session = session;
@@ -53,6 +59,7 @@ public class DatabaseController {
         this.tickets.setSession(session);
         this.screenings.setSession(session);
         this.cinemas.setSession(session);
+        this.halls.setSession(session);
         // add more DAOs here
     }
 

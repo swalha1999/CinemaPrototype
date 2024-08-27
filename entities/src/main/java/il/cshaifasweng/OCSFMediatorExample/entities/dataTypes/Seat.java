@@ -14,27 +14,26 @@ public class Seat implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id")
-    private Hall hall;
+    private Screening screening;
 
     // the SeatLocation class is used to represent the location of the seat in the seat map
     private int seatLocationX;
     private int seatLocationY;
-    private int SeatAngle;
     private int SeatNumber;
-    private boolean isAvailable = true;
+    private boolean isAvailable;
 
     public Seat() {
         this.seatLocationX = 0;
         this.seatLocationY = 0;
-        this.SeatAngle = 0;
         this.SeatNumber = 0;
+        this.isAvailable = true;
     }
 
-    public Seat(int seatLocationX, int seatLocationY, int SeatAngle, int SeatNumber) {
+    public Seat(int seatLocationX, int seatLocationY, int SeatNumber, boolean isAvailable) {
         this.seatLocationX = seatLocationX;
         this.seatLocationY = seatLocationY;
-        this.SeatAngle = SeatAngle;
         this.SeatNumber = SeatNumber;
+        this.isAvailable = isAvailable;
     }
 
     public int getId() {
@@ -49,10 +48,6 @@ public class Seat implements Serializable {
         return seatLocationY;
     }
 
-    public int getSeatAngle() {
-        return SeatAngle;
-    }
-
     public int getSeatNumber() {
         return SeatNumber;
     }
@@ -63,10 +58,6 @@ public class Seat implements Serializable {
 
     public void setSeatLocationY(int seatLocationY) {
         this.seatLocationY = seatLocationY;
-    }
-
-    public void setSeatAngle(int SeatAngle) {
-        this.SeatAngle = SeatAngle;
     }
 
     public void setSeatNumber(int SeatNumber) {
@@ -81,4 +72,27 @@ public class Seat implements Serializable {
         isAvailable = available;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Screening getScreening() {
+        return screening;
+    }
+
+    public void setScreening(Screening screening) {
+        this.screening = screening;
+        this.screening.addSeat(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id=" + id +
+                ", seatLocationX=" + seatLocationX +
+                ", seatLocationY=" + seatLocationY +
+                ", SeatNumber=" + SeatNumber +
+                ", isAvailable=" + isAvailable +
+                '}';
+    }
 }

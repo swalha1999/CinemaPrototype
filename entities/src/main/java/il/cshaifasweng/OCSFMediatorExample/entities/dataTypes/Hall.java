@@ -22,9 +22,6 @@ public class Hall implements Serializable {
     @OneToMany(mappedBy = "hall")
     private Set<Screening> screenings = new HashSet<>();
 
-    @OneToMany(mappedBy = "hall")
-    private Set<Seat> seats = new HashSet<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
@@ -61,18 +58,6 @@ public class Hall implements Serializable {
         this.screenings = screenings;
     }
 
-    public Set<Seat> getSeats() {
-        return seats;
-    }
-
-    public void addSeat(Seat seat) {
-        this.seats.add(seat);
-    }
-
-    public void setSeats(Set<Seat> seats) {
-        this.seats = seats;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -87,14 +72,6 @@ public class Hall implements Serializable {
 
     public void removeScreening(Screening screening) {
         this.screenings.remove(screening);
-    }
-
-    public void removeSeat(Seat seat) {
-        this.seats.remove(seat);
-    }
-
-    public void removeAllSeats() {
-        this.seats.clear();
     }
 
     public void removeAllScreenings() {

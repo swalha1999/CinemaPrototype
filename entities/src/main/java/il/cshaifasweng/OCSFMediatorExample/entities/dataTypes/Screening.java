@@ -33,6 +33,9 @@ public class Screening implements Serializable {
     @OneToMany(mappedBy = "screening")
     private Set<MovieTicket> tickets = new HashSet<>();
 
+    @OneToMany(mappedBy = "hall")
+    private Set<Seat> seats = new HashSet<>();
+
     private LocalDateTime startingAt;
     private int timeInMinute;
     private int price;
@@ -165,9 +168,18 @@ public class Screening implements Serializable {
         this.TotalSeats = TotalSeats;
     }
 
+    public Set<Seat> getSeats() {
+        return seats;
+    }
 
+    public void addSeat(Seat seat) {
+        this.seats.add(seat);
+        if (seat.getScreening() != this) {
+            seat.setScreening(this);
+        }
+    }
 
-
-
-
+    public void removeSeat(Seat seat) {
+        this.seats.remove(seat);
+    }
 }
