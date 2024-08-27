@@ -210,7 +210,6 @@ public class CinemaInfo {
     @Subscribe
     public void onAddCinema(AddCinemaEvent event) {
         Platform.runLater(() -> {
-            cinemaTable.getItems().clear();
             cinemaTable.getItems().add(new CinemaView(event.getCinema()));
         });
     }
