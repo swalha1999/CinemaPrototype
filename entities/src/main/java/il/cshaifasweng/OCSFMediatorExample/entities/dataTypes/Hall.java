@@ -94,7 +94,8 @@ public class Hall implements Serializable {
         return SeatsNum;
     }
 
-    public void setSeatsNum(int seatsNum) {
+    public Hall setSeatsNum(int seatsNum) {
         SeatsNum = seatsNum;
+        return this;
     }
 }

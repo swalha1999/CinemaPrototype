@@ -4,6 +4,13 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +36,13 @@ public class AddHall {
 
     @FXML
     void handleConfirm(ActionEvent event) {
+        Message msg = new Message(MessageType.ADD_HALL_REQUEST).setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Hall hallToAdd = new Hall();
+        hallToAdd.setName(hallNameField.getText());
+        hallToAdd.setSeatsNum(Integer.parseInt(seatsNumberField.getText()));
 
+        msg.setDataObject(hallToAdd);
+        Client.getClient().sendToServer(msg);
+    }
     }
 
-}
