@@ -29,20 +29,39 @@
                 <TableColumn fx:id="managerColumn" prefWidth="165.0" text="Manager" />
             </columns>
         </TableView>
-         <TableView fx:id="hallTable" prefHeight="530.0" prefWidth="313.0">
-             <columns>
-                 <TableColumn fx:id="hallName_Col" prefWidth="159.0" text="Hall" />
-                 <TableColumn fx:id="seatsColumn" prefWidth="151.0" text="Hall Capacity" />
-             </columns>
-         </TableView>
-      <TableView fx:id="ScreeningTable" prefHeight="530.0" prefWidth="553.0">
-        <columns>
-          <TableColumn fx:id="MovieName_Col" prefWidth="259.0" text="Movie Name" />
-          <TableColumn fx:id="Start_Col" prefWidth="175.0" text="Start" />
-            <TableColumn fx:id="End_Col" prefWidth="116.0" text="End" />
-        </columns>
-      </TableView>
+
+        <!-- Hall List Table -->
+        <TableView fx:id="hallTable" prefHeight="530.0" prefWidth="313.0">
+            <columns>
+                <TableColumn fx:id="hallName_Col" prefWidth="159.0" text="Hall" />
+                <TableColumn fx:id="seatsColumn" prefWidth="151.0" text="Hall Capacity" />
+            </columns>
+        </TableView>
+
+        <!-- Screening List Table -->
+        <TableView fx:id="ScreeningTable" prefHeight="530.0" prefWidth="553.0">
+            <columns>
+                <TableColumn fx:id="ScreeningName_Col" prefWidth="259.0" text="Screening Name" />
+                <TableColumn fx:id="Start_Col" prefWidth="175.0" text="Start" />
+                <TableColumn fx:id="End_Col" prefWidth="116.0" text="End" />
+            </columns>
+        </TableView>
     </HBox>
-       <Button fx:id="AddCinemaBtn" layoutX="203.0" layoutY="718.0" onAction="#addCinema" styleClass="button-action" text="Add Cinema" />
-       <Button fx:id="EditCinemaBtn" layoutX="62.0" layoutY="718.0" onAction="#editCinema" styleClass="button-action" text="Edit Cinema" />
+
+    <!-- Cinema Actions -->
+    <Button fx:id="RemoveCienmaBtn" layoutX="255.0" layoutY="718.0" onAction="#RemoveCinema" prefHeight="40.0" prefWidth="142.0" styleClass="button-action" text="Remove Cinema" />
+    <Button fx:id="EditCinemaBtn" layoutX="131.0" layoutY="718.0" onAction="#editCinema" prefHeight="40.0" prefWidth="118.0" styleClass="button-action" text="Edit Cinema" />
+
+    <!-- Hall Actions -->
+    <HBox layoutX="650.0" layoutY="718.0" spacing="10.0" />
+
+    <!-- Screening Actions -->
+    <HBox layoutX="1050.0" layoutY="718.0" spacing="10.0" />
+     <Button fx:id="AddHallBtn" layoutX="407.0" layoutY="718.0" onAction="#addHall" prefHeight="40.0" prefWidth="100.0" styleClass="button-action" text="Add Hall" />
+     <Button fx:id="EditHallBtn" layoutX="639.0" layoutY="718.0" onAction="#editHall" styleClass="button-action" text="Edit Hall" />
+     <Button fx:id="RemoveHallBtn" layoutX="515.0" layoutY="718.0" onAction="#removeHall" prefHeight="40.0" prefWidth="118.0" styleClass="button-action" text="Remove Hall" />
+     <Button fx:id="AddScreeningBtn" layoutX="779.0" layoutY="718.0" onAction="#addScreening" styleClass="button-action" text="Add Screening" />
+     <Button fx:id="EditScreeningBtn" layoutX="933.0" layoutY="718.0" onAction="#editScreening" styleClass="button-action" text="Edit Screening" />
+   <Button fx:id="AddCinemaBtn1" layoutX="10.0" layoutY="718.0" onAction="#addCinema" prefHeight="40.0" prefWidth="118.0" styleClass="button-action" text="Add Cinema" />
+     <Button fx:id="RemoveScreeningBtn" layoutX="1087.0" layoutY="718.0" onAction="#removeScreening" styleClass="button-action" text="Remove Screening" />
 </AnchorPane>

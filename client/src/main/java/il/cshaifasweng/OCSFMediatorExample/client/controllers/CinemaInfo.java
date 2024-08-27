@@ -72,6 +72,72 @@ public class CinemaInfo {
     @FXML // fx:id="seatsColumn"
     private TableColumn<HallView, Integer> seatsColumn; // Value injected by FXMLLoader
 
+
+        @FXML
+        private Button AddCinemaBtn1;
+
+        @FXML
+        private Button AddHallBtn;
+
+        @FXML
+        private Button AddScreeningBtn;
+
+
+        @FXML
+        private Button EditHallBtn;
+
+        @FXML
+        private Button EditScreeningBtn;
+
+        @FXML
+        private Button RemoveCienmaBtn;
+
+        @FXML
+        private Button RemoveHallBtn;
+
+        @FXML
+        private Button RemoveScreeningBtn;
+
+        @FXML
+        private TableColumn<?, ?> ScreeningName_Col;
+
+
+        @FXML
+        void RemoveCinema(ActionEvent event) {
+
+        }
+
+        @FXML
+        void addHall(ActionEvent event) {
+
+        }
+
+        @FXML
+        void addScreening(ActionEvent event) {
+
+        }
+
+        @FXML
+        void editHall(ActionEvent event) {
+
+        }
+
+        @FXML
+        void editScreening(ActionEvent event) {
+
+        }
+
+        @FXML
+        void removeHall(ActionEvent event) {
+
+        }
+
+        @FXML
+        void removeScreening(ActionEvent event) {
+
+        }
+
+
     @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
