@@ -20,7 +20,7 @@ public class Server extends AbstractServer {
 
     public Server(int port, Session session) {
         super(port);
-        this.database = new DatabaseController(session);
+        this.database = DatabaseController.getInstance(session);
     }
 
     @Override
@@ -283,7 +283,7 @@ public class Server extends AbstractServer {
     }
 
     private Message handleGetAllMoviesRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response = database.getMoviesManger().getAllMovies(request);
+        Message response = database.getMoviesManager().getAllMovies(request);
         sendResponse(client, response);
         return response;
     }
@@ -302,7 +302,7 @@ public class Server extends AbstractServer {
                 return sendErrorMessage(client, "Error! User does not have permission to add movies");
         }
 
-        Message response = database.getMoviesManger().addMovie(request);
+        Message response = database.getMoviesManager().addMovie(request);
 
         sendResponse(client, response);
 
@@ -330,7 +330,7 @@ public class Server extends AbstractServer {
                 return sendErrorMessage(client, "Error! User does not have permission to remove movies");
         }
 
-        Message response = database.getMoviesManger().removeMovie(request);
+        Message response = database.getMoviesManager().removeMovie(request);
         sendResponse(client, response);
 
         // send a patch to all the logged-in users
@@ -344,7 +344,7 @@ public class Server extends AbstractServer {
 
     private Message handleGetMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
-        Message response = database.getMoviesManger().getMovie(request);
+        Message response = database.getMoviesManager().getMovie(request);
         sendResponse(client, response);
 
         return response;
@@ -364,7 +364,7 @@ public class Server extends AbstractServer {
                 return sendErrorMessage(client, "Error! User does not have permission to update movies");
         }
 
-        Message response = database.getMoviesManger().updateMovie(request);
+        Message response = database.getMoviesManager().updateMovie(request);
         sendResponse(client, response);
 
         if (response.isSuccess()) {
