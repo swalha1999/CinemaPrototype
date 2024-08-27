@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'AddCinema.fxml' Controller Class
+ * Sample Skeleton for 'EditCinema.fxml' Controller Class
  */
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
