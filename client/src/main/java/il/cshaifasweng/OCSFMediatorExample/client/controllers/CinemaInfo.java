@@ -162,6 +162,9 @@ public class CinemaInfo {
         seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
 
         cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection)->{
+                if (newSelection == null) {
+                    return;
+                }
                 hallTable.getItems().clear();
                 for(Hall hall : newSelection.getCinema().getHalls()) {
                     hallTable.getItems().add(new HallView(hall));
