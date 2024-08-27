@@ -116,6 +116,12 @@ public class AdminMain {
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("Purchase");
         loadFXMLPane("AdminAddMovie");
+
+        Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
+
     }
 
 }
