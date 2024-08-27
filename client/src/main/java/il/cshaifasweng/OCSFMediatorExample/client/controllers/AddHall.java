@@ -53,7 +53,8 @@ public class AddHall {
     @Subscribe
     public void onSideUiEvent(ShowSideUIEvent event) {
         if (event.getUIName().equals("AddHall")) {
-            cinema = (Cinema) event.getFirstObj();
+            cinema = ((Cinema) event.getFirstObj()).deepCopy();
+            System.out.println("Hello Cinema: " + cinema);
         }
     }
 

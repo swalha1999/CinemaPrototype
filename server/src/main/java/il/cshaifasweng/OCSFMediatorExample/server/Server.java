@@ -80,6 +80,9 @@ public class Server extends AbstractServer {
             case REMOVE_CINEMA_REQUEST -> handleRemoveCinemaRequest(request, client, loggedInUser);
             case UPDATE_CINEMA_REQUEST -> handleUpdateCinemaRequest(request, client, loggedInUser);
 
+            //HALLS
+            case ADD_HALL_REQUEST -> handleAddHallRequest(request, client, loggedInUser);
+
 
             //TODO: add the rest of the cases here
 
@@ -551,6 +554,26 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
 
         return response;
+    }
+
+    private Message handleAddHallRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+
+            switch (loggedInUser.getRole()) {
+                case SYSTEM_MANAGER:
+                case MANAGER_OF_ALL_BRANCHES:
+                case BRANCH_MANAGER:
+                    break;
+                case CUSTOMER_SERVICE:
+                case CONTENT_MANAGER:
+                case USER:
+                default:
+                    return sendErrorMessage(client, "Error! User does not have permission to add halls");
+            }
+
+            Message response = database.getHallsManager().addHall(request);
+            sendResponse(client, response);
+
+            return response;
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {

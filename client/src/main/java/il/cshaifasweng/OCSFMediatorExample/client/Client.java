@@ -78,6 +78,9 @@ public class Client extends AbstractClient {
 				case GET_SCREENING_FOR_HALL_RESPONSE:
 					EventBus.getDefault().post( new GetScreeningForHallEvent(message));
 					break;
+				case ADD_HALL_RESPONSE:
+					EventBus.getDefault().post( new AddHallEvent(message));
+					break;
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));

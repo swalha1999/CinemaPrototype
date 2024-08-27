@@ -164,6 +164,20 @@ public class Cinema implements Serializable {
 //        }
     }
 
+    public Cinema deepCopy() {
+        Cinema cinema = new Cinema();
+        cinema.setId(this.id);
+        cinema.setName(this.name);
+        cinema.setCity(this.city);
+        cinema.setAddress(this.address);
+        cinema.setPhoneNumber(this.phoneNumber);
+        cinema.setEmail(this.email);
+        cinema.setManager(this.manager);
+        cinema.setHalls(this.halls);
+        cinema.setScreening(this.screening);
+        return cinema;
+    }
+
     @Override
     public String toString() {
         return "Cinema{" +
