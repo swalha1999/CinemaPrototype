@@ -89,11 +89,11 @@ public class MovieDetailsController {
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
         // this line is to make sure that the event is for this controller only and if we expect data from the event
-        if (!event.getUIName().equals("MovieDetails") || event.getDataForPage() == null) {
+        if (!event.getUIName().equals("MovieDetails") || event.getFirstObj() == null) {
             return;
         }
 
-        Movie movie = (Movie) event.getDataForPage();
+        Movie movie = (Movie) event.getFirstObj();
 
         if (movie == null) {
             showNotification("ERROR: we expected to get data with the UI change with the Type Movie", false);

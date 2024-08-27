@@ -240,18 +240,7 @@ public class Movie implements Serializable {
 
     @Override
     public String toString() {
-        String imageString;
-        if (imageBytes == null) {
-            imageString = "null";
-        } else {
-            imageString = "byte[" + imageBytes.length + "]";
-        }
-        return "Movie{" +
-                "id=" + id +
-                ", englishTitle='" + englishTitle + '\'' +
-                ", genre=" + genre +
-                ", imageBytes=" + imageString +
-                '}';
+        return this.getTitle();
     }
 
     @Override

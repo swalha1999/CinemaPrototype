@@ -53,7 +53,7 @@ public class AddHall {
     @Subscribe
     public void onSideUiEvent(ShowSideUIEvent event) {
         if (event.getUIName().equals("AddHall")) {
-            cinema = (Cinema) event.getDataForPage();
+            cinema = (Cinema) event.getFirstObj();
         }
     }
 
