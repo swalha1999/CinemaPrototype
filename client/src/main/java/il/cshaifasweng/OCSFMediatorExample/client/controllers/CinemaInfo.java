@@ -157,7 +157,7 @@ public class CinemaInfo {
     @FXML
     void addHall(ActionEvent event) {
         Platform.runLater(() -> {
-            showSideUI("AddHall");
+            showSideUI("AddHall", cinemaTable.getSelectionModel().getSelectedItem().getCinema());
         });
     }
 

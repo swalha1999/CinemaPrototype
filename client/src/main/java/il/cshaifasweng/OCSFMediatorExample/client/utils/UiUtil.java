@@ -34,10 +34,13 @@ public class UiUtil {
         EventBus.getDefault().post(new ShowSideUIEvent(UIName));
     }
 
+    public static void showSideUI(String UIName, Object dataForPage){
+        EventBus.getDefault().post(new ShowSideUIEvent(UIName, dataForPage));
+    }
+
     public static void showNotification(String message, boolean Success){
         EventBus.getDefault().post(new ShowNotificationEvent(message, Success));
     }
-
 
     public static Image getImage(String url){
         if (url == null || url.isEmpty() || CinemaMain.class.getResource(url) == null) {

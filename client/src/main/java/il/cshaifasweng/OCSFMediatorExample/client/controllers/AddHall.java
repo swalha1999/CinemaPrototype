@@ -6,6 +6,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
@@ -15,6 +16,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.Subscribe;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
@@ -26,6 +28,8 @@ public class AddHall {
 
     @FXML // fx:id="seatsNumberField"
     private TextField seatsNumberField; // Value injected by FXMLLoader
+
+    Cinema cinema; // this is the cinema that the hall will be added to
 
     @FXML
     void handleBack(ActionEvent event) {
@@ -44,5 +48,12 @@ public class AddHall {
         msg.setDataObject(hallToAdd);
         Client.getClient().sendToServer(msg);
     }
+
+    @Subscribe
+    public void onSideUiEvent(ShowSideUIEvent event) {
+        if (event.getUIName().equals("AddHall")) {
+            cinema = (Cinema) event.getDataForPage();
+        }
     }
 
+}
