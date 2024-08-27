@@ -43,12 +43,6 @@ public class MovieCatalog {
     public void initialize() {
         EventBus.getDefault().register(this);
 
-        // Send request to get all movies
-        Message message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-
-        Client.getClient().sendToServer(message);
-
         // Add listener to search field
         searchField.textProperty().addListener((observable, oldValue, newValue) -> filterMoviesBySearch(newValue));
 

@@ -74,11 +74,6 @@ public class AdminAddMovieController {
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-        Message message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-
-        Client.getClient().sendToServer(message);
-
         for (MovieGenre genre : MovieGenre.values()) {
             genreComboBox.getItems().add(genre);
         }

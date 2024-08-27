@@ -81,11 +81,6 @@ public class AdminUsersView {
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
-
-        Message message = new Message(MessageType.GET_ALL_USERS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
-
         UserName_col.setCellValueFactory(new PropertyValueFactory<>("userName"));
         FirstName_col.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         LastName_col.setCellValueFactory(new PropertyValueFactory<>("lastName"));
