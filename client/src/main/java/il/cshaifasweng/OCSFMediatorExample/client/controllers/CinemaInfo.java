@@ -109,22 +109,30 @@ public class CinemaInfo {
 
         @FXML
         void addHall(ActionEvent event) {
-
+            Platform.runLater(() -> {
+                setRoot("AddHall");
+            });
         }
 
         @FXML
         void addScreening(ActionEvent event) {
-
+            Platform.runLater(() -> {
+                setRoot("EditScreening");
+            });
         }
 
         @FXML
         void editHall(ActionEvent event) {
-
+            Platform.runLater(() -> {
+                setRoot("AddHall");
+            });
         }
 
         @FXML
         void editScreening(ActionEvent event) {
-
+            Platform.runLater(() -> {
+                setRoot("EditScreening");
+            });
         }
 
         @FXML
@@ -163,13 +171,15 @@ public class CinemaInfo {
     @FXML
     void addCinema(ActionEvent event) {
         Platform.runLater(() -> {
-            setRoot("AddHall");
+            setRoot("AddCinema");
         });
     }
 
     @FXML
     void editCinema(ActionEvent event) {
-        //TODO: make a page for it
+        Platform.runLater(() -> {
+            setRoot("AddCinema");
+        });
     }
 
     @FXML

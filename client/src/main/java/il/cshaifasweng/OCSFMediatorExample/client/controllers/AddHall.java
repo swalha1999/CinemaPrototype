@@ -4,9 +4,12 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 
 public class AddHall {
 
@@ -18,7 +21,9 @@ public class AddHall {
 
     @FXML
     void handleBack(ActionEvent event) {
-
+        Platform.runLater(() -> {
+            setRoot("CinemaInfo");
+        });
     }
 
     @FXML
