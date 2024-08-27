@@ -3,11 +3,13 @@ package il.cshaifasweng.OCSFMediatorExample.client.data;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ScreeningView {
+    private Screening screening;
     private SimpleIntegerProperty id;
     private SimpleIntegerProperty availableSeats;
     private SimpleIntegerProperty bookedSeats;
@@ -17,20 +19,10 @@ public class ScreeningView {
     private SimpleObjectProperty<LocalDateTime> screeningDate;
     private SimpleIntegerProperty durationInMinutes;
     private SimpleIntegerProperty endTime;
-
-    public ScreeningView(int id, int availableSeats, int bookedSeats, int cinema, int hall, int movieId, int screeningDate, int startTime, int endTime) {
-        this.id = new SimpleIntegerProperty(id);
-        this.availableSeats = new SimpleIntegerProperty(availableSeats);
-        this.bookedSeats = new SimpleIntegerProperty(bookedSeats);
-        this.cinema = new SimpleIntegerProperty(cinema);
-        this.hall = new SimpleIntegerProperty(hall);
-        this.movieId = new SimpleIntegerProperty(movieId);
-        this.screeningDate = new SimpleObjectProperty<>(LocalDateTime.now());
-        this.durationInMinutes = new SimpleIntegerProperty(startTime);
-        this.endTime = new SimpleIntegerProperty(endTime);
-    }
+    private SimpleStringProperty movieTitle;
 
     public ScreeningView(Screening obj) {
+        this.screening = obj;
         this.id = new SimpleIntegerProperty(obj.getId());
         this.availableSeats = new SimpleIntegerProperty(obj.getAvailableSeats());
         this.bookedSeats = new SimpleIntegerProperty(obj.getTotalSeats() - obj.getAvailableSeats());
@@ -40,6 +32,7 @@ public class ScreeningView {
         this.screeningDate = new SimpleObjectProperty<>(obj.getStartingAt());
         this.durationInMinutes = new SimpleIntegerProperty(obj.getTimeInMinute());
         this.endTime = new SimpleIntegerProperty(obj.getTimeInMinute() + obj.getMovie().getDurationInMinutes());
+        this.movieTitle = new SimpleStringProperty(obj.getMovie().getEnglishTitle());
     }
 
     // Getter methods for properties
@@ -63,6 +56,7 @@ public class ScreeningView {
     public SimpleObjectProperty<LocalDateTime> screeningDateProperty() { return screeningDate; }
     public SimpleIntegerProperty durationInMinutesProperty() { return durationInMinutes; }
     public SimpleIntegerProperty endTimeProperty() { return endTime; }
+    public SimpleStringProperty movieTitleProperty() { return movieTitle; }
 
     public ScreeningView copy(Screening screening) {
         this.id = new SimpleIntegerProperty(screening.getId()) ;
@@ -72,6 +66,8 @@ public class ScreeningView {
         this.movieId = new SimpleIntegerProperty(screening.getMovie().getId());
         this.screeningDate = new SimpleObjectProperty<>(screening.getStartingAt());
         this.durationInMinutes = new SimpleIntegerProperty(screening.getTimeInMinute());
+        this.endTime = new SimpleIntegerProperty(screening.getTimeInMinute() + screening.getMovie().getDurationInMinutes());
+        this.movieTitle = new SimpleStringProperty(screening.getMovie().getEnglishTitle());
         return this;
     }
 

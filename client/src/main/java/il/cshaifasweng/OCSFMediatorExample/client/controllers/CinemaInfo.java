@@ -7,12 +7,15 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
+import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.AddCinemaEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForHallEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemoveCinemaEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -26,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
@@ -52,31 +56,19 @@ public class CinemaInfo {
     private TableColumn<HallView, Integer> seatsColumn; // Value injected by FXMLLoader
 
     @FXML
-    private TableView<?> ScreeningTable;
+    private TableView<ScreeningView> ScreeningTable;
 
     @FXML
-    private TableColumn<?, ?> MovieName_Col;
+    private TableColumn<ScreeningView, ?> Start_Col;
 
     @FXML
-    private TableColumn<?, ?> Start_Col;
+    private TableColumn<ScreeningView, ?> End_Col;
 
     @FXML
-    private TableColumn<?, ?> End_Col;
-
-    @FXML
-    private TableColumn<?, ?> ScreeningName_Col;
-
-    @FXML
-    private Button AddCinemaBtn; // Value injected by FXMLLoader
-
-    @FXML
-    private Button BackBtn; // Value injected by FXMLLoader
+    private TableColumn<ScreeningView, String> ScreeningName_Col;
 
     @FXML
     private Button EditCinemaBtn; // Value injected by FXMLLoader
-
-    @FXML
-    private Button HomeBtn; // Value injected by FXMLLoader
 
     @FXML
     private Button AddCinemaBtn1;
@@ -112,6 +104,8 @@ public class CinemaInfo {
         hallName_Col.setCellValueFactory(new PropertyValueFactory<>("name"));
         seatsColumn.setCellValueFactory(new PropertyValueFactory<>("seats"));
 
+        ScreeningName_Col.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
+
         cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection == null) {
                 return;
@@ -120,6 +114,25 @@ public class CinemaInfo {
             for (Hall hall : newSelection.getCinema().getHalls()) {
                 hallTable.getItems().add(new HallView(hall));
             }
+        });
+
+        hallTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection == null) {
+                return;
+            }
+            //TODO: implement screening table
+            try {
+                ScreeningTable.getItems().clear();
+                for (Screening screening : newSelection.getHall().getScreenings()) {
+                    ScreeningTable.getItems().add(new ScreeningView(screening));
+                }
+            }catch (Exception e) {
+                Message message = new Message(MessageType.GET_SCREENING_FOR_HALL_REQUEST)
+                        .setSessionKey(SessionKeysStorage.getInstance().getSessionKey()).setDataObject(newSelection.getHall());
+                Client.getClient().sendToServer(message);
+            }
+
+
         });
     }
 
@@ -214,5 +227,38 @@ public class CinemaInfo {
                 }
             }
         });
+    }
+
+    @Subscribe
+    public void onGetScreeningForHall(GetScreeningForHallEvent event) {
+        Platform.runLater(() -> {
+            Hall hall = event.getScreenings().getFirst().getHall();
+            if (hallTable.getSelectionModel().getSelectedItem().getHall().getId() == hall.getId()) {
+
+                hallTable.getSelectionModel().getSelectedItem().getHall().setScreenings(new HashSet<>(event.getScreenings()));
+
+                ScreeningTable.getItems().clear();
+                for (Screening screening : event.getScreenings()) {
+                    ScreeningTable.getItems().add(new ScreeningView(screening));
+                }
+                return;
+            }
+
+            Hall hallToUpdate = getHallFromData(hall);
+            if (hallToUpdate != null) {
+                hallToUpdate.setScreenings(new HashSet<>(event.getScreenings()));
+            }
+        });
+    }
+
+    private Hall getHallFromData(Hall hall) {
+        for (CinemaView cinemaView : cinemaTable.getItems()) {
+            for (Hall hall_to_update : cinemaView.getCinema().getHalls()) {
+                if (hall_to_update.getId() == hall.getId()) {
+                    return hall_to_update;
+                }
+            }
+        }
+        return null;
     }
 }

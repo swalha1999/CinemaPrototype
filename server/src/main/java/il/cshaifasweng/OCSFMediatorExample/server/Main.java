@@ -193,11 +193,11 @@ public class Main {
         List<Cinema> cinemas = session.createQuery("from Cinema").list();
 
         for (Movie movie : movies) {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 100; j++) {
                 Screening screening = new Screening();
                 screening.setMovie(movie);
                 screening.setCinema(cinemas.get(j % cinemas.size()));
-                screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().getFirst());
+                screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().get(j % cinemas.get(j % cinemas.size()).getHalls().size()));
                 screening.setStartingAt(LocalDateTime.now());
                 screening.setPrice(45);
                 session.save(screening);

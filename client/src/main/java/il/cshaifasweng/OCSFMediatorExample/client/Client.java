@@ -24,7 +24,6 @@ public class Client extends AbstractClient {
 
 		if (message.getVersion() == MessageVersion.V3) {
 			switch (message.getType()){
-
 				case GET_MY_TICKETS_RESPONSE:
 					EventBus.getDefault().post(new GetMyTicketsEvent(message));
 					break;
@@ -75,6 +74,9 @@ public class Client extends AbstractClient {
 					break;
 				case UPDATED_USER_PATCH:
 					EventBus.getDefault().post( new UpdatedUserEvent(message));
+					break;
+				case GET_SCREENING_FOR_HALL_RESPONSE:
+					EventBus.getDefault().post( new GetScreeningForHallEvent(message));
 					break;
 
 				default:
