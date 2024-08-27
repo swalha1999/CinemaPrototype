@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.data;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.City;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +9,7 @@ public class CinemaView {
     private final Cinema cinema;
     private final SimpleIntegerProperty id;
     private final SimpleStringProperty name;
-    private final SimpleObjectProperty<City> city;
+    private final SimpleObjectProperty<String> city;
     private final SimpleStringProperty address;
     private final SimpleStringProperty phoneNumber;
     private final SimpleStringProperty email;
@@ -30,7 +29,7 @@ public class CinemaView {
 
 
     // Parameterized Constructor
-    public CinemaView(Cinema cinema, int id, String name, City city, String address, String phoneNumber, String email, String managerName) {
+    public CinemaView(Cinema cinema, int id, String name, String city, String address, String phoneNumber, String email, String managerName) {
         this.cinema = cinema;
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
@@ -57,7 +56,7 @@ public class CinemaView {
    public SimpleStringProperty getName() {
         return name;
    }
-   public SimpleObjectProperty<City> getCity() {
+   public SimpleObjectProperty<String> getCity() {
         return city;
    }
    public SimpleStringProperty getAddress() {
@@ -78,7 +77,7 @@ public class CinemaView {
         return name;
     }
 
-    public SimpleObjectProperty<City> cityProperty() {
+    public SimpleObjectProperty<String> cityProperty() {
         return city;
     }
 
@@ -105,7 +104,7 @@ public class CinemaView {
         return this;
     }
 
-    public CinemaView setCity(City city) {
+    public CinemaView setCity(String city) {
         this.city.set(city);
         return this;
     }

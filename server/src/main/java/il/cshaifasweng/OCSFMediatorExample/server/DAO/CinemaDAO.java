@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
@@ -51,7 +52,22 @@ public class CinemaDAO {
 
     public Message addCinema(Message request) {
         Cinema cinemaFromUser = (Cinema) request.getDataObject();
+
+        // Get the user manager from the database by username
+        User manager = session.createQuery("from User where username = :username", User.class)
+                .setParameter("username", cinemaFromUser.getManager().getUsername())
+                .uniqueResult();
+
+        if (manager == null) {
+            return new Message(MessageType.ADD_CINEMA_RESPONSE)
+                    .setSuccess(false)
+                    .setMessage("Manager not found")
+                    .setDataObject(null);
+        }
+
         Cinema cinema = new Cinema(cinemaFromUser.getName(), cinemaFromUser.getCity(), cinemaFromUser.getAddress(), cinemaFromUser.getPhoneNumber(), cinemaFromUser.getEmail());
+        cinema.setManager(manager);
+
         session.save(cinema);
         return new Message(MessageType.ADD_CINEMA_RESPONSE)
                 .setSuccess(true)

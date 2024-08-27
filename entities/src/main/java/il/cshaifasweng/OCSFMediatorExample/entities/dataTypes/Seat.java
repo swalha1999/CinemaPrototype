@@ -13,7 +13,7 @@ public class Seat implements Serializable {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall_id")
+    @JoinColumn(name = "screening_id")
     private Screening screening;
 
     // the SeatLocation class is used to represent the location of the seat in the seat map

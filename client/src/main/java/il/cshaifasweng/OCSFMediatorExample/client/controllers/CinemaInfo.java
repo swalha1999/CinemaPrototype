@@ -8,6 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.HallView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.AddCinemaEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
@@ -200,6 +201,14 @@ public class CinemaInfo {
             for (Cinema cinema :cinemas ) {
                 cinemaTable.getItems().add(new CinemaView(cinema));
             }
+        });
+    }
+
+    @Subscribe
+    public void onAddCinema(AddCinemaEvent event) {
+        Platform.runLater(() -> {
+            cinemaTable.getItems().clear();
+            cinemaTable.getItems().add(new CinemaView(event.getCinema()));
         });
     }
 

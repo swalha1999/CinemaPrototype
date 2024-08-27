@@ -139,10 +139,10 @@ public class Main {
                 movies[i] = existingMovies.getFirst(); // Use the existing movie
             }
         }
-
+        List<String> citys = List.of("TEL_AVIV", "JERUSALEM", "HAIFA");
         // Create and save Cinema and Hall entities
-        for (City city : City.values()) {
-            Cinema cinema = new Cinema("Cinema City " + city.toString() , city, "Rothschild 1", "03-1234567", "email");
+        for (String city : citys) {
+            Cinema cinema = new Cinema("Cinema City " + city , city, "Rothschild 1", "03-1234567", "email");
 
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Cinema> criteria = builder.createQuery(Cinema.class);
@@ -155,7 +155,7 @@ public class Main {
             } else {
 
                 User manager = new User()
-                        .setUsername("manager" + city.toString())
+                        .setUsername("manager" + city)
                         .setSalt(UserDAO.generateSalt());
 
                 manager.setHashedPassword(UserDAO.hashPassword("password", manager.getSalt()));

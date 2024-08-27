@@ -14,7 +14,7 @@ public class Cinema implements Serializable {
     private int id;
 
     private String name;
-    private City city;
+    private String  city;
     private String address;
     private String phoneNumber;
     private String email;
@@ -28,7 +28,7 @@ public class Cinema implements Serializable {
     @OneToOne
     private User manager;
 
-    public Cinema(String name, City city, String address, String phoneNumber, String email) {
+    public Cinema(String name, String city, String address, String phoneNumber, String email) {
         this.name = name;
         this.city = city;
         this.address = address;
@@ -38,7 +38,7 @@ public class Cinema implements Serializable {
 
     public Cinema() {
         this.name = "";
-        this.city = City.TEL_AVIV;
+        this.city = "TEL_AVIV";
         this.address = "";
         this.phoneNumber = "";
         this.email = "";
@@ -60,12 +60,13 @@ public class Cinema implements Serializable {
         this.name = name;
     }
 
-    public City getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public Cinema setCity(String city) {
         this.city = city;
+        return this;
     }
 
     public String getAddress() {
@@ -104,8 +105,9 @@ public class Cinema implements Serializable {
         return manager;
     }
 
-    public void setManager(User manager) {
+    public Cinema setManager(User manager) {
         this.manager = manager;
+        return this;
     }
 
     public Set<Screening> getScreening() {

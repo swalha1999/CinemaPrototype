@@ -51,25 +51,35 @@ public class Server extends AbstractServer {
         request.setUserId(loggedInUser.getUserId());
 
         return switch (request.getType()) {
+            //USERS
             case GET_ALL_USERS_REQUEST -> handleGetAllUsersRequest(request, client,loggedInUser);
-            case GET_MY_TICKETS_REQUEST -> handleGetMyTicketsRequest(request, client, loggedInUser);
             case BLOCK_USER_REQUEST -> handleBlockUserRequest(request, client, loggedInUser);
             case UNBLOCK_USER_REQUEST -> handleUnblockUserRequest(request, client, loggedInUser);
             case REMOVE_USER_REQUEST -> handleRemoveUserRequest(request, client, loggedInUser);
+            case CHANGE_USER_ROLE_REQUEST -> handleChangeUserRoleRequest(request, client, loggedInUser);
+
+            //TICKETS
+            case GET_MY_TICKETS_REQUEST -> handleGetMyTicketsRequest(request, client, loggedInUser);
             case GET_ALL_MOVIES_REQUEST -> handleGetAllMoviesRequest(request, client, loggedInUser);
+
+            //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
             case GET_MOVIE_REQUEST -> handleGetMovieRequest(request, client, loggedInUser);
             case UPDATE_MOVIE_REQUEST -> handleUpdateMovieRequest(request, client, loggedInUser);
+
+            //SCREENINGS
             case GET_ALL_SCREENINGS_REQUEST -> handleGetAllScreeningsRequest(request, client, loggedInUser);
             case GET_SCREENING_FOR_MOVIE_REQUEST -> handleGetScreeningForMovieRequest(request, client, loggedInUser);
+            case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
+
+            //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
             case GET_CINEMA_HALLS_REQUEST -> handleGetCinemaHallsRequest(request, client, loggedInUser);
             case ADD_CINEMA_REQUEST -> handleAddCinemaRequest(request, client, loggedInUser);
             case REMOVE_CINEMA_REQUEST -> handleRemoveCinemaRequest(request, client, loggedInUser);
             case UPDATE_CINEMA_REQUEST -> handleUpdateCinemaRequest(request, client, loggedInUser);
-            case CHANGE_USER_ROLE_REQUEST -> handleChangeUserRoleRequest(request, client, loggedInUser);
-            case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
+
 
             //TODO: add the rest of the cases here
 
@@ -455,7 +465,6 @@ public class Server extends AbstractServer {
             response.setMessageType(MessageType.ADD_CINEMA_PATCH);
             sendToAllAdmins(response);
         }
-
         return response.setMessageType(MessageType.ADD_CINEMA_RESPONSE);
     }
 

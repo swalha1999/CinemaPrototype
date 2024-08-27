@@ -33,7 +33,7 @@ public class Screening implements Serializable {
     @OneToMany(mappedBy = "screening")
     private Set<MovieTicket> tickets = new HashSet<>();
 
-    @OneToMany(mappedBy = "hall")
+    @OneToMany(mappedBy = "screening")
     private Set<Seat> seats = new HashSet<>();
 
     private LocalDateTime startingAt;

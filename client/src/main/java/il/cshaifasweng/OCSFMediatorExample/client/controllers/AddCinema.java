@@ -3,6 +3,12 @@
  */
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +32,16 @@ public class AddCinema {
 
     @FXML
     void handleConfirm(ActionEvent event) {
+        Message msg = new Message(MessageType.ADD_CINEMA_REQUEST).setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
+        User manager = new User().setUsername(managerField.getText());
+
+        Cinema cinemaToAdd = new Cinema().setManager(manager);
+        cinemaToAdd.setCity(cityField.getText());
+        // TODO: add cinema address, phone number, email
+
+        msg.setDataObject(cinemaToAdd);
+        Client.getClient().sendToServer(msg);
     }
 
 }
