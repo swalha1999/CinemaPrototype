@@ -179,7 +179,12 @@ public class CinemaInfo {
 
     @FXML
     void editHall(ActionEvent event) {
-        showSideUI("EditHall", hallTable.getSelectionModel().getSelectedItem().getHall());
+        HallView selectedHall = hallTable.getSelectionModel().getSelectedItem();
+        if (selectedHall != null) {
+            Platform.runLater(() -> {
+                showSideUI("EditHall", selectedHall.getHall());
+            });
+        }
     }
 
     @FXML
