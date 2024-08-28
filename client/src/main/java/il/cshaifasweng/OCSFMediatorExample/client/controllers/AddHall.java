@@ -15,6 +15,8 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -22,6 +24,15 @@ import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class AddHall {
+
+    @FXML // fx:id="backBtn"
+    private Button backBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="confirmBtn"
+    private Button confirmBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="cinemaComboBox"
+    private ComboBox<?> cinemaComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="hallNameField"
     private TextField hallNameField; // Value injected by FXMLLoader
@@ -48,6 +59,10 @@ public class AddHall {
 
         msg.setDataObject(hallToAdd);
         Client.getClient().sendToServer(msg);
+
+        Platform.runLater(() -> {
+            showSideUI("CinemaInfo");
+        });
     }
 
     @Subscribe

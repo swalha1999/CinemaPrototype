@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
@@ -15,24 +16,27 @@
         <Label styleClass="toolbar-label" text=" Hall" />
     </ToolBar>
 
-    <!-- GridPane for form inputs -->
-    <GridPane hgap="10" layoutX="20" layoutY="50" vgap="10">
-        <Label text="Hall Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="hallNameField" promptText="Enter hall name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-   
-        <Label text="Number of Seats:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="seatsNumberField" promptText="Enter number of seats" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <columnConstraints>
-         <ColumnConstraints />
-         <ColumnConstraints />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints />
-         <RowConstraints />
-      </rowConstraints>
-    </GridPane>
-
     <!-- Buttons -->
-    <Button layoutX="100.0" layoutY="167.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
-    <Button layoutX="210.0" layoutY="167.0" onAction="#handleBack" styleClass="button-back" text="Back" />
+    <Button fx:id="confirmBtn" layoutX="66.0" layoutY="187.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
+    <Button fx:id="backBtn" layoutX="210.0" layoutY="187.0" onAction="#handleBack" styleClass="button-back" text="Back" />
+   <GridPane hgap="10.0" layoutX="49.0" layoutY="53.0" prefHeight="92.0" prefWidth="265.0" vgap="10.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints maxHeight="36.799993896484374" minHeight="10.0" prefHeight="31.19998779296875" vgrow="SOMETIMES" />
+       <RowConstraints maxHeight="29.60001220703125" minHeight="10.0" prefHeight="29.60001220703125" vgrow="SOMETIMES" />
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+      <children>
+           <Label text="Hall Name:" />
+           <TextField fx:id="hallNameField" prefWidth="93.0" promptText="Enter hall name" styleClass="text-field" GridPane.columnIndex="1" />
+      
+           <Label text="Number of Seats:" GridPane.rowIndex="1" />
+           <TextField fx:id="seatsNumberField" prefHeight="4.0" prefWidth="128.0" promptText="Enter number of seats" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Label text="Cinema:" GridPane.rowIndex="2" />
+         <ComboBox fx:id="cinemaComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      </children>
+   </GridPane>
 </AnchorPane>

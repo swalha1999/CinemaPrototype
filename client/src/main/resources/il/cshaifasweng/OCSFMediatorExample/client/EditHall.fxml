@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="271.0" prefWidth="365.0" stylesheets="@css/AddHall.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AddHall">
+<AnchorPane prefHeight="271.0" prefWidth="365.0" stylesheets="@css/AddHall.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.EditHall">
     <!-- ToolBar at the top -->
     <ToolBar styleClass="toolbar">
         <Label styleClass="toolbar-label" text=" Hall" />
     </ToolBar>
 
     <!-- GridPane for form inputs -->
-    <GridPane hgap="10" layoutX="20" layoutY="50" vgap="10">
+    <GridPane hgap="10.0" layoutX="20" layoutY="50" vgap="10">
         <Label text="Hall Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <TextField fx:id="hallNameField" promptText="Enter hall name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
@@ -33,6 +33,6 @@
     </GridPane>
 
     <!-- Buttons -->
-    <Button layoutX="100.0" layoutY="167.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
-    <Button layoutX="210.0" layoutY="167.0" onAction="#handleBack" styleClass="button-back" text="Back" />
+    <Button layoutX="100.0" layoutY="167.0" onAction="#saveHall" styleClass="button-confirm" text="Save" />
+    <Button layoutX="210.0" layoutY="167.0" onAction="#handleCancel" styleClass="button-back" text="Cancel" />
 </AnchorPane>

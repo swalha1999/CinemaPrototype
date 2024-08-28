@@ -179,7 +179,7 @@ public class CinemaInfo {
 
     @FXML
     void editHall(ActionEvent event) {
-        // TODO: Implement edit hall functionality
+        showSideUI("EditHall", hallTable.getSelectionModel().getSelectedItem().getHall());
     }
 
     @FXML

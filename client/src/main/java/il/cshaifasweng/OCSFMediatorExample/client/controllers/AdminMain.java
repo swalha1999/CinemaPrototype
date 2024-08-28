@@ -118,6 +118,7 @@ public class AdminMain {
         loadFXMLPane("AdminAddMovie");
         loadFXMLPane("AddScreening");
         loadFXMLPane("EditCinema");
+        loadFXMLPane("EditHall");
 
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)

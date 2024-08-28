@@ -1,6 +1,6 @@
 /* Styling for the toolbar */
 .toolbar {
-    -fx-background-color: #333;
+    -fx-background-color: #34495EFF;
 }
 
 .toolbar-label {
@@ -22,13 +22,13 @@
 
 /* Styling for the buttons */
 .button-confirm {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #34495EFF;
     -fx-text-fill: white;
     -fx-pref-width: 80px;
 }
 
 .button-back {
-    -fx-background-color: #f44336;
+    -fx-background-color: #34495EFF;
     -fx-text-fill: white;
     -fx-pref-width: 80px;
 }

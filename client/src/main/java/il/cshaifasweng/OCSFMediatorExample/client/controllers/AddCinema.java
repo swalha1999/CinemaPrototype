@@ -43,6 +43,10 @@ public class AddCinema {
 
         msg.setDataObject(cinemaToAdd);
         Client.getClient().sendToServer(msg);
+
+        Platform.runLater(() -> {
+            showSideUI("CinemaInfo");
+        });
     }
 
 }
