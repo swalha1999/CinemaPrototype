@@ -7,6 +7,7 @@ Pay attention to the three modules:
 
 ## Running
 // TODO: Add instructions on how to run the project inside IntelliJ IDEA.
+// The instructions on RunIntelliJIDEA.pdf file, maybe it will be better to save it in a new folder 
 
 ## `WindowSize`
 width = 1200
