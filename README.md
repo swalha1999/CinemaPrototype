@@ -18,8 +18,8 @@ hight = 900
 3. TODO: make a page to add Hall
 4. TODO: make a page to add Screening
 5. TODO: add screening management `--> omar`
-6. TODO: add actors to the movie view
-7. TODO: add producer to the movie view
+6. TODO: add actors to the movie view --> orel
+7. TODO: add producer to the movie view --> orel
 8. TODO: add screening to the movie view
 9. TODO: add cinema entity `--> swalha`
 10. TODO: after the screening is done, we can make online movies view
