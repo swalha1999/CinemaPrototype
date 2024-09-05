@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -58,6 +59,89 @@ public class ScreeningDAO {
         return response.setSuccess(true)
                 .setMessage("All screenings fetched successfully")
                 .setDataObject(allScreening);
+    }
+
+    public Message addScreening(Message request) {
+        Message response = new Message(MessageType.ADD_SCREENING_RESPONSE);
+        Screening screeningToAdd = (Screening) request.getDataObject();
+
+        Hall hall = session.get(Hall.class, screeningToAdd.getHall().getId());
+        if (hall == null) {
+            return response.setSuccess(false)
+                    .setMessage("Hall not found")
+                    .setDataObject(null);
+        }
+
+        Cinema cinema = session.get(Cinema.class, hall.getCinema().getId());
+        if (cinema == null) {
+            return response.setSuccess(false)
+                    .setMessage("Cinema not found")
+                    .setDataObject(null);
+        }
+
+
+
+        Screening screening = new Screening();
+        screening.setMovie(screeningToAdd.getMovie());
+        screening.setPrice(screeningToAdd.getPrice());
+        screening.setStartingAt(screeningToAdd.getStartingAt());
+        screening.setHall(hall);
+        screening.setCinema(cinema);
+
+        session.beginTransaction();  // Start transaction
+        session.save(screening);     // Save the screening object
+        session.flush();             // Flush session
+        session.getTransaction().commit(); // Commit transaction
+        return response.setSuccess(true)
+                .setMessage("Screening added successfully")
+                .setDataObject(screening);
+    }
+
+    public Message removeScreening(Message request) {
+        Message response = new Message(MessageType.REMOVE_SCREENING_RESPONSE);
+        Screening screening = session.get(Screening.class, ((Screening) request.getDataObject()).getId());
+
+        if (screening == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found")
+                    .setDataObject(null);
+        }
+
+        session.beginTransaction();
+        session.delete(screening);
+        session.flush();
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Screening removed successfully")
+                .setDataObject(screening);
+    }
+
+    public Message updateScreening(Message request) {
+        Message response = new Message(MessageType.UPDATE_SCREENING_RESPONSE);
+        Screening screeningFromUser = (Screening) request.getDataObject();
+
+        Screening screening = session.get(Screening.class, screeningFromUser.getId());
+
+        if (screening == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found")
+                    .setDataObject(null);
+        }
+
+        screening.setMovie(screeningFromUser.getMovie() == null ? screening.getMovie() : screeningFromUser.getMovie());
+        screening.setHall(screeningFromUser.getHall() == null ? screening.getHall() : screeningFromUser.getHall());
+        screening.setPrice(screeningFromUser.getPrice() == 0 ? screening.getPrice() : screeningFromUser.getPrice());
+        screening.setStartingAt(screeningFromUser.getStartingAt() == null ? screening.getStartingAt() : screeningFromUser.getStartingAt());
+
+        session.beginTransaction();
+        session.update(screening);
+        session.flush();
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Screening updated successfully")
+                .setDataObject(screening);
     }
 
 
