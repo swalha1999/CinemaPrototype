@@ -104,6 +104,13 @@ public class ScreeningDAO {
         Screening screeningFromUser = (Screening) request.getDataObject();
 
         Screening screening = session.get(Screening.class, screeningFromUser.getId());
+
+        if (screening == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found")
+                    .setDataObject(null);
+        }
+
         screening.setMovie(screeningFromUser.getMovie() == null ? screening.getMovie() : screeningFromUser.getMovie());
         screening.setHall(screeningFromUser.getHall() == null ? screening.getHall() : screeningFromUser.getHall());
         screening.setPrice(screeningFromUser.getPrice() == 0 ? screening.getPrice() : screeningFromUser.getPrice());
