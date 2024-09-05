@@ -63,7 +63,7 @@ public class CinemaInfo {
     private TableColumn<ScreeningView, LocalDateTime> Start_Col;
 
     @FXML
-    private TableColumn<ScreeningView, Integer> Duration_Col;
+    private TableColumn<ScreeningView, Integer> Price_Col;
 
     @FXML
     private TableColumn<ScreeningView, String> ScreeningName_Col;
@@ -107,7 +107,7 @@ public class CinemaInfo {
 
         ScreeningName_Col.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
         Start_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
-        Duration_Col.setCellValueFactory(new PropertyValueFactory<>("durationInMinutes"));
+        Price_Col.setCellValueFactory(new PropertyValueFactory<>("price"));
 
 
         cinemaTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

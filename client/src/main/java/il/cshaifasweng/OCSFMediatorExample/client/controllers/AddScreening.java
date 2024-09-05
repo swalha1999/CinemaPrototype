@@ -3,15 +3,13 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -25,6 +23,9 @@ public class AddScreening {
 
     @FXML // fx:id="movieDate"
     private DatePicker movieDate; // Value injected by FXMLLoader
+
+    @FXML // fx:id="priceField"
+    private TextField priceField; // Value injected by FXMLLoader
 
     @FXML // fx:id="movieNameCombobox"
     private ComboBox<Movie> movieNameCombobox; // Value injected by FXMLLoader
@@ -55,6 +56,7 @@ public class AddScreening {
         EventBus.getDefault().register(this);
         movieNameCombobox.setButtonCell(cellFactory.call(null));
         movieNameCombobox.setCellFactory(cellFactory);
+
 
     }
 

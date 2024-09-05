@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -18,6 +19,8 @@
     <Button layoutX="210.0" layoutY="200.0" onAction="#handleBack" styleClass="button-back" text="Back" />
    <ComboBox fx:id="movieNameCombobox" layoutX="100.0" layoutY="63.0" prefWidth="150.0" />
    <Label layoutX="27.0" layoutY="66.0" prefHeight="18.0" prefWidth="37.0" text="Movie:" />
-   <Label layoutX="27.0" layoutY="126.0" prefHeight="18.0" prefWidth="37.0" text="Date:" />
-   <DatePicker fx:id="movieDate" layoutX="99.0" layoutY="123.0" prefHeight="30.0" prefWidth="163.0" />
+   <Label layoutX="27.0" layoutY="114.0" prefHeight="18.0" prefWidth="37.0" text="Date:" />
+   <DatePicker fx:id="movieDate" layoutX="101.0" layoutY="108.0" prefHeight="30.0" prefWidth="163.0" />
+   <Label layoutX="27.0" layoutY="161.0" prefHeight="18.0" prefWidth="37.0" text="Price:" />
+   <TextField fx:id="priceField" layoutX="101.0" layoutY="155.0" />
 </AnchorPane>

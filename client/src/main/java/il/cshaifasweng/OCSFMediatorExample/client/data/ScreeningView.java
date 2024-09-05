@@ -19,6 +19,7 @@ public class ScreeningView {
     private SimpleObjectProperty<LocalDateTime> screeningDate;
     private SimpleIntegerProperty durationInMinutes;
     private SimpleIntegerProperty endTime;
+    private SimpleIntegerProperty price;
     private SimpleStringProperty movieTitle;
 
     public ScreeningView(Screening obj) {
@@ -33,10 +34,12 @@ public class ScreeningView {
         this.durationInMinutes = new SimpleIntegerProperty(obj.getTimeInMinute());
         this.endTime = new SimpleIntegerProperty(obj.getTimeInMinute() + obj.getMovie().getDurationInMinutes());
         this.movieTitle = new SimpleStringProperty(obj.getMovie().getEnglishTitle());
+        this.price = new SimpleIntegerProperty(obj.getPrice());
     }
 
     // Getter methods for properties
     public int getId() { return id.get(); }
+    public int getPrice() {return price.get(); }
     public int getAvailableSeats() { return availableSeats.get(); }
     public int getBookedSeats() { return bookedSeats.get(); }
     public int getCinema() { return cinema.get(); }
@@ -57,6 +60,9 @@ public class ScreeningView {
     public SimpleIntegerProperty durationInMinutesProperty() { return durationInMinutes; }
     public SimpleIntegerProperty endTimeProperty() { return endTime; }
     public SimpleStringProperty movieTitleProperty() { return movieTitle; }
+    public SimpleIntegerProperty priceProperty() {
+        return price;
+    }
 
     public ScreeningView copy(Screening screening) {
         this.id = new SimpleIntegerProperty(screening.getId()) ;
@@ -68,6 +74,7 @@ public class ScreeningView {
         this.durationInMinutes = new SimpleIntegerProperty(screening.getTimeInMinute());
         this.endTime = new SimpleIntegerProperty(screening.getTimeInMinute() + screening.getMovie().getDurationInMinutes());
         this.movieTitle = new SimpleStringProperty(screening.getMovie().getEnglishTitle());
+        this.price = new SimpleIntegerProperty(screening.getPrice());
         return this;
     }
 
@@ -84,6 +91,7 @@ public class ScreeningView {
                 ", screeningDate=" + screeningDate +
                 ", startTime=" + durationInMinutes +
                 ", endTime=" + endTime +
+                ", price=" + price +
                 '}';
     }
 }
