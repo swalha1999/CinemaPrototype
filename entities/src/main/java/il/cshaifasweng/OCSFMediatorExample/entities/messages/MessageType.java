@@ -44,6 +44,8 @@ public enum MessageType implements Serializable {
     UPDATE_MOVIE_PATCH, // DONE on server TODO: check on client
     GET_MOVIE_REQUEST,  // DONE on server and client
     GET_MOVIE_RESPONSE, // DONE on server and client
+    GET_COMING_SOON_MOVIES_REQUEST, // DONE on server and client
+    GET_COMING_SOON_MOVIES_RESPONSE, // DONE on server and client
 
     // SCREENINGS
     GET_ALL_SCREENINGS_REQUEST,

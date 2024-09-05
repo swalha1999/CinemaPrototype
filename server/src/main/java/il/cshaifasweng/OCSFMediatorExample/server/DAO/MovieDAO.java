@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 public class MovieDAO {
 
@@ -72,6 +72,8 @@ public class MovieDAO {
     public Message getAllMovies(Message request) {
         List<Movie> movies = getMovies();
         return new Message(MessageType.GET_ALL_MOVIES_RESPONSE)
+                .setSuccess(true)
+                .setMessage("Movies found")
                 .setDataObject(movies);
     }
 
@@ -150,7 +152,6 @@ public class MovieDAO {
             transaction = session.beginTransaction();
             movie = session.get(Movie.class, updatedMovie.getMovieId());
 
-
             if (movie != null) {
                 movie.copy(updatedMovie); // copy the none null fields from updatedMovie to movie
                 session.update(movie);
@@ -172,6 +173,14 @@ public class MovieDAO {
                 .setSuccess(true)
                 .setMessage("Movie updated successfully")
                 .setDataObject(movie);
+    }
+
+    public Message getComingSoonMovies(Message request) {
+        List<Movie> movies = getMovies().stream().filter(Movie::isComingSoon).collect(Collectors.toList());
+        return new Message(MessageType.GET_COMING_SOON_MOVIES_RESPONSE)
+                .setSuccess(true)
+                .setMessage("Coming soon movies found")
+                .setDataObject(movies);
     }
 
     public void setSession(Session session) {

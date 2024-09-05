@@ -67,6 +67,7 @@ public class Server extends AbstractServer {
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
             case GET_MOVIE_REQUEST -> handleGetMovieRequest(request, client, loggedInUser);
             case UPDATE_MOVIE_REQUEST -> handleUpdateMovieRequest(request, client, loggedInUser);
+            case GET_COMING_SOON_MOVIES_REQUEST -> database.getMoviesManager().getComingSoonMovies(request);
 
             //SCREENINGS
             case GET_ALL_SCREENINGS_REQUEST -> handleGetAllScreeningsRequest(request, client, loggedInUser);
@@ -82,9 +83,6 @@ public class Server extends AbstractServer {
 
             //HALLS
             case ADD_HALL_REQUEST -> handleAddHallRequest(request, client, loggedInUser);
-
-
-            //TODO: add the rest of the cases here
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
