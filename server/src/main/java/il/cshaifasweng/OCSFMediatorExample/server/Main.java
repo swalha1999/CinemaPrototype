@@ -115,6 +115,13 @@ public class Main {
             movies[i].setHebrewTitle(hebrewTitles[i]);
             movies[i].setDescription(descriptions[i]);
 
+            // Set some movies as online, some as coming soon, and some as both or neither
+            if (i < 2) {
+                movies[i].setOnlineMovie(true);
+            } else if (i < 4) {
+                movies[i].setComingSoon(true);
+            }
+            // The last two movies will be neither online nor coming soon
 
             // Check if the movie already exists in the database
             Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);
@@ -126,6 +133,11 @@ public class Main {
                 session.flush();
             } else {
                 movies[i] = existingMovies.getFirst(); // Use the existing movie
+                // Update the existing movie's online and coming soon status
+                movies[i].setOnlineMovie(movies[i].isOnlineMovie());
+                movies[i].setComingSoon(movies[i].isComingSoon());
+                session.update(movies[i]);
+                session.flush();
             }
         }
         List<String> citys = List.of("TEL_AVIV", "JERUSALEM", "HAIFA");
