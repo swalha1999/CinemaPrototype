@@ -67,7 +67,6 @@ public class Server extends AbstractServer {
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
             case GET_MOVIE_REQUEST -> handleGetMovieRequest(request, client, loggedInUser);
             case UPDATE_MOVIE_REQUEST -> handleUpdateMovieRequest(request, client, loggedInUser);
-            case GET_COMING_SOON_MOVIES_REQUEST -> database.getMoviesManager().getComingSoonMovies(request);
 
             //SCREENINGS
             case GET_ALL_SCREENINGS_REQUEST -> handleGetAllScreeningsRequest(request, client, loggedInUser);
@@ -681,7 +680,6 @@ public class Server extends AbstractServer {
         }
     }
 
-    //TODO: the message doesn't reach the client
     public void logOutUser(String username, String message) {
         for (LoggedInUser loggedInUser : sessionKeys.values()) {
             if (loggedInUser.getUsername().equals(username)) {
