@@ -87,7 +87,6 @@ public class Movie implements Serializable {
 
     public Movie setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
-        this.comingSoon = releaseDate.after(new Date());
         return this ;
     }
 
