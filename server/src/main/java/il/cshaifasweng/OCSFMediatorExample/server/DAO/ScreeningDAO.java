@@ -78,6 +78,25 @@ public class ScreeningDAO {
                 .setDataObject(screening);
     }
 
+    public Message removeScreening(Message request) {
+        Message response = new Message(MessageType.REMOVE_SCREENING_RESPONSE);
+        Screening screening = session.get(Screening.class, ((Screening) request.getDataObject()).getId());
+
+        if (screening == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found")
+                    .setDataObject(null);
+        }
+
+        session.beginTransaction();
+        session.delete(screening);
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Screening removed successfully")
+                .setDataObject(screening);
+    }
+
 
     public void setSession(Session session) {
         this.session = session;

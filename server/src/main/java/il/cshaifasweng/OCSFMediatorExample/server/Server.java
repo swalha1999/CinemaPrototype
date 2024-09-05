@@ -74,6 +74,7 @@ public class Server extends AbstractServer {
             case GET_SCREENING_FOR_MOVIE_REQUEST -> handleGetScreeningForMovieRequest(request, client, loggedInUser);
             case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
             case ADD_SCREENING_REQUEST -> handleAddScreeningRequest(request, client, loggedInUser);
+            case REMOVE_SCREENING_REQUEST -> handleRemoveScreeningRequest(request, client, loggedInUser);
 
             //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
@@ -598,6 +599,31 @@ public class Server extends AbstractServer {
         }
 
         return response.setMessageType(MessageType.ADD_SCREENING_RESPONSE);
+    }
+
+    private Message handleRemoveScreeningRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CONTENT_MANAGER:
+                break;
+            case CUSTOMER_SERVICE:
+            case USER:
+            default:
+                return sendErrorMessage(client, "Error! User does not have permission to remove screenings");
+        }
+
+        Message response = database.getScreeningsManager().removeScreening(request);
+        sendResponse(client, response);
+
+        if(response.isSuccess()) {
+            response.setMessageType(MessageType.REMOVE_SCREENING_PATCH);
+            sendToAllLoggedInUsers(response);
+        }
+
+        return response.setMessageType(MessageType.REMOVE_SCREENING_RESPONSE);
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {
