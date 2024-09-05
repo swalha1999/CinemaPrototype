@@ -108,17 +108,6 @@ public class Main {
                 "Indiana Jones returns for one last adventure."
         };
 
-        String[] images = {
-                "images\\movie1.jpg",
-                "images\\movie2.jpeg",
-                "images\\movie3.jpeg",
-                "images\\movie4.jpeg",
-                "images\\movie5.jpeg",
-                "images\\movie6.jpeg",
-                "images\\movie7.jpeg",
-                "images\\movie8.jpeg",
-                "images\\movie9.jpeg"
-        };
 
         for (int i = 0; i < movies.length; i++) {
             movies[i] = new Movie(movieTitles[i], dates[i]);
@@ -183,14 +172,14 @@ public class Main {
 
     private static void generateScreening(){
         // check if there is screening in the system
-        List<Screening> screenings = session.createQuery("from Screening").list();
-        if(screenings.size() > 0){
+        List<Screening> screenings = session.createQuery("from Screening", Screening.class).list();
+        if (!screenings.isEmpty()) {
             return;
         }
 
-        // for every movie genrate 3 screenings
-        List<Movie> movies = session.createQuery("from Movie").list();
-        List<Cinema> cinemas = session.createQuery("from Cinema").list();
+        // Generate screenings for every movie
+        List<Movie> movies = session.createQuery("from Movie", Movie.class).list();
+        List<Cinema> cinemas = session.createQuery("from Cinema", Cinema.class).list();
 
         for (Movie movie : movies) {
             for (int j = 0; j < 100; j++) {
