@@ -80,9 +80,9 @@ public class AddScreening {
         screeningToAdd.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0)));
         screeningToAdd.setMovie(movieNameCombobox.getValue());
 
-        Message message = new Message(MessageType.ADD_SCREENING_REQUEST).setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-
-        message.setDataObject(screeningToAdd);
+        Message message = new Message(MessageType.ADD_SCREENING_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(screeningToAdd);
 
         Client.getClient().sendToServer(message);
 
