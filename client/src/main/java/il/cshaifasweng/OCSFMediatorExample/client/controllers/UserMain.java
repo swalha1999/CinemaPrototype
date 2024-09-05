@@ -138,13 +138,22 @@ public class UserMain {
     }
 
     public void preLoadPages() {
-        loadFXML("MyTickets");
-        loadFXML("MyInbox");
-        loadFXML("MovieCatalog");
-        loadFXML("UpcomingMovies");
-        loadFXML("OnlineMovies");
-        loadFXML("SeatPicker");
-        loadFXML("UpcomingMovies");
+        loadFXMLPane("CinemaInfo");
+        loadFXMLPane("AdminUsersView");
+        loadFXMLPane("DashBoard");
+        loadFXMLPane("MovieCatalog");
+        loadFXMLPane("Purchase");
+        loadFXMLPane("AdminAddMovie");
+        loadFXMLPane("AddScreening");
+        loadFXMLPane("EditCinema");
+        loadFXMLPane("EditHall");
+        loadFXMLPane("MyTickets");
+        loadFXMLPane("MyInbox");
+        loadFXMLPane("MovieCatalog");
+        loadFXMLPane("UpcomingMovies");
+        loadFXMLPane("OnlineMovies");
+        loadFXMLPane("SeatPicker");
+        loadFXMLPane("UpcomingMovies");
 
         Message message;
 
