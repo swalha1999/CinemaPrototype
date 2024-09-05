@@ -131,13 +131,6 @@ public class Main {
             if (existingMovies.isEmpty()) {
                 session.save(movies[i]);
                 session.flush();
-            } else {
-                movies[i] = existingMovies.getFirst(); // Use the existing movie
-                // Update the existing movie's online and coming soon status
-                movies[i].setOnlineMovie(movies[i].isOnlineMovie());
-                movies[i].setComingSoon(movies[i].isComingSoon());
-                session.update(movies[i]);
-                session.flush();
             }
         }
         List<String> citys = List.of("TEL_AVIV", "JERUSALEM", "HAIFA");
