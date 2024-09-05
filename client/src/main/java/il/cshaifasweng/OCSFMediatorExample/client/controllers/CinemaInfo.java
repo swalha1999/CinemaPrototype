@@ -268,4 +268,5 @@ public class CinemaInfo {
         return null;
     }
 
+
 }

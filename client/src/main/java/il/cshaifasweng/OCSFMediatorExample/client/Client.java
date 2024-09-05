@@ -31,16 +31,16 @@ public class Client extends AbstractClient {
 				case GET_ALL_USERS_RESPONSE:
 					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
-				case UPDATE_CINEMA_RESPONSE:
+				case UPDATE_CINEMA_PATCH:
 					EventBus.getDefault().post(new UpdateCinemaEvent(message));
 					break;
-				case REMOVE_CINEMA_RESPONSE:
+				case REMOVE_CINEMA_PATCH:
 					EventBus.getDefault().post(new RemoveCinemaEvent(message));
 					break;
 				case GET_CINEMA_HALLS_RESPONSE:
 					EventBus.getDefault().post(new GetCinemaHallsEvent(message));
 					break;
-				case ADD_CINEMA_RESPONSE:
+				case ADD_CINEMA_PATCH:
 					EventBus.getDefault().post(new AddCinemaEvent(message));
 					break;
 				case GET_ALL_MOVIES_RESPONSE:
@@ -79,13 +79,13 @@ public class Client extends AbstractClient {
 				case GET_SCREENING_FOR_HALL_RESPONSE:
 					EventBus.getDefault().post( new GetScreeningForHallEvent(message));
 					break;
-				case ADD_HALL_RESPONSE:
+				case ADD_HALL_PATCH:
 					EventBus.getDefault().post( new AddHallEvent(message));
 					break;
-				case ADD_SCREENING_REQUEST:
+				case ADD_SCREENING_PATCH:
 					EventBus.getDefault().post( new AddScreeningEvent(message));
 					break;
-				case UPDATE_SCREENING_REQUEST:
+				case UPDATE_SCREENING_PATCH:
 					EventBus.getDefault().post( new UpdateScreeningEvent(message));
 					break;
 
