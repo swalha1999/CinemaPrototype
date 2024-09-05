@@ -67,7 +67,7 @@ public class Movie implements Serializable {
         this.name = name;
         this.englishTitle = name;
         this.releaseDate = releaseDate;
-        this.comingSoon = releaseDate.after(new Date());
+        this.comingSoon = false;
     }
 
     // Getters and Setters
