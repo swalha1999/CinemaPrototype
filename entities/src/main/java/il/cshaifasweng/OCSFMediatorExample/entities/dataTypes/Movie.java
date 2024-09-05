@@ -33,6 +33,7 @@ public class Movie implements Serializable {
     private String producer;
     private int durationInMinutes;
     private boolean comingSoon;
+    private boolean isOnlineMovie;
 
     @ManyToMany
     @JoinTable(
@@ -61,6 +62,7 @@ public class Movie implements Serializable {
         this.hebrewTitle = other.hebrewTitle;
         this.durationInMinutes = other.durationInMinutes;
         this.comingSoon = other.comingSoon;
+        this.isOnlineMovie = other.isOnlineMovie;
     }
 
     public Movie(String name, Date releaseDate) {
@@ -68,6 +70,7 @@ public class Movie implements Serializable {
         this.englishTitle = name;
         this.releaseDate = releaseDate;
         this.comingSoon = false;
+        this.isOnlineMovie = false;
     }
 
     // Getters and Setters
@@ -231,6 +234,15 @@ public class Movie implements Serializable {
         return this;
     }
 
+    public boolean isOnlineMovie() {
+        return isOnlineMovie;
+    }
+
+    public Movie setOnlineMovie(boolean onlineMovie) {
+        isOnlineMovie = onlineMovie;
+        return this;
+    }
+
     public Movie copy(Movie movie ) {
         this.name = movie.name == null ? this.name : movie.name;
         this.releaseDate = movie.releaseDate == null ? this.releaseDate : movie.releaseDate;
@@ -248,6 +260,7 @@ public class Movie implements Serializable {
         this.screenings = movie.screenings == null ? this.screenings : movie.screenings;
         this.imageBytes = movie.imageBytes;
         this.comingSoon = movie.comingSoon;
+        this.isOnlineMovie = movie.isOnlineMovie;
         return this;
     }
 
