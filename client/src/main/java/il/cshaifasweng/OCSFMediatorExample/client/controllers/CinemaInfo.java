@@ -283,4 +283,8 @@ public class CinemaInfo {
         }
         return null;
     }
+    @Subscribe
+  public void onAddScreening(AddScreeningEvent event) {
+
+    }
 }

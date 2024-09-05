@@ -54,7 +54,7 @@ public class AddScreening {
                         setText(item.getId() + "    " + item.getName());
                     }
                 }
-            } ;
+            };
         }
     };
 
@@ -108,6 +108,6 @@ public class AddScreening {
     public void onUIShow(ShowSideUIEvent event) {
         this.hall = (Hall) event.getFirstObj();
     }
-
-
 }
+
+

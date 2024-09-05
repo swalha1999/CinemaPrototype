@@ -18,7 +18,7 @@ public class AddScreeningEvent {
         return message;
     }
 
-    public Screening getHall() {
+    public Screening getScreening() {
         return screening;
     }
 }
