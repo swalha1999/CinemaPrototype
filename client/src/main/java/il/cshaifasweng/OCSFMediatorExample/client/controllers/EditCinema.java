@@ -72,7 +72,6 @@ public class EditCinema {
 
     @Subscribe
     public void onSideUiChange (ShowSideUIEvent event){
-        System.out.println("i GOT HERE!!!!");
         if(!Objects.equals(event.getUIName(), "EditCinema")){
             return;
         }

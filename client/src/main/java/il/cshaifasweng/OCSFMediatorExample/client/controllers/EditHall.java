@@ -61,7 +61,6 @@ public class EditHall {
 
     @Subscribe
     public void onSideUiChange (ShowSideUIEvent event){
-        System.out.println("i GOT HERE!!!!");
         if(!Objects.equals(event.getUIName(), "EditHall")){
             return;
         }

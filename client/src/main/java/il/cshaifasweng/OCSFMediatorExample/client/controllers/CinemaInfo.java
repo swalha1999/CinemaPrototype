@@ -257,6 +257,15 @@ public class CinemaInfo {
         });
     }
 
+    @Subscribe
+    public void onScreeningAdded(AddScreeningEvent event) {
+        Platform.runLater(() -> {
+            if (hallTable.getSelectionModel().getSelectedItem().getHall().getId() == event.getScreening().getHall().getId()) {
+                ScreeningTable.getItems().add(new ScreeningView(event.getScreening()));
+            }
+        });
+    }
+
     private Hall getHallFromData(Hall hall) {
         for (CinemaView cinemaView : cinemaTable.getItems()) {
             for (Hall hall_to_update : cinemaView.getCinema().getHalls()) {
