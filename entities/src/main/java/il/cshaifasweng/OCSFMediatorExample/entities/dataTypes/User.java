@@ -25,12 +25,13 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String creditCard;
+    private float balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets;
 
-//    @OneToOne
-//    private Cinema cinema; // This is used for the manager of the cinema
+   @OneToOne
+   private Cinema cinema; // This is used for the manager of the cinema
 
     private int remainingTicketsPurchasedByBundle;
 
@@ -51,6 +52,7 @@ public class User implements Serializable {
         this.phone = phone;
         this.creditCard = creditCard;
         this.isLogged = false;
+        this.balance = 0.0f;
     }
 
     public User() {
@@ -61,6 +63,7 @@ public class User implements Serializable {
         this.phone = "";
         this.creditCard = "";
         this.isLogged = false;
+        this.balance = 0.0f;
     }
 
     public boolean isLogged() {
@@ -204,14 +207,14 @@ public class User implements Serializable {
         return this;
     }
 
-//    public Cinema getCinema() {
-//        return cinema;
-//    }
-//
-//    public User setCinema(Cinema cinema) {
-//        this.cinema = cinema;
-//        return this;
-//    }
+   public Cinema getCinema() {
+       return cinema;
+   }
+
+   public User setCinema(Cinema cinema) {
+       this.cinema = cinema;
+       return this;
+   }
 
     public int getRemainingTicketsPurchasedByBundle() {
         return remainingTicketsPurchasedByBundle;
@@ -259,6 +262,14 @@ public class User implements Serializable {
         return this;
     }
 
+    public float getBalance() {
+        return balance;
+    }
+
+    public User setBalance(float balance) {
+        this.balance = balance;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -279,20 +290,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", role=" + role +
-//                ", email='" + email + '\'' +
-//                ", phone='" + phone + '\'' +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", creditCard='" + creditCard + '\'' +
-//                ", isLogged=" + isLogged +
-//                ", isBlocked=" + isBlocked +
-//                ", isDeleted=" + isDeleted +
-//                ", isAgeRestricted=" + isAgeRestricted +
-//                ", NumberOfTicketsPurchased=" + NumberOfTicketsPurchased +
-//                ", NumberOfBundlePurchased=" + NumberOfBundlePurchased +
-//                ", NumberOfOnlineScreeningsPurchased=" + NumberOfOnlineScreeningsPurchased +
-//                ", tickets=" + tickets +
-//                ", remainingTicketsPurchasedByBundle=" + remainingTicketsPurchasedByBundle +
+                ", balance=" + balance +
                 '}';
     }
 }
