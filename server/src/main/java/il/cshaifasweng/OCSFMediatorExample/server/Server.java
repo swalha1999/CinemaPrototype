@@ -73,6 +73,7 @@ public class Server extends AbstractServer {
             case GET_ALL_SCREENINGS_REQUEST -> handleGetAllScreeningsRequest(request, client, loggedInUser);
             case GET_SCREENING_FOR_MOVIE_REQUEST -> handleGetScreeningForMovieRequest(request, client, loggedInUser);
             case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
+            case ADD_SCREENING_REQUEST -> handleAddScreeningRequest(request, client, loggedInUser);
 
             //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
@@ -572,6 +573,31 @@ public class Server extends AbstractServer {
             sendResponse(client, response);
 
             return response;
+    }
+
+    private Message handleAddScreeningRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+                break;
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                return sendErrorMessage(client, "Error! User does not have permission to add screenings");
+        }
+
+        Message response = database.getScreeningsManager().addScreening(request);
+        sendResponse(client, response);
+
+        if(response.isSuccess()) {
+            response.setMessageType(MessageType.ADD_SCREENING_PATCH);
+            sendToAllLoggedInUsers(response);
+        }
+
+        return response.setMessageType(MessageType.ADD_SCREENING_RESPONSE);
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {

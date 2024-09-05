@@ -67,7 +67,12 @@ public class ScreeningDAO {
         Screening screening = new Screening();
         screening.setMovie(screeningToAdd.getMovie());
         screening.setHall(screeningToAdd.getHall());
+        screening.setPrice(screeningToAdd.getPrice());
+        screening.setStartingAt(screeningToAdd.getStartingAt());
 
+        session.beginTransaction();  // Start transaction
+        session.save(screening);     // Save the screening object
+        session.getTransaction().commit(); // Commit transaction
         return response.setSuccess(true)
                 .setMessage("Screening added successfully")
                 .setDataObject(screening);
