@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -64,11 +65,28 @@ public class ScreeningDAO {
         Message response = new Message(MessageType.ADD_SCREENING_RESPONSE);
         Screening screeningToAdd = (Screening) request.getDataObject();
 
+        Hall hall = session.get(Hall.class, screeningToAdd.getHall().getId());
+        if (hall == null) {
+            return response.setSuccess(false)
+                    .setMessage("Hall not found")
+                    .setDataObject(null);
+        }
+
+        Cinema cinema = session.get(Cinema.class, hall.getCinema().getId());
+        if (cinema == null) {
+            return response.setSuccess(false)
+                    .setMessage("Cinema not found")
+                    .setDataObject(null);
+        }
+
+
+
         Screening screening = new Screening();
         screening.setMovie(screeningToAdd.getMovie());
-        screening.setHall(screeningToAdd.getHall());
         screening.setPrice(screeningToAdd.getPrice());
         screening.setStartingAt(screeningToAdd.getStartingAt());
+        screening.setHall(hall);
+        screening.setCinema(cinema);
 
         session.beginTransaction();  // Start transaction
         session.save(screening);     // Save the screening object
