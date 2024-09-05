@@ -184,7 +184,8 @@ public class CinemaInfo {
 
     @FXML
     void addScreening(ActionEvent event) {
-        showSideUI("AddScreening");
+        showSideUI("AddScreening", hallTable.getSelectionModel().getSelectedItem().getHall());
+
     }
 
     @FXML

@@ -5,6 +5,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -37,9 +38,9 @@ public class AddScreening {
     private ComboBox<Movie> movieNameCombobox; // Value injected by FXMLLoader
 
     private List<Movie> movies;
+    private Hall hall;
 
     Callback<ListView<Movie>, ListCell<Movie>> cellFactory = new Callback<ListView<Movie>, ListCell<Movie>>() {
-
         @Override
         public ListCell<Movie> call(ListView<Movie> l) {
             return new ListCell<Movie>() {
@@ -79,6 +80,7 @@ public class AddScreening {
         screeningToAdd.setPrice(Integer.parseInt(priceField.getText()));
         screeningToAdd.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0)));
         screeningToAdd.setMovie(movieNameCombobox.getValue());
+        screeningToAdd.setHall(hall);
 
         Message message = new Message(MessageType.ADD_SCREENING_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
@@ -101,5 +103,11 @@ public class AddScreening {
             }
         });
     }
+
+    @Subscribe
+    public void onUIShow(ShowSideUIEvent event) {
+        this.hall = (Hall) event.getFirstObj();
+    }
+
 
 }

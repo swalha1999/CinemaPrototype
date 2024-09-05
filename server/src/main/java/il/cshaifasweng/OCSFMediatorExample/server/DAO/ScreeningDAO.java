@@ -60,6 +60,19 @@ public class ScreeningDAO {
                 .setDataObject(allScreening);
     }
 
+    public Message addScreening(Message request) {
+        Message response = new Message(MessageType.ADD_SCREENING_RESPONSE);
+        Screening screeningToAdd = (Screening) request.getDataObject();
+
+        Screening screening = new Screening();
+        screening.setMovie(screeningToAdd.getMovie());
+        screening.setHall(screeningToAdd.getHall());
+
+        return response.setSuccess(true)
+                .setMessage("Screening added successfully")
+                .setDataObject(screening);
+    }
+
 
     public void setSession(Session session) {
         this.session = session;
