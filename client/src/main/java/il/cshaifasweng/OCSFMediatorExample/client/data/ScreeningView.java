@@ -48,6 +48,7 @@ public class ScreeningView {
     public LocalDateTime getScreeningDate() { return screeningDate.get(); }
     public int getDurationInMinutes() { return durationInMinutes.get(); }
     public int getEndTime() { return endTime.get(); }
+    public Screening getScreening(){ return screening;}
 
     // Property methods for JavaFX bindings
     public SimpleIntegerProperty idProperty() { return id; }

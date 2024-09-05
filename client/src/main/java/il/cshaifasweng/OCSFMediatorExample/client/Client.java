@@ -85,6 +85,9 @@ public class Client extends AbstractClient {
 				case ADD_SCREENING_REQUEST:
 					EventBus.getDefault().post( new AddScreeningEvent(message));
 					break;
+				case UPDATE_SCREENING_REQUEST:
+					EventBus.getDefault().post( new UpdateScreeningEvent(message));
+					break;
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));

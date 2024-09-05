@@ -186,7 +186,12 @@ public class CinemaInfo {
 
     @FXML
     void editScreening(ActionEvent event) {
-        // TODO Implement edit screening functionality
+        ScreeningView selectedScreening = ScreeningTable.getSelectionModel().getSelectedItem();
+        if(selectedScreening != null){
+            Platform.runLater(() -> {
+                showSideUI("EditScreening", selectedScreening.getScreening());
+            });
+        }
     }
 
 
