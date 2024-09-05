@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client.events;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieDetails;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 
