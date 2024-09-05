@@ -72,6 +72,7 @@ public class ScreeningDAO {
 
         session.beginTransaction();  // Start transaction
         session.save(screening);     // Save the screening object
+        session.flush();             // Flush session
         session.getTransaction().commit(); // Commit transaction
         return response.setSuccess(true)
                 .setMessage("Screening added successfully")
@@ -90,10 +91,31 @@ public class ScreeningDAO {
 
         session.beginTransaction();
         session.delete(screening);
+        session.flush();
         session.getTransaction().commit();
 
         return response.setSuccess(true)
                 .setMessage("Screening removed successfully")
+                .setDataObject(screening);
+    }
+
+    public Message updateScreening(Message request) {
+        Message response = new Message(MessageType.UPDATE_SCREENING_RESPONSE);
+        Screening screeningFromUser = (Screening) request.getDataObject();
+
+        Screening screening = session.get(Screening.class, screeningFromUser.getId());
+        screening.setMovie(screeningFromUser.getMovie() == null ? screening.getMovie() : screeningFromUser.getMovie());
+        screening.setHall(screeningFromUser.getHall() == null ? screening.getHall() : screeningFromUser.getHall());
+        screening.setPrice(screeningFromUser.getPrice() == 0 ? screening.getPrice() : screeningFromUser.getPrice());
+        screening.setStartingAt(screeningFromUser.getStartingAt() == null ? screening.getStartingAt() : screeningFromUser.getStartingAt());
+
+        session.beginTransaction();
+        session.update(screening);
+        session.flush();
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Screening updated successfully")
                 .setDataObject(screening);
     }
 

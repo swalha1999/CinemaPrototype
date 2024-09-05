@@ -625,6 +625,31 @@ public class Server extends AbstractServer {
         return response.setMessageType(MessageType.REMOVE_SCREENING_RESPONSE);
     }
 
+    private Message handleUpdateScreeningRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CONTENT_MANAGER:
+                break;
+            case CUSTOMER_SERVICE:
+            case USER:
+            default:
+                return sendErrorMessage(client, "Error! User does not have permission to update screenings");
+        }
+
+        Message response = database.getScreeningsManager().updateScreening(request);
+        sendResponse(client, response);
+
+        if(response.isSuccess()) {
+            response.setMessageType(MessageType.UPDATE_SCREENING_PATCH);
+            sendToAllLoggedInUsers(response);
+        }
+
+        return response.setMessageType(MessageType.UPDATE_SCREENING_RESPONSE);
+    }
+
     private boolean sendResponse(ConnectionToClient client, Message response) {
         try {
             client.sendToClient(response);
