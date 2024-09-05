@@ -126,15 +126,11 @@ public class CinemaInfo {
                 return;
             }
             ScreeningTable.getItems().clear();
-            try {
-                for (Screening screening : newSelection.getHall().getScreenings()) {
-                    ScreeningTable.getItems().add(new ScreeningView(screening));
-                }
-            }catch (Exception e) {
-                Message message = new Message(MessageType.GET_SCREENING_FOR_HALL_REQUEST)
-                        .setSessionKey(SessionKeysStorage.getInstance().getSessionKey()).setDataObject(newSelection.getHall());
-                Client.getClient().sendToServer(message);
-            }
+            Message message = new Message(MessageType.GET_SCREENING_FOR_HALL_REQUEST)
+                    .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                    .setDataObject(newSelection.getHall());
+            Client.getClient().sendToServer(message);
+
         });
     }
 
@@ -232,26 +228,9 @@ public class CinemaInfo {
     @Subscribe
     public void onGetScreeningForHall(GetScreeningForHallEvent event) {
         Platform.runLater(() -> {
-          if (event.getScreenings().isEmpty()) {
-                return;
-          }
-
-          Hall hall = event.getScreenings().getFirst().getHall();
-
-            if (hallTable.getSelectionModel().getSelectedItem().getHall().getId() == hall.getId()) {
-
-                hallTable.getSelectionModel().getSelectedItem().getHall().setScreenings(new HashSet<>(event.getScreenings()));
-
-                ScreeningTable.getItems().clear();
-                for (Screening screening : event.getScreenings()) {
-                    ScreeningTable.getItems().add(new ScreeningView(screening));
-                }
-                return;
-            }
-
-            Hall hallToUpdate = getHallFromData(hall);
-            if (hallToUpdate != null) {
-                hallToUpdate.setScreenings(new HashSet<>(event.getScreenings()));
+            ScreeningTable.getItems().clear();
+            for (Screening screening : event.getScreenings()) {
+                ScreeningTable.getItems().add(new ScreeningView(screening));
             }
         });
     }
@@ -283,8 +262,5 @@ public class CinemaInfo {
         }
         return null;
     }
-    @Subscribe
-  public void onAddScreening(AddScreeningEvent event) {
 
-    }
 }
