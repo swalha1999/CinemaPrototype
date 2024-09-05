@@ -28,6 +28,7 @@ import java.io.IOException;
 import javafx.scene.layout.BorderPane;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXML;
 
 public class UserMain {
 
@@ -143,6 +144,8 @@ public class UserMain {
         loadFXML("UpcomingMovies");
         loadFXML("OnlineMovies");
         loadFXML("SeatPicker");
+        loadFXML("UpcomingMovies");
+
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());

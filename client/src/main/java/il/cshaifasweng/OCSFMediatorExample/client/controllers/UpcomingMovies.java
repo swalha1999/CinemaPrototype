@@ -71,6 +71,7 @@ public class UpcomingMovies {
     }
 
     public void addMovie(Movie movie) {
+        System.out.println("im CHECKING FOR UPCOMING MOVIES");
         if(movie.isComingSoon()){
             allMovies.add(movie);
             renderMovies(allMovies);

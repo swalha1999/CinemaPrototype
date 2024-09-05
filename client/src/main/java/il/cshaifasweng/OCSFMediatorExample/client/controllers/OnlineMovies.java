@@ -67,6 +67,7 @@ public class OnlineMovies {
     }
 
     public void addMovie(Movie movie) {
+        System.out.println("im CHECKING FOR ONLINE MOVIES");
         if(movie.isOnlineMovie()){
             allMovies.add(movie);
             renderMovies(allMovies);
