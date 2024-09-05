@@ -46,19 +46,19 @@ public class SeatPickerController {
         });
     }
 
- private void makeSeat(int col, int row){
-     Pane seat = new Pane();
-     seat.getStyleClass().add("seat");
+    private void makeSeat(int col, int row){
+        Pane seat = new Pane();
+        seat.getStyleClass().add("seat");
 
-     // Example: Mark some seats as unavailable
-     if ((row == 2 && col == 2) || (row == 3 && col == 4)) {
-         seat.getStyleClass().add("unavailable");
-         seat.setDisable(true);
-     } else {
-         seat.setOnMouseClicked(event -> toggleSeatSelection(seat));
-     }
-     SeatsGrid.add(seat, col, row);
- }
+        // Example: Mark some seats as unavailable
+        if ((row == 2 && col == 2) || (row == 3 && col == 4)) {
+            seat.getStyleClass().add("unavailable");
+            seat.setDisable(true);
+        } else {
+            seat.setOnMouseClicked(event -> toggleSeatSelection(seat));
+        }
+        SeatsGrid.add(seat, col, row);
+    }
 
     private void toggleSeatSelection(Pane seat) {
         if (selectedSeats.contains(seat)) {
