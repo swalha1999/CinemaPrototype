@@ -74,6 +74,7 @@ public class Server extends AbstractServer {
             case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
             case ADD_SCREENING_REQUEST -> handleAddScreeningRequest(request, client, loggedInUser);
             case REMOVE_SCREENING_REQUEST -> handleRemoveScreeningRequest(request, client, loggedInUser);
+            //TODO: do updateScreeningRequest response so that it works plz do it man cmon
 
             //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);

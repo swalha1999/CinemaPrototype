@@ -63,8 +63,6 @@ public class EditScreening {
         EventBus.getDefault().register(this);
         movieNameCombobox.setButtonCell(cellFactory.call(null));
         movieNameCombobox.setCellFactory(cellFactory);
-
-
     }
 
     @FXML
@@ -80,7 +78,7 @@ public class EditScreening {
         screening.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0)));
         screening.setMovie(movieNameCombobox.getValue());
 
-        Message message = new Message(MessageType.UPDATE_SCREENING_RESPONSE)
+        Message message = new Message(MessageType.UPDATE_SCREENING_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(screening);
 
@@ -109,7 +107,17 @@ public class EditScreening {
         }
         screening = (Screening) event.getFirstObj();
 
+        int id= screening.getMovie().getId();
         priceField.setText(Integer.toString(screening.getPrice()));
+        movieDate.setValue(screening.getStartingAt().toLocalDate());
+        for(Movie movie:movieNameCombobox.getItems()){
+            if(movie.getId() == id){
+                movieNameCombobox.setValue(movie);
+                break;
+            }
+        }
 
     }
+
+
 }

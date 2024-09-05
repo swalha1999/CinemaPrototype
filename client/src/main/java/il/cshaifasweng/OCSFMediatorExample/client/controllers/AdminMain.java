@@ -126,6 +126,7 @@ public class AdminMain {
         loadFXMLPane("OnlineMovies");
         loadFXMLPane("SeatPicker");
         loadFXMLPane("UpcomingMovies");
+        loadFXMLPane("EditScreening");
 
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)

@@ -63,8 +63,6 @@ public class AddScreening {
         EventBus.getDefault().register(this);
         movieNameCombobox.setButtonCell(cellFactory.call(null));
         movieNameCombobox.setCellFactory(cellFactory);
-
-
     }
 
     @FXML
@@ -106,6 +104,9 @@ public class AddScreening {
 
     @Subscribe
     public void onUIShow(ShowSideUIEvent event) {
+        if(!event.getUIName().equals("AddScreening")){
+            return;
+        }
         this.hall = (Hall) event.getFirstObj();
     }
 }
