@@ -86,8 +86,6 @@ public class CinemaInfo {
     @FXML
     private Button EditScreeningBtn;
 
-    @FXML
-    private Button RemoveCienmaBtn;
 
     @FXML
     private Button RemoveHallBtn;
@@ -155,20 +153,6 @@ public class CinemaInfo {
                 showSideUI("EditCinema", selectedCinema.getCinema());
             });
         }
-
-    }
-
-    @FXML
-    void RemoveCinema(ActionEvent event) {
-        // get the selected cinema
-        Cinema selectedCinema = cinemaTable.getSelectionModel().getSelectedItem().getCinema();
-
-        // send a message to the server to remove the selected cinema
-        Message message = new Message(MessageType.REMOVE_CINEMA_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setDataObject(selectedCinema);
-
-        Client.getClient().sendToServer(message);
 
     }
 
