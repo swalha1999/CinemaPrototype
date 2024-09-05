@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.controllers.AddScreening;
 import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
@@ -80,6 +81,9 @@ public class Client extends AbstractClient {
 					break;
 				case ADD_HALL_RESPONSE:
 					EventBus.getDefault().post( new AddHallEvent(message));
+					break;
+				case ADD_SCREENING_REQUEST:
+					EventBus.getDefault().post( new AddScreeningEvent(message));
 					break;
 
 				default:
