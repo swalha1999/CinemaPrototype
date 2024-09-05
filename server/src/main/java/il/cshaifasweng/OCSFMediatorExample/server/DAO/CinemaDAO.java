@@ -65,7 +65,8 @@ public class CinemaDAO {
                     .setDataObject(null);
         }
 
-        Cinema cinema = new Cinema(cinemaFromUser.getName(), cinemaFromUser.getCity(), cinemaFromUser.getAddress(), cinemaFromUser.getPhoneNumber(), cinemaFromUser.getEmail());
+        Cinema cinema = new Cinema();
+        cinema.setCity(cinemaFromUser.getCity());
         cinema.setManager(manager);
         cinema.setName("yes planet");
         cinema.setAddress("iksal");

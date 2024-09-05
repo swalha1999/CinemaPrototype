@@ -155,21 +155,11 @@ public class UserMain {
         loadFXMLPane("SeatPicker");
         loadFXMLPane("UpcomingMovies");
 
-
-        Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
-
-        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
-
-        message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
+        Message message;
 
         message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        
         Client.getClient().sendToServer(message);
 
 
