@@ -82,7 +82,6 @@ public class Purchase {
     }
 
     seatsNum = (int) event.getFirstObj();
-
     Movie selectedMovie = (Movie) event.getFirstObj();
     if (selectedMovie != null) {
       MovieTitleLabel.setText(selectedMovie.getTitle());

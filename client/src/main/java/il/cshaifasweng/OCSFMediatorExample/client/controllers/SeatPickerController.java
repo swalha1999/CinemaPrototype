@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashSet;
@@ -16,7 +17,8 @@ import java.util.Set;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class SeatPickerController {
-    private Movie MovieData = new Movie();
+    private Movie MovieData = new Movie(); // Initialize MovieData
+
     @FXML // fx:id="SeatsGrid"
     private GridPane SeatsGrid; // Value injected by FXMLLoader
 
@@ -31,13 +33,14 @@ public class SeatPickerController {
     @FXML
     void returnFunction(ActionEvent event) {
         Platform.runLater(() -> {
-            showSideUI("MovieDetails",MovieData);
+            showSideUI("MovieDetails"); // Ensure this is the correct screen name
         });
     }
 
     @FXML
     public void initialize() {
-        // Example: Creating a 5x5 grid of seats
+        EventBus.getDefault().register(this);
+        // Example: Creating a 10x10 grid of seats
         Platform.runLater(() -> {
             int rows = 10;
             int columns = 10;
@@ -77,16 +80,17 @@ public class SeatPickerController {
     private void confirmSelection() {
         // Handle the confirmation of selected seats.
         System.out.println("Selected seats: " + selectedSeats.size());
-        showSideUI("Purchase", selectedSeats.toArray().length);
-        // Implement the logic to proceed with booking these seats
+        showSideUI("Purchase", selectedSeats.size(), MovieData); // Pass the MovieData
+        System.out.println("Movie selected: " + MovieData.getTitle());
     }
 
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
-        if(!(event.getUIName().equals("SeatPickerController"))) {
-            return;
+        if (event.getUIName().equals("SeatPicker") && event.getFirstObj() instanceof Movie) {
+            MovieData = (Movie) event.getFirstObj();
+            System.out.println("Movie received: " + MovieData.getTitle());
         }
-        MovieData = (Movie) event.getFirstObj();
-
     }
+
+
 }

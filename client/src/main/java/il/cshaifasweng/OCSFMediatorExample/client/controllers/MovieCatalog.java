@@ -103,6 +103,7 @@ public class MovieCatalog {
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
         moviePane.setOnMouseClicked(event -> {
+            // the movie is good untill here
             showSideUI("MovieDetails", movie);
         });
 

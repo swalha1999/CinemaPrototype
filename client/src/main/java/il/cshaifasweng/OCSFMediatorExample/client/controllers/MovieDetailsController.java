@@ -73,7 +73,6 @@ public class MovieDetailsController {
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
         Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
         //Price_Col.setCellValueFactory(new PropertyValueFactory<>("price"));
-
         screeningTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Platform.runLater(()->{
@@ -135,8 +134,5 @@ public class MovieDetailsController {
     public void returnToMovieCatalog(ActionEvent actionEvent) {
         showSideUI("MovieCatalog");
     }
-
-    //TODO: request the screening times from the server -=DONE=-
-    //TODO: display the screening times in the ListView -=DONE=-
 
 }
