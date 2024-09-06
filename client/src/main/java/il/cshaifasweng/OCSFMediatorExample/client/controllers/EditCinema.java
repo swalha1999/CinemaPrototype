@@ -66,7 +66,7 @@ public class EditCinema {
         Client.getClient().sendToServer(message);
 
         Platform.runLater(() -> {
-            showSideUI("CinemaInfo");
+            showSideUI("CinemaInfo",cinema);
         });
     }
 
