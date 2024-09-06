@@ -4,16 +4,20 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class Purchase {
-
+  private int seatsNum;
     @FXML // fx:id="CVV_Txt"
     private TextField CVV_Txt; // Value injected by FXMLLoader
 
@@ -58,7 +62,10 @@ public class Purchase {
 
     @FXML // fx:id="expiryDate"
     private TextField expiryDate; // Value injected by FXMLLoader
+    @FXML
+    public void initialize() throws IOException {
 
+    }
     @FXML
     void ConfirmPurchase(ActionEvent event) {
 
@@ -74,5 +81,11 @@ public class Purchase {
     void ReturnHome(ActionEvent event) {
 
     }
-
+    @Subscribe
+    public void onShowSideUI(ShowSideUIEvent event) {
+        if (!event.getUIName().equals("SeatPicker")) {
+            return;
+        }
+        seatsNum = (int)event.getFirstObj();
+    }
 }

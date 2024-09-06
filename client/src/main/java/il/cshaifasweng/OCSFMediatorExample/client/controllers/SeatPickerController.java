@@ -72,9 +72,9 @@ public class SeatPickerController {
 
     @FXML
     private void confirmSelection() {
-        // Handle the confirmation of selected seats
+        // Handle the confirmation of selected seats.
         System.out.println("Selected seats: " + selectedSeats.size());
-        showSideUI("Purchase");
+        showSideUI("Purchase",selectedSeats.toArray().length);
         // Implement the logic to proceed with booking these seats
     }
 }
