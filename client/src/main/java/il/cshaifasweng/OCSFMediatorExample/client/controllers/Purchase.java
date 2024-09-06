@@ -2,17 +2,19 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class Purchase {
-
+  private Movie movieData; // To hold the movie data
   private int seatsNum;
 
   @FXML // fx:id="CVV_Txt"
@@ -62,7 +64,7 @@ public class Purchase {
 
   @FXML
   void ConfirmPurchase(ActionEvent event) {
-    // Implement purchase logic here
+    // Handle the purchase confirmation logic
   }
 
   @FXML
@@ -72,21 +74,20 @@ public class Purchase {
 
   @FXML
   void ReturnHome(ActionEvent event) {
-    // Implement return to home logic here
+    // Handle returning home
   }
 
   @Subscribe
   public void onShowSideUI(ShowSideUIEvent event) {
-    if (!event.getUIName().equals("SeatPicker")) {
-      return;
-    }
-
-    seatsNum = (int) event.getFirstObj();
-    Movie selectedMovie = (Movie) event.getFirstObj();
-    if (selectedMovie != null) {
-      MovieTitleLabel.setText(selectedMovie.getTitle());
-    } else {
-      MovieTitleLabel.setText("No movie selected");
+    if (event.getUIName().equals("Purchase") && event.getSecondObj() instanceof Movie) {
+      movieData = (Movie) event.getSecondObj();
+      MovieTitleLabel.setText(movieData.getTitle());
     }
   }
+
+  @FXML
+  public void initialize() {
+    EventBus.getDefault().register(this);
+  }
+
 }
