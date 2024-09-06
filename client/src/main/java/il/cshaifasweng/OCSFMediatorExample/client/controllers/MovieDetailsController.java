@@ -23,7 +23,7 @@ import java.util.List;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.*;
 
 public class MovieDetailsController {
-
+    public static Movie movieData = new Movie();
     @FXML // fx:id="AvailableSeat_Col"
     private TableColumn<ScreeningView, ?> AvailableSeat_Col; // Value injected by FXMLLoader
 
@@ -77,12 +77,15 @@ public class MovieDetailsController {
         screeningTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Platform.runLater(()->{
-                    showSideUI("SeatPicker");
+                    showSideUI("SeatPicker",movieData,screeningTable.getSelectionModel().getSelectedItem());
                 });
             }
         });
     }
 
+    static Movie getMovieData() {
+        return movieData;
+    }
 
     //TODO change the way we display the image in the movie details page
 
@@ -94,7 +97,7 @@ public class MovieDetailsController {
         }
 
         Movie movie = (Movie) event.getFirstObj();
-
+        movieData = movie;
         if (movie == null) {
             showNotification("ERROR: we expected to get data with the UI change with the Type Movie", false);
             return;

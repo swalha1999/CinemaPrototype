@@ -1,11 +1,14 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +16,7 @@ import java.util.Set;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class SeatPickerController {
-
+    private Movie MovieData = new Movie();
     @FXML // fx:id="SeatsGrid"
     private GridPane SeatsGrid; // Value injected by FXMLLoader
 
@@ -27,8 +30,8 @@ public class SeatPickerController {
 
     @FXML
     void returnFunction(ActionEvent event) {
-        Platform.runLater(()->{
-            showSideUI("MovieDetails");
+        Platform.runLater(() -> {
+            showSideUI("MovieDetails",MovieData);
         });
     }
 
@@ -40,13 +43,13 @@ public class SeatPickerController {
             int columns = 10;
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < columns; col++) {
-                   makeSeat(row, col);
+                    makeSeat(row, col);
                 }
             }
         });
     }
 
-    private void makeSeat(int col, int row){
+    private void makeSeat(int col, int row) {
         Pane seat = new Pane();
         seat.getStyleClass().add("seat");
 
@@ -74,7 +77,16 @@ public class SeatPickerController {
     private void confirmSelection() {
         // Handle the confirmation of selected seats.
         System.out.println("Selected seats: " + selectedSeats.size());
-        showSideUI("Purchase",selectedSeats.toArray().length);
+        showSideUI("Purchase", selectedSeats.toArray().length);
         // Implement the logic to proceed with booking these seats
+    }
+
+    @Subscribe
+    public void getMovieDetails(ShowSideUIEvent event) {
+        if(!(event.getUIName().equals("SeatPickerController"))) {
+            return;
+        }
+        MovieData = (Movie) event.getFirstObj();
+
     }
 }
