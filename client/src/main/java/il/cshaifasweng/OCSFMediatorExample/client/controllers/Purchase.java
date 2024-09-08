@@ -82,6 +82,9 @@ public class Purchase {
     if (event.getUIName().equals("Purchase") && event.getSecondObj() instanceof Movie) {
       movieData = (Movie) event.getSecondObj();
       MovieTitleLabel.setText(movieData.getTitle());
+      int seatsnum =  (int)event.getFirstObj();
+      TotalAmountLabel.setText(toString());
+      SeatNumberLabel.setText(String.valueOf(seatsnum));
     }
   }
 
