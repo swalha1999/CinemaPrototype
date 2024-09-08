@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +18,7 @@ import java.util.Set;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class SeatPickerController {
-    private Movie MovieData = new Movie(); // Initialize MovieData
-
+     private Screening screeningData = new Screening();
     @FXML // fx:id="SeatsGrid"
     private GridPane SeatsGrid; // Value injected by FXMLLoader
 
@@ -80,15 +80,16 @@ public class SeatPickerController {
     private void confirmSelection() {
         // Send the movie data and selected seats to the Purchase screen
         System.out.println("Selected seats: " + selectedSeats.size());
-        showSideUI("Purchase", selectedSeats, MovieData);  // Pass selected seats and Movie data
+        System.out.println("Movie received: " + screeningData.getMovie().getTitle());
+        showSideUI("Purchase", selectedSeats, screeningData);  // Pass selected seats and Movie data
     }
 
 
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
         if (event.getUIName().equals("SeatPicker") && event.getFirstObj() instanceof Movie) {
-            MovieData = (Movie) event.getFirstObj();
-            System.out.println("Movie received: " + MovieData.getTitle());
+            screeningData.setMovie((Movie)event.getFirstObj());
+            System.out.println("Movie received: " + screeningData.getMovie().getTitle());
         }
     }
 

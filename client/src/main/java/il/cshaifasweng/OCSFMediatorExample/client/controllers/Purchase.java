@@ -18,7 +18,6 @@ import java.util.Set;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class Purchase {
-  private Movie movieData; // To hold the movie data
   private Screening screeningData; // To hold the screening data
 
   @FXML
@@ -77,23 +76,26 @@ public class Purchase {
 
   @Subscribe
   public void onShowSideUI(ShowSideUIEvent event) {
-    if (event.getUIName().equals("Purchase")) {
-        Set<Pane> selectedSeats = null;
-        if (event.getFirstObj() instanceof Set) {
-            selectedSeats = (Set<Pane>) event.getFirstObj();
-            SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));  // Update seat count label
-        }
-
-        if (event.getSecondObj() instanceof Movie) {
-            movieData = (Movie) event.getSecondObj();  // Retrieve movie data
-            MovieTitleLabel.setText(movieData.getTitle());  // Update movie title label
-        }
-
-        // Update pricing (assuming you have a method to get the price per seat)
-        double pricePerSeat = screeningData != null ? screeningData.getPrice() : 10.0;  // Default to 10.0 if no screeningData
-        PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
-        TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
+    if (!event.getUIName().equals("Purchase")) {
+      return;
     }
+      Set<Pane> selectedSeats = null;
+      if (event.getFirstObj() instanceof Set) {
+        selectedSeats = (Set<Pane>) event.getFirstObj();
+        SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));  // Update seat count label
+      }
+
+      if (event.getSecondObj() instanceof Screening) {
+       screeningData =(Screening) event.getSecondObj() ;// Retrieve movie data
+        MovieTitleLabel.setText(screeningData.getMovie().getTitle());  // Update movie title label
+      }
+
+      // Update pricing (assuming you have a method to get the price per seat)
+      double pricePerSeat =  screeningData.getPrice() ;  // Default to 10.0 if no screeningData
+      PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
+      TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
+      DurationLabel.setText(String.valueOf(screeningData.getMovie().getDurationInMinutes()));
+      MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
   }
 
   @FXML
