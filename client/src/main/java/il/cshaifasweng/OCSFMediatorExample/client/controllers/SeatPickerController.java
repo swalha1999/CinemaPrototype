@@ -78,11 +78,11 @@ public class SeatPickerController {
 
     @FXML
     private void confirmSelection() {
-        // Handle the confirmation of selected seats.
+        // Send the movie data and selected seats to the Purchase screen
         System.out.println("Selected seats: " + selectedSeats.size());
-        showSideUI("Purchase", selectedSeats.size(), MovieData); // Pass the MovieData
-        System.out.println("Movie selected: " + MovieData.getTitle());
+        showSideUI("Purchase", selectedSeats, MovieData);  // Pass selected seats and Movie data
     }
+
 
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {

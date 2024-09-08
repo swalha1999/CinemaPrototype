@@ -2,65 +2,63 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Set;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class Purchase {
   private Movie movieData; // To hold the movie data
-  private int seatsNum;
+  private Screening screeningData; // To hold the screening data
 
-  @FXML // fx:id="CVV_Txt"
-  private TextField CVV_Txt; // Value injected by FXMLLoader
+  @FXML
+  private TextField CVV_Txt;
 
-  @FXML // fx:id="ConfirmPurchaseBtn"
-  private Button ConfirmPurchaseBtn; // Value injected by FXMLLoader
+  @FXML
+  private Button ConfirmPurchaseBtn;
 
-  @FXML // fx:id="DurationLabel"
-  private Label DurationLabel; // Value injected by FXMLLoader
+  @FXML
+  private Label DurationLabel;
 
-  @FXML // fx:id="HomeBtn"
-  private Button HomeBtn; // Value injected by FXMLLoader
+  @FXML
+  private Button HomeBtn;
 
-  @FXML // fx:id="MovieTimeLabel"
-  private Label MovieTimeLabel; // Value injected by FXMLLoader
+  @FXML
+  private Label MovieTimeLabel;
 
-  @FXML // fx:id="MovieTitleLabel"
-  private Label MovieTitleLabel; // Value injected by FXMLLoader
+  @FXML
+  private Label MovieTitleLabel;
 
-  @FXML // fx:id="NumberItemPurchLabel"
-  private Label NumberItemPurchLabel; // Value injected by FXMLLoader
+  @FXML
+  private Label OrderIdLabel;
 
-  @FXML // fx:id="OrderIdLabel"
-  private Label OrderIdLabel; // Value injected by FXMLLoader
+  @FXML
+  private Label PricePerSeatLabel;
 
-  @FXML // fx:id="PricePerSeatLabel"
-  private Label PricePerSeatLabel; // Value injected by FXMLLoader
+  @FXML
+  private Button ReturnBackBtn;
 
-  @FXML // fx:id="ReturnBackBtn"
-  private Button ReturnBackBtn; // Value injected by FXMLLoader
+  @FXML
+  private Label SeatNumberLabel;
 
-  @FXML // fx:id="SeatNumberLabel"
-  private Label SeatNumberLabel; // Value injected by FXMLLoader
+  @FXML
+  private Label TotalPriceLabel;
 
-  @FXML // fx:id="TotalAmountLabel"
-  private Label TotalAmountLabel; // Value injected by FXMLLoader
+  @FXML
+  private TextField cardNumber;
 
-  @FXML // fx:id="TotalPriceLabel"
-  private Label TotalPriceLabel; // Value injected by FXMLLoader
-
-  @FXML // fx:id="cardNumber"
-  private TextField cardNumber; // Value injected by FXMLLoader
-
-  @FXML // fx:id="expiryDate"
-  private TextField expiryDate; // Value injected by FXMLLoader
+  @FXML
+  private TextField expiryDate;
 
   @FXML
   void ConfirmPurchase(ActionEvent event) {
@@ -74,17 +72,27 @@ public class Purchase {
 
   @FXML
   void ReturnHome(ActionEvent event) {
-    // Handle returning home
+    showSideUI("HomeScreen");
   }
 
   @Subscribe
   public void onShowSideUI(ShowSideUIEvent event) {
-    if (event.getUIName().equals("Purchase") && event.getSecondObj() instanceof Movie) {
-      movieData = (Movie) event.getSecondObj();
-      MovieTitleLabel.setText(movieData.getTitle());
-      int seatsnum =  (int)event.getFirstObj();
-      TotalAmountLabel.setText(toString());
-      SeatNumberLabel.setText(String.valueOf(seatsnum));
+    if (event.getUIName().equals("Purchase")) {
+        Set<Pane> selectedSeats = null;
+        if (event.getFirstObj() instanceof Set) {
+            selectedSeats = (Set<Pane>) event.getFirstObj();
+            SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));  // Update seat count label
+        }
+
+        if (event.getSecondObj() instanceof Movie) {
+            movieData = (Movie) event.getSecondObj();  // Retrieve movie data
+            MovieTitleLabel.setText(movieData.getTitle());  // Update movie title label
+        }
+
+        // Update pricing (assuming you have a method to get the price per seat)
+        double pricePerSeat = screeningData != null ? screeningData.getPrice() : 10.0;  // Default to 10.0 if no screeningData
+        PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
+        TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
     }
   }
 
@@ -93,4 +101,7 @@ public class Purchase {
     EventBus.getDefault().register(this);
   }
 
+  public void dispose() {
+    EventBus.getDefault().unregister(this);
+  }
 }
