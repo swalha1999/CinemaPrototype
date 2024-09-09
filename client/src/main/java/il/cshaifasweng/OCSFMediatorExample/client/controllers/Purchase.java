@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
@@ -17,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Set;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class Purchase {
@@ -66,6 +68,10 @@ public class Purchase {
 
   @FXML
   void ConfirmPurchase(ActionEvent event) {
+    if (selectedSeats== null || selectedSeats.isEmpty()) {
+      showNotification("Please select seats to purchase", false);
+      return;
+    }
     screeningData.setSeats(selectedSeats.stream().toList());
     Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
             .setDataObject(screeningData)
@@ -84,7 +90,6 @@ public class Purchase {
       return;
     }
 
-    selectedSeats.clear();
     if (event.getFirstObj() instanceof Set) {
       System.out.println("First obj is set");
       selectedSeats = (Set<Seat>) event.getFirstObj();
