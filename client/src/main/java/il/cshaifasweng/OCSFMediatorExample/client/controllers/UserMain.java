@@ -28,7 +28,6 @@ import java.io.IOException;
 import javafx.scene.layout.BorderPane;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXML;
 
 public class UserMain {
 
@@ -109,14 +108,17 @@ public class UserMain {
         int x=0;
         Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(()->{
+            clearAllUICache();
             setRoot("Login");
         });
+
     }
 
     @Subscribe
     public void onLogoutEvent(LogoutEvent response) {
         SessionKeysStorage.getInstance().clearSession();
         Platform.runLater(()->{
+            clearAllUICache();
             setRoot("Login");
         });
     }

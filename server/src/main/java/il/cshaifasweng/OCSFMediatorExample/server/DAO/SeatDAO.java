@@ -35,9 +35,6 @@ public class SeatDAO {
         List<Seat> seats = query.getResultList();
         session.getTransaction().commit();
 
-        for (Seat seat : seats) {
-            System.out.println(seat.getId());
-        }
 
         return response.setSuccess(true)
                 .setMessage("All seats fetched successfully")

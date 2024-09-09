@@ -115,7 +115,6 @@ public class SeatPickerController {
             List<Seat> seats = event.getSeats();
             for (Seat seat : seats) {
                 makeSeatTile(seat);
-                System.out.println("Seat ID: " + seat.getId());
             }
         });
     }

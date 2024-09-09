@@ -60,7 +60,6 @@ public class TicketDAO {
                         .setMessage("Seat not found");
             }
 
-            System.out.println("Seat ID: " + seat.getId());
 
             if (!seat.isAvailable()) {
                 return response.setSuccess(false)

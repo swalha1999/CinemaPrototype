@@ -85,8 +85,9 @@ public class CinemaMain extends Application {
         }
     }
 
-    public static void clearFxmlScenes() {
+    public static void clearAllUICache() {
         CinemaMain.fxmlScenes.clear();
+        CinemaMain.fxml.clear();
     }
 
     @Override
