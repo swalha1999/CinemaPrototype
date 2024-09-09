@@ -58,7 +58,7 @@ public class TicketDAO {
 
             MovieTicket ticket = new MovieTicket();
             ticket.setScreening(screening);
-            ticket.setSeatNumber(seat.getSeatNumber());
+            ticket.setSeat(seat);
             user.addTicket(ticket);
             seat.setAvailable(false);
             session.update(seat);
