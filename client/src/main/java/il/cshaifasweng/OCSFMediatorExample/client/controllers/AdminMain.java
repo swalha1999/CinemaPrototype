@@ -74,7 +74,6 @@ public class AdminMain {
 
     @FXML
     void logOut(ActionEvent event) throws IOException {
-        clearFxmlScenes();
         LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(() -> {
