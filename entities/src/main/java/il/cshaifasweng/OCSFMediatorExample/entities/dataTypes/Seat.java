@@ -16,23 +16,25 @@ public class Seat implements Serializable {
     @JoinColumn(name = "screening_id")
     private Screening screening;
 
-    // the SeatLocation class is used to represent the location of the seat in the seat map
     private int seatLocationX;
     private int seatLocationY;
-    private int SeatNumber;
+    private int seatNumber;
     private boolean isAvailable;
+
+    @OneToOne(mappedBy = "seat", fetch = FetchType.LAZY)
+    private MovieTicket movieTicket;
 
     public Seat() {
         this.seatLocationX = 0;
         this.seatLocationY = 0;
-        this.SeatNumber = 0;
+        this.seatNumber = 0;
         this.isAvailable = true;
     }
 
-    public Seat(int seatLocationX, int seatLocationY, int SeatNumber, boolean isAvailable) {
+    public Seat(int seatLocationX, int seatLocationY, int seatNumber, boolean isAvailable) {
         this.seatLocationX = seatLocationX;
         this.seatLocationY = seatLocationY;
-        this.SeatNumber = SeatNumber;
+        this.seatNumber = seatNumber;
         this.isAvailable = isAvailable;
     }
 
@@ -49,7 +51,7 @@ public class Seat implements Serializable {
     }
 
     public int getSeatNumber() {
-        return SeatNumber;
+        return seatNumber;
     }
 
     public void setSeatLocationX(int seatLocationX) {
@@ -60,8 +62,8 @@ public class Seat implements Serializable {
         this.seatLocationY = seatLocationY;
     }
 
-    public void setSeatNumber(int SeatNumber) {
-        this.SeatNumber = SeatNumber;
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
     public boolean isAvailable() {
@@ -72,7 +74,6 @@ public class Seat implements Serializable {
         isAvailable = available;
     }
 
-
     public Screening getScreening() {
         return screening;
     }
@@ -81,13 +82,21 @@ public class Seat implements Serializable {
         this.screening = screening;
     }
 
+    public MovieTicket getMovieTicket() {
+        return movieTicket;
+    }
+
+    public void setMovieTicket(MovieTicket movieTicket) {
+        this.movieTicket = movieTicket;
+    }
+
     @Override
     public String toString() {
         return "Seat{" +
                 "id=" + id +
                 ", seatLocationX=" + seatLocationX +
                 ", seatLocationY=" + seatLocationY +
-                ", SeatNumber=" + SeatNumber +
+                ", seatNumber=" + seatNumber +
                 ", isAvailable=" + isAvailable +
                 '}';
     }

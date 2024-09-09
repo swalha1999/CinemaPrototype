@@ -21,23 +21,29 @@ public class MovieTicket implements Serializable {
     @JoinColumn(name = "screening_id")
     private Screening screening;
 
-    private int seatNumber; //TODO: replace with seat object for future use
-    private boolean isUsed; //TODO: for prvent double use of ticket
-    private boolean isRefunded; //TODO: this marks the ticket as refunded and should be used in the future
-    private boolean isBundleTicket; //TODO: for future use
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
+    private boolean isUsed; // Prevent double use of ticket
+    private boolean isRefunded; // Marks the ticket as refunded
+    private boolean isBundleTicket; // For future use
 
     public MovieTicket() {
         this.user = null;
-        this.seatNumber = 0;
+        this.seat = null;
         this.isUsed = false;
+        this.isRefunded = false;
+        this.isBundleTicket = false;
     }
 
-    public MovieTicket(User user, Screening screening, int seatNumber) {
+    public MovieTicket(User user, Screening screening, Seat seat) {
         this.user = user;
         this.screening = screening;
-        this.seatNumber = seatNumber;
+        this.seat = seat;
         this.isUsed = false;
+        this.isRefunded = false;
+        this.isBundleTicket = false;
     }
 
     public int getId() {
@@ -52,8 +58,8 @@ public class MovieTicket implements Serializable {
         return screening;
     }
 
-    public int getSeatNumber() {
-        return seatNumber;
+    public Seat getSeat() {
+        return seat;
     }
 
     public boolean getIsUsed() {
@@ -72,8 +78,8 @@ public class MovieTicket implements Serializable {
         this.user = user;
     }
 
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
 
     public void setRefunded(boolean isRefunded) {
@@ -96,23 +102,13 @@ public class MovieTicket implements Serializable {
         this.id = id;
     }
 
-    public void setIsRefunded(boolean isRefunded) {
-        this.isRefunded = isRefunded;
-    }
-
-    public void setIsBundleTicket(boolean isBundleTicket) {
-        this.isBundleTicket = isBundleTicket;
-    }
-
-
-
     @Override
     public String toString() {
         return "MovieTicket{" +
                 "id=" + id +
                 ", user=" + user.getFirstName() + " " + user.getLastName() +
                 ", screening=" + screening.getMovie().getTitle() +
-                ", seatNumber=" + seatNumber +
+                ", seat=" + seat.getSeatNumber() + // Assuming Seat class has a seatNumber or similar
                 ", isUsed=" + isUsed +
                 '}';
     }
@@ -122,13 +118,14 @@ public class MovieTicket implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieTicket ticket = (MovieTicket) o;
-        return id == ticket.id && user.equals(ticket.user) && screening.equals(ticket.screening) && seatNumber == ticket.seatNumber && isUsed == ticket.isUsed;
+        return id == ticket.id && user.equals(ticket.user) && screening.equals(ticket.screening) && seat.equals(ticket.seat) && isUsed == ticket.isUsed;
     }
 
-
-    public boolean isRefunded() {   return this.isRefunded;
+    public boolean isRefunded() {
+        return this.isRefunded;
     }
 
-    public boolean isBundleTicket() { return this.isBundleTicket;
+    public boolean isBundleTicket() {
+        return this.isBundleTicket;
     }
 }
