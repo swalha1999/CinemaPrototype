@@ -1,13 +1,19 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetSeatsForScreeningEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.greenrobot.eventbus.EventBus;
@@ -90,12 +96,23 @@ public class SeatPickerController {
         screeningData = (Screening) event.getSecondObj();
         movieData = (Movie) event.getFirstObj();
 
-        // Clear the grid
-        SeatsGrid.getChildren().clear();
-        seatLocations.clear();
-        for( Seat seat : screeningData.getSeats() ) {
-            makeSeatTile(seat);
-        }
+        //Make a request to the server to get the seats for the screening
+        Message request = new Message(MessageType.GET_SEATS_FOR_SCREENING_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(screeningData);
+
+        Client.getClient().sendToServer(request);
+    }
+
+
+    @Subscribe
+    public void onGetSeatsForScreeningEvent(GetSeatsForScreeningEvent event) {
+        Platform.runLater(() -> {
+            List<Seat> seats = event.getSeats();
+            for (Seat seat : seats) {
+                makeSeatTile(seat);
+            }
+        });
     }
 
 

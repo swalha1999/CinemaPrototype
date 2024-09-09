@@ -2,7 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
@@ -25,30 +25,12 @@ public class TicketDAO {
         return new Message(MessageType.GET_MY_TICKETS_RESPONSE).setDataObject(tickets);
     }
 
-    public Message purchaseTicket(Message request) {
-        MovieTicket ticketToBuy = (MovieTicket) request.getDataObject();
-
-        // check if the user exists
-        User user = session.get(User.class, ticketToBuy.getUser().getId());
-        if (user == null) {
-            return new Message(MessageType.ERROR).setMessage("User does not exist to purchase ticket");
+    public Message purchaseTickets(Message request) {
+        System.out.println("We got the request to purchase a ticket");
+        for (Seat seat : ((Screening) request.getDataObject()).getSeats() ) {
+            System.out.println("Seat: " + seat.getSeatNumber());
         }
-
-        // check if the screening exists
-        Screening screening = session.get(Screening.class, ticketToBuy.getScreening().getId());
-        if (screening == null) {
-            return new Message(MessageType.ERROR).setMessage("Screening does not exist to purchase ticket");
-        }
-
-        // TODO: check if the seat is available
-
-        MovieTicket ticket = new MovieTicket();
-        ticket.setUser(user);
-        ticket.setScreening(screening);
-
-        session.save(ticket);
-
-        return new Message(MessageType.PURCHASE_TICKET_REQUEST).setDataObject(ticket);
+        return new Message(MessageType.PURCHASE_TICKETS_RESPONSE);
     }
 
     public void setSession(Session session) {

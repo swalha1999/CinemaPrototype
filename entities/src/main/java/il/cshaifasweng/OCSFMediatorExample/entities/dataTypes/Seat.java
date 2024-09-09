@@ -72,9 +72,6 @@ public class Seat implements Serializable {
         isAvailable = available;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Screening getScreening() {
         return screening;

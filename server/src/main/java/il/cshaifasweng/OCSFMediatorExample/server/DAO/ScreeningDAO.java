@@ -40,15 +40,6 @@ public class ScreeningDAO {
         query.setParameter("movie", movie);
         List<Screening> allScreening = query.getResultList();
 
-        //For every Screening, get all the seats and add them to the Screening object
-
-        for (Screening screening : allScreening) {
-            Query query2 = session.createQuery("from Seat where screening = :screening");
-            query2.setParameter("screening", screening);
-            List<Seat> seats = query2.getResultList();
-            screening.setSeats(seats);
-        }
-
         return response.setSuccess(true)
                 .setMessage("All screenings fetched successfully")
                 .setDataObject(allScreening);

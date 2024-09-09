@@ -61,6 +61,8 @@ public class Server extends AbstractServer {
             //TICKETS
             case GET_MY_TICKETS_REQUEST -> handleGetMyTicketsRequest(request, client, loggedInUser);
             case GET_ALL_MOVIES_REQUEST -> handleGetAllMoviesRequest(request, client, loggedInUser);
+            case PURCHASE_TICKETS_REQUEST -> handlePurchaseTicketsRequest(request, client, loggedInUser);
+
 
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
@@ -85,6 +87,9 @@ public class Server extends AbstractServer {
 
             //HALLS
             case ADD_HALL_REQUEST -> handleAddHallRequest(request, client, loggedInUser);
+
+            //SEATS
+            case GET_SEATS_FOR_SCREENING_REQUEST -> handleGetSeatsForScreeningRequest(request, client, loggedInUser);
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
@@ -648,6 +653,18 @@ public class Server extends AbstractServer {
         }
 
         return response.setMessageType(MessageType.UPDATE_SCREENING_RESPONSE);
+    }
+
+    private Message handleGetSeatsForScreeningRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getSeatsManager().getSeatsForScreening(request);
+        sendResponse(client, response);
+        return response;
+    }
+
+    private Message handlePurchaseTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getTicketsManager().purchaseTickets(request);
+        sendResponse(client, response);
+        return response;
     }
 
     private boolean sendResponse(ConnectionToClient client, Message response) {

@@ -1,8 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -63,7 +67,11 @@ public class Purchase {
 
   @FXML
   void ConfirmPurchase(ActionEvent event) {
-    // Handle the purchase confirmation logic
+    screeningData.setSeats(selectedSeats.stream().toList());
+    Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
+            .setDataObject(screeningData)
+            .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+    Client.getClient().sendToServer(request);
   }
 
   @FXML
@@ -79,6 +87,9 @@ public class Purchase {
 
     if (event.getFirstObj() instanceof Set) {
       selectedSeats = (Set<Seat>) event.getFirstObj();
+      for (Seat seat : selectedSeats) {
+        System.out.println(seat.getId());
+      }
       SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));
     }
 
