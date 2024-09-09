@@ -3,14 +3,14 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 import java.io.Serializable;
 
 public enum MessageType implements Serializable {
-    NONE, //DONE on server
-    ERROR, //DONE on server
-    STRING, //DONE on server
+    NONE,
+    ERROR,
+    STRING,
 
     //AUTH
-    LOGIN_REQUEST, // DONE on server and client
-    LOGIN_RESPONSE, // DONE on server and client
-    LOGOUT_REQUEST, // DONE on server and client
+    LOGIN_REQUEST,
+    LOGIN_RESPONSE,
+    LOGOUT_REQUEST,
     LOGOUT_RESPONSE, // DONE on server and client
     REGISTER_REQUEST, // DONE on server and client
     REGISTER_RESPONSE, // DONE on server and client

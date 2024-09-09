@@ -49,7 +49,7 @@ public class Main {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    private static void generateMovies() throws Exception {
+    private static void generateMovies() {
         Movie[] movies = new Movie[8];
         Date[] dates = new Date[8];
         Calendar calendar = Calendar.getInstance();
@@ -107,7 +107,6 @@ public class Main {
                 "The Guardians face their greatest threat yet in this epic conclusion.",
                 "Indiana Jones returns for one last adventure."
         };
-
 
         for (int i = 0; i < movies.length; i++) {
             movies[i] = new Movie(movieTitles[i], dates[i]);
@@ -186,7 +185,7 @@ public class Main {
         List<Movie> movies = session.createQuery("from Movie", Movie.class).list();
         List<Cinema> cinemas = session.createQuery("from Cinema", Cinema.class).list();
 
-        for (Movie movie : movies) {
+            for (Movie movie : movies) {
             for (int j = 0; j < 100; j++) {
                 Screening screening = new Screening();
                 screening.setMovie(movie);
@@ -194,6 +193,21 @@ public class Main {
                 screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().get(j % cinemas.get(j % cinemas.size()).getHalls().size()));
                 screening.setStartingAt(LocalDateTime.now());
                 screening.setPrice(45);
+
+                // lets make the screnning seats 100
+                screening.setTotalSeats(100);
+                for (int i = 0; i < 100; i++) {
+                    Seat seat = new Seat();
+                    seat.setSeatLocationX(i % 10);
+                    seat.setSeatLocationY(i / 10);
+                    seat.setSeatNumber(i);
+                    seat.setAvailable(true);
+                    seat.setScreening(screening);
+                    screening.addSeat(seat);
+                    session.save(seat);
+                    session.flush();
+                }
+
                 session.save(screening);
                 session.flush();
             }

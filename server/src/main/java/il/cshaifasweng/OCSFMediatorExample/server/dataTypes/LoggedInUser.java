@@ -11,7 +11,7 @@ public class LoggedInUser {
     private int userId;
     private final ConnectionToClient client;
     private UserRole role;
-    private LocalDateTime expirationTime; // TODO: for future use in session expiration
+    private LocalDateTime expirationTime;
 
     public LoggedInUser(String sessionKey, String username, int UserId, UserRole role, ConnectionToClient client) {
         this.sessionKey = sessionKey;

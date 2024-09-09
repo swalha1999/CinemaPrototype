@@ -74,7 +74,7 @@ public class Server extends AbstractServer {
             case GET_SCREENING_FOR_HALL_REQUEST -> handleGetScreeningForHallRequest(request, client, loggedInUser);
             case ADD_SCREENING_REQUEST -> handleAddScreeningRequest(request, client, loggedInUser);
             case REMOVE_SCREENING_REQUEST -> handleRemoveScreeningRequest(request, client, loggedInUser);
-            //TODO: do updateScreeningRequest response so that it works plz do it man cmon
+            case UPDATE_SCREENING_REQUEST -> handleUpdateScreeningRequest(request, client, loggedInUser);
 
             //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
@@ -271,7 +271,6 @@ public class Server extends AbstractServer {
 
         // send a patch to all the logged-in admins to notify them that a user has been removed
         if (response.isSuccess()) {
-            // TODO: update this to lock out the user and remove him from the logged-in users list
             response.setMessageType(MessageType.REMOVE_USER_PATCH);
             sendToAllAdmins(response);
             logOutUser(((User) response.getDataObject()).getUsername(), "User has been removed from the system");
@@ -699,7 +698,6 @@ public class Server extends AbstractServer {
 
                     // if the user fail to respond we will remove him from the logged-in users list
                     sessionKeys.remove(loggedInUser.getSessionKey());
-                    //TODO : indicate the user that he is logged out
 
                 }
             }

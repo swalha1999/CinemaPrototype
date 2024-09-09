@@ -44,7 +44,6 @@ public class UserDAO {
     }
 
     public User deleteUser(User deletedUser) {
-        // TODO: fix this is not right and doesn't indicate if the user was deleted or not out side of the function
         Transaction transaction = null;
         User user = null;
         try {
@@ -228,7 +227,7 @@ public class UserDAO {
                 .setRole(user.getRole())
                 .setUsername(user.getUsername())
                 .setUserId(user.getId())
-                .setSessionKey(UserDAO.generateSalt()); //TODO: generate a unique session ID and save it to the user database
+                .setSessionKey(UserDAO.generateSalt());
 
         return loginResponse;
     }
@@ -342,7 +341,6 @@ public class UserDAO {
                     .setMessage("User not found");
         }
 
-        //TODO: make this inline this is error prone
         deleteUser(user);
 
         return response

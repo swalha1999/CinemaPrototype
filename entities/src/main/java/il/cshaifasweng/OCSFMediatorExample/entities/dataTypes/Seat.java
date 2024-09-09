@@ -82,7 +82,6 @@ public class Seat implements Serializable {
 
     public void setScreening(Screening screening) {
         this.screening = screening;
-        this.screening.addSeat(this);
     }
 
     @Override
