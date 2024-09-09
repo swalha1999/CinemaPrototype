@@ -108,7 +108,6 @@ public class MovieTicket implements Serializable {
                 "id=" + id +
                 ", user=" + user.getFirstName() + " " + user.getLastName() +
                 ", screening=" + screening.getMovie().getTitle() +
-                ", seat=" + seat.getSeatNumber() + // Assuming Seat class has a seatNumber or similar
                 ", isUsed=" + isUsed +
                 '}';
     }
