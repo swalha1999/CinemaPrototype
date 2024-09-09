@@ -70,7 +70,6 @@ public class Login {
         System.out.println(SessionKeysStorage.getInstance().toString());
 
         Platform.runLater(()->{
-            clearAllUICache();
             if (response.isSuccess()) {
                 if( response.getRole() == UserRole.USER){
                     setRoot("UserMain");
