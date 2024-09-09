@@ -186,7 +186,7 @@ public class Main {
         List<Cinema> cinemas = session.createQuery("from Cinema", Cinema.class).list();
 
             for (Movie movie : movies) {
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < 10; j++) {
                 Screening screening = new Screening();
                 screening.setMovie(movie);
                 screening.setCinema(cinemas.get(j % cinemas.size()));
