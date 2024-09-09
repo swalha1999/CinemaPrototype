@@ -197,7 +197,6 @@ public class Main {
                     Seat seat = new Seat();
                     seat.setSeatLocationX(i % 10);
                     seat.setSeatLocationY(i / 10);
-                    seat.setSeatNumber(i);
                     seat.setAvailable(true);
                     seat.setScreening(screening);
                     screening.addSeat(seat);
