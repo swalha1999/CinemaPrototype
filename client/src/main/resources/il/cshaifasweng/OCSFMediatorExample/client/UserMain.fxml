@@ -16,7 +16,7 @@
                <font>
                   <Font size="31.0" />
                </font></Label>
-                <Button fx:id="DashBoard_Btn" onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
+                <Button fx:id="DashBoard_Btn" onAction="#showDashBoard" styleClass="sidebar-button" text="SupportPage" />
                 <Button fx:id="UpComingMovies_Btn" onAction="#ShowUpcomingMovies" styleClass="sidebar-button" text="UpComingMovies" />
                 <Button fx:id="AvailbleMovies_Btn" onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
                 <Button fx:id="OnlineMovies_Btn" onAction="#ShowOnlineMoves" styleClass="sidebar-button" text="OnlineMovies" />
