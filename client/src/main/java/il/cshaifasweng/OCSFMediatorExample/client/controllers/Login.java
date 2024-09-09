@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.clearAllUICache;
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 
@@ -69,6 +70,7 @@ public class Login {
         System.out.println(SessionKeysStorage.getInstance().toString());
 
         Platform.runLater(()->{
+            clearAllUICache();
             if (response.isSuccess()) {
                 if( response.getRole() == UserRole.USER){
                     setRoot("UserMain");
