@@ -44,7 +44,6 @@ public class AdminMain {
     public void initialize() {
         EventBus.getDefault().register(this);
         notificationPane = new NotificationPane(stackPaneMain);
-        loadUI("DashBoard");
         preLoadPages();
     }
 
@@ -112,7 +111,6 @@ public class AdminMain {
     public void preLoadPages() {
         loadFXMLPane("CinemaInfo");
         loadFXMLPane("AdminUsersView");
-        loadFXMLPane("DashBoard");
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("Purchase");
         loadFXMLPane("AdminAddMovie");
@@ -121,7 +119,6 @@ public class AdminMain {
         loadFXMLPane("EditHall");
         loadFXMLPane("MyTickets");
         loadFXMLPane("MyInbox");
-        loadFXMLPane("MovieCatalog");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("OnlineMovies");
         loadFXMLPane("SeatPicker");
