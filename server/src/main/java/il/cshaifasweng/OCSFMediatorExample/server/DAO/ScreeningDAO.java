@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -139,6 +140,22 @@ public class ScreeningDAO {
         return response.setSuccess(true)
                 .setMessage("Screening updated successfully")
                 .setDataObject(screening);
+    }
+
+    public Screening getScreeningById(int id) {
+        Transaction transaction = null;
+        Screening screening = null;
+        try {
+            transaction = session.beginTransaction();
+            screening = session.get(Screening.class, id);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return screening;
     }
 
 

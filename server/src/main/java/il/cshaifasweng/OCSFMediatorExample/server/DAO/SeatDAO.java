@@ -21,15 +21,29 @@ public class SeatDAO {
 
     public Message getSeatsForScreening(Message request) {
         Message response = new Message(MessageType.GET_SEATS_FOR_SCREENING_RESPONSE);
-        Screening screening = (Screening) request.getDataObject();
+        Screening screeningFromUser = (Screening) request.getDataObject();
 
-        Query<Seat> query = session.createQuery("from Seat where screening = :screening", Seat.class);
+        Screening screening = DatabaseController.getInstance(session).getScreeningsManager().getScreeningById(screeningFromUser.getId());
+        if (screening == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found");
+        }
+
+        session.beginTransaction();
+
+        Query<Seat> query = session.createQuery("from Seat where Screening = :screening", Seat.class);
         query.setParameter("screening", screening);
-        List<Seat> allSeats = query.getResultList();
+        List<Seat> seats = query.getResultList();
+
+        session.getTransaction().commit();
+
+        for (Seat seat : seats) {
+            System.out.println(seat.getId());
+        }
 
         return response.setSuccess(true)
                 .setMessage("All seats fetched successfully")
-                .setDataObject(allSeats);
+                .setDataObject(seats);
     }
 
     public Seat getSeatById(int id) {
