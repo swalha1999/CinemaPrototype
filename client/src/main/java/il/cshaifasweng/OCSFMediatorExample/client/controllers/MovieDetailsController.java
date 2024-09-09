@@ -71,7 +71,8 @@ public class MovieDetailsController {
         Screening_Col.setCellValueFactory(new PropertyValueFactory<>("screeningDate"));
         Cinema_Col.setCellValueFactory(new PropertyValueFactory<>("cinema"));
         Hall_Col.setCellValueFactory(new PropertyValueFactory<>("hall"));
-        //Price_Col.setCellValueFactory(new PropertyValueFactory<>("price"));
+        Price_Col.setCellValueFactory(new PropertyValueFactory<>("price"));
+        AvailableSeat_Col.setCellValueFactory(new PropertyValueFactory<>("availableSeats"));
         screeningTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Platform.runLater(()->{

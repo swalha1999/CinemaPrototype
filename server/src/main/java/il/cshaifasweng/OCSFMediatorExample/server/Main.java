@@ -14,10 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -184,7 +181,6 @@ public class Main {
         // Generate screenings for every movie
         List<Movie> movies = session.createQuery("from Movie", Movie.class).list();
         List<Cinema> cinemas = session.createQuery("from Cinema", Cinema.class).list();
-
             for (Movie movie : movies) {
             for (int j = 0; j < 10; j++) {
                 Screening screening = new Screening();
@@ -193,7 +189,6 @@ public class Main {
                 screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().get(j % cinemas.get(j % cinemas.size()).getHalls().size()));
                 screening.setStartingAt(LocalDateTime.now());
                 screening.setPrice(45);
-
                 session.save(screening);
                 session.flush();
 
