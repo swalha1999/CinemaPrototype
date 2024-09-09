@@ -85,6 +85,10 @@ public class CinemaMain extends Application {
         }
     }
 
+    public static void clearFxmlScenes() {
+        CinemaMain.fxmlScenes.clear();
+    }
+
     @Override
     public void stop() throws Exception {
         // TODO Auto-generated method stub
