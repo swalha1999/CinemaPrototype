@@ -100,7 +100,7 @@ public class UserMain {
 
     @FXML
     void showDashBoard(ActionEvent event) {
-        loadUI("SeatPicker");
+        loadUI("SupportPage");
     }
 
     @FXML
@@ -140,7 +140,7 @@ public class UserMain {
     public void preLoadPages() {
         loadFXMLPane("CinemaInfo");
         loadFXMLPane("AdminUsersView");
-        loadFXMLPane("DashBoard");
+        loadFXMLPane("SupportPage");
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("Purchase");
         loadFXMLPane("AdminAddMovie");
