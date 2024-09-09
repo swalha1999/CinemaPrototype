@@ -45,6 +45,11 @@ public class TicketDAO {
                     .setMessage("Screening not found");
         }
 
+        if (seats.isEmpty()) {
+            return response.setSuccess(false)
+                    .setMessage("No seats selected");
+        }
+
 
         for (Seat seatFromUser : seats) {
             System.out.println("Seat From user ID: " + seatFromUser.getId());
