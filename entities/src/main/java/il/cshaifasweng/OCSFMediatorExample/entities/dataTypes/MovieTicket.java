@@ -105,7 +105,6 @@ public class MovieTicket implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "MovieTicket{" +
@@ -126,9 +125,11 @@ public class MovieTicket implements Serializable {
     }
 
 
-    public boolean isRefunded() {   return this.isRefunded;
+    public boolean isRefunded() {
+        return this.isRefunded;
     }
 
-    public boolean isBundleTicket() { return this.isBundleTicket;
+    public boolean isBundleTicket() {
+        return this.isBundleTicket;
     }
 }
