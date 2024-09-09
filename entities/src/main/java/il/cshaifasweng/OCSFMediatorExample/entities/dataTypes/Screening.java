@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -181,5 +182,9 @@ public class Screening implements Serializable {
 
     public void removeSeat(Seat seat) {
         this.seats.remove(seat);
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = new HashSet<>(seats);
     }
 }

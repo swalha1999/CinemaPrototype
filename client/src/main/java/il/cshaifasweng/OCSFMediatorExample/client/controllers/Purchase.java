@@ -1,9 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -79,23 +77,22 @@ public class Purchase {
     if (!event.getUIName().equals("Purchase")) {
       return;
     }
-      Set<Pane> selectedSeats = null;
-      if (event.getFirstObj() instanceof Set) {
-        selectedSeats = (Set<Pane>) event.getFirstObj();
-        SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));  // Update seat count label
-      }
 
-      if (event.getSecondObj() instanceof Screening) {
-       screeningData =(Screening) event.getSecondObj() ;// Retrieve movie data
-        MovieTitleLabel.setText(screeningData.getMovie().getTitle());  // Update movie title label
-      }
-
-      // Update pricing (assuming you have a method to get the price per seat)
-      double pricePerSeat =  screeningData.getPrice() ;  // Default to 10.0 if no screeningData
-      PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
-      TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
-      DurationLabel.setText(String.valueOf(screeningData.getMovie().getDurationInMinutes()));
-      MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
+    Set<Pane> selectedSeats = null;
+    if (event.getFirstObj() instanceof Set) {
+      selectedSeats = (Set<Pane>) event.getFirstObj();
+      SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));  // Update seat count label
+    }
+    if (event.getSecondObj() instanceof Screening) {
+      screeningData =(Screening) event.getSecondObj() ;// Retrieve movie data
+      MovieTitleLabel.setText(screeningData.getMovie().getTitle());  // Update movie title label
+    }
+    // Update pricing (assuming you have a method to get the price per seat)
+    double pricePerSeat =  screeningData.getPrice() ;  // Default to 10.0 if no screeningData
+    PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
+    TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
+    DurationLabel.setText(String.valueOf(screeningData.getMovie().getDurationInMinutes()));
+    MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
   }
 
   @FXML

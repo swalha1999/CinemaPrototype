@@ -1,9 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
@@ -42,6 +39,15 @@ public class ScreeningDAO {
         Query<Screening> query = session.createQuery("from Screening where movie = :movie", Screening.class);
         query.setParameter("movie", movie);
         List<Screening> allScreening = query.getResultList();
+
+        //For every Screening, get all the seats and add them to the Screening object
+
+        for (Screening screening : allScreening) {
+            Query query2 = session.createQuery("from Seat where screening = :screening");
+            query2.setParameter("screening", screening);
+            List<Seat> seats = query2.getResultList();
+            screening.setSeats(seats);
+        }
 
         return response.setSuccess(true)
                 .setMessage("All screenings fetched successfully")
