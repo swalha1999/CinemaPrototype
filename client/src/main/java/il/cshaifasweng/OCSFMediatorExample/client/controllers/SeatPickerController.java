@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,15 +19,17 @@ import java.util.Set;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class SeatPickerController {
-     private Screening screeningData = new Screening();
-    @FXML // fx:id="SeatsGrid"
-    private GridPane SeatsGrid; // Value injected by FXMLLoader
+    private Screening screeningData;
+    private Movie movieData;
 
-    @FXML // fx:id="confirmButton"
-    private Button confirmButton; // Value injected by FXMLLoader
+    @FXML
+    private GridPane SeatsGrid;
 
-    @FXML // fx:id="returnBtn"
-    private Button returnBtn; // Value injected by FXMLLoader
+    @FXML
+    private Button confirmButton;
+
+    @FXML
+    private Button returnBtn;
 
     private Set<Pane> selectedSeats = new HashSet<>();
 
@@ -40,24 +43,13 @@ public class SeatPickerController {
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this);
-        // Example: Creating a 10x10 grid of seats
-        Platform.runLater(() -> {
-            int rows = 10;
-            int columns = 10;
-            for (int row = 0; row < rows; row++) {
-                for (int col = 0; col < columns; col++) {
-                    makeSeat(row, col);
-                }
-            }
-        });
     }
 
-    private void makeSeat(int col, int row) {
+    private void makeSeat(int col, int row, boolean isAvailable) {
         Pane seat = new Pane();
         seat.getStyleClass().add("seat");
 
-        // Example: Mark some seats as unavailable
-        if ((row == 2 && col == 2) || (row == 3 && col == 4)) {
+        if (!isAvailable) {
             seat.getStyleClass().add("unavailable");
             seat.setDisable(true);
         } else {
@@ -78,18 +70,22 @@ public class SeatPickerController {
 
     @FXML
     private void confirmSelection() {
-        // Send the movie data and selected seats to the Purchase screen
-        System.out.println("Selected seats: " + selectedSeats.size());
-        System.out.println("Movie received: " + screeningData.getMovie().getTitle());
-        showSideUI("Purchase", selectedSeats, screeningData);  // Pass selected seats and Movie data
+        showSideUI("Purchase", selectedSeats, screeningData);
     }
 
 
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
-        if (event.getUIName().equals("SeatPicker") && event.getFirstObj() instanceof Movie) {
-            screeningData.setMovie((Movie)event.getFirstObj());
-            System.out.println("Movie received: " + screeningData.getMovie().getTitle());
+        if (!event.getUIName().equals("SeatPicker")) {
+            return;
+        }
+        screeningData = (Screening) event.getSecondObj();
+        movieData = (Movie) event.getFirstObj();
+
+        // Clear the grid
+        SeatsGrid.getChildren().clear();
+        for( Seat seat : screeningData.getSeats() ) {
+            makeSeat(seat.getSeatLocationX(), seat.getSeatLocationY(), seat.isAvailable());
         }
     }
 
