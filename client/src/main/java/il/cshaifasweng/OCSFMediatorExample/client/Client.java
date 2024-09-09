@@ -88,6 +88,9 @@ public class Client extends AbstractClient {
 				case UPDATE_SCREENING_PATCH:
 					EventBus.getDefault().post( new UpdateScreeningEvent(message));
 					break;
+				case GET_SEATS_FOR_SCREENING_RESPONSE:
+					EventBus.getDefault().post( new GetSeatsForScreeningEvent(message));
+					break;
 
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
