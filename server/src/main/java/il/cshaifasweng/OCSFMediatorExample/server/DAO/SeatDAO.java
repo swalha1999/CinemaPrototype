@@ -30,11 +30,9 @@ public class SeatDAO {
         }
 
         session.beginTransaction();
-
-        Query<Seat> query = session.createQuery("from Seat where Screening = :screening", Seat.class);
+        Query<Seat> query = session.createQuery("from Seat where screening = :screening", Seat.class);
         query.setParameter("screening", screening);
         List<Seat> seats = query.getResultList();
-
         session.getTransaction().commit();
 
         for (Seat seat : seats) {

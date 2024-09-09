@@ -45,17 +45,24 @@ public class TicketDAO {
                     .setMessage("Screening not found");
         }
 
-        session.beginTransaction();
-        for (Seat seatFromUser : seats) {
 
+        for (Seat seatFromUser : seats) {
+            System.out.println("Seat From user ID: " + seatFromUser.getId());
             Seat seat = DatabaseController.getInstance(session).getSeatsManager().getSeatById(seatFromUser.getId());
 
-            if (seat == null || !seat.isAvailable()) {
-                session.getTransaction().rollback();
+            if (seat == null) {
+                return response.setSuccess(false)
+                        .setMessage("Seat not found");
+            }
+
+            System.out.println("Seat ID: " + seat.getId());
+
+            if (!seat.isAvailable()) {
                 return response.setSuccess(false)
                         .setMessage("Seat is not available");
             }
 
+            session.beginTransaction();
             MovieTicket ticket = new MovieTicket();
             ticket.setScreening(screening);
             ticket.setSeat(seat);
@@ -63,7 +70,11 @@ public class TicketDAO {
             seat.setAvailable(false);
             session.update(seat);
             session.save(ticket);
+            session.getTransaction().commit();
+
         }
+
+        session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
 
