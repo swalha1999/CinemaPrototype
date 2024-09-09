@@ -662,7 +662,7 @@ public class Server extends AbstractServer {
     }
 
     private Message handlePurchaseTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response = database.getTicketsManager().purchaseTickets(request);
+        Message response = database.getTicketsManager().purchaseTickets(request, loggedInUser.getUserId());
         sendResponse(client, response);
         return response;
     }
