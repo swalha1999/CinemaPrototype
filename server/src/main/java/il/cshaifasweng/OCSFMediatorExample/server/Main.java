@@ -194,22 +194,22 @@ public class Main {
                 screening.setStartingAt(LocalDateTime.now());
                 screening.setPrice(45);
 
-                // lets make the screnning seats 100
-//                screening.setTotalSeats(100);
-//                for (int i = 0; i < 100; i++) {
-//                    Seat seat = new Seat();
-//                    seat.setSeatLocationX(i % 10);
-//                    seat.setSeatLocationY(i / 10);
-//                    seat.setSeatNumber(i);
-//                    seat.setAvailable(true);
-//                    seat.setScreening(screening);
-//                    screening.addSeat(seat);
-//                    session.save(seat);
-//                    session.flush();
-//                }
-
                 session.save(screening);
                 session.flush();
+
+                screening.setTotalSeats(100);
+                for (int i = 0; i < 100; i++) {
+                    Seat seat = new Seat();
+                    seat.setSeatLocationX(i % 10);
+                    seat.setSeatLocationY(i / 10);
+                    seat.setSeatNumber(i);
+                    seat.setAvailable(true);
+                    seat.setScreening(screening);
+                    screening.addSeat(seat);
+                    session.save(seat);
+                    session.flush();
+                }
+                session.update(screening);
             }
         }
     }
