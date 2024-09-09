@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -85,16 +84,15 @@ public class Purchase {
       return;
     }
 
-    if (selectedSeats != null){
-      selectedSeats.clear();
-    }
-
+    selectedSeats.clear();
     if (event.getFirstObj() instanceof Set) {
+      System.out.println("First obj is set");
       selectedSeats = (Set<Seat>) event.getFirstObj();
     }
 
     if (event.getSecondObj() instanceof Screening) {
-      screeningData =(Screening) event.getSecondObj();
+      System.out.println("Second obj is screening");
+      screeningData = (Screening) event.getSecondObj();
     }
 
     double pricePerSeat =  screeningData.getPrice();

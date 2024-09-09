@@ -88,10 +88,14 @@ public class SeatPickerController {
 
 
     @Subscribe
-    public void getMovieDetails(ShowSideUIEvent event) {
+    public void getUIChange(ShowSideUIEvent event) {
         if (!event.getUIName().equals("SeatPicker") || event.getFirstObj() == null || event.getSecondObj() == null) {
             return;
         }
+
+        selectedSeats.clear();
+        seatLocations.clear();
+        SeatsGrid.getChildren().clear();
 
         screeningData = (Screening) event.getSecondObj();
         movieData = (Movie) event.getFirstObj();
