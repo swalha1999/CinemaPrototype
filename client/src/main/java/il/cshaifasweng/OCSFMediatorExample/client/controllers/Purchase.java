@@ -85,20 +85,21 @@ public class Purchase {
       return;
     }
 
+    if (selectedSeats != null){
+      selectedSeats.clear();
+    }
+
     if (event.getFirstObj() instanceof Set) {
       selectedSeats = (Set<Seat>) event.getFirstObj();
-      for (Seat seat : selectedSeats) {
-        System.out.println(seat.getId());
-      }
-      SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));
     }
 
     if (event.getSecondObj() instanceof Screening) {
       screeningData =(Screening) event.getSecondObj();
-      MovieTitleLabel.setText(screeningData.getMovie().getTitle());
     }
 
     double pricePerSeat =  screeningData.getPrice();
+    MovieTitleLabel.setText(screeningData.getMovie().getTitle());
+    SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));
     PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
     TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
     DurationLabel.setText(String.valueOf(screeningData.getMovie().getDurationInMinutes()));

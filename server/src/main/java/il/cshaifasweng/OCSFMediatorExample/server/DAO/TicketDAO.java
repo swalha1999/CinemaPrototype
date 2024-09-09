@@ -49,6 +49,7 @@ public class TicketDAO {
         for (Seat seatFromUser : seats) {
 
             Seat seat = session.get(Seat.class, seatFromUser.getId());
+            System.out.println(seat);
 
             if (seat == null || !seat.isAvailable()) {
                 session.getTransaction().rollback();

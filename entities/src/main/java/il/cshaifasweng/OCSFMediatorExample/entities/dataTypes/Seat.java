@@ -18,7 +18,6 @@ public class Seat implements Serializable {
 
     private int seatLocationX;
     private int seatLocationY;
-    private int seatNumber;
     private boolean isAvailable;
 
     @OneToOne(mappedBy = "seat", fetch = FetchType.LAZY)
@@ -27,14 +26,12 @@ public class Seat implements Serializable {
     public Seat() {
         this.seatLocationX = 0;
         this.seatLocationY = 0;
-        this.seatNumber = 0;
         this.isAvailable = true;
     }
 
     public Seat(int seatLocationX, int seatLocationY, int seatNumber, boolean isAvailable) {
         this.seatLocationX = seatLocationX;
         this.seatLocationY = seatLocationY;
-        this.seatNumber = seatNumber;
         this.isAvailable = isAvailable;
     }
 
@@ -50,20 +47,12 @@ public class Seat implements Serializable {
         return seatLocationY;
     }
 
-    public int getSeatNumber() {
-        return seatNumber;
-    }
-
     public void setSeatLocationX(int seatLocationX) {
         this.seatLocationX = seatLocationX;
     }
 
     public void setSeatLocationY(int seatLocationY) {
         this.seatLocationY = seatLocationY;
-    }
-
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
     }
 
     public boolean isAvailable() {
@@ -96,7 +85,6 @@ public class Seat implements Serializable {
                 "id=" + id +
                 ", seatLocationX=" + seatLocationX +
                 ", seatLocationY=" + seatLocationY +
-                ", seatNumber=" + seatNumber +
                 ", isAvailable=" + isAvailable +
                 '}';
     }
