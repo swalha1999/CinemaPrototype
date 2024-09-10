@@ -62,6 +62,12 @@ public class Purchase {
   private TextField expiryDate;
 
   @FXML
+  private Label TotalAmountLabel;
+
+  @FXML
+  private Label NumberItemPurchLabel;
+
+  @FXML
   public void initialize() {
     EventBus.getDefault().register(this);
   }
@@ -107,5 +113,8 @@ public class Purchase {
     TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
     DurationLabel.setText(String.valueOf(screeningData.getMovie().getDurationInMinutes()));
     MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
+    OrderIdLabel.setText(String.valueOf(screeningData.getId()));
+    TotalAmountLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
+    NumberItemPurchLabel.setText(String.valueOf(selectedSeats.size()));
   }
 }
