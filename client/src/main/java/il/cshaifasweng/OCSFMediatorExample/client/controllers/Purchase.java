@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Set;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.PaymentUtil.isValidCard;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
@@ -76,6 +77,10 @@ public class Purchase {
   void ConfirmPurchase(ActionEvent event) {
     if (selectedSeats== null || selectedSeats.isEmpty()) {
       showNotification("Please select seats to purchase", false);
+      return;
+    }
+    if(!isValidCard(String.valueOf(CVV_Txt.getText()))) {
+      showNotification("The Card Number is Not Valid , Please Try Again", false);
       return;
     }
     screeningData.setSeats(selectedSeats.stream().toList());

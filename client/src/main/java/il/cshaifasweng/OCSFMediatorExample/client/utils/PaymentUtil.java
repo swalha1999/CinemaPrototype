@@ -17,6 +17,11 @@ public class PaymentUtil {
         return (cardNumber.startsWith("34") || cardNumber.startsWith("37")) && luhnCheck(cardNumber);
     }
 
+    // Function to check if the card is valid for any type (Visa, MasterCard, or Amex)
+    public static boolean isValidCard(String cardNumber) {
+        return validateVisaCard(cardNumber) || validateMasterCard(cardNumber) || validateAmexCard(cardNumber);
+    }
+
     // Luhn algorithm to check if a card number is valid
     private static boolean luhnCheck(String cardNumber) {
         int sum = 0;

@@ -44,7 +44,6 @@ public class TicketDAO {
             return response.setSuccess(false)
                     .setMessage("Screening not found");
         }
-
         if (seats.isEmpty()) {
             return response.setSuccess(false)
                     .setMessage("No seats selected");
