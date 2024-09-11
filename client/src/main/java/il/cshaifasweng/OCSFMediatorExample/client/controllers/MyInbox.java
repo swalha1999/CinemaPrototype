@@ -1,9 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseMovieEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class MyInbox {
 
@@ -12,6 +15,9 @@ public class MyInbox {
 
     @FXML
     public void initialize() {
+        // Register the EventBus
+        EventBus.getDefault().register(this);
+
         // Example: Adding some messages on initialization
         addMessage("John Doe", "Hello! How are you?");
         addMessage("Jane Smith", "Meeting at 3 PM.");
@@ -38,5 +44,17 @@ public class MyInbox {
         messagePane.getChildren().addAll(senderLabel, contentLabel);
 
         MessageContainer.getChildren().add(messagePane);
+    }
+
+    @Subscribe
+    public void MoviePurchasse(PurchaseMovieEvent event) {
+        String movieTitle = event.getMovieTitle();
+        String startTime = event.getStartTime().toString(); // Assuming startTime is LocalDateTime
+        String endTime = event.getEndTime().toString(); // Assuming endTime is LocalDateTime
+
+        String messageContent = String.format("Your purchase for the movie '%s' is confirmed. \n" +
+                "Available from: %s to %s", movieTitle, startTime, endTime);
+
+        addMessage("Cinema System", messageContent);
     }
 }

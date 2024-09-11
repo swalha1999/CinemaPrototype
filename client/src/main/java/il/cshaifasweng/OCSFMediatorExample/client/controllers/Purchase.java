@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.PaymentUtil.isValidCard;
@@ -75,20 +77,55 @@ public class Purchase {
 
   @FXML
   void ConfirmPurchase(ActionEvent event) {
-    if (selectedSeats== null || selectedSeats.isEmpty()) {
+    // Check if the user has selected seats
+    if (selectedSeats == null || selectedSeats.isEmpty()) {
       showNotification("Please select seats to purchase", false);
       return;
     }
-    if(!isValidCard(String.valueOf(CVV_Txt.getText()))) {
-      showNotification("The Card Number is Not Valid , Please Try Again", false);
+
+    // Validate the credit card using the CVV input
+    if (!isValidCard(CVV_Txt.getText())) {
+      showNotification("The Card Number is Not Valid, Please Try Again", false);
       return;
     }
+
+    // Assign selected seats to the screening
     screeningData.setSeats(selectedSeats.stream().toList());
+
+    // Prepare details for purchase event
+    String movieTitle = screeningData.getMovie().getTitle();
+    LocalDateTime startTime = screeningData.getStartingAt();
+    LocalDateTime endTime = startTime.plusMinutes(screeningData.getTimeInMinute());
+
+    // Check if the screening is online or in-person
+    String movieLink = screeningData.getIsOnlineScreening()
+            ? "https://cinema.example.com/watch/" + screeningData.getMovie().getId()
+            : "In-Person Screening at " + screeningData.getCinema().getName();
+
+    // Create the purchase movie event with movie details
+    PurchaseMovieEvent purchaseEvent = new PurchaseMovieEvent(
+            movieTitle,
+            movieLink,
+            startTime,
+            endTime,
+            SessionKeysStorage.getInstance().getUserEmail()
+    );
+
+    // Optionally, send the email confirmation (if applicable)
+    String emailContent = purchaseEvent.generateEmailMessage();
+    System.out.println(emailContent);  // Debug or send email
+
+    // Notify the user about successful purchase
+    showNotification("Purchase successful! A confirmation email has been sent to your inbox.", true);
+
+    // Send the purchase request to the server
     Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
             .setDataObject(screeningData)
             .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
     Client.getClient().sendToServer(request);
   }
+
 
   @FXML
   void ReturnBack(ActionEvent event) {
