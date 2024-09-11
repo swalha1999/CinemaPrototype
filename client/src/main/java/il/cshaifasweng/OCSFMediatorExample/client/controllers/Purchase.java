@@ -92,7 +92,7 @@ public class Purchase {
     // Assign selected seats to the screening
     screeningData.setSeats(selectedSeats.stream().toList());
 
-    // Prepare details for purchase event
+    // Prepare details for the purchase event
     String movieTitle = screeningData.getMovie().getTitle();
     LocalDateTime startTime = screeningData.getStartingAt();
     LocalDateTime endTime = startTime.plusMinutes(screeningData.getTimeInMinute());
@@ -103,19 +103,17 @@ public class Purchase {
             : "In-Person Screening at " + screeningData.getCinema().getName();
 
     // Create the purchase movie event with movie details
-    PurchaseMovieEvent purchaseEvent = new PurchaseMovieEvent(
+    PurchaseMovieEvent purchaseMovieEvent = new PurchaseMovieEvent(
             movieTitle,
-            movieLink,
             startTime,
             endTime,
             SessionKeysStorage.getInstance().getUserEmail()
     );
 
-    // Optionally, send the email confirmation (if applicable)
-    String emailContent = purchaseEvent.generateEmailMessage();
-    System.out.println(emailContent);  // Debug or send email
+    // **Post the event to notify other components (e.g., MyInbox)**
+    EventBus.getDefault().post(purchaseMovieEvent);
 
-    // Notify the user about successful purchase
+    // Notify the user about the successful purchase
     showNotification("Purchase successful! A confirmation email has been sent to your inbox.", true);
 
     // Send the purchase request to the server
