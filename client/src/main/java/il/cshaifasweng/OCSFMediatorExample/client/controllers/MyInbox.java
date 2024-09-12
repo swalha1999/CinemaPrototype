@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
-import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseMovieEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +29,7 @@ public class MyInbox {
     public void addMessage(String sender, String content) {
         AnchorPane messagePane = new AnchorPane();
         messagePane.getStyleClass().add("ticket-pane");
-        messagePane.setPrefWidth(300); // Set the desired width of the ticket
+        messagePane.setPrefWidth(300);
 
         Label senderLabel = new Label("Sender: " + sender);
         senderLabel.setLayoutX(14.0);
@@ -47,13 +47,16 @@ public class MyInbox {
     }
 
     @Subscribe
-    public void MoviePurchasse(PurchaseMovieEvent event) {
+    public void onPurchaseScreeningEvent(PurchaseScreeningEvent event) {
         String movieTitle = event.getMovieTitle();
-        String startTime = event.getStartTime().toString(); // Assuming startTime is LocalDateTime
-        String endTime = event.getEndTime().toString(); // Assuming endTime is LocalDateTime
+        String startTime = event.getStartTime().toString();
+        String endTime = event.getEndTime().toString();
+        String userEmail = event.getUserEmail();
 
+       //TODO : fix the email its null
         String messageContent = String.format("Your purchase for the movie '%s' is confirmed. \n" +
-                "Available from: %s to %s", movieTitle, startTime, endTime);
+                "Available from: %s to %s.\n" +
+                "Confirmation sent to: %s", movieTitle, startTime, endTime, userEmail);
 
         addMessage("Cinema System", messageContent);
     }

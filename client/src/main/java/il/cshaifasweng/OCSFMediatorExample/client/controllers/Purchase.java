@@ -2,8 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseMovieEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
@@ -97,23 +96,19 @@ public class Purchase {
     LocalDateTime startTime = screeningData.getStartingAt();
     LocalDateTime endTime = startTime.plusMinutes(screeningData.getTimeInMinute());
 
-    // Check if the screening is online or in-person
-    String movieLink = screeningData.getIsOnlineScreening()
-            ? "https://cinema.example.com/watch/" + screeningData.getMovie().getId()
-            : "In-Person Screening at " + screeningData.getCinema().getName();
-
-    // Create the purchase movie event with movie details
-    PurchaseMovieEvent purchaseMovieEvent = new PurchaseMovieEvent(
+    // Create the purchase screening event with movie details and selected seats
+    PurchaseScreeningEvent purchaseScreeningEvent = new PurchaseScreeningEvent(
             movieTitle,
             startTime,
             endTime,
-            SessionKeysStorage.getInstance().getUserEmail()
+            SessionKeysStorage.getInstance().getUserEmail(),
+            selectedSeats
     );
 
-    // **Post the event to notify other components (e.g., MyInbox)**
-    EventBus.getDefault().post(purchaseMovieEvent);
+    // Post the event to EventBus
+    EventBus.getDefault().post(purchaseScreeningEvent);
 
-    // Notify the user about the successful purchase
+    // Notify the user about successful purchase
     showNotification("Purchase successful! A confirmation email has been sent to your inbox.", true);
 
     // Send the purchase request to the server
