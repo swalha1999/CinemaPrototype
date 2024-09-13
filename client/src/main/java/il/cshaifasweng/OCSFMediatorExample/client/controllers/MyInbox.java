@@ -52,7 +52,7 @@ public class MyInbox {
         String startTime = event.getStartTime().toString();
         String endTime = event.getEndTime().toString();
         String userEmail = event.getUserEmail();
-
+System.out.println(movieTitle + " " + startTime + " " + endTime + " " + userEmail + "hahahahahahahah");
        //TODO : fix the email its null
         String messageContent = String.format("Your purchase for the movie '%s' is confirmed. \n" +
                 "Available from: %s to %s.\n" +

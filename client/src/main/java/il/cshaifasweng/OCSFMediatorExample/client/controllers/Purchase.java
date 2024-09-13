@@ -87,7 +87,6 @@ public class Purchase {
       showNotification("The Card Number is Not Valid, Please Try Again", false);
       return;
     }
-
     // Assign selected seats to the screening
     screeningData.setSeats(selectedSeats.stream().toList());
 
@@ -95,18 +94,6 @@ public class Purchase {
     String movieTitle = screeningData.getMovie().getTitle();
     LocalDateTime startTime = screeningData.getStartingAt();
     LocalDateTime endTime = startTime.plusMinutes(screeningData.getTimeInMinute());
-
-    // Create the purchase screening event with movie details and selected seats
-    PurchaseScreeningEvent purchaseScreeningEvent = new PurchaseScreeningEvent(
-            movieTitle,
-            startTime,
-            endTime,
-            SessionKeysStorage.getInstance().getUserEmail(),
-            selectedSeats
-    );
-
-    // Post the event to EventBus
-    EventBus.getDefault().post(purchaseScreeningEvent);
 
     // Notify the user about successful purchase
     showNotification("Purchase successful! A confirmation email has been sent to your inbox.", true);
