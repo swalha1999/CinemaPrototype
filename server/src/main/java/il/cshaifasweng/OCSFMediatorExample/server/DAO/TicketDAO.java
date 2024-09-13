@@ -8,10 +8,8 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 
 public class TicketDAO {
     private Session session;
@@ -21,8 +19,8 @@ public class TicketDAO {
     }
 
     public Message getMyTickets(Message request) {
-        //TODO change to fetch the user and then get the tickets hash form the user class
-        List<MovieTicket> tickets = session.createQuery("from MovieTicket where user = :id", MovieTicket.class)
+        // Fetch the user's tickets
+        List<MovieTicket> tickets = session.createQuery("from MovieTicket where user.id = :id", MovieTicket.class)
                 .setParameter("id", request.getUserId())
                 .getResultList();
         return new Message(MessageType.GET_MY_TICKETS_RESPONSE).setDataObject(tickets);
@@ -58,53 +56,42 @@ public class TicketDAO {
             return response;
         }
 
-        // Process each seat
-        for (Seat seatFromUser : seats) {
-            System.out.println("Seat From user ID: " + seatFromUser.getId());
-            Seat seat = DatabaseController.getInstance(session).getSeatsManager().getSeatById(seatFromUser.getId());
+        // Assume only one seat is selected for the ticket
+        Seat seatFromUser = seats.iterator().next();
+        Seat seat = DatabaseController.getInstance(session).getSeatsManager().getSeatById(seatFromUser.getId());
 
-            if (seat == null) {
-                response.setSuccess(false)
-                        .setMessage("Seat not found");
-                return response;
-            }
-
-            if (!seat.isAvailable()) {
-                response.setSuccess(false)
-                        .setMessage("Seat is not available");
-                return response;
-            }
-
-            // Begin transaction to process the ticket
-            session.beginTransaction();
-            MovieTicket ticket = new MovieTicket();
-            ticket.setScreening(screening);
-            ticket.setSeat(seat);
-            user.addTicket(ticket);
-            seat.setAvailable(false);
-            session.update(seat);
-            session.save(ticket);
-            session.getTransaction().commit();
+        if (seat == null) {
+            response.setSuccess(false)
+                    .setMessage("Seat not found");
+            return response;
         }
 
-        // Update user information in the database
+        if (!seat.isAvailable()) {
+            response.setSuccess(false)
+                    .setMessage("Seat is not available");
+            return response;
+        }
+
+        // Begin transaction to process the ticket
         session.beginTransaction();
-        session.update(user);
+        MovieTicket ticket = new MovieTicket(user, screening, seat);
+        ticket.setIsUsed(false); // Initialize the ticket as not used
+        ticket.setRefunded(false); // Initialize the ticket as not refunded
+        ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
+
+        seat.setAvailable(false); // Mark the seat as unavailable
+        session.update(seat); // Update seat status in the database
+        session.save(ticket); // Save the ticket in the database
         session.getTransaction().commit();
 
-        // Prepare additional data for response if needed
-        // Example: you might want to include the tickets purchased
-        List<MovieTicket> purchasedTickets = new ArrayList<>(user.getTickets());
-
-        // Set response data object
-        response.setDataObject(purchasedTickets);
+        // Set response data object to the created ticket
+        response.setDataObject(ticket);
 
         // Return a success message with the data object included
         response.setSuccess(true)
-                .setMessage("Tickets purchased successfully");
+                .setMessage("Ticket purchased successfully");
         return response;
     }
-
 
     public void setSession(Session session) {
         this.session = session;

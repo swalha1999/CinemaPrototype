@@ -8,6 +8,9 @@ import javafx.scene.layout.VBox;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class MyInbox {
 
     @FXML
@@ -48,15 +51,20 @@ public class MyInbox {
 
     @Subscribe
     public void onPurchaseScreeningEvent(PurchaseScreeningEvent event) {
-        String movieTitle = event.getMovieTitle();
-        String startTime = event.getStartTime().toString();
-        String endTime = event.getEndTime().toString();
-        String userEmail = event.getUserEmail();
-System.out.println(movieTitle + " " + startTime + " " + endTime + " " + userEmail + "hahahahahahahah");
-       //TODO : fix the email its null
+        String movieTitle = event.getTicket().getScreening().getMovie().getTitle();
+        LocalDateTime startTime = event.getTicket().getScreening().getStartingAt();
+        int durationInMinutes = event.getTicket().getScreening().getMovie().getDurationInMinutes();
+
+        // Calculate end time by adding the duration to the start time
+        LocalDateTime endTime = startTime.plusMinutes(durationInMinutes);
+
+        // Format date and time
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedStartTime = startTime.format(formatter);
+        String formattedEndTime = endTime.format(formatter);
+
         String messageContent = String.format("Your purchase for the movie '%s' is confirmed. \n" +
-                "Available from: %s to %s.\n" +
-                "Confirmation sent to: %s", movieTitle, startTime, endTime, userEmail);
+                "Available from: %s to %s.", movieTitle, formattedStartTime, formattedEndTime);
 
         addMessage("Cinema System", messageContent);
     }
