@@ -1,31 +1,93 @@
-/* SeatPicker.css */
+/* Purchase.css */
 
-/* Seat styling */
-.seat {
-    -fx-background-color: green;
-    -fx-border-color: #34495E;
-    -fx-border-width: 2;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-pref-height: 30;
-    -fx-pref-width: 30;
-    -fx-cursor: hand;
+/* Style for Text Fields */
+.text-field {
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ddd;
 }
 
-.seat.selected {
-    -fx-background-color: blue;
-}
-
-.seat.unavailable {
-    -fx-background-color: black;
-    -fx-cursor: not-allowed;
-}
-
-.confirm-button {
-    -fx-background-color: #34495E;
-    -fx-text-fill: white;
+/* Style for Header Section */
+.label-header {
+    -fx-font-size: 24px;
+    -fx-text-fill: darkblue;
     -fx-font-weight: bold;
-    -fx-padding: 10;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
+}
+
+/* Style for Labels */
+.label-info {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-background-color: darkblue;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+}
+
+.large-label {
+    -fx-font-size: 24px;
+    -fx-background-color: darkblue;
+}
+
+.button-nav {
+    -fx-font-size: 14px;
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button-nav:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Style for Movie Details Section */
+.label-movie {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+
+/* Style for Seat Information Section */
+.label-seat {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkorange;
+    -fx-font-weight: bold;
+}
+
+/* Style for Payment Information Section */
+.label-payment {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkred;
+    -fx-font-weight: bold;
+}
+
+/* Style for Order Summary Section */
+.label-summary {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkblue;
+    -fx-font-weight: bold;
+}
+
+.summary-box {
+    -fx-background-color: lightyellow;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+}
+
+.button-confirm {
+    -fx-font-size: 16px;
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-margin: 20px 0 0 0;
+}
+
+.button-confirm:hover {
+    -fx-background-color: #218838;
 }
