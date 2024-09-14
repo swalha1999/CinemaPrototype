@@ -48,6 +48,10 @@ public class Message implements Serializable {
         this.timeStamp = LocalDateTime.now();
     }
 
+    public Message() {
+
+    }
+
     public LocalDateTime getTimeStamp() {
         return timeStamp;
     }

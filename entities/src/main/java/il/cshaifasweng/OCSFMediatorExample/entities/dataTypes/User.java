@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -292,5 +294,9 @@ public class User implements Serializable {
                 ", role=" + role +
                 ", balance=" + balance +
                 '}';
+    }
+
+    public void sendToClient(Message notification) {
+
     }
 }

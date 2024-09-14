@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
@@ -13,6 +14,10 @@ import org.hibernate.Session;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Server extends AbstractServer {
     private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>(); //this will be used to store the session keys for the logged-in users
@@ -728,16 +733,6 @@ public class Server extends AbstractServer {
                 handleLogoutRequest(new Message(logoutRequest, MessageType.LOGOUT_REQUEST), loggedInUser.getClient());
             }
         }
-    }
-
-    public UserRole addInfoToRequest(Message request) {
-        LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
-        if (loggedInUser == null) {
-            return UserRole.NOT_LOGGED_IN;
-        }
-        request.setUsername(loggedInUser.getUsername());
-        request.setUserId(loggedInUser.getUserId());
-        return loggedInUser.getRole();
     }
 
 }
