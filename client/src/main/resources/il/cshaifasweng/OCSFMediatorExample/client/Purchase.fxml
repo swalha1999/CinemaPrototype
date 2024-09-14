@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/Purchase.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.Purchase">
@@ -25,15 +26,15 @@
         <children>
             <HBox spacing="10.0">
                 <Label text="Movie Title:" />
-                <Label fx:id="MovieTitleLabel" text="[Title of the Movie]" styleClass="label-info" />
+                <Label fx:id="MovieTitleLabel" styleClass="label-info" text="[Title of the Movie]" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Duration:" />
-                <Label fx:id="DurationLabel" text="[Duration of the Movie]" styleClass="label-info" />
+                <Label fx:id="DurationLabel" styleClass="label-info" text="[Duration of the Movie]" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Showtime:" />
-                <Label fx:id="MovieTimeLabel" text="[Showtime of the Movie]" styleClass="label-info" />
+                <Label fx:id="MovieTimeLabel" styleClass="label-info" text="[Showtime of the Movie]" />
             </HBox>
         </children>
     </VBox>
@@ -43,21 +44,21 @@
         <children>
             <HBox spacing="10.0">
                 <Label text="Seat Number:" />
-                <Label fx:id="SeatNumberLabel" text="[Selected Seat Number]" styleClass="label-info" />
+                <Label fx:id="SeatNumberLabel" styleClass="label-info" text="[Selected Seat Number]" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Price per Seat:" />
-                <Label fx:id="PricePerSeatLabel" text="[Price per Seat]" styleClass="label-info" />
+                <Label fx:id="PricePerSeatLabel" styleClass="label-info" text="[Price per Seat]" />
             </HBox>
             <HBox spacing="10.0">
                 <Label text="Total Price:" />
-                <Label fx:id="TotalPriceLabel" text="[Total Price]" styleClass="label-info" />
+                <Label fx:id="TotalPriceLabel" styleClass="label-info" text="[Total Price]" />
             </HBox>
         </children>
     </VBox>
 
     <!-- Payment Information Section -->
-    <VBox layoutX="14.0" layoutY="477.0" prefWidth="1160.0" spacing="20.0">
+    <VBox layoutX="14.0" layoutY="408.0" prefWidth="1160.0" spacing="20.0">
         <children>
             <Label styleClass="label-payment" text="Payment Information" />
             <GridPane hgap="20.0" vgap="15.0">
@@ -65,13 +66,16 @@
                     <ColumnConstraints halignment="RIGHT" />
                     <ColumnConstraints halignment="LEFT" />
                 </columnConstraints>
-
+      
                 <Label text="Card Number:" />
                 <TextField fx:id="cardNumber" promptText="Enter card number" styleClass="text-field" />
                 <Label text="Expiration Date:" />
                 <TextField fx:id="expiryDate" promptText="MM/YY" styleClass="text-field" />
                 <Label text="CVV:" />
                 <TextField fx:id="CVV_Txt" promptText="Enter CVV" styleClass="text-field" />
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
             </GridPane>
         </children>
     </VBox>
@@ -79,22 +83,22 @@
     <!-- Order Summary Section -->
     <VBox layoutX="20.0" layoutY="600.0" prefHeight="236.0" prefWidth="1160.0" spacing="20.0">
         <children>
-            <Label styleClass="label-summary" text="Order Summary" />
             <VBox spacing="10.0" styleClass="summary-box">
                 <HBox spacing="10.0">
                     <Label text="Order ID:" />
-                    <Label fx:id="OrderIdLabel" text="[Order ID]" styleClass="label-info" />
+                    <Label fx:id="OrderIdLabel" styleClass="label-info" text="[Order ID]" />
                 </HBox>
                 <HBox spacing="10.0">
                     <Label text="Items Purchased:" />
-                    <Label fx:id="NumberItemPurchLabel" text="[Number of Items]" styleClass="label-info" />
+                    <Label fx:id="NumberItemPurchLabel" styleClass="label-info" text="[Number of Items]" />
                 </HBox>
                 <HBox spacing="10.0">
                     <Label text="Total Amount:" />
-                    <Label fx:id="TotalAmountLabel" text="[Total Amount]" styleClass="label-info" />
+                    <Label fx:id="TotalAmountLabel" styleClass="label-info" text="[Total Amount]" />
                 </HBox>
             </VBox>
             <Button fx:id="ConfirmPurchaseBtn" onAction="#ConfirmPurchase" styleClass="button-confirm" text="Confirm Purchase" />
         </children>
     </VBox>
+      <Label layoutX="20.0" layoutY="541.0" styleClass="label-summary" text="Order Summary" />
 </AnchorPane>
