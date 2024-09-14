@@ -94,11 +94,6 @@ public class Purchase {
     String movieTitle = screeningData.getMovie().getTitle();
     LocalDateTime startTime = screeningData.getStartingAt();
     LocalDateTime endTime = startTime.plusMinutes(screeningData.getTimeInMinute());
-
-    // Notify the user about successful purchase
-    showNotification("Purchase successful! A confirmation email has been sent to your inbox.", true);
-
-    // Send the purchase request to the server
     Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
             .setDataObject(screeningData)
             .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());

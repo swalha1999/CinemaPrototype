@@ -71,7 +71,6 @@ public class TicketDAO {
                     .setMessage("Seat is not available");
             return response;
         }
-
         // Begin transaction to process the ticket
         session.beginTransaction();
         MovieTicket ticket = new MovieTicket(user, screening, seat);
@@ -89,7 +88,7 @@ public class TicketDAO {
 
         // Return a success message with the data object included
         response.setSuccess(true)
-                .setMessage("Ticket purchased successfully");
+                .setMessage("Purchase successful! A confirmation email has been sent to your inbox.");
         return response;
     }
 
