@@ -13,7 +13,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.greenrobot.eventbus.EventBus;
@@ -44,15 +43,12 @@ public class SeatPickerController {
 
     @FXML
     void returnFunction(ActionEvent event) {
-        Platform.runLater(() -> {
-            showSideUI("MovieDetails"); // Ensure this is the correct screen name
-        });
+        Platform.runLater(() -> showSideUI("MovieDetails"));  // Ensures return to MovieDetails
     }
 
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this);
-
     }
 
     private void makeSeatTile(Seat seat) {
@@ -83,9 +79,8 @@ public class SeatPickerController {
 
     @FXML
     private void confirmSelection() {
-        showSideUI("Purchase", selectedSeats, screeningData);
+        showSideUI("Purchase", selectedSeats, screeningData);  // Pass the selected seats and screening data
     }
-
 
     @Subscribe
     public void getUIChange(ShowSideUIEvent event) {
@@ -100,14 +95,13 @@ public class SeatPickerController {
         screeningData = (Screening) event.getSecondObj();
         movieData = (Movie) event.getFirstObj();
 
-        //Make a request to the server to get the seats for the screening
+        // Request server to get the seats for the screening
         Message request = new Message(MessageType.GET_SEATS_FOR_SCREENING_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(screeningData);
 
         Client.getClient().sendToServer(request);
     }
-
 
     @Subscribe
     public void onGetSeatsForScreeningEvent(GetSeatsForScreeningEvent event) {
@@ -118,7 +112,6 @@ public class SeatPickerController {
             }
         });
     }
-
 
     private static class seatContainer {
         Seat seat;
@@ -136,8 +129,5 @@ public class SeatPickerController {
         public Pane getSeatPane() {
             return seatPane;
         }
-
     }
-
-
 }

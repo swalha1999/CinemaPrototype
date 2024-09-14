@@ -4,12 +4,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
 
-<AnchorPane prefHeight="688.0" prefWidth="943.0" stylesheets="@css/SeatPicker.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SeatPickerController">
+<AnchorPane prefHeight="859.0" prefWidth="1293.0" stylesheets="@css/SeatsStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SeatPickerController">
     <children>
-        <GridPane fx:id="SeatsGrid" hgap="10.0" layoutX="37.0" layoutY="50.0" prefHeight="530.0" prefWidth="855.0" vgap="10.0">
+        <!-- Seats Grid -->
+        <GridPane fx:id="SeatsGrid" hgap="15.0" layoutX="28.0" layoutY="19.0" prefHeight="589.0" prefWidth="943.0" vgap="15.0">
             <!-- Seats will be dynamically added here -->
         </GridPane>
-        <Button fx:id="confirmButton" layoutX="337.0" layoutY="613.0" onAction="#confirmSelection" styleClass="confirm-button" text="Confirm Selection" />
-      <Button fx:id="returnBtn" layoutX="487.0" layoutY="613.0" onAction="#returnFunction" prefHeight="37.0" prefWidth="79.0" styleClass="confirm-button" text="Return" />
+
+        <!-- Confirm Button -->
+        <Button fx:id="confirmButton" layoutX="267.0" layoutY="670.0" onAction="#confirmSelection" prefHeight="50.0" prefWidth="150.0" styleClass="confirm-button" text="Confirm Selection" />
+
+        <!-- Return Button -->
+        <Button fx:id="returnBtn" layoutX="502.0" layoutY="670.0" onAction="#returnFunction" prefHeight="50.0" prefWidth="150.0" styleClass="return-button" text="Return" />
     </children>
 </AnchorPane>

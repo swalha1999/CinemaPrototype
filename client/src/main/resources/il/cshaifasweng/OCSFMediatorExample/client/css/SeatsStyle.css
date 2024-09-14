@@ -1,0 +1,64 @@
+/* General Grid Styles */
+#SeatsGrid {
+    -fx-background-color: #1e1e2f;
+    -fx-padding: 30;
+}
+
+/* Seat styles */
+.seat {
+    -fx-background-color: #2f4f75;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-pref-width: 80px;   /* Increased seat size */
+    -fx-pref-height: 80px;  /* Increased seat size */
+    -fx-cursor: hand;
+}
+
+.seat:hover {
+    -fx-background-color: #506890;
+}
+
+/* Selected seat */
+.seat.selected {
+    -fx-background-color: #ffca28;
+    -fx-border-color: #ffffff;
+}
+
+/* Unavailable seat */
+.seat.unavailable {
+    -fx-background-color: #555555;
+    -fx-border-color: #444444;
+    -fx-opacity: 0.7;
+}
+
+/* Confirm Button Styles */
+.confirm-button {
+    -fx-background-color: #2a3d66; /* New button color */
+    -fx-text-fill: white;
+    -fx-border-color: #506890;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 12 24;
+    -fx-font-size: 16px;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #3f5792;
+    -fx-text-fill: white;
+}
+
+/* Return Button */
+.return-button {
+    -fx-background-color: #2a3d66;
+    -fx-text-fill: white;
+    -fx-border-color: #506890;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 12 24;
+    -fx-font-size: 16px;
+}
+
+.return-button:hover {
+    -fx-background-color: #3f5792;
+}
