@@ -671,7 +671,6 @@ public class Server extends AbstractServer {
     private Message handlePurchaseTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response = database.getTicketsManager().purchaseTickets(request, loggedInUser.getUserId());
         sendResponse(client, response);
-        // TODO: we need to check if the purchase passed through
         Screening screening;
         screening = (Screening) request.getDataObject();
         if(!response.isSuccess())
