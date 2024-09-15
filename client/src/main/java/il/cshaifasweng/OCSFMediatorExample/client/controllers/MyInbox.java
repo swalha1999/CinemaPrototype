@@ -74,5 +74,6 @@ public class MyInbox {
     public void OnHourTillMovieEvent(HourTillMovieEvent event) {
         String messageContent = event.getMessage();
         addMessage("Cinema System", messageContent);
+        System.out.println(" it should print the movie ");
     }
 }

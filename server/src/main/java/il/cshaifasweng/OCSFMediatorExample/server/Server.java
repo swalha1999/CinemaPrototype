@@ -671,6 +671,11 @@ public class Server extends AbstractServer {
     private Message handlePurchaseTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response = database.getTicketsManager().purchaseTickets(request, loggedInUser.getUserId());
         sendResponse(client, response);
+        // TODO: we need to check if the purchase passed through
+        Screening screening;
+        screening = (Screening) request.getDataObject();
+        String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
+        addNotification(message,screening.getStartingAt(),loggedInUser);
         return response;
     }
 

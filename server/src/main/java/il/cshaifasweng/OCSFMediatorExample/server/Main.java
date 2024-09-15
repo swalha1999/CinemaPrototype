@@ -187,7 +187,7 @@ public class Main {
                 screening.setMovie(movie);
                 screening.setCinema(cinemas.get(j % cinemas.size()));
                 screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().get(j % cinemas.get(j % cinemas.size()).getHalls().size()));
-                screening.setStartingAt(now.plusHours(j == 0 ? 1 : 1).plusMinutes(j == 1 ? 1 : 0));
+                screening.setStartingAt(now.plusHours(1).plusMinutes(j == 1 ? 1 : 0));
                 screening.setPrice(45);
                 session.save(screening);
                 session.flush();
