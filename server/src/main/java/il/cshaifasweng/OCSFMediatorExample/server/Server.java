@@ -674,6 +674,10 @@ public class Server extends AbstractServer {
         // TODO: we need to check if the purchase passed through
         Screening screening;
         screening = (Screening) request.getDataObject();
+        if(!response.isSuccess())
+        {
+            return response;
+        }
         String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
         addNotification(message,screening.getStartingAt().minusHours(1),loggedInUser);
         return response;
