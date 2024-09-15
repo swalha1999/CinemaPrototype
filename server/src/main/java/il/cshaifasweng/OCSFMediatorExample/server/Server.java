@@ -752,7 +752,10 @@ public class Server extends AbstractServer {
         LoggedInUser user = notification.getUserConnection();
         if (user != null) {
             try {
-                user.getClient().sendToClient(new Message(notification, MessageType.NOTIFICATION));
+                Message notificationMessage = new Message(MessageType.NOTIFICATION)
+                        .setMessage(notification.getMessage());
+                user.getClient().sendToClient(notificationMessage);
+
             } catch (IOException e) {
                 System.out.println("Error sending notification to user: " + user.getUsername());
             }
