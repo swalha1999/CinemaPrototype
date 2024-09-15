@@ -105,7 +105,7 @@ public enum MessageType implements Serializable {
     GET_SEATS_FOR_SCREENING_REQUEST,
     GET_SEATS_FOR_SCREENING_RESPONSE,
 
-    NOTIFY_CLIENTS,
+    NOTIFY_CLIENTS, NOTIFICATION,
 
 }
 

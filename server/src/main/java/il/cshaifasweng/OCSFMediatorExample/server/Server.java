@@ -749,11 +749,18 @@ public class Server extends AbstractServer {
     }
 
     private static void sendNotification(Notification notification) {
-        System.out.println("Notification: " + notification.getMessage() + " at " + LocalDateTime.now());
+        LoggedInUser user = notification.getUserConnection();
+        if (user != null) {
+            try {
+                user.getClient().sendToClient(new Message(notification, MessageType.NOTIFICATION));
+            } catch (IOException e) {
+                System.out.println("Error sending notification to user: " + user.getUsername());
+            }
+        }
     }
 
-    public static void addNotification(String message, LocalDateTime time) {
-        Notification notification = new Notification(message, time);
+    public static void addNotification(String message, LocalDateTime time, LoggedInUser user) {
+        Notification notification = new Notification(message, time, user);
         scheduleNotification(notification);
     }
 
