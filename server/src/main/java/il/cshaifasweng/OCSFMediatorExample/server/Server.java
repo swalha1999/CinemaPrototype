@@ -8,13 +8,15 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
+import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.Notification;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.Session;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -734,5 +736,26 @@ public class Server extends AbstractServer {
             }
         }
     }
+
+    private static void scheduleNotification(Notification notification) {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(now, notification.getNotificationTime());
+
+        long delay = duration.getSeconds();
+
+        scheduler.schedule(() -> sendNotification(notification), delay, TimeUnit.SECONDS);
+    }
+
+    private static void sendNotification(Notification notification) {
+        System.out.println("Notification: " + notification.getMessage() + " at " + LocalDateTime.now());
+    }
+
+    public static void addNotification(String message, LocalDateTime time) {
+        Notification notification = new Notification(message, time);
+        scheduleNotification(notification);
+    }
+
 
 }
