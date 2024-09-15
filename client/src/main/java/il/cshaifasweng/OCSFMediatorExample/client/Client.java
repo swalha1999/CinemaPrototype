@@ -93,7 +93,8 @@ public class Client extends AbstractClient {
 					break;
 				case PURCHASE_TICKETS_RESPONSE:
 					EventBus.getDefault().post(new PurchaseScreeningEvent(message));
-
+				case NOTIFY_CLIENTS:
+					EventBus.getDefault().post(new HourTillMovieEvent(message));
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;

@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -66,6 +67,12 @@ public class MyInbox {
         String messageContent = String.format("Your purchase for the movie '%s' is confirmed. \n" +
                 "Available from: %s to %s.", movieTitle, formattedStartTime, formattedEndTime);
 
+        addMessage("Cinema System", messageContent);
+    }
+
+    @Subscribe
+    public void OnHourTillMovieEvent(HourTillMovieEvent event) {
+        String messageContent = event.getMessage();
         addMessage("Cinema System", messageContent);
     }
 }
