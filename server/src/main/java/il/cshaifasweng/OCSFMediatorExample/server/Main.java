@@ -18,7 +18,7 @@ import java.util.*;
 
 public class Main {
 
-    private static Session session;
+    public static Session session;
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();

@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.awt.event.ActionEvent;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -142,5 +143,16 @@ public class MyTickets {
     // Unregister from the EventBus when the controller is no longer in use
     public void cleanup() {
         EventBus.getDefault().unregister(this);
+    }
+
+@FXML
+    public void RemoveTicketBtn(javafx.event.ActionEvent actionEvent) {
+        if (selectedTicket != null) {
+            Message message = new Message(MessageType.REMOVE_TICKET_REQUEST)
+                    .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                    .setDataObject(selectedTicket.getId());
+            Client.getClient().sendToServer(message);
+        }
+
     }
 }

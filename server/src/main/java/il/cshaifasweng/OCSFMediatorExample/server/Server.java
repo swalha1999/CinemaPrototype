@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
+import il.cshaifasweng.OCSFMediatorExample.server.DAO.TicketDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.Notification;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
@@ -20,6 +21,8 @@ import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static il.cshaifasweng.OCSFMediatorExample.server.Main.session;
 
 public class Server extends AbstractServer {
     private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>(); //this will be used to store the session keys for the logged-in users
@@ -69,7 +72,7 @@ public class Server extends AbstractServer {
             case GET_MY_TICKETS_REQUEST -> handleGetMyTicketsRequest(request, client, loggedInUser);
             case GET_ALL_MOVIES_REQUEST -> handleGetAllMoviesRequest(request, client, loggedInUser);
             case PURCHASE_TICKETS_REQUEST -> handlePurchaseTicketsRequest(request, client, loggedInUser);
-
+            case REMOVE_TICKET_REQUEST -> handleRemoveTicketRequest(request,client , loggedInUser);
 
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
@@ -775,5 +778,11 @@ public class Server extends AbstractServer {
         scheduleNotification(notification);
     }
 
+    private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        database.getTicketsManager().removeTicket(request, loggedInUser);
+        Message response = handleGetMyTicketsRequest(request, client, loggedInUser);
+        sendResponse(client, response);
+        return response;
+    }
 
 }
