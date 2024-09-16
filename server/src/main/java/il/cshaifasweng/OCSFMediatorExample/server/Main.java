@@ -37,6 +37,7 @@ public class Main {
         configuration.addAnnotatedClass(Hall.class);
         configuration.addAnnotatedClass(Seat.class);
         configuration.addAnnotatedClass(Cinema.class);
+        configuration.addAnnotatedClass(SupportTicket.class);
 
         // if the tables do not exist, hibernate will create them
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
