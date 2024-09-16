@@ -15,7 +15,7 @@
         </ScrollPane>
 
         <!-- Add the Return Ticket Button -->
-        <Button fx:id="returnTicketButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" text="Return Ticket" styleClass="button-return"/>
+        <Button fx:id="returnTicketButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" text="Return Ticket" styleClass="return-button"/>
 
     </children>
 </AnchorPane>
