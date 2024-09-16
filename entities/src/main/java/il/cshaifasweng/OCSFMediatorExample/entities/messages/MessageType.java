@@ -116,5 +116,6 @@ public enum MessageType implements Serializable {
     ADD_SUPPORT_TICKET_PATCH,
     CLOSE_SUPPORT_TICKET_REQUEST,
 
+
 }
 
