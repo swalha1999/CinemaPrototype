@@ -81,3 +81,15 @@
     -fx-background-color: #0056b3; /* Darker blue on hover */
     -fx-cursor: hand;
 }
+/* Style for the selected ticket */
+.selected-ticket {
+    -fx-background-color: #3498db; /* Light blue background when selected */
+    -fx-border-color: #2980b9; /* Darker blue border for selected state */
+}
+/* Highlight the selected ticket */
+.selected-ticket {
+    -fx-background-color: #4682B4;  /* Change color when selected */
+    -fx-border-color: #FFFFFF;      /* White border for selected ticket */
+    -fx-border-width: 2;
+}
+
