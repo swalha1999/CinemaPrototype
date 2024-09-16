@@ -68,10 +68,24 @@ public class SeatPickerController {
     }
 
     private void toggleSeatSelection(seatContainer seatContainer) {
+        // If the seat is already selected, deselect it
         if (selectedSeats.contains(seatContainer.getSeat())) {
             selectedSeats.remove(seatContainer.getSeat());
             seatContainer.getSeatPane().getStyleClass().remove("selected");
         } else {
+            // If a seat is already selected, clear the selection
+            if (!selectedSeats.isEmpty()) {
+                seatContainer previousSelection = seatLocations.stream()
+                        .filter(container -> selectedSeats.contains(container.getSeat()))
+                        .findFirst()
+                        .orElse(null);
+                if (previousSelection != null) {
+                    selectedSeats.remove(previousSelection.getSeat());
+                    previousSelection.getSeatPane().getStyleClass().remove("selected");
+                }
+            }
+
+            // Select the new seat
             selectedSeats.add(seatContainer.getSeat());
             seatContainer.getSeatPane().getStyleClass().add("selected");
         }
