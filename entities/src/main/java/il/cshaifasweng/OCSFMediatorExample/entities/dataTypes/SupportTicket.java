@@ -18,11 +18,11 @@ public class SupportTicket implements Serializable {
     private String subject;
     private String description;
     private LocalDateTime createdDate;
-    private String status;
+    private SupportTicketStatus status;
 
     public SupportTicket() {
         this.createdDate = LocalDateTime.now();
-        this.status = "Open"; // default status
+        this.status = SupportTicketStatus.OPEN; // default status
     }
 
     public SupportTicket(String name, String email, String subject, String description) {
@@ -31,7 +31,7 @@ public class SupportTicket implements Serializable {
         this.subject = subject;
         this.description = description;
         this.createdDate = LocalDateTime.now();
-        this.status = "Open";
+        this.status = SupportTicketStatus.OPEN; // default status
     }
 
     // Getters and setters
@@ -79,11 +79,11 @@ public class SupportTicket implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getStatus() {
+    public SupportTicketStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(SupportTicketStatus status) {
         this.status = status;
     }
 
