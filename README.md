@@ -3,30 +3,26 @@
 Pay attention to the three modules:
 1. **client** - a simple client built using JavaFX and OCSF. We use EventBus (which implements the mediator pattern) in order to pass events between classes (in this case: between SimpleClient and PrimaryController).
 2. **server** - a simple server built using OCSF.
-3. **entities** - a shared module where all the entities of the project live.
+3. **entities** - a shared module where all the entities of the project live.\
 
 ## Running
 // TODO: Add instructions on how to run the project inside IntelliJ IDEA.
-// The instructions on RunIntelliJIDEA.pdf file, maybe it will be better to save it in a new folder 
-
+// The instructions on RunIntelliJIDEA.pdf file, maybe it will be better to save it in a new folder
 ## `WindowSize`
 width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-1. TODO change the way we display the image in the movie details page
-2. TODO: make a page to add [Cinema]() 
-3. TODO: make a page to add Hall
-4. TODO: make a page to add Screening
-5. TODO: add screening management `--> omar`
-6. TODO: add actors to the movie view `--> orel`
-7. TODO: add producer to the movie view `--> orel`
-8. TODO: add screening to the movie view
-9. TODO: add cinema entity `--> swalha`
-10. TODO: after the screening is done, we can make online movies view
-11. TODO: add a page to display to packages and how many entrances they have left
-12. TODO:Make Req and Res to the Screening DIO
-
+1.TODO: add actors to the movie view `--> orel`
+2. TODO: add producer to the movie view `--> orel`
+3.TODO: add screening to the movie view
+4. TODO: add a page to display to packages and how many entrances they have left
+5. TODO:Make Req and Res to the Screening DIO
+6. fix the get all tickets logic
+7. fix the remove ticket 
+8. connect the dashboard to the client and the server
+9. add the pack of tickets 
+10. connect the supportpage 
 
 
 ## `Done tasks but ur name :)`
