@@ -208,7 +208,7 @@ public class Server extends AbstractServer {
         request.setUsername(loggedInUser.getUsername());
         request.setUserId(loggedInUser.getUserId());
 
-        Message response = database.getTicketsManager().getMyTickets(request);
+        Message response = database.getTicketsManager().getMyTickets(request,loggedInUser);
 
         sendResponse(client, response);
         return response;
@@ -673,7 +673,7 @@ public class Server extends AbstractServer {
     }
 
     private Message handlePurchaseTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response = database.getTicketsManager().purchaseTickets(request, loggedInUser.getUserId());
+        Message response = database.getTicketsManager().purchaseTickets(request, loggedInUser);
         sendResponse(client, response);
         Screening screening;
         screening = (Screening) request.getDataObject();

@@ -90,7 +90,6 @@ public class Purchase {
     CVV_Txt.clear();
     // Assign selected seats to the screening
     screeningData.setSeats(selectedSeats.stream().toList());
-
     // Prepare details for the purchase event
     String movieTitle = screeningData.getMovie().getTitle();
     LocalDateTime startTime = screeningData.getStartingAt();

@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -22,13 +23,48 @@ public class TicketDAO {
         this.session = session;
     }
 
-    public Message getMyTickets(Message request) {
-        // Fetch the user's tickets
-        List<MovieTicket> tickets = session.createQuery("from MovieTicket where user.id = :id", MovieTicket.class)
-                .setParameter("id", request.getUserId())
-                .getResultList();
-        return new Message(MessageType.GET_MY_TICKETS_RESPONSE).setDataObject(tickets);
+    public Message getMyTickets(Message request, LoggedInUser loggedInUser) {
+        Transaction transaction = null;
+        List<MovieTicket> tickets = null;
+
+        try {
+            // Begin transaction
+            transaction = session.beginTransaction();
+
+            // Fetch the user's tickets
+            tickets = session.createQuery("from MovieTicket where user.id = :id", MovieTicket.class)
+                    .setParameter("id", loggedInUser.getUserId())
+                    .getResultList();
+
+            // Initialize lazy-loaded associations if needed
+            for (MovieTicket ticket : tickets) {
+                Hibernate.initialize(ticket.getSeat()); // Example initialization
+            }
+
+            // Commit transaction
+            transaction.commit();
+
+            // Return success message with tickets
+            return new Message(MessageType.GET_MY_TICKETS_RESPONSE)
+                    .setSuccess(true)
+                    .setDataObject(tickets);
+
+        } catch (Exception e) {
+            // Rollback transaction if there is an exception
+            if (transaction != null) {
+                transaction.rollback();
+            }
+
+            // Log the exception for debugging
+            e.printStackTrace();
+
+            // Return error message
+            return new Message(MessageType.GET_MY_TICKETS_RESPONSE)
+                    .setSuccess(false)
+                    .setMessage("An error occurred while fetching tickets.");
+        }
     }
+
     public Message removeTicket(Message request, LoggedInUser loggedInUser) {
         Transaction transaction = null;
         try {
@@ -75,7 +111,7 @@ public class TicketDAO {
         }
     }
 
-    public Message purchaseTickets(Message request, int userID) {
+    public Message purchaseTickets(Message request, LoggedInUser loggedInUser) {
         // Create the response message
         Message response = new Message(MessageType.PURCHASE_TICKETS_RESPONSE);
 
@@ -83,8 +119,8 @@ public class TicketDAO {
         Screening screeningFromUser = (Screening) request.getDataObject();
         Set<Seat> seats = screeningFromUser.getSeats();
 
-        // Fetch the user from the database
-        User user = DatabaseController.getInstance(session).getUsersManager().getUserById(userID);
+        // Fetch the user from the database using the loggedInUser information
+        User user = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
         if (user == null) {
             response.setSuccess(false)
                     .setMessage("User not found");
@@ -120,27 +156,55 @@ public class TicketDAO {
                     .setMessage("Seat is not available");
             return response;
         }
-        // Begin transaction to process the ticket
-        session.beginTransaction();
-        MovieTicket ticket = new MovieTicket(user, screening, seat);
-        ticket.setIsUsed(false); // Initialize the ticket as not used
-        ticket.setRefunded(false); // Initialize the ticket as not refunded
-        ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
-        ticket.setId(ticketcounter++);
-        seat.setAvailable(false); // Mark the seat as unavailable
-        session.update(seat); // Update seat status in the database
-        session.save(ticket); // Save the ticket in the database
-        session.getTransaction().commit();
 
-        // Set response data object to the created ticket
-        response.setDataObject(ticket);
+        Transaction transaction = null;
+        try {
+            // Begin transaction if none is active
+            transaction = session.getTransaction();
+            if (transaction == null || !transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
 
-        // Return a success message with the data object included
-        response.setSuccess(true)
-                .setMessage("Purchase successful! A confirmation email has been sent to your inbox.");
-        return response;
+            // Process the ticket purchase
+            MovieTicket ticket = new MovieTicket(user, screening, seat);
+            ticket.setIsUsed(false); // Initialize the ticket as not used
+            ticket.setRefunded(false); // Initialize the ticket as not refunded
+            ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
+            ticket.setId(ticketcounter++); // Increment the ticket counter
+            seat.setAvailable(false); // Mark the seat as unavailable
+
+            // Save the ticket and update the seat status in the database
+            session.update(seat); // Update seat status in the database
+            session.save(ticket); // Save the ticket in the database
+
+            // Commit transaction
+            if (transaction != null && transaction.isActive()) {
+                transaction.commit();
+            }
+
+            // Set response data object to the created ticket
+            response.setDataObject(ticket);
+
+            // Return a success message with the data object included
+            response.setSuccess(true)
+                    .setMessage("Purchase successful! A confirmation email has been sent to your inbox.");
+            return response;
+
+        } catch (Exception e) {
+            // Rollback transaction if there is an exception
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            // Log the exception for debugging
+            e.printStackTrace();
+
+            // Return error message
+            return new Message(MessageType.PURCHASE_TICKETS_RESPONSE)
+                    .setSuccess(false)
+                    .setMessage("An error occurred while processing the ticket purchase.");
+        }
     }
-
     public void setSession(Session session) {
         this.session = session;
     }
