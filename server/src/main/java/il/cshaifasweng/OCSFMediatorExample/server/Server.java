@@ -87,6 +87,7 @@ public class Server extends AbstractServer {
             case ADD_SCREENING_REQUEST -> handleAddScreeningRequest(request, client, loggedInUser);
             case REMOVE_SCREENING_REQUEST -> handleRemoveScreeningRequest(request, client, loggedInUser);
             case UPDATE_SCREENING_REQUEST -> handleUpdateScreeningRequest(request, client, loggedInUser);
+            case GET_MY_SCREENINGS_REQUEST -> handleGetMyScreeningsRequest(request, client, loggedInUser);
 
             //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
@@ -784,5 +785,15 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
         return response;
     }
+    private Message handleGetMyScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response;
+        response = database.getScreeningsManager().getMyScreenings(request, loggedInUser);
+        // If the role is not recognized, return an error
+        if(loggedInUser == null) {
+            return sendErrorMessage(client, "Error! User does not have permission to perform this action");
+        }
+        sendResponse(client, response);
 
+        return response;
+    }
 }

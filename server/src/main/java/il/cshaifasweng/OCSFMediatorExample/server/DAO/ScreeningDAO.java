@@ -3,12 +3,15 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class ScreeningDAO {
@@ -158,6 +161,21 @@ public class ScreeningDAO {
         return screening;
     }
 
+    public Message getMyScreenings(Message request, LoggedInUser loggedInUser) {
+        try {
+            // Ensure we are fetching screenings linked to the user's movie tickets
+            List<Screening> screenings = session.createQuery(
+                            "select t.screening from MovieTicket t where t.user.id = :userId", Screening.class)
+                    .setParameter("userId", loggedInUser.getUserId())  // Use the logged-in user's ID
+                    .getResultList();
+
+            return new Message(MessageType.GET_MY_SCREENINGS_RESPONSE).setDataObject(screenings);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message(MessageType.ERROR);
+        }
+    }
 
     public void setSession(Session session) {
         this.session = session;

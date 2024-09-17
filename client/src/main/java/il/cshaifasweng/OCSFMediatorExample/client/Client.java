@@ -95,6 +95,8 @@ public class Client extends AbstractClient {
 					EventBus.getDefault().post(new PurchaseScreeningEvent(message));
 				case NOTIFICATION:
 					EventBus.getDefault().post(new HourTillMovieEvent(message));
+				case GET_MY_SCREENINGS_RESPONSE:
+					EventBus.getDefault().post( new GetMyScreeningsEvent(message));
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
