@@ -18,7 +18,7 @@ hight = 900
 3.TODO: add screening to the movie view
 4. TODO: add a page to display to packages and how many entrances they have left
 5. TODO:Make Req and Res to the Screening DIO
-6. fix the get all tickets logic
+6. fix the inbox logic so that when u exit the information stay 
 7. fix the remove ticket 
 8. connect the dashboard to the client and the server
 9. add the pack of tickets 
