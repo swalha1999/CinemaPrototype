@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.EventBus;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 
 public class Client extends AbstractClient {
-	
+
 	private static Client client = null;
 	public static String host="";
 	public static int port6=0;
@@ -93,10 +93,16 @@ public class Client extends AbstractClient {
 					break;
 				case PURCHASE_TICKETS_RESPONSE:
 					EventBus.getDefault().post(new PurchaseScreeningEvent(message));
+					break;
 				case NOTIFICATION:
 					EventBus.getDefault().post(new HourTillMovieEvent(message));
+					break;
 				case GET_MY_SCREENINGS_RESPONSE:
 					EventBus.getDefault().post( new GetMyScreeningsEvent(message));
+					break;
+				case SHOW_CINEMA_INFO_RESPONSE:
+					EventBus.getDefault().post(new GetCinemaTicketsEvent(message));
+					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
@@ -113,7 +119,6 @@ public class Client extends AbstractClient {
 				case LOGOUT_RESPONSE:
 					EventBus.getDefault().post( new LogoutEvent((LogoutResponse) message.getDataObject()));
 					break;
-
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;

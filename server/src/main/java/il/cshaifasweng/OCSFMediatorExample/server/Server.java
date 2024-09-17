@@ -95,7 +95,7 @@ public class Server extends AbstractServer {
             case ADD_CINEMA_REQUEST -> handleAddCinemaRequest(request, client, loggedInUser);
             case REMOVE_CINEMA_REQUEST -> handleRemoveCinemaRequest(request, client, loggedInUser);
             case UPDATE_CINEMA_REQUEST -> handleUpdateCinemaRequest(request, client, loggedInUser);
-
+            case SHOW_CINEMA_INFO_REQUEST -> handleShowCinemaInfoRequest(client,request);
             //HALLS
             case ADD_HALL_REQUEST -> handleAddHallRequest(request, client, loggedInUser);
 
@@ -796,4 +796,12 @@ public class Server extends AbstractServer {
 
         return response;
     }
+    private Message handleShowCinemaInfoRequest(ConnectionToClient client,Message request) {
+        // Call the method to get cinema tickets
+        Message ticketsResponse = database.getCinemasManager().getCinemaTickets(request);
+sendResponse(client, ticketsResponse);
+        // Send the response back to the client
+        return ticketsResponse;
+    }
+
 }

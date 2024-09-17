@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie_tickets")
@@ -28,13 +29,16 @@ public class MovieTicket implements Serializable {
     private boolean isUsed; // Prevent double use of ticket
     private boolean isRefunded; // Marks the ticket as refunded
     private boolean isBundleTicket; // For future use
+    private LocalDateTime ticketPurchaseDay; // The day when the ticket was purchased
 
     public MovieTicket() {
         this.user = null;
+        this.screening = null;
         this.seat = null;
         this.isUsed = false;
         this.isRefunded = false;
         this.isBundleTicket = false;
+        this.ticketPurchaseDay = LocalDateTime.now(); // Default to current time
     }
 
     public MovieTicket(User user, Screening screening, Seat seat) {
@@ -44,22 +48,39 @@ public class MovieTicket implements Serializable {
         this.isUsed = false;
         this.isRefunded = false;
         this.isBundleTicket = false;
+        this.ticketPurchaseDay = LocalDateTime.now(); // Set purchase day to the current time
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Screening getScreening() {
         return screening;
     }
 
+    public void setScreening(Screening screening) {
+        this.screening = screening;
+    }
+
     public Seat getSeat() {
         return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
 
     public boolean getIsUsed() {
@@ -70,36 +91,28 @@ public class MovieTicket implements Serializable {
         this.isUsed = isUsed;
     }
 
-    public void setScreening(Screening screening) {
-        this.screening = screening;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setSeat(Seat seat) {
-        this.seat = seat;
+    public boolean getRefunded() {
+        return isRefunded;
     }
 
     public void setRefunded(boolean isRefunded) {
         this.isRefunded = isRefunded;
     }
 
+    public boolean getBundleTicket() {
+        return isBundleTicket;
+    }
+
     public void setBundleTicket(boolean isBundleTicket) {
         this.isBundleTicket = isBundleTicket;
     }
 
-    public boolean getIsRefunded() {
-        return isRefunded;
+    public LocalDateTime getTicketPurchaseDay() {
+        return ticketPurchaseDay;
     }
 
-    public boolean getIsBundleTicket() {
-        return isBundleTicket;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setTicketPurchaseDay(LocalDateTime ticketPurchaseDay) {
+        this.ticketPurchaseDay = ticketPurchaseDay;
     }
 
     @Override
@@ -108,7 +121,10 @@ public class MovieTicket implements Serializable {
                 "id=" + id +
                 ", user=" + user.getFirstName() + " " + user.getLastName() +
                 ", screening=" + screening.getMovie().getTitle() +
+                ", seat=" + seat.toString() +
                 ", isUsed=" + isUsed +
+                ", isRefunded=" + isRefunded +
+                ", ticketPurchaseDay=" + ticketPurchaseDay +
                 '}';
     }
 
@@ -117,14 +133,14 @@ public class MovieTicket implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieTicket ticket = (MovieTicket) o;
-        return id == ticket.id && user.equals(ticket.user) && screening.equals(ticket.screening) && seat.equals(ticket.seat) && isUsed == ticket.isUsed;
+        return id == ticket.id &&
+                isUsed == ticket.isUsed &&
+                isRefunded == ticket.isRefunded &&
+                isBundleTicket == ticket.isBundleTicket &&
+                user.equals(ticket.user) &&
+                screening.equals(ticket.screening) &&
+                seat.equals(ticket.seat) &&
+                ticketPurchaseDay.equals(ticket.ticketPurchaseDay);
     }
 
-    public boolean isRefunded() {
-        return this.isRefunded;
-    }
-
-    public boolean isBundleTicket() {
-        return this.isBundleTicket;
-    }
 }

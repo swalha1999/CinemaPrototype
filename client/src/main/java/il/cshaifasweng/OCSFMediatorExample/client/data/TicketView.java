@@ -31,8 +31,8 @@ public class TicketView {
         Screening screening = ticket.getScreening();
         this.screeningTitle = new SimpleStringProperty(screening != null ? screening.getMovie().getTitle() : "Unknown");
         this.isUsed = new SimpleBooleanProperty(ticket.getIsUsed());
-        this.isRefunded = new SimpleBooleanProperty(ticket.isRefunded());
-        this.isBundleTicket = new SimpleBooleanProperty(ticket.isBundleTicket());
+        this.isRefunded = new SimpleBooleanProperty(ticket.getRefunded());
+        this.isBundleTicket = new SimpleBooleanProperty(ticket.getBundleTicket());
     }
 
     // Getter methods for properties

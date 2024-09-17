@@ -1,14 +1,13 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CinemaDAO {
 
@@ -131,6 +130,42 @@ public class CinemaDAO {
                 .setDataObject(cinema);
     }
 
+
+    public Message getCinemaTickets(Message request) {
+        // Create a response message
+        Message message = new Message(MessageType.SHOW_CINEMA_INFO_RESPONSE);
+
+        // Retrieve the cinema ID from the request
+        Integer cinemaId = (Integer) request.getDataObject();
+
+        // Fetch the cinema from the database using the cinema ID
+        Cinema cinemaFromDb = session.get(Cinema.class, cinemaId);
+        if (cinemaFromDb == null) {
+            return message.setSuccess(false)
+                    .setMessage("Cinema not found")
+                    .setDataObject(null);
+        }
+
+        // Retrieve all screenings for the cinema
+        List<Screening> screenings = session.createQuery(
+                        "select s from Screening s where s.cinema.id = :cinemaId", Screening.class)
+                .setParameter("cinemaId", cinemaId)
+                .list();
+
+        // Retrieve all movie tickets for the screenings
+        List<MovieTicket> tickets = screenings.stream()
+                .flatMap(screening -> session.createQuery(
+                                "select t from MovieTicket t where t.screening.id = :screeningId", MovieTicket.class)
+                        .setParameter("screeningId", screening.getId())
+                        .list()
+                        .stream())
+                .collect(Collectors.toList());
+
+        // Return the list of tickets in the response message
+        return message.setSuccess(true)
+                .setMessage("Cinema tickets fetched successfully")
+                .setDataObject(tickets);
+    }
 
 
 }
