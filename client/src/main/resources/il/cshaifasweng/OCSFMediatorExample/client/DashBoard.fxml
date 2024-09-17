@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.DashBoard">
+    <children>
+        <BorderPane prefHeight="88.0" prefWidth="1000.0" style="-fx-background-color: #3f2b63;">
+            <left>
+                <Button fx:id="backBtn" mnemonicParsing="false" onAction="#GoBack" prefHeight="54.0" prefWidth="150.0" style="-fx-background-color: #3f2b63;" text="Back" textFill="WHITE" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font name="Bodoni MT" size="20.0" />
+                    </font>
+                </Button>
+            </left>
+            <center>
+                <Label fx:id="TopLabel" prefHeight="47.0" prefWidth="363.0" text="Sales DashBoard" textFill="WHITE" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font name="Bodoni MT Bold" size="36.0" />
+                    </font>
+                </Label>
+            </center>
+        </BorderPane>
+        <Label layoutX="74.0" layoutY="120.0" prefHeight="33.0" prefWidth="272.0" text="Select a Location to Explore :">
+            <font>
+                <Font name="Bodoni MT Bold" size="22.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="locationComboi" layoutX="398.0" layoutY="124.0" onAction="#PickLocation" prefWidth="150.0" promptText="All Locations" style="-fx-background-color: #ffffff;" />
+        <BarChart fx:id="TicketSaleTable" layoutX="75.0" layoutY="163.0" prefHeight="370.0" prefWidth="850.0" title="Ticket Sales">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </BarChart>
+        <LineChart fx:id="LinksTable" layoutX="75.0" layoutY="525.0" prefHeight="325.0" prefWidth="471.0" title="Links &amp; T-book Sales">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </LineChart>
+        <PieChart fx:id="ComplaintsTable" layoutX="546.0" layoutY="525.0" prefHeight="305.0" prefWidth="383.0" title="Complaints" />
+    </children>
+</AnchorPane>

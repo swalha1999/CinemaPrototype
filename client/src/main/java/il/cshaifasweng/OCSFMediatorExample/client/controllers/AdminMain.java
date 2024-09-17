@@ -49,7 +49,7 @@ public class AdminMain {
 
     @FXML
     private void showDashBoard(ActionEvent event) {
-        loadUI("Purchase");
+        loadUI("DashBoard");
     }
 
     @FXML

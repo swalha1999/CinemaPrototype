@@ -17,7 +17,7 @@ import static il.cshaifasweng.OCSFMediatorExample.server.Main.session;
 
 public class TicketDAO {
     public Session session;
-
+    public static int ticketcounter = 0;
     public TicketDAO(Session session) {
         this.session = session;
     }
@@ -35,10 +35,10 @@ public class TicketDAO {
             transaction = session.beginTransaction();
 
             // Fetch the ticket to be deleted from the request
-            int ticketToDelete = (int) request.getDataObject();
+            MovieTicket ticketToDelete = (MovieTicket) request.getDataObject();
 
             // Retrieve the ticket from the database
-            MovieTicket ticket = session.get(MovieTicket.class, ticketToDelete);
+            MovieTicket ticket = session.get(MovieTicket.class, ticketToDelete.getId());
 
             // Check if the ticket exists
             if (ticket == null) {
@@ -126,7 +126,7 @@ public class TicketDAO {
         ticket.setIsUsed(false); // Initialize the ticket as not used
         ticket.setRefunded(false); // Initialize the ticket as not refunded
         ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
-
+        ticket.setId(ticketcounter++);
         seat.setAvailable(false); // Mark the seat as unavailable
         session.update(seat); // Update seat status in the database
         session.save(ticket); // Save the ticket in the database
