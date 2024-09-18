@@ -87,6 +87,7 @@ public class Purchase {
       showNotification("The Card Number is Not Valid, Please Try Again", false);
       return;
     }
+    showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
     CVV_Txt.clear();
     // Assign selected seats to the screening
     screeningData.setSeats(selectedSeats.stream().toList());

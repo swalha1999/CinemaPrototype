@@ -127,7 +127,7 @@ public class DashBoard {
     }
 
     @Subscribe
-    // TODO mhmod hen al tickets al date tb3ha = null bntaim a3mlhn date zi ma bdk 3ben ma m7md idef al date 3l data base 3n tread ticket.setdate
+    // TODO mhmod hen al tickets al date tb3ha = null bntaim a3mlhn date zi ma bdk 3ben ma m7md idef al date 3l data base 3n trek ticket.setdate
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
       // TODO : zbt alwd3 ia kber
