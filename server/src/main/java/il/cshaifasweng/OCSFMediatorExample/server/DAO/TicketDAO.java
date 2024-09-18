@@ -84,6 +84,15 @@ public class TicketDAO {
                         .setMessage("Ticket not found");
             }
 
+            // Retrieve the seat associated with this ticket
+            Seat seat = ticket.getSeat();
+
+            // Check if the seat exists and set its availability to true
+            if (seat != null) {
+                seat.setAvailable(true);
+                session.update(seat); // Update the seat's availability in the database
+            }
+
             // Delete the ticket
             session.delete(ticket);
 
@@ -98,7 +107,7 @@ public class TicketDAO {
             // Return a success message with the updated tickets
             return new Message(MessageType.REMOVE_TICKET_RESPONSE)
                     .setSuccess(true)
-                    .setMessage("Ticket removed successfully")
+                    .setMessage("Ticket removed successfully, seat is now available")
                     .setDataObject(updatedTickets);
 
         } catch (Exception e) {
