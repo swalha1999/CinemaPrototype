@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
@@ -780,11 +781,29 @@ public class Server extends AbstractServer {
     }
 
     private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        database.getTicketsManager().removeTicket(request, loggedInUser);
-        Message response = handleGetMyTicketsRequest(request, client, loggedInUser);
-        sendResponse(client, response);
-        return response;
+        // Remove the ticket and get the updated list
+        Message removeResponse = database.getTicketsManager().removeTicket(request, loggedInUser);
+
+        // Send the response with the updated ticket list back to the client
+        Message updatedTicketsResponse = handleGetMyTicketsRequest(request, client, loggedInUser);
+        sendResponse(client, updatedTicketsResponse);
+
+        // Create another message with the removed ticket information
+        MovieTicket removedTicket = (MovieTicket) request.getDataObject();
+
+        // Create response2: a message informing the client about the removed ticket
+        Message response2 = new Message(MessageType.USER_TICKET_REMOVED_PATCH)
+                .setSessionKey(request.getSessionKey())
+                .setMessage("Ticket for " + removedTicket.getScreening().getMovie().getTitle() + " has been removed.")
+                .setDataObject(removedTicket);  // Add the removed ticket to the response
+
+        // Send the second message (response2) back to the client
+        sendResponse(client, response2);
+
+        // Return the first response (updated tickets list)
+        return updatedTicketsResponse;
     }
+
     private Message handleGetMyScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response;
         response = database.getScreeningsManager().getMyScreenings(request, loggedInUser);

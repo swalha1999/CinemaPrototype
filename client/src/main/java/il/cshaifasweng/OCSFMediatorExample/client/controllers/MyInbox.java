@@ -5,6 +5,8 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.RemovedTicketEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -133,4 +135,28 @@ public class MyInbox {
             System.err.println("GetMyScreeningsEvent or Screening data is null.");
         }
     }
+    @Subscribe
+    public void ShowRemovedTicket(RemovedTicketEvent event) {
+        MovieTicket ticket = event.getTicket();
+
+        // Get necessary information from the ticket and screening
+        String movieTitle = ticket.getScreening().getMovie().getTitle();
+        int seatX = ticket.getSeat().getSeatLocationX();  // Assuming getLocationX() exists in Seat
+        int seatY = ticket.getSeat().getSeatLocationY();  // Assuming getLocationY() exists in Seat
+        LocalDateTime screeningTime = ticket.getScreening().getStartingAt();
+
+        // Format the screening time
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedScreeningTime = screeningTime.format(formatter);
+
+        // Create the user-friendly message content
+        String messageContent = String.format("Your ticket for the movie '%s' at seat Row %d, Column %d " +
+                "for the screening on %s has been removed.", movieTitle, seatY, seatX, formattedScreeningTime);
+
+        // Add the message to the inbox
+        addMessage("Cinema System", messageContent);
+    }
+
+
 }
+
