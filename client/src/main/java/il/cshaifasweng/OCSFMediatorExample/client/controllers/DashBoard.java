@@ -105,7 +105,13 @@ public class DashBoard {
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
 
-        Map<LocalDate, Long> ticketsByDate = movieTickets.stream()
+        // Filter out tickets older than 30 days
+        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
+        List<MovieTicket> recentTickets = movieTickets.stream()
+                .filter(ticket -> ticket.getScreening().getStartingAt().toLocalDate().isAfter(thirtyDaysAgo))
+                .collect(Collectors.toList());
+
+        Map<LocalDate, Long> ticketsByDate = recentTickets.stream()
                 .filter(ticket -> ticket.getScreening().getStartingAt() != null)
                 .collect(Collectors.groupingBy(ticket -> ticket.getScreening().getStartingAt().toLocalDate(), Collectors.counting()));
 
@@ -120,6 +126,13 @@ public class DashBoard {
                 XYChart.Data<String, Number> data = new XYChart.Data<>(dateString, count);
                 series.getData().add(data);
             });
+
+            // Add empty data for the last 30 days
+            for (int i = 0; i < 30; i++) {
+                LocalDate date = LocalDate.now().minusDays(i);
+                XYChart.Data<String, Number> emptyData = new XYChart.Data<>(date.toString(), 0);
+                series.getData().add(emptyData);
+            }
 
             TicketSaleTable.getData().add(series);
         });
