@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
+
 public class SupportPage {
 
     @FXML
@@ -22,9 +24,11 @@ public class SupportPage {
 
     @FXML
     void handleSubmit(ActionEvent event) {
-//        Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)
-//                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-//                .setDataObject();  // Send the selected ticket object to the server
+        Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(issueDescription.getText());  // Send the selected ticket object to the server
+        showNotification(" Thank For Trying To Get The Best Experience , The Team Will Respond In less Than 24 Hours",true);
+        issueDescription.clear();
     }
 
 }

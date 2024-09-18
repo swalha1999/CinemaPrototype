@@ -74,7 +74,7 @@ public class Server extends AbstractServer {
             case GET_ALL_MOVIES_REQUEST -> handleGetAllMoviesRequest(request, client, loggedInUser);
             case PURCHASE_TICKETS_REQUEST -> handlePurchaseTicketsRequest(request, client, loggedInUser);
             case REMOVE_TICKET_REQUEST -> handleRemoveTicketRequest(request,client , loggedInUser);
-
+            case SEND_SUPPORT_TICKET_REQUEST -> handleSendSupportTicketRequest(request,client,loggedInUser);
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
@@ -822,5 +822,10 @@ sendResponse(client, ticketsResponse);
         // Send the response back to the client
         return ticketsResponse;
     }
+     private Message handleSendSupportTicketRequest(Message request,ConnectionToClient client,LoggedInUser loggedInUser){
 
+
+
+        return request;
+     }
 }

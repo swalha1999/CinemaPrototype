@@ -32,32 +32,37 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets;
 
-   @OneToOne
-   private Cinema cinema; // This is used for the manager of the cinema
+    @OneToOne
+    private Cinema cinema; // This is used for the manager of the cinema
 
     private int remainingTicketsPurchasedByBundle;
 
     private boolean isLogged;
     private boolean isBlocked;
     private boolean isDeleted;
-    private boolean isAgeRestricted; // TODO: For future use
+    private boolean isAgeRestricted;
 
-    private int NumberOfTicketsPurchased; // TODO: For future use in statistics
-    private int NumberOfBundlePurchased; // TODO: For future use in statistics
-    private int NumberOfOnlineScreeningsPurchased; // TODO: For future use in statistics
+    private int NumberOfTicketsPurchased;
+    private int NumberOfBundlePurchased;
+    private int NumberOfOnlineScreeningsPurchased;
 
-    public User(String username, String password, UserRole role, String email, String phone, String creditCard) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SupportTicket> supportTickets;
+
+    public User(String username, String password, UserRole role, String email, String phone, String creditCard, Set<SupportTicket> supportTickets) {
         this.username = username;
         this.hashedPassword = password;
         this.role = role;
         this.email = email;
         this.phone = phone;
         this.creditCard = creditCard;
+        this.supportTickets = supportTickets;
         this.isLogged = false;
         this.balance = 0.0f;
     }
 
     public User() {
+        this.supportTickets = null;
         this.username = "";
         this.hashedPassword = "";
         this.role = UserRole.USER;
@@ -67,6 +72,18 @@ public class User implements Serializable {
         this.isLogged = false;
         this.balance = 0.0f;
     }
+
+    // Getters and setters for supportTickets
+    public Set<SupportTicket> getSupportTickets() {
+        return supportTickets;
+    }
+
+    public User setSupportTickets(Set<SupportTicket> supportTickets) {
+        this.supportTickets = supportTickets;
+        return this;
+    }
+
+    // Remaining getters and setters
 
     public boolean isLogged() {
         return isLogged;
@@ -209,14 +226,14 @@ public class User implements Serializable {
         return this;
     }
 
-   public Cinema getCinema() {
-       return cinema;
-   }
+    public Cinema getCinema() {
+        return cinema;
+    }
 
-   public User setCinema(Cinema cinema) {
-       this.cinema = cinema;
-       return this;
-   }
+    public User setCinema(Cinema cinema) {
+        this.cinema = cinema;
+        return this;
+    }
 
     public int getRemainingTicketsPurchasedByBundle() {
         return remainingTicketsPurchasedByBundle;
@@ -248,7 +265,6 @@ public class User implements Serializable {
     public int getNumberOfBundlePurchased() {
         return NumberOfBundlePurchased;
     }
-
 
     public User setNumberOfBundlePurchased(int numberOfBundlePurchased) {
         NumberOfBundlePurchased = numberOfBundlePurchased;
@@ -287,7 +303,7 @@ public class User implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
@@ -297,6 +313,6 @@ public class User implements Serializable {
     }
 
     public void sendToClient(Message notification) {
-
+        // Add method logic here
     }
 }
