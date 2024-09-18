@@ -8,6 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,7 +24,7 @@ import java.util.Set;
 public class MyTickets {
 
     @FXML
-    private VBox TicketsContainer;  // Make sure this is correctly linked in FXML.
+    private VBox TicketsContainer;
 
     @FXML
     private Button returnTicketButton;
@@ -46,23 +47,43 @@ public class MyTickets {
         Client.getClient().sendToServer(message);
     }
 
-    public void addTicket(String id, String movieTitle, String seatNumber) {
+    @FXML
+    public void RemoveTicketBtn(javafx.event.ActionEvent actionEvent) {
+        if (selectedTicket != null) {
+            System.out.println("Removing ticket: " + selectedTicket);
+
+            Message message = new Message(MessageType.REMOVE_TICKET_REQUEST)
+                    .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                    .setDataObject(selectedTicket);  // Send the selected ticket object to the server
+
+            Client.getClient().sendToServer(message);
+        } else {
+            System.err.println("No ticket selected for removal.");
+        }
+    }
+
+    public void addTicket(MovieTicket ticket) {
+        // Add the ticket object to the set
+        tickets.add(ticket);
+
         // Create a new AnchorPane for the ticket
         AnchorPane ticketPane = new AnchorPane();
         ticketPane.getStyleClass().add("ticket-pane");
         ticketPane.setPrefWidth(300);
 
         // Create labels for ticket details
-        Label idLabel = new Label("ID: " + id);
+        Label idLabel = new Label("ID: " + ticket.getId());
         idLabel.setLayoutX(14.0);
         idLabel.setLayoutY(14.0);
         idLabel.getStyleClass().add("ticket-label");
 
-        Label movieLabel = new Label("Movie: " + movieTitle);
+        Label movieLabel = new Label("Movie: " + ticket.getScreening().getMovie().getTitle());
         movieLabel.setLayoutX(14.0);
         movieLabel.setLayoutY(34.0);
         movieLabel.getStyleClass().add("ticket-label");
 
+        Seat seat = ticket.getSeat();
+        String seatNumber = String.format("(%d, %d)", seat.getSeatLocationX(), seat.getSeatLocationY());
         Label seatNumberLabel = new Label("Seat Number: " + seatNumber);
         seatNumberLabel.setLayoutX(14.0);
         seatNumberLabel.setLayoutY(54.0);
@@ -72,7 +93,7 @@ public class MyTickets {
         ticketPane.getChildren().addAll(idLabel, movieLabel, seatNumberLabel);
 
         // Add click event to select the ticket
-        ticketPane.setOnMouseClicked(event -> selectTicket(ticketPane, id));
+        ticketPane.setOnMouseClicked(event -> selectTicket(ticketPane, String.valueOf(ticket.getId())));
 
         // Add the ticket pane to the VBox container
         TicketsContainer.getChildren().add(ticketPane);
@@ -92,23 +113,22 @@ public class MyTickets {
         returnTicketButton.setDisable(false);
 
         // Fetch the corresponding ticket object for the selected ID
-        selectedTicket = fetchTicketById(ticketId);  // Implement this method to get the actual MovieTicket
+        selectedTicket = fetchTicketById(ticketId);
     }
 
     private MovieTicket fetchTicketById(String ticketId) {
-        // Placeholder: Fetch the ticket based on the ticketId (from your backend or stored data)
-        return new MovieTicket();  // Replace with actual logic
+        for (MovieTicket ticket : tickets) {
+            if (String.valueOf(ticket.getId()).equals(ticketId)) {
+                return ticket;
+            }
+        }
+        return null;  // Return null if no ticket is found with the given ID
     }
 
     @Subscribe
     public void onPurchaseScreeningEvent(PurchaseScreeningEvent event) {
         if (event != null && event.getTicket() != null) {
-            MovieTicket ticket = event.getTicket();
-            String movieTitle = ticket.getScreening().getMovie().getTitle();
-            Seat seat = ticket.getSeat();
-            String seatNumber = String.format("(%d, %d)", seat.getSeatLocationX(), seat.getSeatLocationY());
-
-            addTicket(String.valueOf(ticket.getId()), movieTitle, seatNumber);
+            addTicket(event.getTicket());
         } else {
             System.err.println("PurchaseScreeningEvent or Ticket data is null.");
         }
@@ -117,30 +137,23 @@ public class MyTickets {
     @Subscribe
     public void onGetMyTicketsEvent(GetMyTicketsEvent event) {
         if (event != null && event.getTickets() != null) {
-            List<MovieTicket> ticketSet = event.getTickets();
+            // Ensure this runs on the JavaFX Application thread
+            Platform.runLater(() -> {
+                // Clear the container and ticket set to remove old tickets
+                TicketsContainer.getChildren().clear();
+                tickets.clear();
 
-            for (MovieTicket ticket : ticketSet) {
-                String movieTitle = ticket.getScreening().getMovie().getTitle();
-                Seat seat = ticket.getSeat();
-                String seatNumber = String.format("(%d, %d)", seat.getSeatLocationX(), seat.getSeatLocationY());
+                // Add the updated list of tickets
+                List<MovieTicket> ticketList = event.getTickets();
 
-                addTicket(String.valueOf(ticket.getId()), movieTitle, seatNumber);
-            }
+                for (MovieTicket ticket : ticketList) {
+                    addTicket(ticket);
+                }
+            });
         } else {
             System.err.println("GetMyTicketsEvent or Ticket data is null.");
         }
     }
 
-    @FXML
-    public void RemoveTicketBtn(javafx.event.ActionEvent actionEvent) {
-        if (selectedTicket != null) {
-            Message message = new Message(MessageType.REMOVE_TICKET_REQUEST)
-                    .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                    .setDataObject(selectedTicket);  // Use selectedTicket, not selectedTicketPane
 
-            Client.getClient().sendToServer(message);
-        } else {
-            System.err.println("No ticket selected for removal.");
-        }
-    }
 }
