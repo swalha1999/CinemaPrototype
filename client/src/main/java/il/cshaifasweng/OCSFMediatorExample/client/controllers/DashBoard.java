@@ -13,16 +13,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -38,7 +36,7 @@ public class DashBoard {
     private PieChart ComplaintsTable;
 
     @FXML
-    private LineChart<?, ?> LinksTable;
+    private BarChart<String, Number> LinksTable;
 
     @FXML
     private BarChart<String, Number> TicketSaleTable;
@@ -104,40 +102,58 @@ public class DashBoard {
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
-        Platform.runLater(() -> {
-        // Filter out tickets older than 30 days
-        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
-        List<MovieTicket> recentTickets = movieTickets.stream()
-                .filter(ticket -> ticket.getScreening().getStartingAt().toLocalDate().isAfter(thirtyDaysAgo))
+
+        for (int i = 0; i < 5; i++) {
+            movieTickets.addAll(movieTickets);
+        }
+        makeChart(movieTickets, TicketSaleTable);
+        makeChart(getOnlineTickets(movieTickets), LinksTable);
+
+    }
+
+    public List<MovieTicket> getOnlineTickets(List<MovieTicket> movieTickets) {
+        return movieTickets.stream()
+                .filter(ticket -> ticket.getScreening().getIsOnlineScreening())  // Directly check if the screening is online
                 .collect(Collectors.toList());
+    }
 
-        Map<LocalDate, Long> ticketsByDate = recentTickets.stream()
-                .filter(ticket -> ticket.getScreening().getStartingAt() != null)
-                .collect(Collectors.groupingBy(ticket -> ticket.getScreening().getStartingAt().toLocalDate(), Collectors.counting()));
 
-            TicketSaleTable.getData().clear();
+    public void makeChart(List<MovieTicket> movieTickets, BarChart<String, Number> TicketSaleTable) {
+        // Prepare a series for the chart
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Tickets Sold Daily");
 
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            series.setName("Daily Ticket Sales");
+        // Get the current month and year to filter tickets by the current month
+        LocalDate now = LocalDate.now();
+        int currentMonth = now.getMonthValue();
+        int currentYear = now.getYear();
 
-            ticketsByDate.forEach((date, count) -> {
-                String dateString = date.toString(); // Convert LocalDateTime to String
-                XYChart.Data<String, Number> data = new XYChart.Data<>(dateString, count);
-                series.getData().add(data);
-            });
+        // Initialize an array to store the number of tickets per day of the month (1-31)
+        long[] ticketsPerDay = new long[31];
 
-            // Add empty data for the last 30 days
-            for (int i = 0; i < 30; i++) {
-                LocalDate date = LocalDate.now().minusDays(i);
-                XYChart.Data<String, Number> emptyData = new XYChart.Data<>(date.toString(), 0);
-                series.getData().add(emptyData);
-            }
+        // Group tickets by the day of the month, ensuring they are from the current month and year
+        movieTickets.stream()
+                .filter(ticket -> ticket.getScreening().getStartingAt().getMonthValue() == currentMonth &&
+                        ticket.getScreening().getStartingAt().getYear() == currentYear)
+                .forEach(ticket -> {
+                    int dayOfMonth = ticket.getScreening().getStartingAt().getDayOfMonth();  // Get the day of the month
+                    ticketsPerDay[dayOfMonth - 1]++;  // Increment the count for that day (dayOfMonth is 1-based)
+                });
 
-            TicketSaleTable.getData().add(series);
+        // Add the data for each day of the month to the series (1 to 31)
+        for (int day = 1; day <= now.lengthOfMonth(); day++) {
+            series1.getData().add(new XYChart.Data<>(String.valueOf(day), ticketsPerDay[day - 1]));
+        }
+
+        // Update the chart in the JavaFX thread
+        Platform.runLater(() -> {
+            TicketSaleTable.getData().clear();  // Clear any existing data
+            TicketSaleTable.getData().add(series1);  // Add the new series
         });
     }
+
     @FXML
     private void GoBack(ActionEvent event) {
-        // Handle the Go Back action
+        // Handle the Go Back action}
     }
 }

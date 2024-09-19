@@ -2,7 +2,6 @@
 
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
@@ -44,14 +43,14 @@
                 <NumberAxis side="LEFT" />
             </yAxis>
         </BarChart>
-        <LineChart fx:id="LinksTable" layoutX="75.0" layoutY="525.0" prefHeight="325.0" prefWidth="471.0" title="Links &amp; T-book Sales">
+        <BarChart fx:id="LinksTable" layoutX="75.0" layoutY="525.0" prefHeight="325.0" prefWidth="471.0" title="Links &amp; T-book Sales">
             <xAxis>
                 <CategoryAxis side="BOTTOM" />
             </xAxis>
             <yAxis>
                 <NumberAxis side="LEFT" />
             </yAxis>
-        </LineChart>
+        </BarChart>
         <PieChart fx:id="ComplaintsTable" layoutX="546.0" layoutY="525.0" prefHeight="305.0" prefWidth="383.0" title="Complaints" />
     </children>
 </AnchorPane>
