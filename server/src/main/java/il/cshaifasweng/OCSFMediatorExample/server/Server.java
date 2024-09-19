@@ -1,13 +1,11 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
+import il.cshaifasweng.OCSFMediatorExample.server.DAO.SupportTicketDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.TicketDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.Notification;
@@ -822,10 +820,27 @@ sendResponse(client, ticketsResponse);
         // Send the response back to the client
         return ticketsResponse;
     }
-     private Message handleSendSupportTicketRequest(Message request,ConnectionToClient client,LoggedInUser loggedInUser){
+    public Message handleSendSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        // Extract the support ticket details from the request
+        SupportTicket supportTicketFromRequest = (SupportTicket) request.getDataObject();
 
+        // Create a new support ticket and populate its fields
+        SupportTicket supportTicket = new SupportTicket();
+        supportTicket.setName(supportTicketFromRequest.getName());
+        supportTicket.setEmail(supportTicketFromRequest.getEmail());
+        supportTicket.setSubject(supportTicketFromRequest.getSubject());
+        supportTicket.setDescription(supportTicketFromRequest.getDescription());
+        supportTicket.setStatus(SupportTicketStatus.OPEN); // Default to OPEN
 
+        // Optional: Associate the ticket with the logged-in user if needed
+        // supportTicket.setUser(loggedInUser.getUser());
 
-        return request;
-     }
+        // Use DAO to save the support ticket
+        SupportTicketDAO supportTicketDAO = new SupportTicketDAO(session);
+        Message response = supportTicketDAO.addSupportTicket(request);
+
+        // Return the response message (success or failure)
+        return response;
+    }
+
 }
