@@ -102,10 +102,6 @@ public class DashBoard {
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
-
-        for (int i = 0; i < 5; i++) {
-            movieTickets.addAll(movieTickets);
-        }
         makeChart(movieTickets, TicketSaleTable);
         makeChart(getOnlineTickets(movieTickets), LinksTable);
 
