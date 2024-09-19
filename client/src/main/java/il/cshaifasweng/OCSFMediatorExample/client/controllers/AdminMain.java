@@ -29,6 +29,9 @@ public class AdminMain {
     NotificationPane notificationPane;
 
     @FXML
+    private Button AdminInbox;
+
+    @FXML
     private BorderPane mainPane;
 
     @FXML
@@ -124,6 +127,7 @@ public class AdminMain {
         loadFXMLPane("SeatPicker");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("EditScreening");
+        loadFXMLPane("AdminInbox");
 
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
@@ -145,4 +149,9 @@ public class AdminMain {
 
     }
 
+    @FXML
+    void showAdminInbox(ActionEvent event) {
+        loadUI("AdminInbox");
+
+    }
 }

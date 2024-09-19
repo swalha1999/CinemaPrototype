@@ -104,14 +104,12 @@ public class SupportTicket implements Serializable {
     @Override
     public String toString() {
         return "SupportTicket{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", subject='" + subject + '\'' +
+                "name='" + (name != null ? name : "N/A") + '\'' +
+                ", email='" + (email != null ? email : "N/A") + '\'' +
                 ", description='" + description + '\'' +
-                ", createdDate=" + createdDate +
                 ", status=" + status +
-                ", user=" + user.getUsername() + // Example to show user's username
+                (user != null ? ", user=" + user.getUsername() : ", user=N/A") +  // Handle null user
                 '}';
     }
+
 }

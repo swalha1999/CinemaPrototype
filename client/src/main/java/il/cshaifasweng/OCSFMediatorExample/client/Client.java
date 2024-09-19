@@ -106,7 +106,9 @@ public class Client extends AbstractClient {
 				case USER_TICKET_REMOVED_PATCH:
 					EventBus.getDefault().post(new RemovedTicketEvent(message));
 					break;
-					default:
+				case GET_ALL_SUPPORT_TICKETS_RESPONSE:
+					EventBus.getDefault().post(new GetAllSupportTicketsEvent(message));
+				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
 			}
