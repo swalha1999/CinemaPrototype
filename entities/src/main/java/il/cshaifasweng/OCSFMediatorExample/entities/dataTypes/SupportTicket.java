@@ -20,18 +20,24 @@ public class SupportTicket implements Serializable {
     private LocalDateTime createdDate;
     private SupportTicketStatus status;
 
+    // Many-to-one relationship with User
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public SupportTicket() {
         this.createdDate = LocalDateTime.now();
         this.status = SupportTicketStatus.OPEN; // default status
     }
 
-    public SupportTicket(String name, String email, String subject, String description) {
+    public SupportTicket(String name, String email, String subject, String description, User user) {
         this.name = name;
         this.email = email;
         this.subject = subject;
         this.description = description;
         this.createdDate = LocalDateTime.now();
         this.status = SupportTicketStatus.OPEN; // default status
+        this.user = user;
     }
 
     // Getters and setters
@@ -87,6 +93,14 @@ public class SupportTicket implements Serializable {
         this.status = status;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "SupportTicket{" +
@@ -96,7 +110,8 @@ public class SupportTicket implements Serializable {
                 ", subject='" + subject + '\'' +
                 ", description='" + description + '\'' +
                 ", createdDate=" + createdDate +
-                ", status='" + status + '\'' +
+                ", status=" + status +
+                ", user=" + user.getUsername() + // Example to show user's username
                 '}';
     }
 }
