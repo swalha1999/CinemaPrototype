@@ -1,14 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
-import org.hibernate.type.LocalDateTimeType;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "screenings")
@@ -31,18 +29,23 @@ public class Screening implements Serializable {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "screening")
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets = new HashSet<>();
 
-    @OneToMany(mappedBy = "screening")
+    // Changed to List instead of Set
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Seat> seats = new HashSet<>();
+
+    // SupportTickets field
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SupportTicket> supportTickets = new HashSet<>();
 
     private LocalDateTime startingAt;
     private int timeInMinute;
     private int price;
     private int availableSeats;
     private int TotalSeats;
-    private boolean isOnlineScreening = false; //TODO: for future use if the screening is online from home and should send a link for the user
+    private boolean isOnlineScreening = false;
 
     public Screening(Movie movie, Hall hall, LocalDateTime date, int time, int price, int availableSeats, boolean isOnlineScreening) {
         this.movie = movie;
@@ -132,26 +135,6 @@ public class Screening implements Serializable {
         this.isOnlineScreening = isOnlineScreening;
     }
 
-    public void setTickets(Set<MovieTicket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public void addHall(Hall hall) {
-        this.hall = hall;
-    }
-
-    public void removeHall(Hall hall) {
-        this.hall = null;
-    }
-
-    public void removeMovie(Movie movie) {
-        this.movie = null;
-    }
-
-    public void removeTicket(MovieTicket ticket) {
-        this.tickets.remove(ticket);
-    }
-
     public Cinema getCinema() {
         return cinema;
     }
@@ -173,6 +156,10 @@ public class Screening implements Serializable {
         return seats;
     }
 
+    public void setSeats(Set<Seat> seats) {  // Updated setter to handle a List of seats
+        this.seats = seats;
+    }
+
     public void addSeat(Seat seat) {
         this.seats.add(seat);
         if (seat.getScreening() != this) {
@@ -184,7 +171,43 @@ public class Screening implements Serializable {
         this.seats.remove(seat);
     }
 
+    // SupportTickets methods
+    public Set<SupportTicket> getSupportTickets() {
+        return supportTickets;
+    }
+
+    public void addSupportTicket(SupportTicket ticket) {
+        this.supportTickets.add(ticket);
+        ticket.setScreening(this);
+    }
+
+    public void removeSupportTicket(SupportTicket ticket) {
+        this.supportTickets.remove(ticket);
+        ticket.setScreening(null);
+    }
+
+    public void setTickets(Set<MovieTicket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public void addHall(Hall hall) {
+        this.hall = hall;
+    }
+
+    public void removeHall(Hall hall) {
+        this.hall = null;
+    }
+
+    public void removeMovie(Movie movie) {
+        this.movie = null;
+    }
+
+    public void removeTicket(MovieTicket ticket) {
+        this.tickets.remove(ticket);
+    }
+
     public void setSeats(List<Seat> seats) {
         this.seats = new HashSet<>(seats);
+
     }
 }
