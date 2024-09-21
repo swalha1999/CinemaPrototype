@@ -3,7 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyTicketsEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -125,14 +124,6 @@ public class MyTickets {
         return null;  // Return null if no ticket is found with the given ID
     }
 
-    @Subscribe
-    public void onPurchaseScreeningEvent(PurchaseScreeningEvent event) {
-        if (event != null && event.getTicket() != null) {
-            addTicket(event.getTicket());
-        } else {
-            System.err.println("PurchaseScreeningEvent or Ticket data is null.");
-        }
-    }
 
     @Subscribe
     public void onGetMyTicketsEvent(GetMyTicketsEvent event) {

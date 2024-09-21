@@ -4,7 +4,6 @@ import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemovedTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -67,26 +66,6 @@ public class MyInbox {
         messagePane.getChildren().addAll(senderLabel, contentLabel);
 
         MessageContainer.getChildren().add(messagePane);
-    }
-
-    @Subscribe
-    public void onPurchaseScreeningEvent(PurchaseScreeningEvent event) {
-        String movieTitle = event.getTicket().getScreening().getMovie().getTitle();
-        LocalDateTime startTime = event.getTicket().getScreening().getStartingAt();
-        int durationInMinutes = event.getTicket().getScreening().getMovie().getDurationInMinutes();
-
-        // Calculate end time by adding the duration to the start time
-        LocalDateTime endTime = startTime.plusMinutes(durationInMinutes);
-
-        // Format date and time
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedStartTime = startTime.format(formatter);
-        String formattedEndTime = endTime.format(formatter);
-
-        String messageContent = String.format("Your purchase for the movie '%s' is confirmed. \n" +
-                "Available from: %s to %s.", movieTitle, formattedStartTime, formattedEndTime);
-
-        addMessage("Cinema System", messageContent);
     }
 
     @Subscribe
