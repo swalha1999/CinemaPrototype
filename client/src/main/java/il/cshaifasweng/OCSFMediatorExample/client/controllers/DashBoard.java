@@ -50,18 +50,20 @@ public class DashBoard {
 
     @Subscribe
     public void onGetlocation(GetAllCinemasEvent event) {
-        List<Cinema> cinemaList = event.getCinemas();
-        List<CinemaView> cinemaViewList = cinemaList.stream()
-                .map(CinemaView::new)
-                .collect(Collectors.toList());
+        Platform.runLater(() -> {
+            List<Cinema> cinemaList = event.getCinemas();
+            List<CinemaView> cinemaViewList = cinemaList.stream()
+                    .map(CinemaView::new)
+                    .collect(Collectors.toList());
 
-        allLocations = new CinemaView(null, -1, "All Locations", "", "", "", "", "");
-        cinemaViewList.add(0, allLocations);
+            allLocations = new CinemaView(null, -1, "All Locations", "", "", "", "", "");
+            cinemaViewList.add(0, allLocations);
 
-        locationComboi.setItems(FXCollections.observableArrayList(cinemaViewList));
-        if (!cinemaViewList.isEmpty()) {
-            locationComboi.getSelectionModel().selectFirst();
-        }
+            locationComboi.setItems(FXCollections.observableArrayList(cinemaViewList));
+            if (!cinemaViewList.isEmpty()) {
+                locationComboi.getSelectionModel().selectFirst();
+            }
+        });
     }
 
     @FXML

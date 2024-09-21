@@ -24,9 +24,16 @@ public class PaymentUtil {
 
     // Luhn algorithm to check if a card number is valid
     private static boolean luhnCheck(String cardNumber) {
+        cardNumber = cardNumber.strip();
         int sum = 0;
         boolean alternate = false;
         for (int i = cardNumber.length() - 1; i >= 0; i--) {
+            if (cardNumber.charAt(i) == ' ') {
+                continue;
+            }
+            if (!Character.isDigit(cardNumber.charAt(i))) {
+                return false;
+            }
             int n = Integer.parseInt(cardNumber.substring(i, i + 1));
             if (alternate) {
                 n *= 2;
