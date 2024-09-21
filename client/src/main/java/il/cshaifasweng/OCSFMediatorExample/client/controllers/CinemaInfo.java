@@ -187,7 +187,13 @@ public class CinemaInfo {
 
     @FXML
     void removeScreening(ActionEvent event) {
-        // TODO: Implement remove screening functionality
+        Screening selectedScreening = ScreeningTable.getSelectionModel().getSelectedItem().getScreening();
+
+        Message message = new Message(MessageType.REMOVE_SCREENING_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(selectedScreening);
+
+        Client.getClient().sendToServer(message);
     }
 
     @Subscribe
