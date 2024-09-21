@@ -99,7 +99,6 @@ public class ScreeningDAO {
             seat.setScreening(screening);
             screening.addSeat(seat);
             session.save(seat);
-            session.flush();
         }
 
         session.save(screening);     // Save the screening object
