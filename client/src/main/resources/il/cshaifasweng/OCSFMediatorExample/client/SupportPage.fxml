@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20" style="-fx-padding: 20px; -fx-background-color: #f4f4f4;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SupportPage">
+<VBox alignment="CENTER" spacing="20" style="-fx-padding: 20px; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SupportPage">
 
     <!-- Title -->
     <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: Helvetica Neue;" text="Contact us" />
 
     <!-- Welcome Message -->
     <Label fx:id="welcomeMessage" prefHeight="25.0" prefWidth="596.0" style="-fx-font-size: 16px;" text="Hi [Username], Let us know what we can improve." wrapText="true" />
+   <HBox prefHeight="35.0" prefWidth="598.0">
+      <children>
+         <Label prefHeight="25.0" prefWidth="374.0" text="Please pick a location that needs improvement :">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+         <ComboBox fx:id="ComplainsLocation" onAction="#PickLocation" prefHeight="25.0" prefWidth="183.0" promptText="Online Purchases" />
+      </children>
+   </HBox>
 
     <!-- Issue Description -->
     <VBox alignment="CENTER_LEFT" spacing="10">
