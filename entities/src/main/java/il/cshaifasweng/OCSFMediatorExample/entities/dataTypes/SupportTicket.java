@@ -18,6 +18,7 @@ public class SupportTicket implements Serializable {
     private String subject;
     private String description;
     private LocalDateTime createdDate;
+    private LocalDateTime purchasDayTime;  // Purchase date-time field
     private SupportTicketStatus status;
 
     // Many-to-one relationship with User
@@ -25,19 +26,27 @@ public class SupportTicket implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // Many-to-one relationship with Screening
+    @ManyToOne
+    @JoinColumn(name = "screening_id", nullable = true)
+    private Screening screening;
+
+    // Default constructor
     public SupportTicket() {
         this.createdDate = LocalDateTime.now();
-        this.status = SupportTicketStatus.OPEN; // default status
+        this.status = SupportTicketStatus.OPEN; // Default status
     }
 
-    public SupportTicket(String name, String email, String subject, String description, User user) {
+    // Parameterized constructor
+    public SupportTicket(String name, String email, String subject, String description, User user, Screening screening) {
         this.name = name;
         this.email = email;
         this.subject = subject;
         this.description = description;
         this.createdDate = LocalDateTime.now();
-        this.status = SupportTicketStatus.OPEN; // default status
+        this.status = SupportTicketStatus.OPEN; // Default status
         this.user = user;
+        this.screening = screening;
     }
 
     // Getters and setters
@@ -85,6 +94,14 @@ public class SupportTicket implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public LocalDateTime getPurchasDayTime() {
+        return purchasDayTime;
+    }
+
+    public void setPurchasDayTime(LocalDateTime purchasDayTime) {
+        this.purchasDayTime = purchasDayTime;
+    }
+
     public SupportTicketStatus getStatus() {
         return status;
     }
@@ -101,17 +118,27 @@ public class SupportTicket implements Serializable {
         this.user = user;
     }
 
+    public Screening getScreening() {
+        return screening;
+    }
+
+    public void setScreening(Screening screening) {
+        this.screening = screening;
+    }
+
     @Override
     public String toString() {
         return "SupportTicket{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                ", name='" + (name != null ? name : "N/A") + '\'' +
+                ", email='" + (email != null ? email : "N/A") + '\'' +
                 ", subject='" + subject + '\'' +
                 ", description='" + description + '\'' +
                 ", createdDate=" + createdDate +
+                ", purchasDayTime=" + purchasDayTime +  // Include purchase date-time in toString()
                 ", status=" + status +
-                ", user=" + user.getUsername() + // Example to show user's username
+                (user != null ? ", user=" + user.getUsername() : ", user=N/A") +  // Handle null user
+                (screening != null ? ", screening=" + screening.getId() : ", screening=N/A") +  // Handle null screening
                 '}';
     }
 }

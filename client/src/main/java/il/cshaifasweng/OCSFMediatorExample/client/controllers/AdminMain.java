@@ -29,6 +29,9 @@ public class AdminMain {
     NotificationPane notificationPane;
 
     @FXML
+    private Button AdminInbox;
+
+    @FXML
     private BorderPane mainPane;
 
     @FXML
@@ -38,7 +41,29 @@ public class AdminMain {
     private Button logoutBtn;
 
     @FXML
-    private StackPane stackPaneMain; // Value injected by FXMLLoader
+    private Button AvailableMoviesBtn;
+
+    @FXML
+    private Button CustomersBtn;
+
+    @FXML
+    private Button DashBoardBtn;
+
+    @FXML
+    private Button LogOutBtn;
+
+    @FXML
+    private Button MoviesBtn;
+
+    @FXML
+    private Button ScreeningsBtn;
+
+
+    @FXML
+    private BorderPane rootPane;
+
+    @FXML
+    private StackPane stackPaneMain;
 
     @FXML
     public void initialize() {
@@ -77,6 +102,7 @@ public class AdminMain {
         LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(() -> {
+            clearAllUICache();
             setRoot("Login");
         });
     }
@@ -85,6 +111,7 @@ public class AdminMain {
     public void onLogoutEvent(LogoutEvent response) {
         SessionKeysStorage.getInstance().clearSession();
         Platform.runLater(() -> {
+            clearAllUICache();
             setRoot("Login");
         });
     }
@@ -117,13 +144,13 @@ public class AdminMain {
         loadFXMLPane("AddScreening");
         loadFXMLPane("EditCinema");
         loadFXMLPane("EditHall");
-        loadFXMLPane("MyTickets");
         loadFXMLPane("MyInbox");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("OnlineMovies");
         loadFXMLPane("SeatPicker");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("EditScreening");
+        loadFXMLPane("AdminInbox");
 
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
@@ -145,4 +172,9 @@ public class AdminMain {
 
     }
 
+    @FXML
+    void showAdminInbox(ActionEvent event) {
+        loadUI("AdminInbox");
+
+    }
 }

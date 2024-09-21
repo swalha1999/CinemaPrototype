@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicketStatus;
 import org.hibernate.Session;
 
 public class DatabaseController {
@@ -14,6 +15,7 @@ public class DatabaseController {
     private final CinemaDAO cinemas;
     private final HallDAO halls;
     private final SeatDAO seats;
+    private final SupportTicketDAO supportTickets;  // Added supportTickets initialization
 
     private DatabaseController(Session session) {
         this.session = session;
@@ -24,6 +26,7 @@ public class DatabaseController {
         this.cinemas = new CinemaDAO(session);
         this.halls = new HallDAO(session);
         this.seats = new SeatDAO(session);
+        this.supportTickets = new SupportTicketDAO(session);  // Initialize supportTickets
     }
 
     public static synchronized DatabaseController getInstance(Session session) {
@@ -69,6 +72,10 @@ public class DatabaseController {
         return seats;
     }
 
+    public SupportTicketDAO getSupportTicketsManager() {
+        return supportTickets;  // Fixed this method
+    }
+
     public void setSession(Session session) {
         this.session = session;
         this.movies.setSession(session);
@@ -78,6 +85,6 @@ public class DatabaseController {
         this.cinemas.setSession(session);
         this.halls.setSession(session);
         this.seats.setSession(session);
-        // add more DAOs here if needed
+        this.supportTickets.setSession(session);  // Set session for supportTickets as well
     }
 }

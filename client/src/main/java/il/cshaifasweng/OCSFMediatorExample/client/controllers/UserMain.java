@@ -105,7 +105,6 @@ public class UserMain {
     @FXML
     void logOut(ActionEvent event) throws IOException {
         LogoutRequest logoutRequest = new LogoutRequest (SessionKeysStorage.getInstance().getSessionKey());
-        int x=0;
         Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(()->{
             clearAllUICache();

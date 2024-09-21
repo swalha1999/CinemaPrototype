@@ -42,7 +42,7 @@ public class Server extends AbstractServer {
             Message res = handleV3Message(request, client);
             System.out.println("Message response: " + res.toString());
         } else if (request.getVersion() == MessageVersion.V2) {
-			handleV2Message(request, client);
+            handleV2Message(request, client);
         } else {
             sendErrorMessage(client, "Error! Unknown message version");
         }
@@ -73,6 +73,7 @@ public class Server extends AbstractServer {
             case PURCHASE_TICKETS_REQUEST -> handlePurchaseTicketsRequest(request, client, loggedInUser);
             case REMOVE_TICKET_REQUEST -> handleRemoveTicketRequest(request,client , loggedInUser);
             case SEND_SUPPORT_TICKET_REQUEST -> handleSendSupportTicketRequest(request,client,loggedInUser);
+            case GET_ALL_SUPPORT_TICKETS_REQUEST -> handleGetSupportTicketsRequest(request,client,loggedInUser);
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
@@ -103,6 +104,26 @@ public class Server extends AbstractServer {
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handleGetSupportTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+                break;
+            case CONTENT_MANAGER:
+            case USER:
+            case NOT_LOGGED_IN:
+            default:
+                return sendErrorMessage(client, "Error! User does not have permission to this action");
+        }
+
+        Message response = database.getSupportTicketsManager().getAllSupportTickets(request);
+        sendResponse(client, response);
+
+        return response;
     }
 
     private void handleV2Message(Message request, ConnectionToClient client) {
@@ -140,7 +161,7 @@ public class Server extends AbstractServer {
         }
 
         Message response = new Message(loginResponse, MessageType.LOGIN_RESPONSE);
-		sendResponse(client, response);
+        sendResponse(client, response);
 
         return response;
     }
@@ -572,22 +593,22 @@ public class Server extends AbstractServer {
 
     private Message handleAddHallRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
-            switch (loggedInUser.getRole()) {
-                case SYSTEM_MANAGER:
-                case MANAGER_OF_ALL_BRANCHES:
-                case BRANCH_MANAGER:
-                    break;
-                case CUSTOMER_SERVICE:
-                case CONTENT_MANAGER:
-                case USER:
-                default:
-                    return sendErrorMessage(client, "Error! User does not have permission to add halls");
-            }
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+                break;
+            case CUSTOMER_SERVICE:
+            case CONTENT_MANAGER:
+            case USER:
+            default:
+                return sendErrorMessage(client, "Error! User does not have permission to add halls");
+        }
 
-            Message response = database.getHallsManager().addHall(request);
-            sendResponse(client, response);
+        Message response = database.getHallsManager().addHall(request);
+        sendResponse(client, response);
 
-            return response;
+        return response;
     }
 
     private Message handleAddScreeningRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
@@ -816,31 +837,16 @@ public class Server extends AbstractServer {
     private Message handleShowCinemaInfoRequest(ConnectionToClient client,Message request) {
         // Call the method to get cinema tickets
         Message ticketsResponse = database.getCinemasManager().getCinemaTickets(request);
-sendResponse(client, ticketsResponse);
+        sendResponse(client, ticketsResponse);
         // Send the response back to the client
         return ticketsResponse;
     }
     public Message handleSendSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        // Extract the support ticket details from the request
-        SupportTicket supportTicketFromRequest = (SupportTicket) request.getDataObject();
-
-        // Create a new support ticket and populate its fields
-        SupportTicket supportTicket = new SupportTicket();
-        supportTicket.setName(supportTicketFromRequest.getName());
-        supportTicket.setEmail(supportTicketFromRequest.getEmail());
-        supportTicket.setSubject(supportTicketFromRequest.getSubject());
-        supportTicket.setDescription(supportTicketFromRequest.getDescription());
-        supportTicket.setStatus(SupportTicketStatus.OPEN); // Default to OPEN
-
-        // Optional: Associate the ticket with the logged-in user if needed
-        // supportTicket.setUser(loggedInUser.getUser());
-
-        // Use DAO to save the support ticket
-        SupportTicketDAO supportTicketDAO = new SupportTicketDAO(session);
-        Message response = supportTicketDAO.addSupportTicket(request);
-
-        // Return the response message (success or failure)
+        // Create the response message
+        Message response = database.getSupportTicketsManager().addSupportTicket(request, loggedInUser);
+        sendResponse(client, response);
         return response;
     }
+
 
 }

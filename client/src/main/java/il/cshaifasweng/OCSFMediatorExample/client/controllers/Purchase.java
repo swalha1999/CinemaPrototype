@@ -2,7 +2,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.PurchaseScreeningEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;

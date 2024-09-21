@@ -2,9 +2,12 @@ package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicketStatus;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -52,23 +55,88 @@ public class SupportTicketDAO {
 //    }
 
     // Add a new support ticket
-    public Message addSupportTicket(Message request) {
+    public Message addSupportTicket(Message request, LoggedInUser loggedInUser) {
+        // Create the response message
+        Message response = new Message(MessageType.ADD_SUPPORT_TICKET_RESPONSE);
+
+        // Log for debugging
+        System.out.println("Starting addSupportTicket...");
+
+        // Null check for loggedInUser
+        if (loggedInUser == null || loggedInUser.getUserId() == 0) {
+            response.setSuccess(false).setMessage("Logged in user information is missing.");
+            System.err.println("LoggedInUser is null or userId is 0");
+            return response;
+        }
+
+        // Extract the support ticket details from the request
         SupportTicket ticketFromUser = (SupportTicket) request.getDataObject();
-        SupportTicket ticket = new SupportTicket();
-        ticket.setName(ticketFromUser.getName());
-        ticket.setEmail(ticketFromUser.getEmail());
-        ticket.setSubject(ticketFromUser.getSubject());
-        ticket.setDescription(ticketFromUser.getDescription());
-        ticket.setStatus(SupportTicketStatus.OPEN);  // default status
+        if (ticketFromUser == null) {
+            response.setSuccess(false).setMessage("Support ticket data is missing.");
+            System.err.println("Support ticket data is missing from the request.");
+            return response;
+        }
 
-        session.save(ticket);
-        session.flush();
+        // Fetch the user from the database using the loggedInUser information
+        User user = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
+        if (user == null) {
+            response.setSuccess(false).setMessage("User not found.");
+            System.err.println("User with ID: " + loggedInUser.getUserId() + " not found.");
+            return response;
+        }
 
-        return new Message(MessageType.ADD_SUPPORT_TICKET_RESPONSE)
-                .setSuccess(true)
-                .setMessage("Support ticket added successfully")
-                .setDataObject(ticket);
+        Transaction transaction = null;
+        try {
+            // Start a new transaction
+            transaction = session.beginTransaction();
+            System.out.println("Transaction started.");
+
+            // Create a new support ticket and populate its fields
+            SupportTicket ticket = new SupportTicket();
+            ticket.setName(ticketFromUser.getName());
+            ticket.setEmail(ticketFromUser.getEmail());
+            ticket.setSubject(ticketFromUser.getSubject());
+            ticket.setDescription(ticketFromUser.getDescription());
+            ticket.setStatus(SupportTicketStatus.OPEN);  // Default status as OPEN
+            ticket.setUser(user);  // Associate the ticket with the user
+
+            // Log the ticket details before saving
+            System.out.println("Saving ticket: " + ticket.getSubject() + " for user: " + user.getUsername());
+
+            // Save the ticket in the database
+            session.save(ticket);
+
+            // Commit the transaction after saving
+            transaction.commit();
+            System.out.println("Ticket saved successfully and transaction committed.");
+
+            // Set response data object to the created ticket
+            response.setDataObject(ticket);
+
+            // Return a success message with the data object included
+            response.setSuccess(true).setMessage("Support ticket added successfully.");
+            return response;
+
+        } catch (Exception e) {
+            // Rollback transaction if there is an exception
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            // Log the exception
+            System.err.println("Error while adding support ticket: " + e.getMessage());
+            e.printStackTrace();
+
+            // Return error message
+            response.setSuccess(false).setMessage("An error occurred while adding the support ticket.");
+            return response;
+        }
     }
+
+
+
+
+
+
 
 //    // Update a support ticket
 //    public Message updateSupportTicket(Message request) {
