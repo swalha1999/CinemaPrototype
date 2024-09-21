@@ -90,6 +90,17 @@ public class ScreeningDAO {
         screening.setCinema(cinema);
 
         session.beginTransaction();  // Start transaction
+
+        for (int i = 0; i < 100; i++) {
+            Seat seat = new Seat();
+            seat.setSeatLocationX(i % 10);
+            seat.setSeatLocationY(i / 10);
+            seat.setAvailable(true);
+            seat.setScreening(screening);
+            screening.addSeat(seat);
+            session.save(seat);
+        }
+
         session.save(screening);     // Save the screening object
         session.flush();             // Flush session
         session.getTransaction().commit(); // Commit transaction
