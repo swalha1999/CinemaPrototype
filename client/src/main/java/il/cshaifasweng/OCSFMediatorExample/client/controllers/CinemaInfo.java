@@ -194,6 +194,10 @@ public class CinemaInfo {
                 .setDataObject(selectedScreening);
 
         Client.getClient().sendToServer(message);
+
+        // this is optimistic, the server will send a response if the screening was removed
+        ScreeningTable.getItems().remove(ScreeningTable.getSelectionModel().getSelectedItem());
+
     }
 
     @Subscribe
