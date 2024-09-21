@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -129,11 +130,34 @@ public class CinemaDAO {
                 .setMessage("Cinema updated successfully")
                 .setDataObject(cinema);
     }
+    public Message getCinemaSupportTickets(Message request) {
+        // Create a response message
+        Message message = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_RESPONSE);
+
+        // Retrieve the cinema ID from the request
+        Integer cinemaId = (Integer) request.getDataObject();
+
+        // Fetch the cinema from the database using the cinema ID
+        Cinema cinemaFromDb = session.get(Cinema.class, cinemaId);
+        if (cinemaFromDb == null) {
+            return message.setSuccess(false)
+                    .setMessage("Cinema not found")
+                    .setDataObject(null);
+        }
+
+        // Retrieve all support tickets associated with the cinema
+        List<SupportTicket> supportTickets = new ArrayList<>(cinemaFromDb.getSupportTickets());
+
+        // Return the list of support tickets in the response message
+        return message.setSuccess(true)
+                .setMessage("Cinema support tickets fetched successfully")
+                .setDataObject(supportTickets);
+    }
 
 
     public Message getCinemaTickets(Message request) {
         // Create a response message
-        Message message = new Message(MessageType.SHOW_CINEMA_INFO_RESPONSE);
+        Message message = new Message(MessageType.CINEMA_TICKETS_INFO_RESPONSE);
 
         // Retrieve the cinema ID from the request
         Integer cinemaId = (Integer) request.getDataObject();
@@ -165,6 +189,9 @@ public class CinemaDAO {
         return message.setSuccess(true)
                 .setMessage("Cinema tickets fetched successfully")
                 .setDataObject(tickets);
+    }
+    public Cinema getCinemaById(int cinemaId) {
+        return session.get(Cinema.class, cinemaId);  // Simple Hibernate call to get Cinema by ID
     }
 
 

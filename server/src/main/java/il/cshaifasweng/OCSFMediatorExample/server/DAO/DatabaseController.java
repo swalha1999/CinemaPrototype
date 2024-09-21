@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicketStatus;
 import org.hibernate.Session;
 
@@ -74,6 +75,9 @@ public class DatabaseController {
 
     public SupportTicketDAO getSupportTicketsManager() {
         return supportTickets;  // Fixed this method
+    }
+    public Cinema getCinemaById(int cinemaId) {
+        return cinemas.getCinemaById(cinemaId);  // Call the method from CinemaDAO
     }
 
     public void setSession(Session session) {

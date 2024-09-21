@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllSupportTicketsEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetCinemaSupportTicketsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetCinemaTicketsEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
@@ -18,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -85,13 +85,25 @@ public class DashBoard {
             String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
             Integer selectedCinemaId = selectedCinema.getId().getValue();
 
-            Message message = new Message(MessageType.SHOW_CINEMA_INFO_REQUEST)
+            // Request cinema tickets
+            Message ticketMessage = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
                     .setSessionKey(sessionKey)
                     .setDataObject(selectedCinemaId);
 
             Client client = Client.getClient();
             if (client != null) {
-                client.sendToServer(message);
+                client.sendToServer(ticketMessage);
+            } else {
+                System.out.println("Client is not initialized.");
+            }
+
+            // Request support tickets
+            Message supportMessage = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
+                    .setSessionKey(sessionKey)
+                    .setDataObject(selectedCinemaId);
+
+            if (client != null) {
+                client.sendToServer(supportMessage);
             } else {
                 System.out.println("Client is not initialized.");
             }
@@ -99,14 +111,17 @@ public class DashBoard {
             System.out.println("Selected cinema is null or is 'All Locations'.");
         }
     }
-
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
         makeChart(movieTickets, TicketSaleTable);
         makeChart(getOnlineTickets(movieTickets), LinksTable);
     }
-
+    @Subscribe
+    public void onShowCinemaInfo(GetCinemaSupportTicketsEvent event) {
+        List<SupportTicket> movieTickets = event.getSupportTickets();
+        makeSupportChart(movieTickets, TicketSaleTable);
+    }
     @Subscribe
     public void onShowSupportTickets(GetAllSupportTicketsEvent event) {
         List<SupportTicket> supportTickets = event.getSupportTickets();

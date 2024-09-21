@@ -4,7 +4,6 @@ import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllSupportTicketsEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
@@ -38,14 +37,14 @@ public class SupportPage {
     private Label welcomeMessage;
 
     @FXML
-    private ComboBox<CinemaView> locationComboi;
+    private ComboBox<CinemaView> locationComboBox; // Renamed for clarity
 
     private User currentUser;
 
     private CinemaView allLocations;
 
     @Subscribe
-    public void onGetlocation(GetAllCinemasEvent event) {
+    public void onGetLocation(GetAllCinemasEvent event) {
         Platform.runLater(() -> {
             List<Cinema> cinemaList = event.getCinemas();
             List<CinemaView> cinemaViewList = cinemaList.stream()
@@ -55,9 +54,9 @@ public class SupportPage {
             allLocations = new CinemaView(null, -1, "All Locations", "", "", "", "", "");
             cinemaViewList.add(0, allLocations);
 
-            locationComboi.setItems(FXCollections.observableArrayList(cinemaViewList));
+            locationComboBox.setItems(FXCollections.observableArrayList(cinemaViewList));
             if (!cinemaViewList.isEmpty()) {
-                locationComboi.getSelectionModel().selectFirst();
+                locationComboBox.getSelectionModel().selectFirst();
             }
         });
     }
@@ -75,28 +74,6 @@ public class SupportPage {
     }
 
     @FXML
-    private void PickLocation(ActionEvent event) {
-        CinemaView selectedCinema = locationComboi.getSelectionModel().getSelectedItem();
-        if (selectedCinema != null && !selectedCinema.equals(allLocations)) {
-            String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
-            Integer selectedCinemaId = selectedCinema.getId().getValue();
-
-            Message message = new Message(MessageType.SHOW_CINEMA_INFO_REQUEST)
-                    .setSessionKey(sessionKey)
-                    .setDataObject(selectedCinemaId);
-
-            Client client = Client.getClient();
-            if (client != null) {
-                client.sendToServer(message);
-            } else {
-                System.out.println("Client is not initialized.");
-            }
-        } else {
-            System.out.println("Selected cinema is null or is 'All Locations'.");
-        }
-    }
-
-    @FXML
     void handleSubmit(ActionEvent event) {
         try {
             // Check if the client is connected to the server
@@ -108,6 +85,18 @@ public class SupportPage {
             // Create a new SupportTicket and populate its fields
             SupportTicket supportTicket = new SupportTicket();
             supportTicket.setDescription(issueDescription.getText());
+
+            // Set the selected cinema
+            CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();
+            if (selectedCinema != null && !selectedCinema.equals(allLocations)) {
+                Cinema cinema = new Cinema();
+                cinema.setId(selectedCinema.getId().getValue());
+                supportTicket.setCinema(cinema);
+            } else {
+                // Handle case when no cinema is selected or "All Locations" is selected
+                showNotification("Please select a valid cinema.", false);
+                return;
+            }
 
             // Optionally set other details like subject, email, or user info (if available)
             if (currentUser != null) {
@@ -135,7 +124,6 @@ public class SupportPage {
             showNotification("An error occurred while submitting the request.", false);
         }
     }
-
 
     // Optionally, you can implement a method to unsubscribe from the EventBus when this controller is no longer active.
     public void cleanup() {

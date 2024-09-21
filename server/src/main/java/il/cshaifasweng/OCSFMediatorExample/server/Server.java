@@ -5,15 +5,12 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
 import il.cshaifasweng.OCSFMediatorExample.server.DAO.DatabaseController;
-import il.cshaifasweng.OCSFMediatorExample.server.DAO.SupportTicketDAO;
-import il.cshaifasweng.OCSFMediatorExample.server.DAO.TicketDAO;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.Notification;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.Session;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -21,8 +18,6 @@ import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import static il.cshaifasweng.OCSFMediatorExample.server.Main.session;
 
 public class Server extends AbstractServer {
     private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>(); //this will be used to store the session keys for the logged-in users
@@ -96,7 +91,8 @@ public class Server extends AbstractServer {
             case ADD_CINEMA_REQUEST -> handleAddCinemaRequest(request, client, loggedInUser);
             case REMOVE_CINEMA_REQUEST -> handleRemoveCinemaRequest(request, client, loggedInUser);
             case UPDATE_CINEMA_REQUEST -> handleUpdateCinemaRequest(request, client, loggedInUser);
-            case SHOW_CINEMA_INFO_REQUEST -> handleShowCinemaInfoRequest(client,request);
+            case CINEMA_TICKETS_INFO_REQUEST -> handleCinemaTicketInfoRequest(client,request);
+            case CINEMA_SUPPORT_TICKETS_INFO_REQUEST -> handleCinemaSupportTicketInfoRequest(client,request);
             //HALLS
             case ADD_HALL_REQUEST -> handleAddHallRequest(request, client, loggedInUser);
 
@@ -836,9 +832,16 @@ public class Server extends AbstractServer {
 
         return response;
     }
-    private Message handleShowCinemaInfoRequest(ConnectionToClient client,Message request) {
+    private Message handleCinemaTicketInfoRequest(ConnectionToClient client,Message request) {
         // Call the method to get cinema tickets
         Message ticketsResponse = database.getCinemasManager().getCinemaTickets(request);
+        sendResponse(client, ticketsResponse);
+        // Send the response back to the client
+        return ticketsResponse;
+    }
+    private Message handleCinemaSupportTicketInfoRequest(ConnectionToClient client,Message request) {
+        // Call the method to get cinema tickets
+        Message ticketsResponse = database.getCinemasManager().getCinemaSupportTickets(request);
         sendResponse(client, ticketsResponse);
         // Send the response back to the client
         return ticketsResponse;

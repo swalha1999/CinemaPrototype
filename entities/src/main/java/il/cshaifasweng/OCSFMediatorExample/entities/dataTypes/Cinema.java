@@ -14,19 +14,22 @@ public class Cinema implements Serializable {
     private int id;
 
     private String name;
-    private String  city;
+    private String city;
     private String address;
     private String phoneNumber;
     private String email;
 
-    @OneToMany(mappedBy = "cinema")
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Hall> halls = new HashSet<>();
 
-    @OneToMany(mappedBy = "cinema")
-    private Set<Screening> screening = new HashSet<>();
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Screening> screenings = new HashSet<>();
 
     @OneToOne
     private User manager;
+
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SupportTicket> supportTickets = new HashSet<>();
 
     public Cinema(String name, String city, String address, String phoneNumber, String email) {
         this.name = name;
@@ -44,6 +47,7 @@ public class Cinema implements Serializable {
         this.email = "";
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -110,12 +114,20 @@ public class Cinema implements Serializable {
         return this;
     }
 
-    public Set<Screening> getScreening() {
-        return screening;
+    public Set<Screening> getScreenings() {
+        return screenings;
     }
 
-    public void setScreening(Set<Screening> screening) {
-        this.screening = screening;
+    public void setScreenings(Set<Screening> screenings) {
+        this.screenings = screenings;
+    }
+
+    public Set<SupportTicket> getSupportTickets() {
+        return supportTickets;
+    }
+
+    public void setSupportTickets(Set<SupportTicket> supportTickets) {
+        this.supportTickets = supportTickets;
     }
 
     public void addHall(Hall hall) {
@@ -126,10 +138,15 @@ public class Cinema implements Serializable {
     }
 
     public void addScreening(Screening screening) {
-        this.screening.add(screening);
+        this.screenings.add(screening);
         if (screening.getCinema() != this) {
             screening.setCinema(this);
         }
+    }
+
+    public void addSupportTicket(SupportTicket ticket) {
+        this.supportTickets.add(ticket);
+        ticket.setCinema(this);
     }
 
     public void removeHall(Hall hall) {
@@ -139,8 +156,18 @@ public class Cinema implements Serializable {
         }
     }
 
-    public void removeScreening(Hall hall) {
-        hall.setCinema(null);
+    public void removeScreening(Screening screening) {
+        this.screenings.remove(screening);
+        if (screening.getCinema() == this) {
+            screening.setCinema(null);
+        }
+    }
+
+    public void removeSupportTicket(SupportTicket ticket) {
+        this.supportTickets.remove(ticket);
+        if (ticket.getCinema() == this) {
+            ticket.setCinema(null);
+        }
     }
 
     public void removeAllHalls() {
@@ -151,17 +178,21 @@ public class Cinema implements Serializable {
     }
 
     public void removeAllScreenings() {
-        for (Screening screening : screening) {
+        for (Screening screening : screenings) {
             screening.setCinema(null);
         }
-        this.screening.clear();
+        this.screenings.clear();
+    }
+
+    public void removeAllSupportTickets() {
+        for (SupportTicket ticket : supportTickets) {
+            ticket.setCinema(null);
+        }
+        this.supportTickets.clear();
     }
 
     public void removeManager(User manager) {
         this.manager = null;
-//        if (manager.getCinema() == this) {
-//            manager.setCinema(null);
-//        }
     }
 
     public Cinema deepCopy() {
@@ -173,8 +204,9 @@ public class Cinema implements Serializable {
         cinema.setPhoneNumber(this.phoneNumber);
         cinema.setEmail(this.email);
         cinema.setManager(this.manager);
-        cinema.setHalls(this.halls);
-        cinema.setScreening(this.screening);
+        cinema.setHalls(new HashSet<>(this.halls)); // Deep copy if needed
+        cinema.setScreenings(new HashSet<>(this.screenings)); // Deep copy if needed
+        cinema.setSupportTickets(new HashSet<>(this.supportTickets)); // Deep copy if needed
         return cinema;
     }
 
@@ -183,12 +215,12 @@ public class Cinema implements Serializable {
         return "Cinema{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", city=" + city +
+                ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", halls=" + halls +
-                ", manager=" + manager.getUsername() +
+                ", manager=" + (manager != null ? manager.getUsername() : "None") +
+                ", supportTickets=" + supportTickets +
                 '}';
     }
 }

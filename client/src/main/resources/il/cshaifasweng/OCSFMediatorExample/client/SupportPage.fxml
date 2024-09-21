@@ -22,7 +22,7 @@
                <Font size="16.0" />
             </font>
          </Label>
-         <ComboBox fx:id="locationComboi" onAction="#PickLocation" prefHeight="25.0" prefWidth="183.0" promptText="allLocations" />
+         <ComboBox fx:id="locationComboBox" prefHeight="25.0" prefWidth="183.0" promptText="allLocations" />
       </children>
    </HBox>
 
