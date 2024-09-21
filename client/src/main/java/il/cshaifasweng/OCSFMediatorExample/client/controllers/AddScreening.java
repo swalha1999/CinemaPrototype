@@ -4,8 +4,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllMoviesEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Hall;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
@@ -107,6 +106,30 @@ public class AddScreening {
 
                 movieNameCombobox.getItems().add(movie);
             }
+        });
+    }
+
+    @Subscribe
+    public void onAddMoviesEvent(AddMoviesEvent event) {
+        Platform.runLater(() -> {
+            movieNameCombobox.getItems().add(event.getMovie());
+        });
+    }
+
+    @Subscribe
+    public void onRemoveMoviesEvent(RemoveMovieEvent event) {
+        Platform.runLater(() -> {
+            movieNameCombobox.getItems().removeIf(movie -> movie.getId() == event.getMovie().getId());
+        });
+    }
+
+    @Subscribe
+    public void onUpdateMoviesEvent(UpdateMovieEvent event) {
+        Platform.runLater(() -> {
+            //remove the movie
+            movieNameCombobox.getItems().removeIf(movie -> movie.getId() == event.getMovie().getId());
+            //add the updated movie
+            movieNameCombobox.getItems().add(event.getMovie());
         });
     }
 

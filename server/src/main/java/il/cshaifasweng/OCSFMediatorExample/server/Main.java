@@ -22,11 +22,11 @@ public class Main {
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Enter password for MYSQL DB connection:");
-        String password = myObj.nextLine();  // Read user input
-        myObj.close();
-        configuration.setProperty("hibernate.connection.password", password);
+//        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+//        System.out.println("Enter password for MYSQL DB connection:");
+//        String password = myObj.nextLine();  // Read user input
+//        myObj.close();
+//        configuration.setProperty("hibernate.connection.password", password);
 
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(User.class);
@@ -97,10 +97,10 @@ public class Main {
 
         String[] descriptions = {
                 "Ethan Hunt and his IMF team, along with some familiar allies, face a new and deadly threat.",
-                "The next chapter in the Dune saga continues the story of Paul Atreides.",
+                "The next chapter in the Dune saga continues the story of Paul Ideates.",
                 "The third installment in James Cameron's epic science fiction series.",
-                "Carol Danvers, Kamala Khan, and Monica Rambeau team up for an intergalactic adventure.",
-                "The continuation of Newt Scamander's adventures in the magical world.",
+                "Carol Dancers, Kamala Khan, and Monica Ram beau team up for an intergalactic adventure.",
+                "The continuation of Newt Commander's adventures in the magical world.",
                 "The final chapter of the Spider-Verse trilogy.",
                 "The Guardians face their greatest threat yet in this epic conclusion.",
                 "Indiana Jones returns for one last adventure."

@@ -51,10 +51,8 @@ public class MovieCatalog {
     }
 
     public void addMovie(Movie movie) {
-        if(!movie.isComingSoon()&&!movie.isOnlineMovie()){
-            allMovies.add(movie);
-            renderMovies(allMovies);
-        }
+        allMovies.add(movie);
+        renderMovies(allMovies);
     }
 
     public void removeMovie(int id) {

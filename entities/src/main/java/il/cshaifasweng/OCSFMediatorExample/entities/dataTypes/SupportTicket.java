@@ -31,6 +31,11 @@ public class SupportTicket implements Serializable {
     @JoinColumn(name = "screening_id", nullable = true)
     private Screening screening;
 
+    // Many-to-one relationship with Cinema
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", nullable = true)
+    private Cinema cinema;
+
     // Default constructor
     public SupportTicket() {
         this.createdDate = LocalDateTime.now();
@@ -38,7 +43,7 @@ public class SupportTicket implements Serializable {
     }
 
     // Parameterized constructor
-    public SupportTicket(String name, String email, String subject, String description, User user, Screening screening) {
+    public SupportTicket(String name, String email, String subject, String description, User user, Screening screening, Cinema cinema) {
         this.name = name;
         this.email = email;
         this.subject = subject;
@@ -47,6 +52,7 @@ public class SupportTicket implements Serializable {
         this.status = SupportTicketStatus.OPEN; // Default status
         this.user = user;
         this.screening = screening;
+        this.cinema = cinema;
     }
 
     // Getters and setters
@@ -126,6 +132,14 @@ public class SupportTicket implements Serializable {
         this.screening = screening;
     }
 
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
     @Override
     public String toString() {
         return "SupportTicket{" +
@@ -139,6 +153,7 @@ public class SupportTicket implements Serializable {
                 ", status=" + status +
                 (user != null ? ", user=" + user.getUsername() : ", user=N/A") +  // Handle null user
                 (screening != null ? ", screening=" + screening.getId() : ", screening=N/A") +  // Handle null screening
+                (cinema != null ? ", cinema=" + cinema.getName() : ", cinema=N/A") +  // Handle null cinema
                 '}';
     }
 }
