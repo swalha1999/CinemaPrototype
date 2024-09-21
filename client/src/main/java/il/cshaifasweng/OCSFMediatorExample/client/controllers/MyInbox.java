@@ -34,14 +34,6 @@ public class MyInbox {
     public void initialize() {
         // Register the EventBus
         EventBus.getDefault().register(this);
-
-        // Example: Adding some static messages on initialization
-        addMessage("John Doe", "Hello! How are you?");
-        addMessage("Jane Smith", "Meeting at 3 PM.");
-        addMessage("Admin", "Your account has been updated.");
-        addMessage("Support", "Your issue has been resolved.");
-        addMessage("John Doe", "Let's catch up later.");
-
         // Send a request to get all screenings for the user
         Message message = new Message(MessageType.GET_MY_SCREENINGS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());

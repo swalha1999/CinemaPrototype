@@ -144,7 +144,7 @@ public class AdminMain {
         loadFXMLPane("AddScreening");
         loadFXMLPane("EditCinema");
         loadFXMLPane("EditHall");
-        loadFXMLPane("MyInbox");
+        //loadFXMLPane("MyInbox");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("OnlineMovies");
         loadFXMLPane("SeatPicker");

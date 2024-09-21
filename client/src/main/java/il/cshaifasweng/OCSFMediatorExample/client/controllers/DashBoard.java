@@ -13,19 +13,22 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-// mhmd fix this bruh
+
 public class DashBoard {
 
     @FXML
@@ -44,7 +47,15 @@ public class DashBoard {
     private Button backBtn;
 
     @FXML
-    private ComboBox<CinemaView> locationComboi;
+    private ComboBox<CinemaView> locationComboBox;
+
+    @FXML
+    private TableView<SupportTicket> complaintsTable; // TableView for support tickets
+
+    @FXML
+    private TableColumn<SupportTicket, String> ticketDescriptionColumn; // Column for description
+    @FXML
+    private TableColumn<SupportTicket, String> ticketDateColumn; // Column for creation date
 
     private CinemaView allLocations;
 
@@ -59,9 +70,9 @@ public class DashBoard {
             allLocations = new CinemaView(null, -1, "All Locations", "", "", "", "", "");
             cinemaViewList.add(0, allLocations);
 
-            locationComboi.setItems(FXCollections.observableArrayList(cinemaViewList));
+            locationComboBox.setItems(FXCollections.observableArrayList(cinemaViewList));
             if (!cinemaViewList.isEmpty()) {
-                locationComboi.getSelectionModel().selectFirst();
+                locationComboBox.getSelectionModel().selectFirst();
             }
         });
     }
@@ -70,6 +81,12 @@ public class DashBoard {
     private void initialize() {
         EventBus.getDefault().register(this);
         fetchCinemas();
+
+        // Initialize the complaints table
+        ticketDescriptionColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getDescription()));
+        ticketDateColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getCreatedDate().toString())); // Change to the desired format
     }
 
     private void fetchCinemas() {
@@ -80,30 +97,18 @@ public class DashBoard {
 
     @FXML
     private void PickLocation(ActionEvent event) {
-        CinemaView selectedCinema = locationComboi.getSelectionModel().getSelectedItem();
+        CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();
         if (selectedCinema != null && !selectedCinema.equals(allLocations)) {
             String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
             Integer selectedCinemaId = selectedCinema.getId().getValue();
 
-            // Request cinema tickets
-            Message ticketMessage = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
+            Message message = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
                     .setSessionKey(sessionKey)
                     .setDataObject(selectedCinemaId);
 
             Client client = Client.getClient();
             if (client != null) {
-                client.sendToServer(ticketMessage);
-            } else {
-                System.out.println("Client is not initialized.");
-            }
-
-            // Request support tickets
-            Message supportMessage = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
-                    .setSessionKey(sessionKey)
-                    .setDataObject(selectedCinemaId);
-
-            if (client != null) {
-                client.sendToServer(supportMessage);
+                client.sendToServer(message);
             } else {
                 System.out.println("Client is not initialized.");
             }
@@ -111,21 +116,25 @@ public class DashBoard {
             System.out.println("Selected cinema is null or is 'All Locations'.");
         }
     }
+
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
         makeChart(movieTickets, TicketSaleTable);
         makeChart(getOnlineTickets(movieTickets), LinksTable);
     }
+
     @Subscribe
     public void onShowCinemaInfo(GetCinemaSupportTicketsEvent event) {
-        List<SupportTicket> movieTickets = event.getSupportTickets();
-        makeSupportChart(movieTickets, TicketSaleTable);
+        List<SupportTicket> supportTickets = event.getSupportTickets();
+        makeSupportChart(supportTickets, TicketSaleTable);
     }
+
     @Subscribe
     public void onShowSupportTickets(GetAllSupportTicketsEvent event) {
         List<SupportTicket> supportTickets = event.getSupportTickets();
         makeSupportChart(supportTickets, SupportTicketsTable);
+        fillComplaintsTable(supportTickets); // Call to fill the complaints table
     }
 
     public List<MovieTicket> getOnlineTickets(List<MovieTicket> movieTickets) {
@@ -202,8 +211,14 @@ public class DashBoard {
         });
     }
 
-    @FXML
-    private void GoBack(ActionEvent event) {
-        // Handle the Go Back action
+    private void fillComplaintsTable(List<SupportTicket> supportTickets) {
+        Platform.runLater(() -> {
+            complaintsTable.getItems().clear(); // Clear previous items
+            complaintsTable.getItems().addAll(supportTickets); // Add new items
+        });
+    }
+
+    public void GoBack(ActionEvent actionEvent) {
+
     }
 }

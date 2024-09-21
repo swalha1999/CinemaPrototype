@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -43,7 +45,7 @@
                             <Font name="Bodoni MT Bold" size="22.0" />
                         </font>
                     </Label>
-                    <ComboBox fx:id="locationComboi" onAction="#PickLocation" prefWidth="150.0" promptText="All Locations" style="-fx-background-color: #ffffff;" />
+                    <ComboBox fx:id="locationComboBox" onAction="#PickLocation" prefWidth="150.0" promptText="All Locations" style="-fx-background-color: #ffffff;" />
                 </HBox>
 
                 <!-- Ticket Sales Chart -->
@@ -77,6 +79,15 @@
                         </yAxis>
                     </BarChart>
                 </HBox>
+
+                <!-- Support Tickets Table -->
+                <TableView fx:id="complaintsTable" prefWidth="850.0" prefHeight="300.0">
+                    <columns>
+                        <TableColumn fx:id="ticketDescriptionColumn" text="Description" />
+                        <TableColumn fx:id="ticketDateColumn" text="Date" />
+                    </columns>
+                </TableView>
+
             </VBox>
         </ScrollPane>
     </children>
