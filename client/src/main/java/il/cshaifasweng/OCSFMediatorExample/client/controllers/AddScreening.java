@@ -40,6 +40,12 @@ public class AddScreening {
     private List<Movie> movies;
     private Hall hall;
 
+    @FXML
+    private TextField HourField;
+
+    @FXML
+    private TextField MinuteField;
+
     Callback<ListView<Movie>, ListCell<Movie>> cellFactory = new Callback<ListView<Movie>, ListCell<Movie>>() {
         @Override
         public ListCell<Movie> call(ListView<Movie> l) {
@@ -76,7 +82,7 @@ public class AddScreening {
     void handleConfirm(ActionEvent event) {
         Screening screeningToAdd = new Screening();
         screeningToAdd.setPrice(Integer.parseInt(priceField.getText()));
-        screeningToAdd.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0)));
+        screeningToAdd.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0,0)));
         screeningToAdd.setMovie(movieNameCombobox.getValue());
         screeningToAdd.setHall(hall);
 
