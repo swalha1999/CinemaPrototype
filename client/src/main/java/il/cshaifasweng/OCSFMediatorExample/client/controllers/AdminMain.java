@@ -41,7 +41,29 @@ public class AdminMain {
     private Button logoutBtn;
 
     @FXML
-    private StackPane stackPaneMain; // Value injected by FXMLLoader
+    private Button AvailableMoviesBtn;
+
+    @FXML
+    private Button CustomersBtn;
+
+    @FXML
+    private Button DashBoardBtn;
+
+    @FXML
+    private Button LogOutBtn;
+
+    @FXML
+    private Button MoviesBtn;
+
+    @FXML
+    private Button ScreeningsBtn;
+
+
+    @FXML
+    private BorderPane rootPane;
+
+    @FXML
+    private StackPane stackPaneMain;
 
     @FXML
     public void initialize() {

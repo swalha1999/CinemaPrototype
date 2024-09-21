@@ -13,12 +13,12 @@
             <Label styleClass="sidebar-header" text="Welcome" />
             <Label fx:id="AdminLabel" prefHeight="32.0" prefWidth="93.0" styleClass="sidebar-subheader" />
             <Button fx:id="AdminInbox" onAction="#showAdminInbox" styleClass="sidebar-button" text="Inbox" />
-            <Button onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
-            <Button onAction="#showMovies" styleClass="sidebar-button" text="Movies" />
-            <Button onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
-            <Button onAction="#ShowScreenings" styleClass="sidebar-button" text=" Screenings" />
-            <Button onAction="#showCustomers" styleClass="sidebar-button" text="Customers" />
-            <Button onAction="#logOut" styleClass="sidebar-logout-button" text="Log Out" />
+            <Button fx:id="DashBoardBtn" onAction="#showDashBoard" styleClass="sidebar-button" text="DashBoard" />
+            <Button fx:id="MoviesBtn" onAction="#showMovies" styleClass="sidebar-button" text="Movies" />
+            <Button fx:id="AvailableMoviesBtn" onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
+            <Button fx:id="ScreeningsBtn" onAction="#ShowScreenings" styleClass="sidebar-button" text=" Screenings" />
+            <Button fx:id="CustomersBtn" onAction="#showCustomers" styleClass="sidebar-button" text="Customers" />
+            <Button fx:id="LogOutBtn" onAction="#logOut" styleClass="sidebar-logout-button" text="Log Out" />
          </VBox>
       </left>
       <center>
