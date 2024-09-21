@@ -44,7 +44,6 @@ public class EditScreening {
         @Override
         public ListCell<Movie> call(ListView<Movie> l) {
             return new ListCell<Movie>() {
-
                 @Override
                 protected void updateItem(Movie item, boolean empty) {
                     super.updateItem(item, empty);

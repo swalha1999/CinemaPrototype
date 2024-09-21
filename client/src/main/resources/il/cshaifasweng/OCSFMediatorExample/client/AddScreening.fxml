@@ -24,7 +24,7 @@
    <Label layoutX="27.0" layoutY="161.0" prefHeight="18.0" prefWidth="37.0" text="Hour:" />
    <TextField fx:id="HourField" layoutX="101.0" layoutY="155.0" />
    <TextField fx:id="MinuteField" layoutX="101.0" layoutY="202.0" />
-   <TextField fx:id="priceField2" layoutX="101.0" layoutY="243.0" />
+   <TextField fx:id="priceField" layoutX="101.0" layoutY="243.0" />
    <Label layoutX="27.0" layoutY="208.0" prefHeight="18.0" prefWidth="46.0" text="Minute:" />
    <Label layoutX="27.0" layoutY="249.0" prefHeight="18.0" prefWidth="37.0" text="Price:" />
 </AnchorPane>
