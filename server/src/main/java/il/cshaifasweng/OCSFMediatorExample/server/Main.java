@@ -97,10 +97,10 @@ public class Main {
 
         String[] descriptions = {
                 "Ethan Hunt and his IMF team, along with some familiar allies, face a new and deadly threat.",
-                "The next chapter in the Dune saga continues the story of Paul Atreides.",
+                "The next chapter in the Dune saga continues the story of Paul Ideates.",
                 "The third installment in James Cameron's epic science fiction series.",
-                "Carol Danvers, Kamala Khan, and Monica Rambeau team up for an intergalactic adventure.",
-                "The continuation of Newt Scamander's adventures in the magical world.",
+                "Carol Dancers, Kamala Khan, and Monica Ram beau team up for an intergalactic adventure.",
+                "The continuation of Newt Commander's adventures in the magical world.",
                 "The final chapter of the Spider-Verse trilogy.",
                 "The Guardians face their greatest threat yet in this epic conclusion.",
                 "Indiana Jones returns for one last adventure."
