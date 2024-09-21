@@ -80,9 +80,11 @@ public class AddScreening {
 
     @FXML
     void handleConfirm(ActionEvent event) {
+        int hour = Integer.parseInt(HourField.getText());
+        int minute = Integer.parseInt(MinuteField.getText());
         Screening screeningToAdd = new Screening();
         screeningToAdd.setPrice(Integer.parseInt(priceField.getText()));
-        screeningToAdd.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0,0)));
+        screeningToAdd.setStartingAt(movieDate.getValue().atTime(LocalTime.of(hour,minute,0)));
         screeningToAdd.setMovie(movieNameCombobox.getValue());
         screeningToAdd.setHall(hall);
 
