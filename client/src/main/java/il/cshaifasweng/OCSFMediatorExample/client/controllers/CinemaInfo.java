@@ -107,7 +107,6 @@ public class CinemaInfo {
                 hallTable.getItems().add(new HallView(hall));
             }
 
-            //select the first hall
             hallTable.getSelectionModel().selectFirst();
         });
 
@@ -276,23 +275,22 @@ public class CinemaInfo {
         }
         return null;
     }
+    
     @Subscribe
     public void onUIShow(ShowSideUIEvent event) {
         if (!event.getUIName().equals("CinemaInfo")) {
             return;
         }
 
-        // Assuming event carries the updated cinema object after an edit
-        Cinema updatedCinema =(Cinema) event.getFirstObj(); // Update this according to your actual event data
+        Cinema updatedCinema =(Cinema) event.getFirstObj();
         for (int i = 0; i < cinemaTable.getItems().size(); i++) {
             CinemaView cinemaView = cinemaTable.getItems().get(i);
             if (cinemaView.getCinema().getId() == updatedCinema.getId()) {
-                // Replace the old cinema with the updated one
                 cinemaTable.getItems().set(i, new CinemaView(updatedCinema));
                 break;
             }
         }
-        cinemaTable.refresh(); // This forces the table to refresh and show the updated cinema
+        cinemaTable.refresh();
     }
 
 }
