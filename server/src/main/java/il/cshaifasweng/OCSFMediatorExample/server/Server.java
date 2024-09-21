@@ -13,6 +13,7 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.Session;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -443,9 +444,10 @@ public class Server extends AbstractServer {
             case MANAGER_OF_ALL_BRANCHES:
             case BRANCH_MANAGER:
             case CUSTOMER_SERVICE:
+            case USER:
                 break;
             case CONTENT_MANAGER:
-            case USER:
+
             case NOT_LOGGED_IN:
             default:
                 return sendErrorMessage(client, "Error! User does not have permission to this action");
