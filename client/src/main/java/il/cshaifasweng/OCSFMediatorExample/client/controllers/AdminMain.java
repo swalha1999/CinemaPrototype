@@ -65,13 +65,14 @@ public class AdminMain {
     @FXML
     private StackPane stackPaneMain;
 
+
     @FXML
     public void initialize() {
         EventBus.getDefault().register(this);
         notificationPane = new NotificationPane(stackPaneMain);
+        AdminLabel.setText("Admin");
         preLoadPages();
     }
-
     @FXML
     private void showDashBoard(ActionEvent event) {
         loadUI("DashBoard");
