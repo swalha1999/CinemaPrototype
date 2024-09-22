@@ -223,6 +223,7 @@ public class Main {
         admin.setHashedPassword(UserDAO.hashPassword("admin", admin.getSalt()));
         admin.setRole(UserRole.SYSTEM_MANAGER);
         admin.setBlocked(false);
+        admin.setEmail("admin@admin.com");
 
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
@@ -241,7 +242,8 @@ public class Main {
     private static void generateTestUser(){
         User user = new User()
                 .setUsername("user")
-                .setSalt(UserDAO.generateSalt());
+                .setSalt(UserDAO.generateSalt())
+                .setEmail("user@user.com");
 
         user.setHashedPassword(UserDAO.hashPassword("user", user.getSalt()));
         user.setRole(UserRole.USER);
