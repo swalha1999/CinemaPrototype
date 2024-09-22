@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 import static il.cshaifasweng.OCSFMediatorExample.server.Main.session;
+import static il.cshaifasweng.OCSFMediatorExample.server.Server.addNotification;
+import static il.cshaifasweng.OCSFMediatorExample.server.Server.removeNotification;
 
 public class TicketDAO {
     public Session session;
@@ -92,6 +94,9 @@ public class TicketDAO {
                 seat.setAvailable(true);
                 session.update(seat); // Update the seat's availability in the database
             }
+
+            // Cancel the notification
+            removeNotification(ticket.getNotificationId());
 
             // Delete the ticket
             session.delete(ticket);
@@ -174,13 +179,17 @@ public class TicketDAO {
                 transaction = session.beginTransaction();
             }
 
-            // Process the ticket purchase
+
+            String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
+            String notificationId = addNotification(message,screening.getStartingAt().minusHours(1),loggedInUser);
+
             MovieTicket ticket = new MovieTicket(user, screening, seat);
             ticket.setIsUsed(false); // Initialize the ticket as not used
             ticket.setRefunded(false); // Initialize the ticket as not refunded
             ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
             ticket.setId(ticketcounter++); // Increment the ticket counter
-            seat.setAvailable(false); // Mark the seat as unavailable
+            ticket.setNotificationId(notificationId); // Initialize the notification ID to null
+            seat.setAvailable(false);
 
             // Save the ticket and update the seat status in the database
             session.update(seat); // Update seat status in the database

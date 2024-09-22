@@ -30,6 +30,7 @@ public class MovieTicket implements Serializable {
     private boolean isRefunded; // Marks the ticket as refunded
     private boolean isBundleTicket; // For future use
     private LocalDateTime ticketPurchaseDay; // The day when the ticket was purchased
+    private String notificationId;
 
     public MovieTicket() {
         this.user = null;
@@ -113,6 +114,14 @@ public class MovieTicket implements Serializable {
 
     public void setTicketPurchaseDay(LocalDateTime ticketPurchaseDay) {
         this.ticketPurchaseDay = ticketPurchaseDay;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
     }
 
     @Override

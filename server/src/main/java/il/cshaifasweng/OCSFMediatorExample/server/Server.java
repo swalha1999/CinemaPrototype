@@ -20,7 +20,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Server extends AbstractServer {
-    private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>(); //this will be used to store the session keys for the logged-in users
+    private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>();
+    private static HashMap<String, Notification> notificationMap = new HashMap<>();
+
+
     private final DatabaseController database;
 
     public Server(int port, Session session) {
@@ -693,12 +696,12 @@ public class Server extends AbstractServer {
     private Message handlePurchaseTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response = database.getTicketsManager().purchaseTickets(request, loggedInUser);
         sendResponse(client, response);
-        Screening screening;
-        screening = (Screening) request.getDataObject();
         if(!response.isSuccess())
         {
             return response;
         }
+
+        Screening screening = (Screening) request.getDataObject();
         String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
         addNotification(message,screening.getStartingAt().minusHours(1),loggedInUser);
         return response;
@@ -767,7 +770,7 @@ public class Server extends AbstractServer {
         }
     }
 
-    private static void scheduleNotification(Notification notification) {
+    private static String scheduleNotification(Notification notification) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         LocalDateTime now = LocalDateTime.now();
@@ -775,26 +778,42 @@ public class Server extends AbstractServer {
 
         long delay = duration.getSeconds();
 
-        scheduler.schedule(() -> sendNotification(notification), delay, TimeUnit.SECONDS);
+        scheduler.schedule(() -> sendNotification(notification.getId()), delay, TimeUnit.SECONDS);
+
+        return notification.getId();
     }
 
-    private static void sendNotification(Notification notification) {
-        LoggedInUser user = notification.getUserConnection();
-        if (user != null) {
-            try {
-                Message notificationMessage = new Message(MessageType.NOTIFICATION)
-                        .setMessage(notification.getMessage());
-                user.getClient().sendToClient(notificationMessage);
+    private static void sendNotification(String notificationId) {
+        Notification notification = notificationMap.get(notificationId);
 
-            } catch (IOException e) {
-                System.out.println("Error sending notification to user: " + user.getUsername());
-            }
+        if (notification == null) {
+            return;
         }
+
+        LoggedInUser user = notification.getUserConnection();
+
+        if (user == null) {
+            return;
+        }
+
+        try {
+            Message notificationMessage = new Message(MessageType.NOTIFICATION)
+                    .setMessage(notification.getMessage());
+            user.getClient().sendToClient(notificationMessage);
+        } catch (IOException e) {
+            System.out.println("Error sending notification to user: " + user.getUsername());
+        }
+
     }
 
-    public static void addNotification(String message, LocalDateTime time, LoggedInUser user) {
+    public static String addNotification(String message, LocalDateTime time, LoggedInUser user) {
         Notification notification = new Notification(message, time, user);
-        scheduleNotification(notification);
+        return scheduleNotification(notification);
+    }
+
+    public static boolean removeNotification(String notificationId) {
+        Notification notification = notificationMap.remove(notificationId);
+        return notification != null;
     }
 
     private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
