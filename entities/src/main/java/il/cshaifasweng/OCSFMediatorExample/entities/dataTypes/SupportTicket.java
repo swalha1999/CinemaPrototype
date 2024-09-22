@@ -31,16 +31,14 @@ public class SupportTicket implements Serializable {
     @JoinColumn(name = "screening_id", nullable = true)
     private Screening screening;
 
-    // Many-to-one relationship with Cinema
+
+
+    // In the SupportTicket entity
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = true)
     private Cinema cinema;
 
-    // Default constructor
-    public SupportTicket() {
-        this.createdDate = LocalDateTime.now();
-        this.status = SupportTicketStatus.OPEN; // Default status
-    }
+
 
     // Parameterized constructor
     public SupportTicket(String name, String email, String subject, String description, User user, Screening screening, Cinema cinema) {
@@ -53,6 +51,10 @@ public class SupportTicket implements Serializable {
         this.user = user;
         this.screening = screening;
         this.cinema = cinema;
+    }
+
+    public SupportTicket() {
+
     }
 
     // Getters and setters

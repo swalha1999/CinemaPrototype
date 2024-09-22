@@ -801,14 +801,12 @@ public class Server extends AbstractServer {
         // Remove the ticket and get the updated list
         Message removeResponse = database.getTicketsManager().removeTicket(request, loggedInUser);
 
-        // Send the response with the updated ticket list back to the client
         Message updatedTicketsResponse = handleGetMyTicketsRequest(request, client, loggedInUser);
+
         sendResponse(client, updatedTicketsResponse);
 
-        // Create another message with the removed ticket information
         MovieTicket removedTicket = (MovieTicket) request.getDataObject();
 
-        // Create response2: a message informing the client about the removed ticket
         Message response2 = new Message(MessageType.USER_TICKET_REMOVED_PATCH)
                 .setSessionKey(request.getSessionKey())
                 .setMessage("Ticket for " + removedTicket.getScreening().getMovie().getTitle() + " has been removed.")

@@ -39,21 +39,6 @@ public class SupportTicketDAO {
                 .setDataObject(tickets);
     }
 
-//    // Fetch a single support ticket by ID
-//    public Message getSupportTicket(Message request) {
-//        Message message = new Message(MessageType.GET_SUPPORT_TICKET_RESPONSE);
-//        SupportTicket ticket = (SupportTicket) request.getDataObject();
-//        SupportTicket ticketFromDB = session.get(SupportTicket.class, ticket.getId());
-//
-//        if (ticketFromDB != null) {
-//            return message.setSuccess(true)
-//                    .setMessage("Support ticket fetched successfully")
-//                    .setDataObject(ticketFromDB);
-//        } else {
-//            return message.setSuccess(false)
-//                    .setMessage("Support ticket not found");
-//        }
-//    }
 
     public Message addSupportTicket(Message request, LoggedInUser loggedInUser) {
         Message response = new Message(MessageType.ADD_SUPPORT_TICKET_RESPONSE);
@@ -95,7 +80,7 @@ public class SupportTicketDAO {
             System.out.println("Transaction started.");
 
             // Create a new support ticket and populate its fields
-            SupportTicket ticket = new SupportTicket();
+            SupportTicket ticket = new SupportTicket();// Set id to null to indicate it's a new object
             ticket.setName(ticketFromUser.getName());
             ticket.setEmail(ticketFromUser.getEmail());
             ticket.setSubject(ticketFromUser.getSubject());
@@ -109,6 +94,9 @@ public class SupportTicketDAO {
 
             // Save the ticket in the database
             session.save(ticket);
+
+            // Add the ticket to the cinema's support tickets
+            cinema.addSupportTicket(ticket);
 
             // Commit the transaction after saving
             transaction.commit();
@@ -133,7 +121,6 @@ public class SupportTicketDAO {
             return response;
         }
     }
-
 
     // Delete a support ticket
     public Message deleteSupportTicket(Message request) {
