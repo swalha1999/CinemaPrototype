@@ -9,6 +9,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -57,7 +58,9 @@ public class MyInbox {
 
         messagePane.getChildren().addAll(senderLabel, contentLabel);
 
-        MessageContainer.getChildren().add(messagePane);
+        Platform.runLater(() -> {
+            MessageContainer.getChildren().add(messagePane);
+        });
     }
 
     @Subscribe

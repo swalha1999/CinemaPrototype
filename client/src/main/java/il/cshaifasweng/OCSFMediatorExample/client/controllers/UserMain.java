@@ -148,8 +148,6 @@ public class UserMain {
         loadFXMLPane("AddScreening");
         loadFXMLPane("EditCinema");
         loadFXMLPane("EditHall");
-        loadFXMLPane("MyTickets");
-        loadFXMLPane("MyInbox");
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("OnlineMovies");
