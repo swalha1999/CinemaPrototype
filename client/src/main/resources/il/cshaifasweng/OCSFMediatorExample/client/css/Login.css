@@ -1,45 +1,67 @@
-/* login.css */
-
+/* Background styling with a gradient */
 .login-pane {
-    -fx-background-color: #ECF0F1; /* Ensure it matches Register's background */
-    -fx-padding: 50; /* Optional: Adjust padding to match the design */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0f2027, #203a43, #2c5364);
+    -fx-alignment: center;
 }
 
+/* AnchorPane with soft shadows, rounded corners, and gradient */
+.login-anchor-pane {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ffffff, #f0f0f0);
+    -fx-background-radius: 20;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 7);
+    -fx-max-width: 400;
+    -fx-max-height: 600;
+}
+
+/* Title styling with glow effect */
 .login-title {
-    -fx-text-fill: #2C3E50; /* Header text color */
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-padding: 20;
+    -fx-fill: #2c3e50;
+    -fx-font-family: "Arial Black";
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 2, 2);
 }
 
+/* Label styling with subtle shadow */
 .login-label {
-    -fx-text-fill: #2C3E50; /* Text color */
+    -fx-text-fill: #2c3e50;
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 1, 0, 1, 1);
 }
 
-/* Standardize text fields */
+/* TextField and PasswordField with modern input style */
 .login-text-field, .login-password-field {
-    -fx-background-color: white;
-    -fx-border-color: #34495E;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 10;
+    -fx-border-color: #bdc3c7;
     -fx-border-width: 2;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-padding: 5;
+    -fx-font-size: 14px;
+    -fx-background-color: #ecf0f1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);
 }
 
-/* Prior styles for buttons remain the same */
+/* Button styling with #34495E and hover animation */
 .login-button, .register-button {
     -fx-background-color: #34495E;
-    -fx-text-fill: #ECF0F1;
+    -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-padding: 10;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: #ECF0F1;
-    -fx-border-width: 2;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 3, 3);
+    -fx-padding: 10 20;
+    -fx-transition: all 0.3s ease;
 }
 
 .login-button:hover, .register-button:hover {
-    -fx-background-color: #3D566E; /* Hover effect */
+    -fx-background-color: #2c3e50; /* Slightly darker on hover */
+    -fx-transform: scale(1.05);
+}
+
+/* TextField and PasswordField focus effect */
+.login-text-field:focused, .login-password-field:focused {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
 }
