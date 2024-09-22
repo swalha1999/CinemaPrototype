@@ -10,6 +10,7 @@ import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SupportTicketDAO {
@@ -79,15 +80,16 @@ public class SupportTicketDAO {
             transaction = session.beginTransaction();
             System.out.println("Transaction started.");
 
-            // Create a new support ticket and populate its fields
-            SupportTicket ticket = new SupportTicket();// Set id to null to indicate it's a new object
+
+            SupportTicket ticket = new SupportTicket();
             ticket.setName(ticketFromUser.getName());
             ticket.setEmail(ticketFromUser.getEmail());
             ticket.setSubject(ticketFromUser.getSubject());
             ticket.setDescription(ticketFromUser.getDescription());
-            ticket.setStatus(SupportTicketStatus.OPEN);  // Default status as OPEN
-            ticket.setUser(user);  // Associate the ticket with the user
-            ticket.setCinema(cinema);  // Associate the ticket with the cinema
+            ticket.setStatus(SupportTicketStatus.OPEN);
+            ticket.setUser(user);
+            ticket.setCinema(cinema);
+            ticket.setCreatedDate(LocalDateTime.now());
 
             // Log the ticket details before saving
             System.out.println("Saving ticket: " + ticket.getSubject() + " for user: " + user.getUsername());

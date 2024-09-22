@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +39,6 @@ public class SupportPage {
 
     @FXML
     private ComboBox<CinemaView> locationComboBox; // Renamed for clarity
-
-    private User currentUser;
 
     private CinemaView allLocations;
 
@@ -70,6 +69,7 @@ public class SupportPage {
     private void fetchCinemas() {
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
         Client.getClient().sendToServer(message);
     }
 
@@ -99,14 +99,9 @@ public class SupportPage {
             }
 
             // Optionally set other details like subject, email, or user info (if available)
-            if (currentUser != null) {
-                supportTicket.setName(currentUser.getUsername());
-                supportTicket.setEmail(currentUser.getEmail());
-            } else {
-                // Handle case when currentUser is null (optional)
-                supportTicket.setName("Anonymous");
-                supportTicket.setEmail("anonymous@support.com");
-            }
+
+            supportTicket.setName(SessionKeysStorage.getInstance().getUsername());
+            supportTicket.setEmail(SessionKeysStorage.getInstance().getEmail() != null ? SessionKeysStorage.getInstance().getEmail() : "N/A");
 
             // Create the message with the SupportTicket object
             Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)

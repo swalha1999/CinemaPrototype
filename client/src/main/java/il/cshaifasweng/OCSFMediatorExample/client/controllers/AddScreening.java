@@ -126,9 +126,7 @@ public class AddScreening {
     @Subscribe
     public void onUpdateMoviesEvent(UpdateMovieEvent event) {
         Platform.runLater(() -> {
-            //remove the movie
             movieNameCombobox.getItems().removeIf(movie -> movie.getId() == event.getMovie().getId());
-            //add the updated movie
             movieNameCombobox.getItems().add(event.getMovie());
         });
     }
