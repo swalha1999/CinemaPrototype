@@ -43,8 +43,6 @@ public class Screening implements Serializable {
     private LocalDateTime startingAt;
     private int timeInMinute;
     private int price;
-    private int availableSeats;
-    private int TotalSeats;
     private boolean isOnlineScreening = false;
 
     public Screening(Movie movie, Hall hall, LocalDateTime date, int time, int price, int availableSeats, boolean isOnlineScreening) {
@@ -53,7 +51,6 @@ public class Screening implements Serializable {
         this.startingAt = date;
         this.timeInMinute = time;
         this.price = price;
-        this.availableSeats = availableSeats;
         this.isOnlineScreening = isOnlineScreening;
         if (!isOnlineScreening) {
             hall.addScreening(this);
@@ -62,10 +59,9 @@ public class Screening implements Serializable {
 
     public Screening() {
         this.startingAt = LocalDateTime.now();
-        this.timeInMinute = 0;
+        this.timeInMinute = 120;
         this.price = 0;
-        this.availableSeats = 0;
-    }
+        }
 
     public int getId() {
         return id;
@@ -93,14 +89,6 @@ public class Screening implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
     }
 
     public Movie getMovie() {
@@ -142,14 +130,6 @@ public class Screening implements Serializable {
     public Screening setCinema(Cinema cinema) {
         this.cinema = cinema;
         return this;
-    }
-
-    public int getTotalSeats() {
-        return TotalSeats;
-    }
-
-    public void setTotalSeats(int TotalSeats) {
-        this.TotalSeats = TotalSeats;
     }
 
     public Set<Seat> getSeats() {

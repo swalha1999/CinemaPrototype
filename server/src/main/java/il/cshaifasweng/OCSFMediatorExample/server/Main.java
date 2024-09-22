@@ -193,7 +193,6 @@ public class Main {
                 session.save(screening);
                 session.flush();
 
-                screening.setTotalSeats(100);
                 for (int i = 0; i < 100; i++) {
                     Seat seat = new Seat();
                     seat.setSeatLocationX(i % 10);
