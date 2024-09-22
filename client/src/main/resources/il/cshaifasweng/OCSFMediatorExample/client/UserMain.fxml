@@ -31,8 +31,10 @@
                 <Button fx:id="AvailbleMovies_Btn" alignment="CENTER" onAction="#showAvailableMovies" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-button" text="Available Movies" />
                 <Button fx:id="OnlineMovies_Btn" alignment="CENTER" onAction="#ShowOnlineMoves" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-button" text="Online Movies" />
                 <Button fx:id="MyTickets_Btn" alignment="CENTER" onAction="#ShowMyTickets" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-button" text="My Tickets" />
-            <Button fx:id="InboxBtn" alignment="CENTER" onAction="#ShowMyInbox" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-button" text="Inbox" />
+                <Button fx:id="InboxBtn" alignment="CENTER" onAction="#ShowMyInbox" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-button" text="Inbox" />
                 <Button fx:id="Logout_Btn" alignment="CENTER" onAction="#logOut" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-logout-button" text="Log Out" />
+                <Button fx:id="UserInfoBtn" onAction="#ShowUserInfo" styleClass="sidebar-button" text="User Info" />
+
             </VBox>
         </left>
         <center>

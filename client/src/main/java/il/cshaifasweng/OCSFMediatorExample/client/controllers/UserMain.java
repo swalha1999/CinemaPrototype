@@ -31,6 +31,8 @@ import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
 
 public class UserMain {
 
+    @FXML  public Button InboxBtn;
+    @FXML public Button UserInfoBtn;
     NotificationPane notificationPane;
 
     @FXML // fx:id="AvailbleMovies_Btn"
