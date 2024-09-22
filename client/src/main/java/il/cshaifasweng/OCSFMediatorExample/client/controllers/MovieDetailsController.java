@@ -38,29 +38,39 @@ public class MovieDetailsController {
     @FXML // fx:id="Screening_Col"
     private TableColumn<ScreeningView, ?> Screening_Col; // Value injected by FXMLLoader
 
-    @FXML // fx:id="durationLabel"
-    private Label durationLabel; // Value injected by FXMLLoader
+    @FXML
+    private Label actorsLabel;
 
-    @FXML // fx:id="genreLabel"
-    private Label genreLabel; // Value injected by FXMLLoader
+    @FXML
+    private Label durationLabel;
 
-    @FXML // fx:id="movieImageView"
-    private ImageView movieImageView; // Value injected by FXMLLoader
+    @FXML
+    private Label genreLabel;
 
-    @FXML // fx:id="ratingLabel"
-    private Label ratingLabel; // Value injected by FXMLLoader
+    @FXML
+    private ImageView movieImageView;
 
-    @FXML // fx:id="releaseDateLabel"
-    private Label releaseDateLabel; // Value injected by FXMLLoader
+    @FXML
+    private Label producerLabel;
 
-    @FXML // fx:id="returnBtn"
-    private Button returnBtn; // Value injected by FXMLLoader
+    @FXML
+    private Label ratingLabel;
+
+    @FXML
+    private Label releaseDateLabel;
+
+    @FXML
+    private Button returnBtn;
+
+    @FXML
+    private Label summaryLabel;
+
+    @FXML
+    private Label titleLabel;
 
     @FXML // fx:id="screeningTable"
     private TableView<ScreeningView> screeningTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="titleLabel"
-    private Label titleLabel; // Value injected by FXMLLoader
 
     private Movie movieToDisplay;
 
@@ -113,6 +123,8 @@ public class MovieDetailsController {
             // TODO :    fix the rating label :)
             ratingLabel.setText(movie.getId() + "/10");
             movieImageView.setImage(movie.getImageBytes() == null ? getImage("default-movie.png") : getImageFromBytes(movie.getImageBytes()));
+            summaryLabel.setText(movie.getDescription());
+            producerLabel.setText(movie.getProducer());
         });
 
     }

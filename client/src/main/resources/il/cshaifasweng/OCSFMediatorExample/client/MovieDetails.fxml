@@ -11,16 +11,27 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/MovieDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController">
     <children>
-        <HBox layoutX="20.0" layoutY="20.0" spacing="20.0">
+        <!-- Main Layout HBox for Image and Movie Details -->
+        <HBox layoutX="20.0" layoutY="20.0" spacing="40.0">
             <!-- Movie Image -->
             <ImageView fx:id="movieImageView" fitHeight="400.0" fitWidth="270.0" />
 
-            <!-- Movie Details and AdminScreening Times -->
-            <VBox spacing="20.0">
-                <!-- Movie Title -->
-                <Label fx:id="titleLabel" styleClass="title-label" />
+            <!-- Movie Details and Screening Times -->
+            <VBox spacing="30.0">
+                <!-- Movie Title and Summary -->
+                <VBox spacing="10.0">
+                    <!-- Movie Title -->
+                    <Label fx:id="titleLabel" styleClass="title-label" />
 
-                <!-- Movie Details -->
+                    <!-- Movie Producer, Actors, and Summary -->
+                    <VBox spacing="8.0">
+                        <Label fx:id="producerLabel" styleClass="details-label" text="Producer: " />
+                        <Label fx:id="actorsLabel" styleClass="details-label" text="Main Actors: " />
+                        <Label fx:id="summaryLabel" prefHeight="46.0" prefWidth="755.0" styleClass="details-label" text="Summary: " wrapText="true" />
+                    </VBox>
+                </VBox>
+
+                <!-- Movie Information -->
                 <VBox spacing="10.0">
                     <Label fx:id="genreLabel" styleClass="details-label" text="Genre: " />
                     <Label fx:id="durationLabel" styleClass="details-label" text="Duration: " />
@@ -28,19 +39,23 @@
                     <Label fx:id="ratingLabel" styleClass="details-label" text="Rating: " />
                 </VBox>
 
-                <!-- AdminScreening Times -->
-                <Label styleClass="section-label" text="Screening Times:" />
-            <TableView fx:id="screeningTable" prefHeight="324.0" prefWidth="757.0">
-              <columns>
-                <TableColumn fx:id="Screening_Col" prefWidth="158.0" text="Screening" />
-                <TableColumn fx:id="Cinema_Col" prefWidth="160.0" text="Cinema" />
-                  <TableColumn fx:id="Hall_Col" prefWidth="187.0" text="Hall" />
-                  <TableColumn fx:id="AvailableSeat_Col" prefWidth="121.0" text="Available Seat" />
-                  <TableColumn fx:id="Price_Col" prefWidth="130.0" text="Price" />
-              </columns>
-            </TableView>
+                <!-- Screening Times Section -->
+                <VBox spacing="10.0">
+                    <Label styleClass="section-label" text="Screening Times:" />
+                    <TableView fx:id="screeningTable" prefHeight="324.0" prefWidth="757.0">
+                        <columns>
+                            <TableColumn fx:id="Screening_Col" prefWidth="158.0" text="Screening" />
+                            <TableColumn fx:id="Cinema_Col" prefWidth="160.0" text="Cinema" />
+                            <TableColumn fx:id="Hall_Col" prefWidth="187.0" text="Hall" />
+                            <TableColumn fx:id="AvailableSeat_Col" prefWidth="121.0" text="Available Seat" />
+                            <TableColumn fx:id="Price_Col" prefWidth="130.0" text="Price" />
+                        </columns>
+                    </TableView>
+                </VBox>
             </VBox>
         </HBox>
-      <Button fx:id="returnBtn" layoutX="112.0" layoutY="463.0" mnemonicParsing="false" onAction="#returnToMovieCatalog" prefHeight="35.0" prefWidth="82.0" text="Return" />
+
+        <!-- Return Button -->
+        <Button fx:id="returnBtn" layoutX="112.0" layoutY="463.0" mnemonicParsing="false" onAction="#returnToMovieCatalog" prefHeight="35.0" prefWidth="82.0" text="Return" />
     </children>
 </AnchorPane>

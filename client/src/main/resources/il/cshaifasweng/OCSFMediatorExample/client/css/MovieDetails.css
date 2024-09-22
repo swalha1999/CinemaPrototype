@@ -1,10 +1,9 @@
-/* MovieDetails.css */
-
 /* Title label styling */
 .title-label {
-    -fx-font-size: 24px;
+    -fx-font-size: 26px;
     -fx-font-weight: bold;
     -fx-text-fill: #2C3E50;
+    -fx-padding: 10 0 5 0;
 }
 
 /* Details label styling */
@@ -20,10 +19,23 @@
     -fx-text-fill: #2C3E50;
 }
 
-/* ListView styling for screening times */
-.screeningTimesListView {
-    -fx-background-color: white;
+/* Screening table styling */
+.table-view {
     -fx-border-color: #34495E;
     -fx-border-width: 1;
+    -fx-background-color: #F0F3F4;
     -fx-padding: 5;
+}
+
+/* Button styling */
+#returnBtn {
+    -fx-background-color: #3498DB;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+#returnBtn:hover {
+    -fx-background-color: #2980B9;
 }
