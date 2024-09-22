@@ -122,7 +122,7 @@ public class DashBoard {
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
         makeChart(movieTickets, TicketSaleTable);
-        makeChart(/*getOnlineTickets(movieTickets)*/movieTickets, LinksTable);
+        makeChart(getOnlineTickets(movieTickets), LinksTable);
     }
 
     @Subscribe
