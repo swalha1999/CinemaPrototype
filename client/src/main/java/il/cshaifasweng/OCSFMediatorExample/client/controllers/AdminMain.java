@@ -144,7 +144,8 @@ public class AdminMain {
         loadFXMLPane("AddScreening");
         loadFXMLPane("EditCinema");
         loadFXMLPane("EditHall");
-        //loadFXMLPane("MyInbox");
+        loadFXMLPane("MyInbox");
+        loadFXMLPane("SupportPage");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("OnlineMovies");
         loadFXMLPane("SeatPicker");
@@ -168,6 +169,7 @@ public class AdminMain {
         message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
+
 
 
     }

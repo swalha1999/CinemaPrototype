@@ -31,8 +31,6 @@ import java.util.stream.Collectors;
 
 public class DashBoard {
 
-    @FXML
-    private BarChart<String, Number> ComplaintsTable;
 
     @FXML
     private BarChart<String, Number> LinksTable;
@@ -41,21 +39,13 @@ public class DashBoard {
     private BarChart<String, Number> TicketSaleTable;
 
     @FXML
-    private BarChart<String, Number> SupportTicketsTable;  // New BarChart for support tickets
+    private BarChart<String, Number> SupportTicketsTable;
 
     @FXML
     private Button backBtn;
 
     @FXML
     private ComboBox<CinemaView> locationComboBox;
-
-    @FXML
-    private TableView<SupportTicket> complaintsTable; // TableView for support tickets
-
-    @FXML
-    private TableColumn<SupportTicket, String> ticketDescriptionColumn; // Column for description
-    @FXML
-    private TableColumn<SupportTicket, String> ticketDateColumn; // Column for creation date
 
     private CinemaView allLocations;
 
@@ -81,12 +71,6 @@ public class DashBoard {
     private void initialize() {
         EventBus.getDefault().register(this);
         fetchCinemas();
-
-        // Initialize the complaints table
-        ticketDescriptionColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getDescription()));
-        ticketDateColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCreatedDate().toString())); // Change to the desired format
     }
 
     private void fetchCinemas() {
@@ -115,26 +99,36 @@ public class DashBoard {
         } else {
             System.out.println("Selected cinema is null or is 'All Locations'.");
         }
+        if (selectedCinema != null && !selectedCinema.equals(allLocations)) {
+            String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
+            Integer selectedCinemaId = selectedCinema.getId().getValue();
+
+            Message message = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
+                    .setSessionKey(sessionKey)
+                    .setDataObject(selectedCinemaId);
+
+            Client client = Client.getClient();
+            if (client != null) {
+                client.sendToServer(message);
+            } else {
+                System.out.println("Client is not initialized.");
+            }
+        } else {
+            System.out.println("Selected cinema is null or is 'All Locations'.");
+        }
     }
 
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
         List<MovieTicket> movieTickets = event.getTickets();
         makeChart(movieTickets, TicketSaleTable);
-        makeChart(getOnlineTickets(movieTickets), LinksTable);
+        makeChart(/*getOnlineTickets(movieTickets)*/movieTickets, LinksTable);
     }
 
     @Subscribe
-    public void onShowCinemaInfo(GetCinemaSupportTicketsEvent event) {
-        List<SupportTicket> supportTickets = event.getSupportTickets();
-        makeSupportChart(supportTickets, TicketSaleTable);
-    }
-
-    @Subscribe
-    public void onShowSupportTickets(GetAllSupportTicketsEvent event) {
+    public void onGetCinemaSupportTicketEvent(GetCinemaSupportTicketsEvent event) {
         List<SupportTicket> supportTickets = event.getSupportTickets();
         makeSupportChart(supportTickets, SupportTicketsTable);
-        fillComplaintsTable(supportTickets); // Call to fill the complaints table
     }
 
     public List<MovieTicket> getOnlineTickets(List<MovieTicket> movieTickets) {
@@ -144,6 +138,9 @@ public class DashBoard {
     }
 
     public void makeChart(List<MovieTicket> movieTickets, BarChart<String, Number> TicketSaleTable) {
+        // Debug: Print out the size of the movieTickets list
+        System.out.println("Total movie tickets: " + movieTickets.size());
+
         // Prepare a series for the chart
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Tickets Sold Daily");
@@ -154,19 +151,23 @@ public class DashBoard {
         int currentYear = now.getYear();
 
         // Initialize an array to store the number of tickets per day of the month (1-31)
-        long[] ticketsPerDay = new long[31];
+        long[] ticketsPerDay = new long[now.lengthOfMonth()];  // Adjusted to handle the length of the current month
 
         // Group tickets by the day of the month, ensuring they are from the current month and year
         movieTickets.stream()
-                .filter(ticket -> ticket.getTicketPurchaseDay().getMonthValue() == currentMonth &&
-                        ticket.getScreening().getStartingAt().getYear() == currentYear)
+                .filter(ticket -> {
+                    LocalDate screeningDate = ticket.getScreening().getStartingAt().toLocalDate();
+                    return screeningDate.getMonthValue() == currentMonth && screeningDate.getYear() == currentYear;
+                })
                 .forEach(ticket -> {
-                    int dayOfMonth = ticket.getTicketPurchaseDay().getDayOfMonth();  // Get the day of the month
-                    ticketsPerDay[dayOfMonth - 1]++;  // Increment the count for that day (dayOfMonth is 1-based)
+                    int dayOfMonth = ticket.getScreening().getStartingAt().getDayOfMonth();
+                    System.out.println("Ticket sold on day: " + dayOfMonth);  // Debug: Print the day for each ticket
+                    ticketsPerDay[dayOfMonth - 1]++;
                 });
 
         // Add the data for each day of the month to the series (1 to 31)
         for (int day = 1; day <= now.lengthOfMonth(); day++) {
+            System.out.println("Tickets for day " + day + ": " + ticketsPerDay[day - 1]);  // Debug: Print count per day
             series1.getData().add(new XYChart.Data<>(String.valueOf(day), ticketsPerDay[day - 1]));
         }
 
@@ -178,6 +179,9 @@ public class DashBoard {
     }
 
     public void makeSupportChart(List<SupportTicket> supportTickets, BarChart<String, Number> SupportTicketsTable) {
+        // Debug: Print out the size of the supportTickets list
+        System.out.println("Total support tickets: " + supportTickets.size());
+
         // Prepare a series for the chart
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Support Tickets Daily");
@@ -188,19 +192,23 @@ public class DashBoard {
         int currentYear = now.getYear();
 
         // Initialize an array to store the number of support tickets per day of the month (1-31)
-        long[] ticketsPerDay = new long[31];
+        long[] ticketsPerDay = new long[now.lengthOfMonth()];  // Adjusted to handle the length of the current month
 
         // Group support tickets by the day of the month, ensuring they are from the current month and year
         supportTickets.stream()
-                .filter(ticket -> ticket.getCreatedDate().getMonthValue() == currentMonth &&
-                        ticket.getPurchasDayTime().getYear() == currentYear)
+                .filter(ticket -> {
+                    LocalDate createdDate = ticket.getCreatedDate().toLocalDate();
+                    return createdDate.getMonthValue() == currentMonth && createdDate.getYear() == currentYear;
+                })
                 .forEach(ticket -> {
-                    int dayOfMonth = ticket.getPurchasDayTime().getDayOfMonth();  // Get the day of the month
-                    ticketsPerDay[dayOfMonth - 1]++;  // Increment the count for that day (dayOfMonth is 1-based)
+                    int dayOfMonth = ticket.getCreatedDate().getDayOfMonth();
+                    System.out.println("Support ticket created on day: " + dayOfMonth);  // Debug: Print the day for each ticket
+                    ticketsPerDay[dayOfMonth - 1]++;
                 });
 
         // Add the data for each day of the month to the series (1 to 31)
         for (int day = 1; day <= now.lengthOfMonth(); day++) {
+            System.out.println("Support tickets for day " + day + ": " + ticketsPerDay[day - 1]);  // Debug: Print count per day
             series.getData().add(new XYChart.Data<>(String.valueOf(day), ticketsPerDay[day - 1]));
         }
 
@@ -211,12 +219,6 @@ public class DashBoard {
         });
     }
 
-    private void fillComplaintsTable(List<SupportTicket> supportTickets) {
-        Platform.runLater(() -> {
-            complaintsTable.getItems().clear(); // Clear previous items
-            complaintsTable.getItems().addAll(supportTickets); // Add new items
-        });
-    }
 
     public void GoBack(ActionEvent actionEvent) {
 
