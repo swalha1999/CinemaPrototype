@@ -44,11 +44,10 @@
                     <Label styleClass="section-label" text="Screening Times:" />
                     <TableView fx:id="screeningTable" prefHeight="324.0" prefWidth="757.0">
                         <columns>
-                            <TableColumn fx:id="Screening_Col" prefWidth="158.0" text="Screening" />
-                            <TableColumn fx:id="Cinema_Col" prefWidth="160.0" text="Cinema" />
-                            <TableColumn fx:id="Hall_Col" prefWidth="187.0" text="Hall" />
-                            <TableColumn fx:id="AvailableSeat_Col" prefWidth="121.0" text="Available Seat" />
-                            <TableColumn fx:id="Price_Col" prefWidth="130.0" text="Price" />
+                            <TableColumn fx:id="Screening_Col" prefWidth="188.0" text="Screening" />
+                            <TableColumn fx:id="Cinema_Col" prefWidth="169.0" text="Cinema" />
+                            <TableColumn fx:id="Hall_Col" prefWidth="170.0" text="Hall" />
+                            <TableColumn fx:id="Price_Col" prefWidth="219.0" text="Price" />
                         </columns>
                     </TableView>
                 </VBox>
