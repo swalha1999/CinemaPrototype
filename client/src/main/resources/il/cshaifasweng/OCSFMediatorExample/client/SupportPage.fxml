@@ -4,48 +4,44 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20" style="-fx-padding: 20px; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SupportPage">
-   <BorderPane prefHeight="53.0" prefWidth="598.0" stylesheets="@css/ButtonEdit.css">
-      <center>
-      
-          <!-- Title -->
-          <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: Helvetica Neue;" text="Contact us" BorderPane.alignment="CENTER" />
-      </center>
-   </BorderPane>
+<VBox alignment="CENTER" prefHeight="587.0" prefWidth="641.0" spacing="20" style="-fx-padding: 30px; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SupportPage">
+    <!-- Header with Contact Us Title -->
+    <BorderPane prefHeight="179.0" prefWidth="611.0" stylesheets="@css/ButtonEdit.css">
+        <center>
+            <AnchorPane prefHeight="297.0" prefWidth="640.0" style="-fx-background-color: #34495E; -fx-padding: 20px;" BorderPane.alignment="CENTER">
+                <children>
+                    <!-- Title -->
+                    <Label layoutX="190.0" layoutY="10.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Contact Us" />
 
-    <!-- Welcome Message -->
-    <Label fx:id="welcomeMessage" alignment="TOP_LEFT" prefHeight="88.0" prefWidth="597.0" style="-fx-font-size: 16px;" text="Hi [Username], Let us know what we can improve." wrapText="true" />
-   <HBox prefHeight="19.0" prefWidth="598.0">
-      <children>
-         <Label prefHeight="25.0" prefWidth="399.0" text="Please pick a location that needs improvement :">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Label>
-         <ComboBox fx:id="locationComboBox" prefHeight="25.0" prefWidth="156.0" promptText="Online Cinema" />
-      </children>
-   </HBox>
+                    <!-- Welcome Message -->
+                    <Label fx:id="welcomeMessage" layoutX="20.0" layoutY="60.0" prefHeight="138.0" prefWidth="580.0" style="-fx-font-size: 16px; -fx-text-fill: #ffffff;" text="Hi [Username], let us know what we can improve." wrapText="true" />
+                </children>
+            </AnchorPane>
+        </center>
+    </BorderPane>
 
-    <!-- Issue Description -->
+    <!-- Location Selection -->
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="598.0" spacing="10">
+        <children>
+            <Label prefHeight="25.0" prefWidth="350.0" style="-fx-font-size: 16px;" text="Please select a location to improve:" />
+            <ComboBox fx:id="locationComboBox" prefHeight="25.0" prefWidth="200.0" promptText="Online Cinema" style="-fx-font-size: 14px;" />
+        </children>
+    </HBox>
+
+    <!-- Issue Description TextArea -->
     <VBox alignment="CENTER_LEFT" spacing="10">
-        <TextArea fx:id="issueDescription" prefHeight="176.0" prefWidth="598.0" promptText="How can we Help?">
-         <font>
-            <Font size="15.0" />
-         </font></TextArea>
+        <Label style="-fx-font-size: 16px;" text="How can we help?" />
+        <TextArea fx:id="issueDescription" prefHeight="180.0" prefWidth="600.0" promptText="Please describe your issue here..." style="-fx-font-size: 14px; -fx-padding: 10px;" wrapText="true" />
     </VBox>
 
     <!-- Submit Button -->
-    <Button fx:id="submitButton" onAction="#handleSubmit" prefHeight="30.0" prefWidth="100.0" stylesheets="@css/ButtonEdit.css" text="Submit">
-      <font>
-         <Font name="System Bold" size="16.0" />
-      </font></Button>
+    <Button fx:id="submitButton" onAction="#handleSubmit" prefHeight="40.0" prefWidth="120.0" style="-fx-font-size: 16px;" stylesheets="@css/ButtonEdit.css" text="Submit" />
 
-    <!-- Contact Info -->
+    <!-- Contact Information -->
     <Label style="-fx-font-size: 12px;" text="Or contact us at: support@cinema.com" />
-
 </VBox>
