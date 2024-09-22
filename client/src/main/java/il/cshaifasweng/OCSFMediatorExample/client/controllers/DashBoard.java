@@ -161,13 +161,11 @@ public class DashBoard {
                 })
                 .forEach(ticket -> {
                     int dayOfMonth = ticket.getScreening().getStartingAt().getDayOfMonth();
-                    System.out.println("Ticket sold on day: " + dayOfMonth);  // Debug: Print the day for each ticket
                     ticketsPerDay[dayOfMonth - 1]++;
                 });
 
         // Add the data for each day of the month to the series (1 to 31)
         for (int day = 1; day <= now.lengthOfMonth(); day++) {
-            System.out.println("Tickets for day " + day + ": " + ticketsPerDay[day - 1]);  // Debug: Print count per day
             series1.getData().add(new XYChart.Data<>(String.valueOf(day), ticketsPerDay[day - 1]));
         }
 
@@ -202,13 +200,11 @@ public class DashBoard {
                 })
                 .forEach(ticket -> {
                     int dayOfMonth = ticket.getCreatedDate().getDayOfMonth();
-                    System.out.println("Support ticket created on day: " + dayOfMonth);  // Debug: Print the day for each ticket
                     ticketsPerDay[dayOfMonth - 1]++;
                 });
 
         // Add the data for each day of the month to the series (1 to 31)
         for (int day = 1; day <= now.lengthOfMonth(); day++) {
-            System.out.println("Support tickets for day " + day + ": " + ticketsPerDay[day - 1]);  // Debug: Print count per day
             series.getData().add(new XYChart.Data<>(String.valueOf(day), ticketsPerDay[day - 1]));
         }
 
