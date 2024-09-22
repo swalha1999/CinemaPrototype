@@ -4,25 +4,30 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20" style="-fx-padding: 20px; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.SupportPage">
-
-    <!-- Title -->
-    <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: Helvetica Neue;" text="Contact us" />
+   <BorderPane prefHeight="53.0" prefWidth="598.0" stylesheets="@css/ButtonEdit.css">
+      <center>
+      
+          <!-- Title -->
+          <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: Helvetica Neue;" text="Contact us" BorderPane.alignment="CENTER" />
+      </center>
+   </BorderPane>
 
     <!-- Welcome Message -->
-    <Label fx:id="welcomeMessage" prefHeight="25.0" prefWidth="596.0" style="-fx-font-size: 16px;" text="Hi [Username], Let us know what we can improve." wrapText="true" />
-   <HBox prefHeight="35.0" prefWidth="598.0">
+    <Label fx:id="welcomeMessage" alignment="TOP_LEFT" prefHeight="88.0" prefWidth="597.0" style="-fx-font-size: 16px;" text="Hi [Username], Let us know what we can improve." wrapText="true" />
+   <HBox prefHeight="19.0" prefWidth="598.0">
       <children>
-         <Label prefHeight="25.0" prefWidth="374.0" text="Please pick a location that needs improvement :">
+         <Label prefHeight="25.0" prefWidth="399.0" text="Please pick a location that needs improvement :">
             <font>
                <Font size="16.0" />
             </font>
          </Label>
-         <ComboBox fx:id="locationComboBox" prefHeight="25.0" prefWidth="183.0" promptText="allLocations" />
+         <ComboBox fx:id="locationComboBox" prefHeight="25.0" prefWidth="156.0" promptText="Online Cinema" />
       </children>
    </HBox>
 
@@ -35,9 +40,9 @@
     </VBox>
 
     <!-- Submit Button -->
-    <Button fx:id="submitButton" onAction="#handleSubmit" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Submit">
+    <Button fx:id="submitButton" onAction="#handleSubmit" prefHeight="30.0" prefWidth="100.0" stylesheets="@css/ButtonEdit.css" text="Submit">
       <font>
-         <Font size="16.0" />
+         <Font name="System Bold" size="16.0" />
       </font></Button>
 
     <!-- Contact Info -->

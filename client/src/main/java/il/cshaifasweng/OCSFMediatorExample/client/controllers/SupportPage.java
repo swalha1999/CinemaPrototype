@@ -62,6 +62,12 @@ public class SupportPage {
 
     @FXML
     private void initialize() {
+        String currentUsername = SessionKeysStorage.getInstance().getUsername();
+
+        // Set the welcome message, replacing "[Username]" with the actual username
+        welcomeMessage.setText("Welcome " + currentUsername + "! , \n"+
+                "We value your feedback and are here to assist with any concerns you may have. " +
+                "Please feel free to share your experience, and we'll work to resolve the issue as quickly as possible.");
         EventBus.getDefault().register(this);
         fetchCinemas();
     }
