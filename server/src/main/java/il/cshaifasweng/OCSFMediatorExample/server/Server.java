@@ -65,6 +65,7 @@ public class Server extends AbstractServer {
             case UNBLOCK_USER_REQUEST -> handleUnblockUserRequest(request, client, loggedInUser);
             case REMOVE_USER_REQUEST -> handleRemoveUserRequest(request, client, loggedInUser);
             case CHANGE_USER_ROLE_REQUEST -> handleChangeUserRoleRequest(request, client, loggedInUser);
+            case GET_USER_INFO_REQUEST -> handleGetUserInfoRequest(request, client, loggedInUser);
 
             //TICKETS
             case GET_MY_TICKETS_REQUEST -> handleGetMyTicketsRequest(request, client, loggedInUser);
@@ -817,7 +818,6 @@ public class Server extends AbstractServer {
     }
 
     private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        // Remove the ticket and get the updated list
         Message removeResponse = database.getTicketsManager().removeTicket(request, loggedInUser);
 
         Message updatedTicketsResponse = handleGetMyTicketsRequest(request, client, loggedInUser);
@@ -831,17 +831,14 @@ public class Server extends AbstractServer {
                 .setMessage("Ticket for " + removedTicket.getScreening().getMovie().getTitle() + " has been removed.")
                 .setDataObject(removedTicket);  // Add the removed ticket to the response
 
-        // Send the second message (response2) back to the client
         sendResponse(client, response2);
 
-        // Return the first response (updated tickets list)
         return updatedTicketsResponse;
     }
 
     private Message handleGetMyScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response;
         response = database.getScreeningsManager().getMyScreenings(request, loggedInUser);
-        // If the role is not recognized, return an error
         if(loggedInUser == null) {
             return sendErrorMessage(client, "Error! User does not have permission to perform this action");
         }
@@ -849,26 +846,29 @@ public class Server extends AbstractServer {
 
         return response;
     }
+
     private Message handleCinemaTicketInfoRequest(ConnectionToClient client,Message request) {
-        // Call the method to get cinema tickets
         Message ticketsResponse = database.getCinemasManager().getCinemaTickets(request);
         sendResponse(client, ticketsResponse);
-        // Send the response back to the client
         return ticketsResponse;
     }
+
     private Message handleCinemaSupportTicketInfoRequest(ConnectionToClient client,Message request) {
-        // Call the method to get cinema tickets
         Message ticketsResponse = database.getCinemasManager().getCinemaSupportTickets(request);
         sendResponse(client, ticketsResponse);
-        // Send the response back to the client
         return ticketsResponse;
     }
+
     public Message handleSendSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        // Create the response message
         Message response = database.getSupportTicketsManager().addSupportTicket(request, loggedInUser);
         sendResponse(client, response);
         return response;
     }
 
+    public Message handleGetUserInfoRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getUsersManager().getUserInfo(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
+    }
 
 }

@@ -129,5 +129,8 @@ public enum MessageType implements Serializable {
     CINEMA_TICKETS_INFO_RESPONSE,
 
 
+    GET_USER_INFO_REQUEST,
+    GET_USER_INFO_RESPONSE,
+
 }
 

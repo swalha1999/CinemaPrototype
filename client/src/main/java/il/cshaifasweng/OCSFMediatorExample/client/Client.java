@@ -115,6 +115,9 @@ public class Client extends AbstractClient {
 				case CINEMA_TICKETS_INFO_RESPONSE:
 					EventBus.getDefault().post(new GetCinemaTicketsEvent(message));
 					break;
+				case GET_USER_INFO_RESPONSE:
+					EventBus.getDefault().post(new UserInfoReceivedEvent(message));
+					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;

@@ -21,7 +21,8 @@
                 <Button fx:id="AvailbleMovies_Btn" onAction="#showAvailableMovies" styleClass="sidebar-button" text="Available Movies" />
                 <Button fx:id="OnlineMovies_Btn" onAction="#ShowOnlineMoves" styleClass="sidebar-button" text="OnlineMovies" />
                 <Button fx:id="MyTickets_Btn" onAction="#ShowMyTickets" styleClass="sidebar-button" text="MyTickets" />
-            <Button fx:id="InboxBtn" onAction="#ShowMyInbox" styleClass="sidebar-button" text="Inbox" />
+                <Button fx:id="InboxBtn" onAction="#ShowMyInbox" styleClass="sidebar-button" text="Inbox" />
+                <Button fx:id="UserInfoBtn" onAction="#ShowUserInfo" styleClass="sidebar-button" text="User Info" />
                 <Button fx:id="Logout_Btn" onAction="#logOut" styleClass="sidebar-logout-button" text="Log Out" />
             </VBox>
         </left>

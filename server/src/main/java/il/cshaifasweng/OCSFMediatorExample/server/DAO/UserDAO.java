@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
 
 public class UserDAO {
 
@@ -374,6 +375,23 @@ public class UserDAO {
         return response
                 .setSuccess(true)
                 .setMessage("User role changed successfully")
+                .setDataObject(user);
+    }
+
+    public Message getUserInfo(Message request, LoggedInUser loggedInUser) {
+        Message response = new Message(MessageType.GET_USER_INFO_RESPONSE);
+        
+        User user = getUserById(loggedInUser.getUserId());
+        
+        if (user == null) {
+            return response
+                    .setSuccess(false)
+                    .setMessage("User not found");
+        }
+
+        return response
+                .setSuccess(true)
+                .setMessage("User information retrieved successfully")
                 .setDataObject(user);
     }
 

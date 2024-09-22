@@ -153,6 +153,7 @@ public class UserMain {
         loadFXMLPane("OnlineMovies");
         loadFXMLPane("SeatPicker");
         loadFXMLPane("UpcomingMovies");
+        loadFXMLPane("UserInfo");
 
         Message message;
 
@@ -164,5 +165,9 @@ public class UserMain {
 
     }
 
+    @FXML
+    void ShowUserInfo(ActionEvent event) {
+        loadUI("UserInfo");
+    }
 
 }

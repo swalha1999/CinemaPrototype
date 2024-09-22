@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.UserInfo">
+    <Label text="User Information" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label fx:id="usernameLabel" />
+    <Label fx:id="emailLabel" />
+    <Label fx:id="roleLabel" />
+    <Label fx:id="phoneLabel" />
+    <Label fx:id="firstNameLabel" />
+    <Label fx:id="lastNameLabel" />
+    <Label fx:id="balanceLabel" />
+    <Label fx:id="ticketsPurchasedLabel" />
+    <Label fx:id="bundlesPurchasedLabel" />
+    <Label fx:id="onlineScreeningsPurchasedLabel" />
+    <Label fx:id="remainingTicketsPurchasedByBundle" />
+</VBox>
