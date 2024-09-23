@@ -79,7 +79,7 @@
          </VBox>
       </left>
       <center>
-         <BorderPane fx:id="mainPane" prefHeight="850.0" prefWidth="250.0" styleClass="main-pane" />
+         <BorderPane fx:id="mainPane" prefHeight="850.0" prefWidth="250.0" style="-fx-background-color: #bdc3c7;" styleClass="main-pane" />
       </center>
    </BorderPane>
 </StackPane>

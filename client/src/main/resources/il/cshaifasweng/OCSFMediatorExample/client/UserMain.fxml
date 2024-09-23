@@ -100,7 +100,7 @@
             </VBox>
         </left>
         <center>
-            <BorderPane fx:id="mainPane" styleClass="main-pane" />
+            <BorderPane fx:id="mainPane" style="-fx-background-color: #bdc3c7;" styleClass="main-pane" />
         </center>
     </BorderPane>
 </StackPane>
