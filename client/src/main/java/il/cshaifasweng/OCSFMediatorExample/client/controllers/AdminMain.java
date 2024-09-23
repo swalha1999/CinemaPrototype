@@ -65,12 +65,15 @@ public class AdminMain {
     @FXML
     private StackPane stackPaneMain;
 
+    @FXML
+    private Label user;
+
 
     @FXML
     public void initialize() {
+        user.setText(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this);
         notificationPane = new NotificationPane(stackPaneMain);
-        AdminLabel.setText("Admin");
         preLoadPages();
     }
     @FXML
