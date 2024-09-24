@@ -130,7 +130,7 @@ public class TicketDAO {
             user.setBalance(user.getBalance() + ticket.getScreening().getPrice());
         } else if (hoursUntilScreening >= 1) {
             // Half refund
-            user.setBalance(user.getBalance() + ticket.getScreening().getPrice() / 2);
+            user.setBalance(user.getBalance() + (float) ticket.getScreening().getPrice() / 2);
         } else {
             return response
                     .setSuccess(false)
