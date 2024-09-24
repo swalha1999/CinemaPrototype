@@ -1,18 +1,10 @@
 /* Styling for the toolbar */
 .toolbar {
-    -fx-background-color: #34495EFF;
+    -fx-background-color: #34495E;
 }
 
-.toolbar-label {
-    -fx-text-fill: white;
-    -fx-font-size: 18px;
-    -fx-padding: 5 0 5 10;
-}
 
 /* Styling for the labels */
-.label {
-    -fx-font-size: 14px;
-}
 
 /* Styling for the text fields */
 .text-field {
@@ -22,13 +14,13 @@
 
 /* Styling for the buttons */
 .button-confirm {
-    -fx-background-color: #34495EFF;
+    -fx-background-color: #34495E;
     -fx-text-fill: white;
     -fx-pref-width: 80px;
 }
 
 .button-back {
-    -fx-background-color: #34495EFF;
+    -fx-background-color: #34495E;
     -fx-text-fill: white;
     -fx-pref-width: 80px;
 }
