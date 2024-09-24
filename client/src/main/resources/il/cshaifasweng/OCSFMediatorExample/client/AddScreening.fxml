@@ -7,24 +7,28 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="418.0" prefWidth="495.0" stylesheets="@css/EditScreening.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AddScreening">
+<AnchorPane prefHeight="850.0" prefWidth="600.0" style="-fx-background-color: #bdc3c7;" stylesheets="@css/EditScreening.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AddScreening">
     <!-- ToolBar at the top -->
     <ToolBar styleClass="toolbar">
-        <Label styleClass="toolbar-label" text=" Screening" />
+        <Label alignment="CENTER" prefHeight="50.0" prefWidth="600.0" styleClass="toolbar-label" text=" Screening" textFill="WHITE">
+         <font>
+            <Font name="Bell MT Bold" size="32.0" />
+         </font></Label>
     </ToolBar>
 
     <!-- Buttons -->
-    <Button layoutX="100.0" layoutY="292.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
-    <Button layoutX="213.0" layoutY="292.0" onAction="#handleBack" styleClass="button-back" text="Back" />
-   <ComboBox fx:id="movieNameCombobox" layoutX="100.0" layoutY="63.0" prefWidth="150.0" />
-   <Label layoutX="27.0" layoutY="66.0" prefHeight="18.0" prefWidth="37.0" text="Movie:" />
-   <Label layoutX="27.0" layoutY="114.0" prefHeight="18.0" prefWidth="37.0" text="Date:" />
-   <DatePicker fx:id="movieDate" layoutX="101.0" layoutY="108.0" prefHeight="30.0" prefWidth="163.0" />
-   <Label layoutX="27.0" layoutY="161.0" prefHeight="18.0" prefWidth="37.0" text="Hour:" />
-   <TextField fx:id="HourField" layoutX="101.0" layoutY="155.0" />
-   <TextField fx:id="MinuteField" layoutX="101.0" layoutY="202.0" />
-   <TextField fx:id="priceField" layoutX="101.0" layoutY="243.0" />
-   <Label layoutX="27.0" layoutY="208.0" prefHeight="18.0" prefWidth="46.0" text="Minute:" />
-   <Label layoutX="27.0" layoutY="249.0" prefHeight="18.0" prefWidth="37.0" text="Price:" />
+    <Button layoutX="180.0" layoutY="378.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
+    <Button layoutX="293.0" layoutY="378.0" onAction="#handleBack" styleClass="button-back" text="Back" />
+   <ComboBox fx:id="movieNameCombobox" layoutX="208.0" layoutY="85.0" prefHeight="25.0" prefWidth="163.0" />
+   <Label layoutX="79.0" layoutY="88.0" prefHeight="18.0" prefWidth="37.0" text="Movie:" />
+   <Label layoutX="79.0" layoutY="141.0" prefHeight="18.0" prefWidth="37.0" text="Date:" />
+   <DatePicker fx:id="movieDate" layoutX="212.0" layoutY="135.0" prefHeight="30.0" prefWidth="163.0" />
+   <Label layoutX="79.0" layoutY="196.0" prefHeight="18.0" prefWidth="37.0" text="Hour:" />
+   <TextField fx:id="HourField" layoutX="210.0" layoutY="190.0" prefHeight="29.0" prefWidth="163.0" />
+   <TextField fx:id="MinuteField" layoutX="210.0" layoutY="253.0" prefHeight="29.0" prefWidth="163.0" />
+   <TextField fx:id="priceField" layoutX="210.0" layoutY="311.0" prefHeight="29.0" prefWidth="163.0" />
+   <Label layoutX="80.0" layoutY="259.0" prefHeight="18.0" prefWidth="46.0" text="Minute:" />
+   <Label layoutX="84.0" layoutY="317.0" prefHeight="18.0" prefWidth="37.0" text="Price:" />
 </AnchorPane>
