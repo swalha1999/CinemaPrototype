@@ -68,13 +68,6 @@ public class BranchManagerMain {
     }
     public void preLoadPages() {
        loadFXMLPane("BranchManagerDashBoard");
-
-        Message message = new Message();
-
-        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
-
     }
     @FXML
     void showDashBoard(ActionEvent event) {
