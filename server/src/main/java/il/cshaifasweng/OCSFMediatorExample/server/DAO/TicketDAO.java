@@ -1,9 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.server.dataTypes.LoggedInUser;
@@ -65,6 +62,14 @@ public class TicketDAO {
                     .setSuccess(false)
                     .setMessage("An error occurred while fetching tickets.");
         }
+    }
+    public Message getAllTickets(Message request) {
+        Message message = new Message(MessageType.GET_ALL_TICKETS_RESPONSE);
+        List<MovieTicket> tickets = session.createQuery("from MovieTicket ", MovieTicket.class).list();
+
+        return message.setSuccess(true)
+                .setMessage("All  tickets fetched successfully")
+                .setDataObject(tickets);
     }
 
     public Message removeTicket(Message request, LoggedInUser loggedInUser) {

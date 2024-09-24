@@ -3,10 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllCinemasEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllSupportTicketsEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetCinemaSupportTicketsEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetCinemaTicketsEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
@@ -79,44 +76,41 @@ public class DashBoard {
         Client.getClient().sendToServer(message);
     }
 
-    @FXML
-    private void PickLocation(ActionEvent event) {
-        CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();
-        if (selectedCinema != null && !selectedCinema.equals(allLocations)) {
-            String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
-            Integer selectedCinemaId = selectedCinema.getId().getValue();
-
-            Message message = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
-                    .setSessionKey(sessionKey)
-                    .setDataObject(selectedCinemaId);
-
-            Client client = Client.getClient();
-            if (client != null) {
-                client.sendToServer(message);
-            } else {
-                System.out.println("Client is not initialized.");
-            }
-        } else {
-            System.out.println("Selected cinema is null or is 'All Locations'.");
-        }
-        if (selectedCinema != null && !selectedCinema.equals(allLocations)) {
-            String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
-            Integer selectedCinemaId = selectedCinema.getId().getValue();
-
-            Message message = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
-                    .setSessionKey(sessionKey)
-                    .setDataObject(selectedCinemaId);
-
-            Client client = Client.getClient();
-            if (client != null) {
-                client.sendToServer(message);
-            } else {
-                System.out.println("Client is not initialized.");
-            }
-        } else {
-            System.out.println("Selected cinema is null or is 'All Locations'.");
-        }
-    }
+//    @FXML
+//    private void PickLocation(ActionEvent event) {
+//        CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();
+//        if (selectedCinema != null ) {
+//            if (selectedCinema.equals(allLocations)) {
+//         Message message = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
+//                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+//         Message message2 = new Message(MessageType.GET_ALL_TICKETS_REQUEST)
+//                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+//                Client.getClient().sendToServer(message);
+//                Client.getClient().sendToServer(message2);
+//            } else {
+//                String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
+//                Integer selectedCinemaId = selectedCinema.getId().getValue();
+//
+//                Message message = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
+//                        .setSessionKey(sessionKey)
+//                        .setDataObject(selectedCinemaId);
+//
+//                Client client = Client.getClient();
+//
+//                if (client != null) {
+//                    client.sendToServer(message);
+//                } else {
+//                    System.out.println("Client is not initialized.");
+//                    return;
+//                }
+//                Message message2 = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
+//                        .setSessionKey(sessionKey)
+//                        .setDataObject(selectedCinemaId);
+//
+//                Client client1 = Client.getClient();
+//            }
+//        }
+//    }
 
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
@@ -219,4 +213,64 @@ public class DashBoard {
     public void GoBack(ActionEvent actionEvent) {
 
     }
+    @FXML
+    private void PickLocation(ActionEvent event) {
+        CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();
+        String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
+        Client client = Client.getClient();
+
+        if (selectedCinema != null) {
+            if (selectedCinema.equals(allLocations)) {
+                // Requesting all tickets and support tickets for all locations
+                Message getAllTicketsMessage = new Message(MessageType.GET_ALL_TICKETS_REQUEST)
+                        .setSessionKey(sessionKey);
+                client.sendToServer(getAllTicketsMessage);
+
+                Message getAllSupportTicketsMessage = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
+                        .setSessionKey(sessionKey);
+                client.sendToServer(getAllSupportTicketsMessage);
+            } else {
+                // Request specific cinema tickets and support tickets
+                Integer selectedCinemaId = selectedCinema.getId().getValue();
+
+                Message cinemaTicketsMessage = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
+                        .setSessionKey(sessionKey)
+                        .setDataObject(selectedCinemaId);
+                client.sendToServer(cinemaTicketsMessage);
+
+                Message cinemaSupportTicketsMessage = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
+                        .setSessionKey(sessionKey)
+                        .setDataObject(selectedCinemaId);
+                client.sendToServer(cinemaSupportTicketsMessage);
+            }
+        }
+    }
+
+    @Subscribe
+    public void onGetTicketsEvent(GetAllTicketsEvent event) {
+        List<MovieTicket> tickets = event.getTickets();
+
+        // Filter tickets that are not links (physical tickets)
+        List<MovieTicket> physicalTickets = tickets.stream()
+                .filter(ticket -> !ticket.getScreening().getIsOnlineScreening())  // Assuming this checks if it's a physical ticket
+                .collect(Collectors.toList());
+
+        // Filter online tickets (link tickets)
+        List<MovieTicket> onlineTickets = getOnlineTickets(tickets);
+
+        // Fill the TicketSaleTable with physical tickets
+        makeChart(physicalTickets, TicketSaleTable);
+
+        // Fill the LinksTable with online tickets
+        makeChart(onlineTickets, LinksTable);
+    }
+
+    @Subscribe
+    public void onGetAllSupportTicketsEvent(GetAllSupportTicketsEvent event) {
+        List<SupportTicket> supportTickets = event.getSupportTickets();
+
+        // Fill the SupportTicketsTable with support tickets
+        makeSupportChart(supportTickets, SupportTicketsTable);
+    }
+
 }

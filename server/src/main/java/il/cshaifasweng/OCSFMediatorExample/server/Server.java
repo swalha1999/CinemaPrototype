@@ -74,6 +74,7 @@ public class Server extends AbstractServer {
             case REMOVE_TICKET_REQUEST -> handleRemoveTicketRequest(request,client , loggedInUser);
             case SEND_SUPPORT_TICKET_REQUEST -> handleSendSupportTicketRequest(request,client,loggedInUser);
             case GET_ALL_SUPPORT_TICKETS_REQUEST -> handleGetSupportTicketsRequest(request,client,loggedInUser);
+            case GET_ALL_TICKETS_REQUEST -> handleGetAllTicketsRequest(request,client,loggedInUser);
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
@@ -105,6 +106,26 @@ public class Server extends AbstractServer {
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handleGetAllTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        switch (loggedInUser.getRole()) {
+            case SYSTEM_MANAGER:
+            case MANAGER_OF_ALL_BRANCHES:
+            case BRANCH_MANAGER:
+            case CUSTOMER_SERVICE:
+                break;
+            case CONTENT_MANAGER:
+            case USER:
+            case NOT_LOGGED_IN:
+            default:
+                return sendErrorMessage(client, "Error! User does not have permission to this action");
+        }
+
+        Message response = database.getTicketsManager().getAllTickets(request);
+        sendResponse(client, response);
+
+        return response;
     }
 
     private Message handleGetSupportTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
