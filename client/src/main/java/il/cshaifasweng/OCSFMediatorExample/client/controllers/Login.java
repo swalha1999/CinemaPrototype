@@ -68,12 +68,16 @@ public class Login {
                 .setRole(response.getRole());
 
         System.out.println(SessionKeysStorage.getInstance().toString());
-
+System.out.println(response.getRole().toString());
         Platform.runLater(()->{
             if (response.isSuccess()) {
+                if(response.getRole() == UserRole.CUSTOMER_SERVICE){
+                    setRoot("CustomerSupportMain");
+                }
                 if( response.getRole() == UserRole.USER){
                     setRoot("UserMain");
-                } else {
+                } if(response.getRole() == UserRole.SYSTEM_MANAGER){
+
                     setRoot("AdminMain");
                 }
             }
