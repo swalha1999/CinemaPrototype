@@ -73,23 +73,12 @@ public class SeatPickerController {
             selectedSeats.remove(seatContainer.getSeat());
             seatContainer.getSeatPane().getStyleClass().remove("selected");
         } else {
-            // If a seat is already selected, clear the selection
-            if (!selectedSeats.isEmpty()) {
-                seatContainer previousSelection = seatLocations.stream()
-                        .filter(container -> selectedSeats.contains(container.getSeat()))
-                        .findFirst()
-                        .orElse(null);
-                if (previousSelection != null) {
-                    selectedSeats.remove(previousSelection.getSeat());
-                    previousSelection.getSeatPane().getStyleClass().remove("selected");
-                }
-            }
-
-            // Select the new seat
+            // Select the new seat without clearing the previous selection
             selectedSeats.add(seatContainer.getSeat());
             seatContainer.getSeatPane().getStyleClass().add("selected");
         }
     }
+
 
     @FXML
     private void confirmSelection() {
