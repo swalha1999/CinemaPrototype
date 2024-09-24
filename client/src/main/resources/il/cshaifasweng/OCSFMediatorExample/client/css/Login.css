@@ -57,7 +57,6 @@
 
 .login-button:hover, .register-button:hover {
     -fx-background-color: #2c3e50; /* Slightly darker on hover */
-    -fx-transform: scale(1.05);
 }
 
 /* TextField and PasswordField focus effect */
