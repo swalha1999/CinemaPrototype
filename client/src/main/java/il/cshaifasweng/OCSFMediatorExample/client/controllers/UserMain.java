@@ -169,6 +169,11 @@ public class UserMain {
 
     @FXML
     void ShowUserInfo(ActionEvent event) {
+
+        Message message = new Message(MessageType.GET_USER_INFO_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
         loadUI("UserInfo");
     }
 
