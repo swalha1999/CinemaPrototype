@@ -23,54 +23,23 @@ import java.util.List;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.*;
 
 public class MovieDetailsController {
-    @FXML // fx:id="AvailableSeat_Col"
-    private TableColumn<ScreeningView, ?> AvailableSeat_Col; // Value injected by FXMLLoader
 
-    @FXML // fx:id="Cinema_Col"
-    private TableColumn<ScreeningView, ?> Cinema_Col; // Value injected by FXMLLoader
-
-    @FXML // fx:id="Hall_Col"
-    private TableColumn<ScreeningView, ?> Hall_Col; // Value injected by FXMLLoader
-
-    @FXML // fx:id="Price_Col"
-    private TableColumn<ScreeningView, ?> Price_Col; // Value injected by FXMLLoader
-
-    @FXML // fx:id="Screening_Col"
-    private TableColumn<ScreeningView, ?> Screening_Col; // Value injected by FXMLLoader
-
-    @FXML
-    private Label actorsLabel;
-
-    @FXML
-    private Label durationLabel;
-
-    @FXML
-    private Label genreLabel;
-
-    @FXML
-    private ImageView movieImageView;
-
-    @FXML
-    private Label producerLabel;
-
-    @FXML
-    private Label ratingLabel;
-
-    @FXML
-    private Label releaseDateLabel;
-
-    @FXML
-    private Button returnBtn;
-
-    @FXML
-    private Label summaryLabel;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML // fx:id="screeningTable"
-    private TableView<ScreeningView> screeningTable; // Value injected by FXMLLoader
-
+    @FXML private TableColumn<ScreeningView, ?> AvailableSeat_Col;
+    @FXML private TableColumn<ScreeningView, ?> Cinema_Col;
+    @FXML private TableColumn<ScreeningView, ?> Hall_Col;
+    @FXML private TableColumn<ScreeningView, ?> Price_Col;
+    @FXML private TableColumn<ScreeningView, ?> Screening_Col;
+    @FXML private Label actorsLabel;
+    @FXML private Label durationLabel;
+    @FXML private Label genreLabel;
+    @FXML private ImageView movieImageView;
+    @FXML private Label producerLabel;
+    @FXML private Label ratingLabel;
+    @FXML private Label releaseDateLabel;
+    @FXML private Button returnBtn;
+    @FXML private Label summaryLabel;
+    @FXML private Label titleLabel;
+    @FXML private TableView<ScreeningView> screeningTable;
 
     private Movie movieToDisplay;
 
@@ -125,7 +94,6 @@ public class MovieDetailsController {
             summaryLabel.setText(movie.getDescription());
             producerLabel.setText(movie.getProducer());
         });
-
     }
 
     @Subscribe
