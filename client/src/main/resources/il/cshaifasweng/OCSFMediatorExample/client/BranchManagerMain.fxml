@@ -29,7 +29,7 @@
                         <Font name="Bodoni MT Bold" size="32.0" />
                     </font>
                 </Label>
-                <Label fx:id="user" text="Branch Manager" textFill="#ecf0f1">
+                <Label fx:id="user" text="Admin" textFill="#ecf0f1">
                     <font>
                         <Font name="Bodoni MT" size="32.0" />
                     </font>
