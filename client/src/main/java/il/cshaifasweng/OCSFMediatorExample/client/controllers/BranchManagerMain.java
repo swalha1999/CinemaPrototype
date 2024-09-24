@@ -4,6 +4,11 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
 
@@ -45,9 +53,27 @@ public class BranchManagerMain {
 
     @FXML // fx:id="user"
     private Label user; // Value injected by FXMLLoader
+    NotificationPane notificationPane;
 
     @FXML
+    public void initialize() throws IOException {
+        user.setText(SessionKeysStorage.getInstance().getUsername());
+        EventBus.getDefault().register(this);
+        notificationPane = new NotificationPane(stackPaneMain);
+        preLoadPages();
+    }
+    @FXML
     void logOut(ActionEvent event) {
+
+    }
+    public void preLoadPages() {
+       loadFXMLPane("BranchManagerDashBoard");
+
+        Message message = new Message();
+
+        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
 
     }
     @FXML
