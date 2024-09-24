@@ -4,12 +4,24 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
 
 public class ContentManagerMain {
 
@@ -38,22 +50,83 @@ public class ContentManagerMain {
     private Label user; // Value injected by FXMLLoader
 
     @FXML
-    void ShowScreenings(ActionEvent event) {
-
+    public void initialize() {
+        user.setText(SessionKeysStorage.getInstance().getUsername());
+        EventBus.getDefault().register(this);
+        NotificationPane notificationPane = new NotificationPane(stackPaneMain);
+        preLoadPages();
     }
 
     @FXML
-    void logOut(ActionEvent event) {
-
+    private void ShowScreenings(ActionEvent event) {
+        loadUI("CinemaInfo");
     }
 
     @FXML
-    void showCustomers(ActionEvent event) {
-
+    private void showMovies(ActionEvent event) {
+        loadUI("AdminAddMovie");
     }
 
     @FXML
-    void showMovies(ActionEvent event) {
+    private void showCustomers(ActionEvent event) {
+        loadUI("AdminUsersView");
+    }
+
+    @FXML
+    void logOut(ActionEvent event) throws IOException {
+        LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
+        Platform.runLater(() -> {
+            clearAllUICache();
+            setRoot("Login");
+        });
+    }
+
+    public void loadUI(String ui) {
+        Platform.runLater(() ->
+                {
+                    mainPane.setCenter(loadFXMLPane(ui));
+                }
+        );
+
+    }
+
+    public void preLoadPages() {
+        loadFXMLPane("CinemaInfo");
+        loadFXMLPane("AdminUsersView");
+        loadFXMLPane("MovieCatalog");
+        loadFXMLPane("Purchase");
+        loadFXMLPane("AdminAddMovie");
+        loadFXMLPane("AddScreening");
+        loadFXMLPane("EditCinema");
+        loadFXMLPane("EditHall");
+        loadFXMLPane("MyInbox");
+        loadFXMLPane("SupportPage");
+        loadFXMLPane("UpcomingMovies");
+        loadFXMLPane("OnlineMovies");
+        loadFXMLPane("SeatPicker");
+        loadFXMLPane("UpcomingMovies");
+        loadFXMLPane("EditScreening");
+        loadFXMLPane("AdminInbox");
+
+
+        Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
+        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
+        message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
+        message = new Message(MessageType.GET_ALL_MOVIES_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
+
 
     }
 

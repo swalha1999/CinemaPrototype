@@ -68,7 +68,6 @@ public class AdminMain {
     @FXML
     private Label user;
 
-
     @FXML
     public void initialize() {
         user.setText(SessionKeysStorage.getInstance().getUsername());
@@ -76,6 +75,7 @@ public class AdminMain {
         notificationPane = new NotificationPane(stackPaneMain);
         preLoadPages();
     }
+
     @FXML
     private void showDashBoard(ActionEvent event) {
         loadUI("DashBoard");
