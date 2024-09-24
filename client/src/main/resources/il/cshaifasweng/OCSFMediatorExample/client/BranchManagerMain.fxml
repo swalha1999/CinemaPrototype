@@ -37,17 +37,13 @@
                 <Button fx:id="DashBoardBtn" onAction="#showDashBoard" prefHeight="49.0" prefWidth="247.0" styleClass="sidebar-button" text="DashBoard">
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/analytics_994170.png" />
-                            </image>
+                            <Image url="@images/analytics_994170.png"/>
                         </ImageView>
                     </graphic></Button>
                 <Button fx:id="LogOutBtn" onAction="#logOut" prefHeight="49.0" prefWidth="244.0" styleClass="sidebar-logout-button" text="Log Out">
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/logout_4034229.png" />
-                            </image>
+                            <Image url="@images/logout_4034229.png"/>
                         </ImageView>
                     </graphic></Button>
             </VBox>
