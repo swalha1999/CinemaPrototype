@@ -466,9 +466,8 @@ public class Server extends AbstractServer {
             case BRANCH_MANAGER:
             case CUSTOMER_SERVICE:
             case USER:
-                break;
             case CONTENT_MANAGER:
-
+                break;
             case NOT_LOGGED_IN:
             default:
                 return sendErrorMessage(client, "Error! User does not have permission to this action");
@@ -487,8 +486,8 @@ public class Server extends AbstractServer {
             case MANAGER_OF_ALL_BRANCHES:
             case BRANCH_MANAGER:
             case CUSTOMER_SERVICE:
-                break;
             case CONTENT_MANAGER:
+                break;
             case USER:
             default:
                 return sendErrorMessage(client, "Error! User does not have permission to this action");

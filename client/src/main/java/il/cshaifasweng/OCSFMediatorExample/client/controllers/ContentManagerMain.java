@@ -6,6 +6,9 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -18,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -49,11 +53,13 @@ public class ContentManagerMain {
     @FXML // fx:id="user"
     private Label user; // Value injected by FXMLLoader
 
+    NotificationPane notificationPane;
+
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         user.setText(SessionKeysStorage.getInstance().getUsername());
         EventBus.getDefault().register(this);
-        NotificationPane notificationPane = new NotificationPane(stackPaneMain);
+        notificationPane = new NotificationPane(stackPaneMain);
         preLoadPages();
     }
 
@@ -80,6 +86,25 @@ public class ContentManagerMain {
             clearAllUICache();
             setRoot("Login");
         });
+    }
+
+    @Subscribe
+    public void onLogoutEvent(LogoutEvent response) {
+        SessionKeysStorage.getInstance().clearSession();
+        Platform.runLater(() -> {
+            clearAllUICache();
+            setRoot("Login");
+        });
+    }
+
+    @Subscribe
+    public void onShowNotification(ShowNotificationEvent event) {
+        notificationPane.showNotification(event.getMessage(), event.isSuccessful());
+    }
+
+    @Subscribe
+    public void onShowSideUIEvent(ShowSideUIEvent event) {
+        loadUI(event.getUIName());
     }
 
     public void loadUI(String ui) {
