@@ -79,7 +79,14 @@ System.out.println(response.getRole().toString());
                 } if(response.getRole() == UserRole.SYSTEM_MANAGER){
 
                     setRoot("AdminMain");
+                }if(response.getRole() == UserRole.BRANCH_MANAGER){
+
+                    setRoot("BranchManagerMain");
+                }if(response.getRole() == UserRole.CONTENT_MANAGER){
+
+                    setRoot("ContentManagerMain");
                 }
+
             }
             showNotification(response.getMessage(), response.isSuccess());
         });
