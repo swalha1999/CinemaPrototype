@@ -26,10 +26,10 @@ public class MovieTicket implements Serializable {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    private boolean isUsed; // Prevent double use of ticket
-    private boolean isRefunded; // Marks the ticket as refunded
-    private boolean isBundleTicket; // For future use
-    private LocalDateTime ticketPurchaseDay; // The day when the ticket was purchased
+    private boolean isUsed;
+    private boolean isRefunded;
+    private boolean isBundleTicket;
+    private LocalDateTime ticketPurchaseDay;
     private String notificationId;
 
     public MovieTicket() {
@@ -39,7 +39,7 @@ public class MovieTicket implements Serializable {
         this.isUsed = false;
         this.isRefunded = false;
         this.isBundleTicket = false;
-        this.ticketPurchaseDay = LocalDateTime.now(); // Default to current time
+        this.ticketPurchaseDay = LocalDateTime.now();
     }
 
     public MovieTicket(User user, Screening screening, Seat seat) {
@@ -49,7 +49,7 @@ public class MovieTicket implements Serializable {
         this.isUsed = false;
         this.isRefunded = false;
         this.isBundleTicket = false;
-        this.ticketPurchaseDay = LocalDateTime.now(); // Set purchase day to the current time
+        this.ticketPurchaseDay = LocalDateTime.now();
     }
 
     public int getId() {
