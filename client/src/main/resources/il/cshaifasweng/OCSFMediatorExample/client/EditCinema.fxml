@@ -8,15 +8,19 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@css/EditCinema.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.EditCinema">
+<AnchorPane prefHeight="850.0" prefWidth="750.0" stylesheets="@css/EditCinema.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.EditCinema">
     <!-- ToolBar at the top -->
     <ToolBar styleClass="toolbar">
-        <Label styleClass="toolbar-label" text="Edit Cinema" />
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="750.0" text="Edit Cinema" textFill="WHITE">
+         <font>
+            <Font name="Bell MT Bold" size="32.0" />
+         </font></Label>
     </ToolBar>
 
     <!-- GridPane for form inputs -->
-    <GridPane hgap="10" layoutX="30" layoutY="80" vgap="15">
+    <GridPane alignment="TOP_CENTER" hgap="10" layoutX="30" layoutY="80" prefHeight="255.0" prefWidth="620.0" vgap="15">
         <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <TextField fx:id="nameField" promptText="Enter cinema name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
@@ -46,6 +50,6 @@
     </GridPane>
 
     <!-- Buttons -->
-    <Button layoutX="150.0" layoutY="350.0" onAction="#saveCinema" styleClass="button-confirm" text="Save" />
-    <Button layoutX="260.0" layoutY="350.0" onAction="#cancelEdit" styleClass="button-back" text="Cancel" />
+    <Button layoutX="287.0" layoutY="338.0" onAction="#saveCinema" styleClass="button-confirm" text="Save" />
+    <Button layoutX="401.0" layoutY="338.0" onAction="#cancelEdit" styleClass="button-back" text="Cancel" />
 </AnchorPane>

@@ -27,7 +27,7 @@
 }
 
 .insert-button {
-    -fx-background-color: #2ECC71; /* Green */
+    -fx-background-color: #27AE60; /* Green */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 5;
@@ -48,7 +48,7 @@
 }
 
 .clear-button {
-    -fx-background-color: #9B59B6; /* Purple */
+    -fx-background-color: #E74C3C; /* Purple */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 5;

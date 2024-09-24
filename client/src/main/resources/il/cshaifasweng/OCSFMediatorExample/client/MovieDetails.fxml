@@ -4,44 +4,44 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/MovieDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController">
+<AnchorPane prefHeight="850.0" prefWidth="850.0" style="-fx-background-color: #bdc3c7;" stylesheets="@css/MovieDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController">
     <children>
         <!-- Main Layout HBox for Image and Movie Details -->
-        <HBox layoutX="20.0" layoutY="20.0" spacing="40.0">
-            <!-- Movie Image -->
-            <ImageView fx:id="movieImageView" fitHeight="400.0" fitWidth="270.0" />
+        <HBox alignment="CENTER" layoutY="20.0" prefHeight="771.0" prefWidth="844.0" spacing="40.0">
 
             <!-- Movie Details and Screening Times -->
-            <VBox spacing="30.0">
+            <VBox alignment="CENTER" prefHeight="771.0" prefWidth="763.0" spacing="30.0">
                 <!-- Movie Title and Summary -->
-                <VBox spacing="10.0">
+                <VBox prefHeight="158.0" prefWidth="644.0" spacing="10.0">
+         
+                    <!-- Return Button -->
+                 <Button fx:id="returnBtn" mnemonicParsing="false" onAction="#returnToMovieCatalog" prefHeight="35.0" prefWidth="82.0" text="Return" />
                     <!-- Movie Title -->
                     <Label fx:id="titleLabel" styleClass="title-label" />
 
                     <!-- Movie Producer, Actors, and Summary -->
                     <VBox spacing="8.0">
-                        <Label fx:id="producerLabel" styleClass="details-label" text="Producer: " />
-                        <Label fx:id="actorsLabel" styleClass="details-label" text="Main Actors: " />
-                        <Label fx:id="summaryLabel" prefHeight="46.0" prefWidth="755.0" styleClass="details-label" text="Summary: " wrapText="true" />
+                        <Label fx:id="producerLabel" styleClass="details-label" text="Producer: " textFill="#34495e" />
+                        <Label fx:id="actorsLabel" styleClass="details-label" text="Main Actors: " textFill="#34495e" />
+                        <Label fx:id="summaryLabel" prefHeight="46.0" prefWidth="755.0" styleClass="details-label" text="Summary: " textFill="#34495e" wrapText="true" />
                     </VBox>
                 </VBox>
 
                 <!-- Movie Information -->
                 <VBox spacing="10.0">
-                    <Label fx:id="genreLabel" styleClass="details-label" text="Genre: " />
-                    <Label fx:id="durationLabel" styleClass="details-label" text="Duration: " />
-                    <Label fx:id="releaseDateLabel" styleClass="details-label" text="Release Date: " />
-                    <Label fx:id="ratingLabel" styleClass="details-label" text="Rating: " />
+                    <Label fx:id="genreLabel" styleClass="details-label" text="Genre: " textFill="#34495e" />
+                    <Label fx:id="durationLabel" styleClass="details-label" text="Duration: " textFill="#34495e" />
+                    <Label fx:id="releaseDateLabel" styleClass="details-label" text="Release Date: " textFill="#34495e" />
+                    <Label fx:id="ratingLabel" styleClass="details-label" text="Rating: " textFill="#34495e" />
                 </VBox>
 
                 <!-- Screening Times Section -->
                 <VBox spacing="10.0">
-                    <Label styleClass="section-label" text="Screening Times:" />
+                    <Label styleClass="section-label" text="Screening Times:" textFill="#34495e" />
                     <TableView fx:id="screeningTable" prefHeight="324.0" prefWidth="757.0">
                         <columns>
                             <TableColumn fx:id="Screening_Col" prefWidth="188.0" text="Screening" />
@@ -53,8 +53,5 @@
                 </VBox>
             </VBox>
         </HBox>
-
-        <!-- Return Button -->
-        <Button fx:id="returnBtn" layoutX="112.0" layoutY="463.0" mnemonicParsing="false" onAction="#returnToMovieCatalog" prefHeight="35.0" prefWidth="82.0" text="Return" />
     </children>
 </AnchorPane>
