@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -184,17 +185,22 @@ public class TicketDAO {
                 transaction = session.beginTransaction();
             }
 
+            // Get the current time as the purchase date-time
+            LocalDateTime purchaseTime = LocalDateTime.now();
 
+            // Create a notification for the screening reminder
             String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
-            String notificationId = addNotification(message,screening.getStartingAt().minusHours(1),loggedInUser);
+            String notificationId = addNotification(message, screening.getStartingAt().minusHours(1), loggedInUser);
 
+            // Create the movie ticket with the current purchase time
             MovieTicket ticket = new MovieTicket(user, screening, seat);
             ticket.setIsUsed(false); // Initialize the ticket as not used
             ticket.setRefunded(false); // Initialize the ticket as not refunded
             ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
             ticket.setId(ticketcounter++); // Increment the ticket counter
-            ticket.setNotificationId(notificationId); // Initialize the notification ID to null
-            seat.setAvailable(false);
+            ticket.setNotificationId(notificationId); // Set the notification ID
+            ticket.setTicketPurchaseDay(purchaseTime); // Set the purchase time
+            seat.setAvailable(false); // Mark the seat as unavailable
 
             // Save the ticket and update the seat status in the database
             session.update(seat); // Update seat status in the database
@@ -228,6 +234,7 @@ public class TicketDAO {
                     .setMessage("An error occurred while processing the ticket purchase.");
         }
     }
+
     public void setSession(Session session) {
         this.session = session;
     }
