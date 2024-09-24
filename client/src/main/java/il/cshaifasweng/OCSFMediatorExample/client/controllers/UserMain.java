@@ -33,38 +33,18 @@ public class UserMain {
 
     @FXML  public Button InboxBtn;
     @FXML public Button UserInfoBtn;
+    @FXML private Button AvailbleMovies_Btn;
+    @FXML private Button DashBoard_Btn;
+    @FXML private Button Logout_Btn;
+    @FXML private Button MyTickets_Btn;
+    @FXML private Button OnlineMovies_Btn;
+    @FXML private Button UpComingMovies_Btn;
+    @FXML private Label Welcome_Label;
+    @FXML private BorderPane mainPane;
+    @FXML private Label UserLabel;
+    @FXML private StackPane stackPaneMain;
+
     NotificationPane notificationPane;
-
-    @FXML // fx:id="AvailbleMovies_Btn"
-    private Button AvailbleMovies_Btn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="DashBoard_Btn"
-    private Button DashBoard_Btn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="Logout_Btn"
-    private Button Logout_Btn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="MyTickets_Btn"
-    private Button MyTickets_Btn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="OnlineMovies_Btn"
-    private Button OnlineMovies_Btn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="UpComingMovies_Btn"
-    private Button UpComingMovies_Btn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="Welcome_Label"
-    private Label Welcome_Label; // Value injected by FXMLLoader
-
-    @FXML // fx:id="mainPane"
-    private BorderPane mainPane; // Value injected by FXMLLoader
-
-    @FXML // fx:id="UserLabel"
-    private Label UserLabel; // Value injected by FXMLLoader
-
-    @FXML
-    private StackPane stackPaneMain; // Value injected by FXMLLoader
-
 
     @FXML
     public void initialize() {
@@ -77,6 +57,11 @@ public class UserMain {
 
     @FXML
     void ShowMyTickets(ActionEvent event) {
+
+        Message message = new Message(MessageType.GET_MY_TICKETS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
         loadUI("MyTickets");
     }
 
