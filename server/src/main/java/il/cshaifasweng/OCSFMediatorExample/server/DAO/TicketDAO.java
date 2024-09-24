@@ -132,14 +132,11 @@ public class TicketDAO {
     }
 
     public Message purchaseTickets(Message request, LoggedInUser loggedInUser) {
-        // Create the response message
         Message response = new Message(MessageType.PURCHASE_TICKETS_RESPONSE);
 
-        // Extract the screening from the request
         Screening screeningFromUser = (Screening) request.getDataObject();
         Set<Seat> seats = screeningFromUser.getSeats();
 
-        // Fetch the user from the database using the loggedInUser information
         User user = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
         if (user == null) {
             response.setSuccess(false)
@@ -147,7 +144,6 @@ public class TicketDAO {
             return response;
         }
 
-        // Fetch the screening from the database
         Screening screening = session.get(Screening.class, screeningFromUser.getId());
         if (screening == null) {
             response.setSuccess(false)
@@ -161,7 +157,6 @@ public class TicketDAO {
             return response;
         }
 
-        // Assume only one seat is selected for the ticket
         Seat seatFromUser = seats.iterator().next();
         Seat seat = DatabaseController.getInstance(session).getSeatsManager().getSeatById(seatFromUser.getId());
 
@@ -179,42 +174,38 @@ public class TicketDAO {
 
         Transaction transaction = null;
         try {
-            // Begin transaction if none is active
             transaction = session.getTransaction();
             if (transaction == null || !transaction.isActive()) {
                 transaction = session.beginTransaction();
             }
 
-            // Get the current time as the purchase date-time
             LocalDateTime purchaseTime = LocalDateTime.now();
 
-            // Create a notification for the screening reminder
             String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
             String notificationId = addNotification(message, screening.getStartingAt().minusHours(1), loggedInUser);
 
-            // Create the movie ticket with the current purchase time
+
             MovieTicket ticket = new MovieTicket(user, screening, seat);
-            ticket.setIsUsed(false); // Initialize the ticket as not used
-            ticket.setRefunded(false); // Initialize the ticket as not refunded
-            ticket.setBundleTicket(false); // Initialize the ticket as not a bundle
-            ticket.setId(ticketcounter++); // Increment the ticket counter
-            ticket.setNotificationId(notificationId); // Set the notification ID
-            ticket.setTicketPurchaseDay(purchaseTime); // Set the purchase time
-            seat.setAvailable(false); // Mark the seat as unavailable
+            ticket.setIsUsed(false);
+            ticket.setRefunded(false);
+            ticket.setBundleTicket(false);
+            ticket.setId(ticketcounter++);
+            ticket.setNotificationId(notificationId);
+            ticket.setTicketPurchaseDay(purchaseTime);
+            seat.setAvailable(false);
 
-            // Save the ticket and update the seat status in the database
-            session.update(seat); // Update seat status in the database
-            session.save(ticket); // Save the ticket in the database
+            user.setNumberOfTicketsPurchased(user.getNumberOfTicketsPurchased() + 1);
 
-            // Commit transaction
+            session.update(seat);
+            session.save(ticket);
+            session.update(user);
+
             if (transaction != null && transaction.isActive()) {
                 transaction.commit();
             }
 
-            // Set response data object to the created ticket
             response.setDataObject(ticket);
 
-            // Return a success message with the data object included
             response.setSuccess(true)
                     .setMessage("Purchase successful! A confirmation email has been sent to your inbox.");
             return response;

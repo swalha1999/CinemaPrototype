@@ -729,6 +729,60 @@ public class Server extends AbstractServer {
         return response;
     }
 
+    private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message removeResponse = database.getTicketsManager().removeTicket(request, loggedInUser);
+
+        Message updatedTicketsResponse = handleGetMyTicketsRequest(request, client, loggedInUser);
+
+        sendResponse(client, updatedTicketsResponse);
+
+        MovieTicket removedTicket = (MovieTicket) request.getDataObject();
+
+        Message response2 = new Message(MessageType.USER_TICKET_REMOVED_PATCH)
+                .setSessionKey(request.getSessionKey())
+                .setMessage("Ticket for " + removedTicket.getScreening().getMovie().getTitle() + " has been removed.")
+                .setDataObject(removedTicket);  // Add the removed ticket to the response
+
+        sendResponse(client, response2);
+
+        return updatedTicketsResponse;
+    }
+
+    private Message handleGetMyScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response;
+        response = database.getScreeningsManager().getMyScreenings(request, loggedInUser);
+        if(loggedInUser == null) {
+            return sendErrorMessage(client, "Error! User does not have permission to perform this action");
+        }
+        sendResponse(client, response);
+
+        return response;
+    }
+
+    private Message handleCinemaTicketInfoRequest(ConnectionToClient client,Message request) {
+        Message ticketsResponse = database.getCinemasManager().getCinemaTickets(request);
+        sendResponse(client, ticketsResponse);
+        return ticketsResponse;
+    }
+
+    private Message handleCinemaSupportTicketInfoRequest(ConnectionToClient client,Message request) {
+        Message ticketsResponse = database.getCinemasManager().getCinemaSupportTickets(request);
+        sendResponse(client, ticketsResponse);
+        return ticketsResponse;
+    }
+
+    public Message handleSendSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getSupportTicketsManager().addSupportTicket(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
+    }
+
+    public Message handleGetUserInfoRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getUsersManager().getUserInfo(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
+    }
+
     private boolean sendResponse(ConnectionToClient client, Message response) {
         try {
             client.sendToClient(response);
@@ -836,60 +890,6 @@ public class Server extends AbstractServer {
     public static boolean removeNotification(String notificationId) {
         Notification notification = notificationMap.remove(notificationId);
         return notification != null;
-    }
-
-    private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message removeResponse = database.getTicketsManager().removeTicket(request, loggedInUser);
-
-        Message updatedTicketsResponse = handleGetMyTicketsRequest(request, client, loggedInUser);
-
-        sendResponse(client, updatedTicketsResponse);
-
-        MovieTicket removedTicket = (MovieTicket) request.getDataObject();
-
-        Message response2 = new Message(MessageType.USER_TICKET_REMOVED_PATCH)
-                .setSessionKey(request.getSessionKey())
-                .setMessage("Ticket for " + removedTicket.getScreening().getMovie().getTitle() + " has been removed.")
-                .setDataObject(removedTicket);  // Add the removed ticket to the response
-
-        sendResponse(client, response2);
-
-        return updatedTicketsResponse;
-    }
-
-    private Message handleGetMyScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response;
-        response = database.getScreeningsManager().getMyScreenings(request, loggedInUser);
-        if(loggedInUser == null) {
-            return sendErrorMessage(client, "Error! User does not have permission to perform this action");
-        }
-        sendResponse(client, response);
-
-        return response;
-    }
-
-    private Message handleCinemaTicketInfoRequest(ConnectionToClient client,Message request) {
-        Message ticketsResponse = database.getCinemasManager().getCinemaTickets(request);
-        sendResponse(client, ticketsResponse);
-        return ticketsResponse;
-    }
-
-    private Message handleCinemaSupportTicketInfoRequest(ConnectionToClient client,Message request) {
-        Message ticketsResponse = database.getCinemasManager().getCinemaSupportTickets(request);
-        sendResponse(client, ticketsResponse);
-        return ticketsResponse;
-    }
-
-    public Message handleSendSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response = database.getSupportTicketsManager().addSupportTicket(request, loggedInUser);
-        sendResponse(client, response);
-        return response;
-    }
-
-    public Message handleGetUserInfoRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response = database.getUsersManager().getUserInfo(request, loggedInUser);
-        sendResponse(client, response);
-        return response;
     }
 
 }
