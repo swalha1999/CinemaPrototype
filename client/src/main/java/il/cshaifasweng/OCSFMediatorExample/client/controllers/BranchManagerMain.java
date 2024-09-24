@@ -4,12 +4,15 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
 
 public class BranchManagerMain {
 
@@ -44,32 +47,19 @@ public class BranchManagerMain {
     private Label user; // Value injected by FXMLLoader
 
     @FXML
-    void ShowScreenings(ActionEvent event) {
-
-    }
-
-    @FXML
     void logOut(ActionEvent event) {
 
     }
-
-    @FXML
-    void showAdminInbox(ActionEvent event) {
-
-    }
-
-    @FXML
-    void showCustomers(ActionEvent event) {
-
-    }
-
     @FXML
     void showDashBoard(ActionEvent event) {
-
+        loadUI("BranchManagerDashBoard.fxml");
     }
-
-    @FXML
-    void showMovies(ActionEvent event) {
+    public void loadUI(String ui) {
+        Platform.runLater(() ->
+                {
+                    mainPane.setCenter(loadFXMLPane(ui));
+                }
+        );
 
     }
 

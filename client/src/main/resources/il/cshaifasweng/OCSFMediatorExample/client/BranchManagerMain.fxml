@@ -34,29 +34,11 @@
                         <Font name="Bodoni MT" size="32.0" />
                     </font>
                 </Label>
-                <Button fx:id="AdminInbox" onAction="#showAdminInbox" prefHeight="49.0" prefWidth="326.0" styleClass="sidebar-button" text="Inbox">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/receive-mail.png" />
-                            </image>
-                        </ImageView>
-                    </graphic></Button>
                 <Button fx:id="DashBoardBtn" onAction="#showDashBoard" prefHeight="49.0" prefWidth="247.0" styleClass="sidebar-button" text="DashBoard">
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@images/analytics_994170.png" />
-                            </image>
-                        </ImageView>
-                    </graphic></Button>
-                <Button fx:id="MoviesBtn" onAction="#showMovies" prefHeight="49.0" prefWidth="253.0" styleClass="sidebar-button" text="Movies" />
-                <Button fx:id="ScreeningsBtn" onAction="#ShowScreenings" prefHeight="49.0" prefWidth="286.0" styleClass="sidebar-button" text=" Screenings" />
-                <Button fx:id="CustomersBtn" onAction="#showCustomers" prefHeight="49.0" prefWidth="254.0" styleClass="sidebar-button" text="Customers">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/client_6009864.png" />
                             </image>
                         </ImageView>
                     </graphic></Button>
