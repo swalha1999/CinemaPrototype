@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="850.0" prefWidth="600.0" style="-fx-background-color: #bdc3c7;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.PurchaseBundle">
+   <children>
+      <BorderPane prefHeight="55.0" prefWidth="600.0" style="-fx-background-color: #34495e;">
+         <center>
+            <Label text="Purchase Bundle" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Bell MT Bold" size="32.0" />
+               </font>
+            </Label>
+         </center>
+      </BorderPane>
+      <VBox layoutX="161.0" layoutY="264.0" prefHeight="77.0" prefWidth="222.0" spacing="20.0">
+         <children>
+            <Label prefHeight="32.0" prefWidth="227.0" style="-fx-background-color: fddfdc;" styleClass="label-payment" text="Payment Information" textFill="FIREBRICK">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <GridPane hgap="20.0" prefHeight="25.0" prefWidth="187.0" vgap="15.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" maxWidth="149.0" minWidth="149.0" prefWidth="149.0" />
+                  <ColumnConstraints halignment="LEFT" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+               <children>
+                  <Label text="Card Number:" />
+                  <TextField fx:id="cardNumber" promptText="Enter card number" styleClass="text-field" />
+                  <Label text="Expiration Date:" />
+                  <TextField fx:id="expiryDate" prefWidth="225.0" promptText="MM/YY" styleClass="text-field" />
+                  <Label text="CVV:" />
+                  <TextField fx:id="CVV_Txt" prefHeight="20.0" prefWidth="149.0" promptText="Enter CVV" styleClass="text-field" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+      <Label alignment="TOP_LEFT" layoutX="33.0" layoutY="77.0" prefHeight="27.0" prefWidth="507.0" text="A bundle is 20 tickets that you can purchase Once for 700₪ ">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="33.0" layoutY="104.0" prefHeight="27.0" prefWidth="478.0" text="Instead of 900₪ !!">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="131.0" prefHeight="27.0" prefWidth="527.0" text="This Bundle allows you to enter any movie any time you want ">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="158.0" prefHeight="27.0" prefWidth="527.0" text="based on empty seats in the Hall">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="33.0" layoutY="185.0" prefHeight="27.0" prefWidth="478.0" text="Keep in mind that the ticket bundle is Not Refundable !">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="33.0" layoutY="212.0" prefHeight="27.0" prefWidth="478.0" text="buy on your Responsibility">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="161.0" layoutY="399.0" prefHeight="32.0" prefWidth="222.0" style="-fx-background-color: #e6e6fa;" styleClass="label-summary" text="Order Summary" textFill="DARKBLUE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <VBox layoutX="62.0" layoutY="468.0" prefHeight="77.0" prefWidth="417.0" spacing="10.0" styleClass="summary-box">
+         <children>
+            <HBox spacing="10.0">
+               <children>
+                  <Label text="Order ID:" />
+                  <Label fx:id="OrderIdLabel" styleClass="label-info" text="[Order ID]" />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Label text="Items Purchased:" />
+                  <Label fx:id="NumberItemPurchLabel" styleClass="label-info" text="[Number of Items]" />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Label text="Total Amount:" />
+                  <Label fx:id="TotalAmountLabel" styleClass="label-info" text="[Total Amount]" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="ConfirmPurchaseBtn" layoutX="217.0" layoutY="606.0" style="-fx-background-color: #32cd32; -fx-padding: 12px 24px; -fx-background-radius: 10px; -fx-background-radius: 10px;" styleClass="button-confirm" stylesheets="@css/buttonHover.css" text="Confirm Purchase" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

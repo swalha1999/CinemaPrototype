@@ -13,16 +13,7 @@ width = 1200
 hight = 900
 
 ## `Take a Task fom here and do it `
-1.TODO: add actors to the movie view `--> orel`
-2. TODO: add producer to the movie view `--> orel`
-3.TODO: add screening to the movie view
-4. TODO: add a page to display to packages and how many entrances they have left
-5. TODO:Make Req and Res to the Screening DIO
-6. fix the inbox logic so that when u exit the information stay 
-7. fix the remove ticket 
-8. connect the dashboard to the client and the server
-9. add the pack of tickets 
-10. connect the supportpage 
+1. Once an Upcoming movie is available to watch send an email to bundle users
 
 
 ## `Done tasks but ur name :)`
