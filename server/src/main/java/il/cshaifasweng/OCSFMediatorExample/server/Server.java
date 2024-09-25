@@ -105,8 +105,30 @@ public class Server extends AbstractServer {
             //SEATS
             case GET_SEATS_FOR_SCREENING_REQUEST -> handleGetSeatsForScreeningRequest(request, client, loggedInUser);
 
+            //PRICE_CHANGE
+            case ADD_PRICE_CHANGE_REQUEST -> handlePriceChangeRequest(request, client, loggedInUser);
+            case GET_PRICE_CHANGES_REQUEST -> handleGetPriceChangesRequest(request, client, loggedInUser);
+            case APPROVE_PRICE_CHANGE_REQUEST -> handleApprovePriceChangeRequest(request, client, loggedInUser);
+            case DENY_PRICE_CHANGE_REQUEST -> handleDenyPriceChangeRequest(request, client, loggedInUser);
+
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handleDenyPriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        return request;
+    }
+
+    private Message handleApprovePriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        return request;
+    }
+
+    private Message handleGetPriceChangesRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        return request;
+    }
+
+    private Message handlePriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        return request;
     }
 
     private Message handlePurchaseBundleRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
