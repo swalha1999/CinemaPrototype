@@ -13,6 +13,7 @@ public class GetReplyTicketEvent {
         this.message = message.getMessage();
         this.replyTicket = (SupportTicket) message.getDataObject();
     }
+
     public boolean isSuccess() {
         return isSuccess;
     }
