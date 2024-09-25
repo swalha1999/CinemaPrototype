@@ -188,7 +188,136 @@ public class ScreeningDAO {
         }
     }
 
+    public Message addPriceChangeRequest( Message req, LoggedInUser loggedInUser) {
+        Message response = new Message(MessageType.ADD_PRICE_CHANGE_RESPONSE);
+        PriceChangeRequest priceChangeRequestFromUser = (PriceChangeRequest) req.getDataObject();
+
+        User contentManager = session.get(User.class, loggedInUser.getUserId());
+
+        if (priceChangeRequestFromUser.getMovie() == null) {
+            return response.setSuccess(false)
+                    .setMessage("Movie not found")
+                    .setDataObject(null);
+        }
+
+        if (priceChangeRequestFromUser.getScreening() == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found")
+                    .setDataObject(null);
+        }
+
+        if (priceChangeRequestFromUser.getNewPrice() == 0) {
+            return response.setSuccess(false)
+                    .setMessage("New price not found")
+                    .setDataObject(null);
+        }
+
+        if (contentManager == null) {
+            return response.setSuccess(false)
+                    .setMessage("Content Manager not found")
+                    .setDataObject(null);
+        }
+
+        if (contentManager.getRole() != UserRole.CONTENT_MANAGER) {
+            return response.setSuccess(false)
+                    .setMessage("User is not a content manager")
+                    .setDataObject(null);
+        }
+
+        PriceChangeRequest priceChangeRequest = new PriceChangeRequest();
+        priceChangeRequest.setMovie(priceChangeRequestFromUser.getMovie());
+        priceChangeRequest.setScreening(priceChangeRequestFromUser.getScreening());
+        priceChangeRequest.setNewPrice(priceChangeRequestFromUser.getNewPrice());
+        priceChangeRequest.setContentManager(contentManager);
+
+        session.beginTransaction();
+        session.save(priceChangeRequest);
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Price change request added successfully")
+                .setDataObject(priceChangeRequest);
+    }
+
+    public Message getAllPriceChangesRequest( Message req, LoggedInUser loggedInUser) {
+        Message response = new Message(MessageType.GET_PRICE_CHANGES_RESPONSE);
+
+        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
+            return response.setSuccess(false)
+                    .setMessage("User is not a manager")
+                    .setDataObject(null);
+        }
+
+        //get all price change requests
+        List<PriceChangeRequest> priceChangeRequests = session.createQuery("from PriceChangeRequest", PriceChangeRequest.class).getResultList();
+
+        return response.setSuccess(true)
+                .setMessage("Price change request added successfully")
+                .setDataObject(priceChangeRequests);
+    }
+
+    public Message approvePriceChangeRequest( Message req, LoggedInUser loggedInUser) {
+        Message response = new Message(MessageType.APPROVE_PRICE_CHANGE_RESPONSE);
+        PriceChangeRequest priceChangeRequestFromUser = (PriceChangeRequest) req.getDataObject();
+
+        PriceChangeRequest priceChangeRequest = session.get(PriceChangeRequest.class, priceChangeRequestFromUser.getId());
+
+        if (priceChangeRequest == null) {
+            return response.setSuccess(false)
+                    .setMessage("Price change request not found")
+                    .setDataObject(null);
+        }
+
+        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
+            return response.setSuccess(false)
+                    .setMessage("User is not a manager")
+                    .setDataObject(null);
+        }
+
+        priceChangeRequest.getScreening().setPrice(priceChangeRequest.getNewPrice());
+
+        session.beginTransaction();
+        session.update(priceChangeRequest.getScreening());
+        session.delete(priceChangeRequest);
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Price change request approved successfully")
+                .setDataObject(priceChangeRequest);
+    }
+
+    public Message denyPriceChangeRequest( Message req, LoggedInUser loggedInUser) {
+        Message response = new Message(MessageType.APPROVE_PRICE_CHANGE_RESPONSE);
+        PriceChangeRequest priceChangeRequestFromUser = (PriceChangeRequest) req.getDataObject();
+
+        PriceChangeRequest priceChangeRequest = session.get(PriceChangeRequest.class, priceChangeRequestFromUser.getId());
+
+        if (priceChangeRequest == null) {
+            return response.setSuccess(false)
+                    .setMessage("Price change request not found")
+                    .setDataObject(null);
+        }
+
+        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
+            return response.setSuccess(false)
+                    .setMessage("User is not a manager")
+                    .setDataObject(null);
+        }
+
+        session.beginTransaction();
+        session.delete(priceChangeRequest);
+        session.getTransaction().commit();
+
+        return response.setSuccess(true)
+                .setMessage("Price change request denied successfully")
+                .setDataObject(priceChangeRequest);
+    }
+
+
+
     public void setSession(Session session) {
         this.session = session;
     }
+
+
 }

@@ -24,7 +24,7 @@ public class PriceChangeRequest implements Serializable {
     private User contentManager;
 
 
-    private double newPrice;
+    private int newPrice;
 
     public PriceChangeRequest() {
         this.screening = null;
@@ -32,7 +32,7 @@ public class PriceChangeRequest implements Serializable {
         this.newPrice = 0;
     }
 
-    public PriceChangeRequest(Screening screening, Movie movie, double newPrice) {
+    public PriceChangeRequest(Screening screening, Movie movie, int newPrice) {
         this.screening = screening;
         this.movie = movie;
         this.newPrice = newPrice;
@@ -65,11 +65,11 @@ public class PriceChangeRequest implements Serializable {
         return this;
     }
 
-    public double getNewPrice() {
+    public int getNewPrice() {
         return newPrice;
     }
 
-    public PriceChangeRequest setNewPrice(double newPrice) {
+    public PriceChangeRequest setNewPrice(int newPrice) {
         this.newPrice = newPrice;
         return this;
     }
