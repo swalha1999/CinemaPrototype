@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@css/Purchase.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.Purchase">
     <!-- Header Section -->
@@ -101,4 +102,10 @@
         </children>
     </VBox>
       <Label layoutX="20.0" layoutY="541.0" styleClass="label-summary" text="Order Summary" />
+   <Label layoutX="555.0" layoutY="246.0" prefHeight="52.0" prefWidth="90.0" text="OR">
+      <font>
+         <Font name="Bell MT" size="61.0" />
+      </font>
+   </Label>
+   <Button fx:id="bundleBtn" layoutX="866.0" layoutY="257.0" onAction="#bundlePurchase" styleClass="button-confirm" text="Buy With Bundle" />
 </AnchorPane>
