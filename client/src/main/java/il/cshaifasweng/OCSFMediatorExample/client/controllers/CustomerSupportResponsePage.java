@@ -53,7 +53,7 @@ public class CustomerSupportResponsePage {
 
 
             // Optionally set other details like subject, email, or user info (if available)
-            supportTicket.setName(user.getFirstName() + " " + user.getLastName());
+            //supportTicket.setName(user.getFirstName() + " " + user.getLastName());
 
             // Create the message with the SupportTicket object
             Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)
