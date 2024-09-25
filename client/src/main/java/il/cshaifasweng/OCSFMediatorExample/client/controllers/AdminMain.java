@@ -180,6 +180,15 @@ public class AdminMain {
 
     @FXML
     void showAdminInbox(ActionEvent event) {
+
+        Message getSupportTicketsMessage = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(getSupportTicketsMessage);
+
+        Message priceChangeRequestMessage = new Message(MessageType.GET_PRICE_CHANGES_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(priceChangeRequestMessage);
+
         loadUI("AdminInbox");
     }
 
