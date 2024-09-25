@@ -150,6 +150,7 @@ public class Server extends AbstractServer {
         Message response = database.getTicketsManager().PurchaseBundleTickets(request, loggedInUser);
         sendResponse(client, response);
         return response;
+        //TODO: implement this
     }
 
     private Message handleGetAllTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
