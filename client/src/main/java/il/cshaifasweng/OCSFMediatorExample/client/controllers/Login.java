@@ -71,7 +71,7 @@ public class Login {
                 .setRole(response.getRole());
 
         System.out.println(SessionKeysStorage.getInstance().toString());
-System.out.println(response.getRole().toString());
+        System.out.println(response.getRole().toString());
         Platform.runLater(()->{
             if (response.isSuccess()) {
                 if(response.getRole() == UserRole.CUSTOMER_SERVICE){
@@ -86,8 +86,9 @@ System.out.println(response.getRole().toString());
 
                     setRoot("BranchManagerMain");
                 }if(response.getRole() == UserRole.CONTENT_MANAGER){
-
                     setRoot("ContentManagerMain");
+                }if (response.getRole() == UserRole.GUEST){
+                    setRoot("GuestMain");
                 }
 
             }
@@ -97,9 +98,8 @@ System.out.println(response.getRole().toString());
 
     @FXML
     void LoginGuest(ActionEvent event) {
-        Platform.runLater(()-> {
-            setRoot("GuestMain");
-        });
+        LoginRequest loginRequest = new LoginRequest(UserNameTxt.getText(), Password.getText());
+        Client.getClient().sendToServer(new Message(loginRequest, MessageType.LOGIN_AS_GUEST_REQUEST));
 
     }
 

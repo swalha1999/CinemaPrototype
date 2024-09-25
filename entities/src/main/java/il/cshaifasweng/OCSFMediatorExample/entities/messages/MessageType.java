@@ -14,6 +14,8 @@ public enum MessageType implements Serializable {
     LOGOUT_RESPONSE,
     REGISTER_REQUEST,
     REGISTER_RESPONSE,
+    LOGIN_AS_GUEST_REQUEST,
+    LOGIN_AS_GUEST_RESPONSE,
 
     // USERS
     GET_ALL_USERS_REQUEST,

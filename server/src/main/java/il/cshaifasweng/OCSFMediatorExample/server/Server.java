@@ -51,7 +51,7 @@ public class Server extends AbstractServer {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
-        if (loggedInUser == null && loggedInUser.getRole() != UserRole.GUEST) {
+        if (loggedInUser == null) {
             return sendErrorMessage(client, "Error! User is not logged in");
         }
 
@@ -196,11 +196,30 @@ public class Server extends AbstractServer {
             case REGISTER_REQUEST:
                 handleRegisterRequest(request, client);
                 break;
+            case LOGIN_AS_GUEST_REQUEST:
+                handleLoginAsGuset(request, client);
+                break;
 
             default:
                 sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it this is not supported in V2");
                 break;
         }
+    }
+
+    private void handleLoginAsGuset(Message request, ConnectionToClient client) {
+        LoginResponse loginAsGuestResponse = database.getUsersManager().loginAsGuest(request, client);
+        Message response = new Message(loginAsGuestResponse, MessageType.LOGIN_RESPONSE);
+        if (loginAsGuestResponse.isSuccess()) {
+            LoggedInUser loggedInUser = new LoggedInUser(
+                    loginAsGuestResponse.getSessionKey(),
+                    loginAsGuestResponse.getUsername(),
+                    loginAsGuestResponse.getUserId(),
+                    loginAsGuestResponse.getRole(),
+                    client
+            );
+            sessionKeys.put(loginAsGuestResponse.getSessionKey(), loggedInUser);
+        }
+        sendResponse(client, response);
     }
 
     private Message handleLoginRequest(Message request, ConnectionToClient client) {

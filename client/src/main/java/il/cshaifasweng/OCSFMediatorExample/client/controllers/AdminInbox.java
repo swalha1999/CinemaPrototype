@@ -30,8 +30,6 @@ public class AdminInbox {
     @FXML // fx:id="rejectBtn"
     private Button rejectBtn; // Value injected by FXMLLoader
 
-
-
     public void initialize() {
         // Register the EventBus
         EventBus.getDefault().register(this);
@@ -97,7 +95,7 @@ public class AdminInbox {
         messagePane.getStyleClass().add("ticket-pane");
         messagePane.setPrefWidth(300);
 
-        Label senderLabel = new Label("Sender: " + priceChangeRequest.getContentManager().getUsername();
+        Label senderLabel = new Label("Sender: " + priceChangeRequest.getContentManager().getUsername());
         senderLabel.setLayoutX(14.0);
         senderLabel.setLayoutY(14.0);
         senderLabel.getStyleClass().add("ticket-label");
