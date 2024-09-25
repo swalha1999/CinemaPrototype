@@ -51,7 +51,7 @@ public class Server extends AbstractServer {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
 
-        if (loggedInUser == null) {
+        if (loggedInUser == null && loggedInUser.getRole() != UserRole.GUEST) {
             return sendErrorMessage(client, "Error! User is not logged in");
         }
 
