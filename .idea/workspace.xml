@@ -9,8 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb2f1a72-2d6b-4e6c-8e0b-a9636e54856f" name="Changes" comment="remove gpt comments">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="fb2f1a72-2d6b-4e6c-8e0b-a9636e54856f" name="Changes" comment="project config">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/AdminMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/AdminMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/GuestMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/GuestMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/MovieDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/MovieDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/SeatPickerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/il/cshaifasweng/OCSFMediatorExample/client/controllers/SeatPickerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +223,7 @@
       <workItem from="1726931468229" duration="9551000" />
       <workItem from="1727020608041" duration="9247000" />
       <workItem from="1727196597687" duration="7398000" />
-      <workItem from="1727270509463" duration="12305000" />
+      <workItem from="1727270509463" duration="14152000" />
     </task>
     <task id="LOCAL‎-00001" summary="in file">
       <option name="closed" value="true" />
@@ -541,7 +545,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1726939748747</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL‎-00041" summary="project config">
+      <option name="closed" value="true" />
+      <created>1727290941302</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL‎-00041" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1727290941302</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +588,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="migrated get all users to V3 message type" />
     <MESSAGE value="migrated get my Tickets to V3 message type" />
     <MESSAGE value="migrated block user to V3 Message" />
     <MESSAGE value="migrated unblock user to V3 Message" />
@@ -601,7 +612,8 @@
     <MESSAGE value="remvoed unsetery code" />
     <MESSAGE value="remove the cache on admin logout" />
     <MESSAGE value="remove gpt comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove gpt comments" />
+    <MESSAGE value="project config" />
+    <option name="LAST_COMMIT_MESSAGE" value="project config" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

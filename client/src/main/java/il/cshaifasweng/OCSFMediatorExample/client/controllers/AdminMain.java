@@ -136,7 +136,6 @@ public class AdminMain {
                     mainPane.setCenter(loadFXMLPane(ui));
                 }
         );
-
     }
 
     public void preLoadPages() {
@@ -181,6 +180,7 @@ public class AdminMain {
     @FXML
     void showAdminInbox(ActionEvent event) {
         loadUI("AdminInbox");
-
     }
+
+
 }
