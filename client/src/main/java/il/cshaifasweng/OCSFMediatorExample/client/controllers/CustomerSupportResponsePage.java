@@ -35,6 +35,14 @@ public class CustomerSupportResponsePage {
     private Label userNameLabel; // Value injected by FXMLLoader
 
     @FXML
+    private void initialize() {
+        String currentUsername = SessionKeysStorage.getInstance().getUsername();
+
+        EventBus.getDefault().register(this);
+
+    }
+
+    @FXML
     void handleReply(ActionEvent event) {
         try {
             // Check if the client is connected to the server
@@ -69,13 +77,7 @@ public class CustomerSupportResponsePage {
         }
     }
 
-    @FXML
-    private void initialize() {
-        String currentUsername = SessionKeysStorage.getInstance().getUsername();
 
-        EventBus.getDefault().register(this);
-
-    }
 
     @Subscribe
     public void onUIShow(ShowSideUIEvent event,Object dataForPage) {
