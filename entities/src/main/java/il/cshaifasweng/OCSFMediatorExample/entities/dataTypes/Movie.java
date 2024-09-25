@@ -22,6 +22,7 @@ public class Movie implements Serializable {
     private MovieGenre genre;
     private Country country;
     private String imageUrl;
+    private String movieUrl;
 
     @Lob
     @Column(name = "image", columnDefinition = "MEDIUMBLOB")
@@ -61,6 +62,7 @@ public class Movie implements Serializable {
         this.comingSoon = other.comingSoon;
         this.isOnlineMovie = other.isOnlineMovie;
         this.actors = other.actors;
+        this.movieUrl = other.movieUrl;
     }
 
     public Movie(String name, Date releaseDate) {
@@ -99,6 +101,16 @@ public class Movie implements Serializable {
         this.description = description;
         return this ;
     }
+
+    public String getMovieUrl() {
+        return movieUrl;
+    }
+
+    public Movie setMovieUrl(String movieUrl) {
+        this.movieUrl = movieUrl;
+        return this;
+    }
+
 
     public Language getLanguage() {
         return language;
@@ -254,6 +266,7 @@ public class Movie implements Serializable {
         this.imageBytes = movie.imageBytes;
         this.comingSoon = movie.comingSoon;
         this.isOnlineMovie = movie.isOnlineMovie;
+        this.movieUrl = movie.movieUrl;
         return this;
     }
 
