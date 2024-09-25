@@ -147,7 +147,7 @@ public class Server extends AbstractServer {
     }
 
     private Message handleSendReplyTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        Message response = database.getSupportTicketsManager().;
+        Message response = database.getTicketsManager().PurchaseBundleTickets(request, loggedInUser);
         sendResponse(client, response);
         return response;
     }
