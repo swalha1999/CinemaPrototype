@@ -9,6 +9,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.PriceChangeRequest
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,6 +19,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Objects;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
+
 public class EditPrice {
 
 
@@ -26,6 +29,16 @@ public class EditPrice {
 
     @FXML
     private TextField PriceText;
+
+    @FXML // fx:id="returnBtn"
+    private Button returnBtn; // Value injected by FXMLLoader
+
+    @FXML
+    void onReturn(ActionEvent event) {
+        Platform.runLater(() -> {
+            showSideUI("CinemaInfo");
+        });
+    }
 
     @FXML
     void EditPrice(ActionEvent event) {

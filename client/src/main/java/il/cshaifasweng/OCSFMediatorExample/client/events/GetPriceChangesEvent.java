@@ -1,6 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.events;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
+
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.PriceChangeRequest;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 
