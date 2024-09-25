@@ -26,47 +26,23 @@ import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXML;
 
 public class AdminMain {
 
+
+    @FXML private Button AdminInbox;
+    @FXML private BorderPane mainPane;
+    @FXML private Label AdminLabel;
+    @FXML private Button logoutBtn;
+    @FXML private Button AvailableMoviesBtn;
+    @FXML private Button CustomersBtn;
+    @FXML private Button DashBoardBtn;
+    @FXML private Button LogOutBtn;
+    @FXML private Button MoviesBtn;
+    @FXML private Button ScreeningsBtn;
+    @FXML private BorderPane rootPane;
+    @FXML private StackPane stackPaneMain;
+    @FXML private Label user;
+
     NotificationPane notificationPane;
 
-    @FXML
-    private Button AdminInbox;
-
-    @FXML
-    private BorderPane mainPane;
-
-    @FXML
-    private Label AdminLabel;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button AvailableMoviesBtn;
-
-    @FXML
-    private Button CustomersBtn;
-
-    @FXML
-    private Button DashBoardBtn;
-
-    @FXML
-    private Button LogOutBtn;
-
-    @FXML
-    private Button MoviesBtn;
-
-    @FXML
-    private Button ScreeningsBtn;
-
-
-    @FXML
-    private BorderPane rootPane;
-
-    @FXML
-    private StackPane stackPaneMain;
-
-    @FXML
-    private Label user;
 
     @FXML
     public void initialize() {
@@ -107,6 +83,7 @@ public class AdminMain {
         Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
         Platform.runLater(() -> {
             clearAllUICache();
+            SessionKeysStorage.getInstance().clearSession();
             setRoot("Login");
         });
     }
