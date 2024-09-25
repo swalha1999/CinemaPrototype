@@ -95,18 +95,18 @@
             <HBox spacing="10.0">
                <children>
                   <Label text="Items Purchased:" />
-                  <Label fx:id="NumberItemPurchLabel" styleClass="label-info" text="[Number of Items]" />
+                  <Label fx:id="NumberItemPurchLabel" styleClass="label-info" text="1" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
                   <Label text="Total Amount:" />
-                  <Label fx:id="TotalAmountLabel" styleClass="label-info" text="[Total Amount]" />
+                  <Label fx:id="TotalAmountLabel" styleClass="label-info" text="700₪ " />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="ConfirmPurchaseBtn" layoutX="217.0" layoutY="606.0" style="-fx-background-color: #32cd32; -fx-padding: 12px 24px; -fx-background-radius: 10px; -fx-background-radius: 10px;" styleClass="button-confirm" stylesheets="@css/buttonHover.css" text="Confirm Purchase" textFill="WHITE">
+      <Button fx:id="ConfirmPurchaseBtn" layoutX="217.0" layoutY="606.0" onAction="#ConfirmPurchase" style="-fx-background-color: #32cd32; -fx-padding: 12px 24px; -fx-background-radius: 10px; -fx-background-radius: 10px;" styleClass="button-confirm" stylesheets="@css/buttonHover.css" text="Confirm Purchase" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

@@ -43,6 +43,7 @@ public class UserMain {
     @FXML private BorderPane mainPane;
     @FXML private Label UserLabel;
     @FXML private StackPane stackPaneMain;
+    @FXML private Button BundleBtn;
 
     NotificationPane notificationPane;
 
@@ -88,6 +89,9 @@ public class UserMain {
     void showDashBoard(ActionEvent event) {
         loadUI("SupportPage");
     }
+
+    @FXML
+    void showPurchaseBundle(ActionEvent event) {loadUI("PurchaseBundle");}
 
     @FXML
     void logOut(ActionEvent event) throws IOException {

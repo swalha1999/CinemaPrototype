@@ -13,7 +13,7 @@
     <BorderPane fx:id="rootPane">
         <left>
             <VBox alignment="CENTER" prefHeight="850.0" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
-            <Label alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" text="Cinema City" textFill="#ecf0f1">
+            <Label alignment="TOP_CENTER" prefHeight="75.0" prefWidth="230.0" text="Cinema City" textFill="#ecf0f1">
                <font>
                   <Font name="Bell MT Bold" size="32.0" />
                </font>
@@ -33,14 +33,15 @@
                   <Font name="Bodoni MT" size="32.0" />
                </font>
             </Label>
-                <Button fx:id="DashBoard_Btn" alignment="CENTER" onAction="#showDashBoard" prefHeight="40.0" prefWidth="240.0" styleClass="sidebar-button" text="Support Page">
+            <Button fx:id="BundleBtn" alignment="CENTER" onAction="#showPurchaseBundle" prefHeight="40.0" prefWidth="240.0" styleClass="sidebar-button" text="Bundle Purchase">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/complaint_10134886.png" />
+                        <Image url="@images/package.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            </Button>
                 <Button fx:id="UpComingMovies_Btn" alignment="CENTER" onAction="#ShowUpcomingMovies" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-button" text="UpComing Movies">
                <graphic>
                   <ImageView fitHeight="34.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
@@ -78,6 +79,14 @@
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/receive-mail.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+                <Button fx:id="DashBoard_Btn" alignment="CENTER" onAction="#showDashBoard" prefHeight="40.0" prefWidth="240.0" styleClass="sidebar-button" text="Support Page">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/complaint_10134886.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
