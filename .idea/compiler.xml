@@ -6,13 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="client" />
+        <module name="entities" />
+        <module name="server" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="client" target="21" />
-      <module name="entities" target="21" />
-      <module name="OCSFMediatorExample" target="21" />
-      <module name="server" target="21" />
-    </bytecodeTargetLevel>
   </component>
 </project>
