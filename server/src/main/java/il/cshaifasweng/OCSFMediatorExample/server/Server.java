@@ -693,8 +693,10 @@ public class Server extends AbstractServer {
         }
 
         Screening screening = (Screening) request.getDataObject();
+
         String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
         addNotification(message,screening.getStartingAt().minusHours(1),loggedInUser);
+
         return response;
     }
 

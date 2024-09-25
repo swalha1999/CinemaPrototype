@@ -34,7 +34,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieTicket> tickets = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "contentManager")
     private Set<PriceChangeRequest> priceChangeRequests = new HashSet<>();
 
     @OneToOne
