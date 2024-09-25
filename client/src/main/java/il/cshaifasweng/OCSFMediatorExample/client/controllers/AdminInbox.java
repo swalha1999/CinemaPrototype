@@ -137,11 +137,18 @@ public class AdminInbox {
                 .setDataObject(priceChangeRequest);
         Client.getClient().sendToServer(acceptPriceChangeRequestMessage);
 
+        requestData();
 
     }
 
     // Handling rejection of price change requests
     void onReject(PriceChangeRequest priceChangeRequest) {
-        // Handle rejection logic for the price change request
+        // send to the server the rejected price change request
+        Message rejectPriceChangeRequestMessage = new Message(MessageType.DENY_PRICE_CHANGE_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(priceChangeRequest);
+        Client.getClient().sendToServer(rejectPriceChangeRequestMessage);
+
+        requestData();
     }
 }
