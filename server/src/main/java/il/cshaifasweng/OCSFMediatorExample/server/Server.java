@@ -75,6 +75,7 @@ public class Server extends AbstractServer {
             case SEND_SUPPORT_TICKET_REQUEST -> handleSendSupportTicketRequest(request,client,loggedInUser);
             case GET_ALL_SUPPORT_TICKETS_REQUEST -> handleGetSupportTicketsRequest(request,client,loggedInUser);
             case GET_ALL_TICKETS_REQUEST -> handleGetAllTicketsRequest(request,client,loggedInUser);
+            case PURCHASE_TICKETS_BUNDLE_REQUEST -> handlePurchaseBundleRequest(request,client,loggedInUser);
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
@@ -106,6 +107,13 @@ public class Server extends AbstractServer {
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handlePurchaseBundleRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        //Message response = database.getTicketsManager().Purch(request, loggedInUser);
+
+
+        return request;
     }
 
     private Message handleGetAllTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {

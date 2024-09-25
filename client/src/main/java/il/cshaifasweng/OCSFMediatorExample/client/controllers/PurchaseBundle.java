@@ -16,13 +16,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.PaymentUtil.isValidCard;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 
 public class PurchaseBundle {
-    private final MovieTicket[] bundle = new MovieTicket[20];
 
     @FXML
     private TextField CVV_Txt;
@@ -45,30 +45,17 @@ public class PurchaseBundle {
 
         showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
         CVV_Txt.clear();
-        // Prepare details for the purchase event
-        for(int i=0 ; i<20 ; i++ ){
-            Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
-                    .setDataObject(bundle)
+            Message request = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_REQUEST)
+                    .setDataObject(1)
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
             Client.getClient().sendToServer(request);
-        }
-
     }
 
     @Subscribe
     public void onShowSideUI(ShowSideUIEvent event) {
-        if (!event.getUIName().equals("Purchase")) {
+        if (!event.getUIName().equals("PurchaseBundle")) {
             return;
         }
-        for(int i=0 ; i<20 ; i++ ){
-            bundle[i].setScreening(null);
-            bundle[i].setSeat(null);
-            bundle[i].setBundleTicket(true);
-        }
-
-
-        OrderIdLabel.setText(String.valueOf(bundle[0].getId()));
-
     }
 }

@@ -86,22 +86,29 @@
       </Label>
       <VBox layoutX="62.0" layoutY="468.0" prefHeight="77.0" prefWidth="417.0" spacing="10.0" styleClass="summary-box">
          <children>
+            <HBox spacing="10.0" />
             <HBox spacing="10.0">
                <children>
-                  <Label text="Order ID:" />
-                  <Label fx:id="OrderIdLabel" styleClass="label-info" text="[Order ID]" />
+                  <Label prefHeight="26.0" prefWidth="161.0" text="Items Purchased:">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label fx:id="NumberItemPurchLabel" prefHeight="32.0" prefWidth="32.0" styleClass="label-info" text="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Label text="Items Purchased:" />
-                  <Label fx:id="NumberItemPurchLabel" styleClass="label-info" text="1" />
-               </children>
-            </HBox>
-            <HBox spacing="10.0">
-               <children>
-                  <Label text="Total Amount:" />
-                  <Label fx:id="TotalAmountLabel" styleClass="label-info" text="700₪ " />
+                  <Label prefHeight="28.0" prefWidth="155.0" text="Total Amount:">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label fx:id="TotalAmountLabel" styleClass="label-info" text="700₪ ">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </HBox>
          </children>
