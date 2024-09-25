@@ -247,4 +247,11 @@ public class TicketDAO {
     public void setSession(Session session) {
         this.session = session;
     }
+
+
+    public Message PurchaseBundleTickets(Message request, LoggedInUser loggedInUser) {
+
+        return request;
+    }
+
 }

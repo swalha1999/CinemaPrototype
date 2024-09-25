@@ -110,10 +110,10 @@ public class Server extends AbstractServer {
     }
 
     private Message handlePurchaseBundleRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        //Message response = database.getTicketsManager().Purch(request, loggedInUser);
+        Message response = database.getTicketsManager().PurchaseBundleTickets(request, loggedInUser);
 
 
-        return request;
+        return response;
     }
 
     private Message handleGetAllTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
