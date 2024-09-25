@@ -9,7 +9,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -22,6 +24,14 @@ public class AdminInbox {
     @FXML
     private VBox MessageContainer;
 
+    @FXML // fx:id="acceptBtn"
+    private Button acceptBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="rejectBtn"
+    private Button rejectBtn; // Value injected by FXMLLoader
+
+
+
     public void initialize() {
         // Register the EventBus
         EventBus.getDefault().register(this);
@@ -30,6 +40,16 @@ public class AdminInbox {
         Message message = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
+    }
+
+    @FXML
+    void onAccept(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onReject(ActionEvent event) {
+
     }
 
     // Add message to the GUI dynamically
@@ -82,7 +102,8 @@ public class AdminInbox {
         senderLabel.setLayoutY(14.0);
         senderLabel.getStyleClass().add("ticket-label");
 
-        Label contentLabel = new Label("Message: " + "Request to change the price for this screening - " + priceChangeRequest.getScreening());
+        Label contentLabel = new Label("Message: " + "Request to change the price for this screening - " + priceChangeRequest.getScreening()
+                + "to this price:" + priceChangeRequest.getNewPrice());
         contentLabel.setLayoutX(14.0);
         contentLabel.setLayoutY(34.0);
         contentLabel.getStyleClass().add("ticket-label");
