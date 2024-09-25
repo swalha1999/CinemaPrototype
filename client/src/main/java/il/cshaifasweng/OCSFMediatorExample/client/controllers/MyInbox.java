@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyScreeningsEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetReplyTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemovedTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
@@ -109,6 +110,7 @@ public class MyInbox {
             System.err.println("GetMyScreeningsEvent or Screening data is null.");
         }
     }
+
     @Subscribe
     public void ShowRemovedTicket(RemovedTicketEvent event) {
         MovieTicket ticket = event.getTicket();
@@ -129,6 +131,11 @@ public class MyInbox {
 
         // Add the message to the inbox
         addMessage("Cinema System", messageContent);
+    }
+
+    @Subscribe
+    public void onGetReplyTicketResponse(GetReplyTicketEvent event){
+
     }
 
 
