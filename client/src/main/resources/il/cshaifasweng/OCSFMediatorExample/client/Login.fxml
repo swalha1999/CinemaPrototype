@@ -31,7 +31,8 @@
             <Button fx:id="LoginBtn" layoutX="121.0" layoutY="419.0" mnemonicParsing="false" onAction="#LoginAccount" prefHeight="50.0" prefWidth="250.0" styleClass="login-button" text="Login" />
 
             <!-- Register Button -->
-            <Button fx:id="registerBtn" layoutX="121.0" layoutY="482.0" mnemonicParsing="false" onAction="#createNewAccount" prefHeight="50.0" prefWidth="250.0" styleClass="register-button" text="Create New Account" />
+            <Button fx:id="registerBtn" layoutX="121.0" layoutY="484.0" mnemonicParsing="false" onAction="#createNewAccount" prefHeight="50.0" prefWidth="250.0" styleClass="register-button" text="Create New Account" />
+         <Button fx:id="LoginGuestBtn" layoutX="121.0" layoutY="548.0" mnemonicParsing="false" onAction="#LoginGuest" prefHeight="50.0" prefWidth="250.0" styleClass="login-button" text="Continue As Guest" />
         </children>
     </AnchorPane>
 </StackPane>

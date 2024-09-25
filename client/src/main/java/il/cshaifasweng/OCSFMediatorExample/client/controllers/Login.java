@@ -38,6 +38,9 @@ public class Login {
     @FXML
     private StackPane stackPaneMain; // Value injected by FXMLLoader
 
+    @FXML
+    private Button LoginGuestBtn;
+
     NotificationPane notificationPane;
 
     @FXML
@@ -90,6 +93,14 @@ System.out.println(response.getRole().toString());
             }
             showNotification(response.getMessage(), response.isSuccess());
         });
+    }
+
+    @FXML
+    void LoginGuest(ActionEvent event) {
+        Platform.runLater(()-> {
+            setRoot("GuestMain");
+        });
+
     }
 
     @Subscribe

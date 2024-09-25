@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class SeatPickerController {
@@ -70,6 +72,10 @@ public class SeatPickerController {
     private void toggleSeatSelection(seatContainer seatContainer) {
         // If the seat is already selected, deselect it
         if (selectedSeats.contains(seatContainer.getSeat())) {
+            if(SessionKeysStorage.getInstance().getRole() == UserRole.GUEST){
+                showNotification("Login To Continue",false);
+                return;
+            }
             selectedSeats.remove(seatContainer.getSeat());
             seatContainer.getSeatPane().getStyleClass().remove("selected");
         } else {
