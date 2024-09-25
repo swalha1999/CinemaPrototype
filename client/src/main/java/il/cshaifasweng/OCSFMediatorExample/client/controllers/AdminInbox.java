@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,31 +43,44 @@ public class AdminInbox {
 
     @FXML
     void onAccept(ActionEvent event) {
-
+        // Handle accept button click from the UI
     }
 
     @FXML
     void onReject(ActionEvent event) {
-
+        // Handle reject button click from the UI
     }
 
-    // Add message to the GUI dynamically
-    public void addMessage(String sender, String content) {
+    // Add message to the GUI dynamically for Support Tickets
+    public void addMessage(SupportTicket ticket) {
         AnchorPane messagePane = new AnchorPane();
         messagePane.getStyleClass().add("ticket-pane");
-        messagePane.setPrefWidth(300);
+        messagePane.setPrefWidth(700);
 
-        Label senderLabel = new Label("Sender: " + sender);
+        Label senderLabel = new Label("Sender: " + ticket.getUser().getUsername());
         senderLabel.setLayoutX(14.0);
         senderLabel.setLayoutY(14.0);
         senderLabel.getStyleClass().add("ticket-label");
 
-        Label contentLabel = new Label("Message: " + content);
+        Label contentLabel = new Label("Message: " + ticket.getDescription());
         contentLabel.setLayoutX(14.0);
         contentLabel.setLayoutY(34.0);
         contentLabel.getStyleClass().add("ticket-label");
 
-        messagePane.getChildren().addAll(senderLabel, contentLabel);
+        HBox buttonBox = new HBox(10);
+        buttonBox.setLayoutX(14.0);
+        buttonBox.setLayoutY(70.0);
+
+//        Button acceptButton = new Button("Accept");
+//        acceptButton.getStyleClass().add("ticket-button");
+//        acceptButton.setOnAction(event -> onAccept(ticket));
+//
+//        Button rejectButton = new Button("Reject");
+//        rejectButton.getStyleClass().add("ticket-button");
+//        rejectButton.setOnAction(event -> onReject(ticket));
+//
+//        buttonBox.getChildren().addAll(acceptButton, rejectButton);
+        messagePane.getChildren().addAll(senderLabel, contentLabel, buttonBox);
 
         MessageContainer.getChildren().add(messagePane);
     }
@@ -74,57 +88,84 @@ public class AdminInbox {
     // Subscribe to the event to receive and display support tickets
     @Subscribe
     public void onGetSupportTicketRequest(GetAllSupportTicketsEvent event) {
-        // Get the list of support tickets from the event
         List<SupportTicket> supportTickets = event.getSupportTickets();
 
-        // Use Platform.runLater to make sure GUI updates are done on the JavaFX thread
         Platform.runLater(() -> {
             MessageContainer.getChildren().clear();  // Clear any previous messages
 
-            // Iterate through the support tickets and add them to the GUI
             for (SupportTicket ticket : supportTickets) {
-                String sender = ticket.getUser().getUsername();
-                String content = ticket.getDescription();
-                addMessage(sender, content);
+                addMessage(ticket);
             }
         });
     }
 
+    // Method to add a price change request to the GUI dynamically
     public void addPriceChangeRequest(PriceChangeRequest priceChangeRequest) {
         AnchorPane messagePane = new AnchorPane();
         messagePane.getStyleClass().add("ticket-pane");
-        messagePane.setPrefWidth(300);
+        messagePane.setPrefWidth(700);
 
         Label senderLabel = new Label("Sender: " + priceChangeRequest.getContentManager().getUsername());
         senderLabel.setLayoutX(14.0);
         senderLabel.setLayoutY(14.0);
         senderLabel.getStyleClass().add("ticket-label");
 
-        Label contentLabel = new Label("Message: " + "Request to change the price for this screening - " + priceChangeRequest.getScreening()
-                + "to this price:" + priceChangeRequest.getNewPrice());
+        Label contentLabel = new Label("Message: " + "Request to change the price for this screening - "
+                + priceChangeRequest.getScreening() + " to this price: " + priceChangeRequest.getNewPrice());
         contentLabel.setLayoutX(14.0);
         contentLabel.setLayoutY(34.0);
         contentLabel.getStyleClass().add("ticket-label");
 
-        messagePane.getChildren().addAll(senderLabel, contentLabel);
+        HBox buttonBox = new HBox(10);
+        buttonBox.setLayoutX(14.0);
+        buttonBox.setLayoutY(70.0);
+
+        Button acceptButton = new Button("Accept");
+        acceptButton.getStyleClass().add("ticket-button");
+        acceptButton.setOnAction(event -> onAccept(priceChangeRequest));
+
+        Button rejectButton = new Button("Reject");
+        rejectButton.getStyleClass().add("ticket-button");
+        rejectButton.setOnAction(event -> onReject(priceChangeRequest));
+
+        buttonBox.getChildren().addAll(acceptButton, rejectButton);
+        messagePane.getChildren().addAll(senderLabel, contentLabel, buttonBox);
 
         MessageContainer.getChildren().add(messagePane);
     }
 
     @Subscribe
     public void onGetPriceChangesRequest(GetPriceChangesEvent event) {
-
         List<PriceChangeRequest> priceChangeRequests = event.getPriceChangeRequests();
 
         Platform.runLater(() -> {
             MessageContainer.getChildren().clear();
 
-            // Iterate through the support tickets and add them to the GUI
             for (PriceChangeRequest priceChangeRequest : priceChangeRequests) {
                 addPriceChangeRequest(priceChangeRequest);
             }
-
         });
+    }
 
+    // Handling acceptance of support tickets
+    void onAccept(SupportTicket ticket) {
+        // Handle acceptance logic for the ticket
+        // e.g., send a message to the server or update the status of the ticket
+    }
+
+    // Handling rejection of support tickets
+    void onReject(SupportTicket ticket) {
+        // Handle rejection logic for the ticket
+    }
+
+    // Handling acceptance of price change requests
+    void onAccept(PriceChangeRequest priceChangeRequest) {
+        // Handle acceptance logic for the price change request
+
+    }
+
+    // Handling rejection of price change requests
+    void onReject(PriceChangeRequest priceChangeRequest) {
+        // Handle rejection logic for the price change request
     }
 }
