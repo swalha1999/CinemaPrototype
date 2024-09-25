@@ -214,9 +214,19 @@ public class ScreeningDAO {
                     .setMessage("User is not a content manager");
         }
 
+        //get screening from the database
+        Screening screening = session.get(Screening.class, priceChangeRequestFromUser.getScreening().getId());
+        if (screening == null) {
+            return response.setSuccess(false)
+                    .setMessage("Screening not found");
+        }
+
+        // get the movie from the screening
+        Movie movie = session.get(Movie.class, screening.getMovie().getId());
+
         PriceChangeRequest priceChangeRequest = new PriceChangeRequest();
-        priceChangeRequest.setMovie(priceChangeRequestFromUser.getMovie());
-        priceChangeRequest.setScreening(priceChangeRequestFromUser.getScreening());
+        priceChangeRequest.setMovie(movie);
+        priceChangeRequest.setScreening(screening);
         priceChangeRequest.setNewPrice(priceChangeRequestFromUser.getNewPrice());
         priceChangeRequest.setContentManager(contentManager);
 
@@ -229,7 +239,7 @@ public class ScreeningDAO {
                 .setDataObject(priceChangeRequest);
     }
 
-    public Message getAllPriceChangesRequest( Message req, LoggedInUser loggedInUser) {
+    public Message getAllPriceChangesRequest(Message req, LoggedInUser loggedInUser) {
         Message response = new Message(MessageType.GET_PRICE_CHANGES_RESPONSE);
 
         if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
