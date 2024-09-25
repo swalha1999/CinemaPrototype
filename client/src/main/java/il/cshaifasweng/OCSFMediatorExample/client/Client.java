@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.client.controllers.AddScreening;
 import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;

@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -12,10 +13,11 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class VideoPlayer {
 
-    // Reference to the root AnchorPane from the FXML
-    @FXML AnchorPane rootPane;
+    @FXML private AnchorPane rootPane;  // AnchorPane from the FXML
+    @FXML private Button muteButton;    // Button for muting the video
 
     private MediaView mediaView;
+    private MediaPlayer mediaPlayer;
 
     public void initialize() {
         // Register this controller with EventBus
@@ -24,19 +26,27 @@ public class VideoPlayer {
         // Create a MediaView and add it to the AnchorPane
         mediaView = new MediaView();
         rootPane.getChildren().add(mediaView);
+
+        // Adjust the MediaView to be larger
+        mediaView.setFitHeight(600);
+        mediaView.setFitWidth(800);
+
         AnchorPane.setTopAnchor(mediaView, 0.0);
         AnchorPane.setBottomAnchor(mediaView, 0.0);
         AnchorPane.setLeftAnchor(mediaView, 0.0);
         AnchorPane.setRightAnchor(mediaView, 0.0);
 
-        // Start playing the video when the controller is initialized
+        // Start playing the video
         String videoUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4";
         playVideo(videoUrl);
+
+        // Configure the mute button action
+        muteButton.setOnAction(event -> toggleMute());
     }
 
     private void playVideo(String videoUrl) {
         Media media = new Media(videoUrl); // Create a Media object from the URL
-        MediaPlayer mediaPlayer = new MediaPlayer(media); // Create a MediaPlayer for the media
+        mediaPlayer = new MediaPlayer(media); // Create a MediaPlayer for the media
         mediaView.setMediaPlayer(mediaPlayer); // Set the MediaPlayer to the MediaView
 
         // Play the video
@@ -48,16 +58,25 @@ public class VideoPlayer {
         });
     }
 
+    // Toggle mute/unmute on the video
+    private void toggleMute() {
+        if (mediaPlayer.isMute()) {
+            mediaPlayer.setMute(false);
+            muteButton.setText("Mute");
+        } else {
+            mediaPlayer.setMute(true);
+            muteButton.setText("Unmute");
+        }
+    }
+
     @Subscribe
     public void getMovieDetails(ShowSideUIEvent event) {
-        // Make sure this event is for this controller
         if (!event.getUIName().equals("VideoPlayer")) {
             return;
         }
     }
 
     public void dispose() {
-        // Unregister from EventBus when no longer needed
         EventBus.getDefault().unregister(this);
     }
 }
