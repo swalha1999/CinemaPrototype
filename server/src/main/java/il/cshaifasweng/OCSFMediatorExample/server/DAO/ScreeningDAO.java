@@ -266,7 +266,7 @@ public class ScreeningDAO {
                     .setMessage("Price change request not found");
         }
 
-        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
+        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES && loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
             return response.setSuccess(false)
                     .setMessage("User is not a manager");
         }
@@ -294,7 +294,7 @@ public class ScreeningDAO {
                     .setMessage("Price change request not found");
         }
 
-        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
+        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES && loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
             return response.setSuccess(false)
                     .setMessage("User is not a manager");
         }
