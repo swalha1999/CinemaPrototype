@@ -169,5 +169,4 @@ public class AdminMain {
         loadUI("AdminInbox");
     }
 
-
 }

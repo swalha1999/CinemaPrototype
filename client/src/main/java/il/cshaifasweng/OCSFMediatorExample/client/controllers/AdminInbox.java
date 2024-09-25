@@ -29,8 +29,9 @@ public class AdminInbox {
     public void initialize() {
         // Register the EventBus
         EventBus.getDefault().register(this);
+    }
 
-        // Send a request to get all support tickets
+    private void requestData() {
         Message getSupportTicketsMessage = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(getSupportTicketsMessage);
@@ -39,6 +40,7 @@ public class AdminInbox {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(priceChangeRequestMessage);
     }
+
 
     // Add message to the GUI dynamically for Support Tickets
     public void addMessage(SupportTicket ticket) {
@@ -129,7 +131,13 @@ public class AdminInbox {
 
     // Handling acceptance of price change requests
     void onAccept(PriceChangeRequest priceChangeRequest) {
-        // Handle acceptance logic for the price change request
+        // send to the server the accepted price change request
+        Message acceptPriceChangeRequestMessage = new Message(MessageType.APPROVE_PRICE_CHANGE_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(priceChangeRequest);
+        Client.getClient().sendToServer(acceptPriceChangeRequestMessage);
+
+
     }
 
     // Handling rejection of price change requests
