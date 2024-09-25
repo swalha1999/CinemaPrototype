@@ -3,6 +3,8 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
@@ -76,8 +78,11 @@ public class GuestMain {
     void ShowUpcomingMovies(ActionEvent event) {
         loadUI("UpcomingMovies");
     }
+
     @FXML
-    void ShowOnlineMoves(ActionEvent event) {loadUI("OnlineMovies");}
+    void ShowOnlineMoves(ActionEvent event) {
+        loadUI("OnlineMovies");
+    }
 
     @FXML
     void logOut(ActionEvent event) throws IOException {
@@ -87,7 +92,6 @@ public class GuestMain {
             clearAllUICache();
             setRoot("Login");
         });
-
     }
 
     @Subscribe
@@ -99,9 +103,7 @@ public class GuestMain {
         });
     }
 
-
     public void preLoadPages() {
-
         loadFXMLPane("MovieCatalog");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("OnlineMovies");
@@ -113,7 +115,16 @@ public class GuestMain {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
         Client.getClient().sendToServer(message);
+    }
 
+    @Subscribe
+    public void onShowNotification(ShowNotificationEvent event) {
+        notificationPane.showNotification(event.getMessage(), event.isSuccessful());
+    }
+
+    @Subscribe
+    public void onShowSideUIEvent(ShowSideUIEvent event) {
+        loadUI(event.getUIName());
     }
 
 }

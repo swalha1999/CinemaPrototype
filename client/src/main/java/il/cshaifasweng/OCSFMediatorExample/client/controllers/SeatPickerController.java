@@ -72,10 +72,6 @@ public class SeatPickerController {
     private void toggleSeatSelection(seatContainer seatContainer) {
         // If the seat is already selected, deselect it
         if (selectedSeats.contains(seatContainer.getSeat())) {
-            if(SessionKeysStorage.getInstance().getRole() == UserRole.GUEST){
-                showNotification("Login To Continue",false);
-                return;
-            }
             selectedSeats.remove(seatContainer.getSeat());
             seatContainer.getSeatPane().getStyleClass().remove("selected");
         } else {

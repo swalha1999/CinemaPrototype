@@ -70,6 +70,7 @@ public class MovieDetailsController {
         if (!event.getUIName().equals("MovieDetails") || event.getFirstObj() == null) {
             return;
         }
+        showNotification("We are in movie Details", false);
 
         Movie movie = (Movie) event.getFirstObj();
         movieToDisplay = movie;
@@ -77,7 +78,7 @@ public class MovieDetailsController {
             showNotification("ERROR: we expected to get data with the UI change with the Type Movie", false);
             return;
         }
-
+        showNotification("We are in movie Details", false);
         Message message = new Message( MessageType.GET_SCREENING_FOR_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(movie);
