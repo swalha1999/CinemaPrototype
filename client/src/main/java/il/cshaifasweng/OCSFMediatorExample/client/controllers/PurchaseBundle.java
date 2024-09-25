@@ -3,9 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Seat;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.event.ActionEvent;
@@ -14,10 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.PaymentUtil.isValidCard;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
@@ -46,7 +39,7 @@ public class PurchaseBundle {
 
         showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
         CVV_Txt.clear();
-        Message request = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_REQUEST)
+        Message request = new Message(MessageType.PURCHASE_BUNDLE_REQUEST)
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
         Client.getClient().sendToServer(request);

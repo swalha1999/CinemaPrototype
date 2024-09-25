@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities.messages;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import org.hibernate.loader.plan.exec.internal.OneToManyLoadQueryDetails;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,6 +24,10 @@ public class Message implements Serializable {
     String message = "no message";
     Object dataObject = "No data";
     String dataType = "No data type";
+
+    //another data object for the V3 version of the message
+    Object dataObject2 = "No data";
+    String dataType2 = "No data type";
 
     // for the V3 version of the message
     boolean success = false;
@@ -132,6 +137,22 @@ public class Message implements Serializable {
         this.type = type;
         return this;
     }
+
+    public Object getDataObject2() {
+        return dataObject2;
+    }
+
+    public Message setDataObject2(Object dataObject2) {
+        this.dataObject2 = dataObject2;
+        this.dataType2 = dataObject2 == null ? "null" :  dataObject2.getClass().getSimpleName();
+        return this;
+    }
+
+    public String getDataType2() {
+        return dataType2;
+    }
+
+
 
     public String toString() {
         return "Message{" +

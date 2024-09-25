@@ -75,7 +75,7 @@ public class Server extends AbstractServer {
             case SEND_SUPPORT_TICKET_REQUEST -> handleSendSupportTicketRequest(request,client,loggedInUser);
             case GET_ALL_SUPPORT_TICKETS_REQUEST -> handleGetSupportTicketsRequest(request,client,loggedInUser);
             case GET_ALL_TICKETS_REQUEST -> handleGetAllTicketsRequest(request,client,loggedInUser);
-            case PURCHASE_TICKETS_BUNDLE_REQUEST -> handlePurchaseBundleRequest(request,client,loggedInUser);
+            case PURCHASE_BUNDLE_REQUEST -> handlePurchaseBundleRequest(request,client,loggedInUser);
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);

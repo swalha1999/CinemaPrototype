@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import static il.cshaifasweng.OCSFMediatorExample.server.Main.session;
 import static il.cshaifasweng.OCSFMediatorExample.server.Server.addNotification;
 import static il.cshaifasweng.OCSFMediatorExample.server.Server.removeNotification;
 
@@ -251,7 +250,7 @@ public class TicketDAO {
 
     public Message PurchaseBundleTickets(Message request, LoggedInUser loggedInUser) {
 
-        Message response = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_RESPONSE);
+        Message response = new Message(MessageType.PURCHASE_BUNDLE_RESPONSE);
         User user  = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
 
         user.setRemainingTicketsPurchasedByBundle(user.getRemainingTicketsPurchasedByBundle() + 20);
