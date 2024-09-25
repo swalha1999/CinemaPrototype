@@ -41,9 +41,7 @@ public class MyTickets {
         returnTicketButton.setDisable(true);
 
         // Send request to server to fetch all tickets
-        Message message = new Message(MessageType.GET_MY_TICKETS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
+
     }
 
     @FXML

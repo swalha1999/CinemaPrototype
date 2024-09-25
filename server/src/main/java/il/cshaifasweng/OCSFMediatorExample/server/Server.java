@@ -693,21 +693,13 @@ public class Server extends AbstractServer {
 
     private Message handleRemoveTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message removeResponse = database.getTicketsManager().removeTicket(request, loggedInUser);
+        sendResponse(client, removeResponse);
 
-        Message updatedTicketsResponse = handleGetMyTicketsRequest(request, client, loggedInUser);
+        // update the tickets list for the user
+        Message getMyTicketsResponse = database.getTicketsManager().getMyTickets(new Message(MessageType.GET_MY_TICKETS_REQUEST), loggedInUser);
+        sendResponse(client, getMyTicketsResponse);
 
-        sendResponse(client, updatedTicketsResponse);
-
-        MovieTicket removedTicket = (MovieTicket) request.getDataObject();
-
-        Message response2 = new Message(MessageType.USER_TICKET_REMOVED_PATCH)
-                .setSessionKey(request.getSessionKey())
-                .setMessage("Ticket for " + removedTicket.getScreening().getMovie().getTitle() + " has been removed.")
-                .setDataObject(removedTicket);  // Add the removed ticket to the response
-
-        sendResponse(client, response2);
-
-        return updatedTicketsResponse;
+        return removeResponse;
     }
 
     private Message handleGetMyScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {

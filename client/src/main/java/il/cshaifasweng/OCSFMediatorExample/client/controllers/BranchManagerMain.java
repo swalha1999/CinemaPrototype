@@ -6,9 +6,13 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.LogoutEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowNotificationEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.utils.NotificationPane;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.LogoutRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,10 +21,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
-import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.*;
 
 public class BranchManagerMain {
 
@@ -63,22 +68,32 @@ public class BranchManagerMain {
         preLoadPages();
     }
     @FXML
-    void logOut(ActionEvent event) {
+    void logOut(ActionEvent event) throws IOException {
+        LogoutRequest logoutRequest = new LogoutRequest(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(new Message(logoutRequest, MessageType.LOGOUT_REQUEST));
+        Platform.runLater(() -> {
+            clearAllUICache();
+            setRoot("Login");
+        });
+    }
+    @Subscribe
+    public void onShowNotification(ShowNotificationEvent event) {
+        notificationPane.showNotification(event.getMessage(), event.isSuccessful());
+    }
 
+    @Subscribe
+    public void onShowSideUIEvent(ShowSideUIEvent event) {
+        loadUI(event.getUIName());
     }
     public void preLoadPages() {
        loadFXMLPane("BranchManagerDashBoard");
 
-        Message message = new Message();
 
-        message = new Message(MessageType.GET_ALL_USERS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
 
     }
     @FXML
     void showDashBoard(ActionEvent event) {
-        loadUI("BranchManagerDashBoard.fxml");
+        loadUI("BranchManagerDashBoard");
     }
     public void loadUI(String ui) {
         Platform.runLater(() ->
@@ -87,6 +102,15 @@ public class BranchManagerMain {
                 }
         );
 
+    }
+
+    @Subscribe
+    public void onLogoutEvent(LogoutEvent response) {
+        SessionKeysStorage.getInstance().clearSession();
+        Platform.runLater(() -> {
+            clearAllUICache();
+            setRoot("Login");
+        });
     }
 
 }

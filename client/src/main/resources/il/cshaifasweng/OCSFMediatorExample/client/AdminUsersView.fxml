@@ -6,23 +6,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="884.0" prefWidth="1172.0" stylesheets="@css/CustomersList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminUsersView">
-    <TableView fx:id="Users_Table" layoutX="26.0" layoutY="-7.0" prefHeight="588.0" prefWidth="1044.0" styleClass="table-view" AnchorPane.bottomAnchor="204.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="-7.0">
+<AnchorPane prefHeight="850.0" prefWidth="1026.0" style="-fx-background-color: #bdc3c7;" stylesheets="@css/CustomersList.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.AdminUsersView">
+    <TableView fx:id="Users_Table" layoutX="28.0" layoutY="14.0" prefHeight="650.0" prefWidth="980.0" styleClass="table-view" AnchorPane.bottomAnchor="183.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
         <columns>
-            <TableColumn fx:id="UserName_col" prefWidth="120" styleClass="table-column" text="UserName" />
-            <TableColumn fx:id="FirstName_col" prefWidth="120" styleClass="table-column" text="FirstName" />
-            <TableColumn fx:id="LastName_col" prefWidth="120" styleClass="table-column" text="LastName" />
-            <TableColumn fx:id="Email_col" prefWidth="150" styleClass="table-column" text="Email" />
-            <TableColumn fx:id="Phone_col" prefWidth="130" styleClass="table-column" text="Phone" />
+            <TableColumn fx:id="UserName_col" prefWidth="135.0" styleClass="table-column" text="UserName" />
+            <TableColumn fx:id="FirstName_col" prefWidth="110.0" styleClass="table-column" text="FirstName" />
+            <TableColumn fx:id="LastName_col" prefWidth="106.0" styleClass="table-column" text="LastName" />
+            <TableColumn fx:id="Email_col" prefWidth="162.0" styleClass="table-column" text="Email" />
+            <TableColumn fx:id="Phone_col" prefWidth="127.0" styleClass="table-column" text="Phone" />
             <TableColumn fx:id="Role_col" prefWidth="100" styleClass="table-column" text="Role" />
-            <TableColumn fx:id="IsLogged_col" prefWidth="100" styleClass="table-column" text="IsLogged" />
-            <TableColumn fx:id="IsBlocked_col" prefWidth="100" styleClass="table-column" text="IsBlocked" />
-            <TableColumn fx:id="isDeleted_col" prefWidth="100" styleClass="table-column" text="IsDeleted" />
+            <TableColumn fx:id="IsLogged_col" prefWidth="74.0" styleClass="table-column" text="IsLogged" />
+            <TableColumn fx:id="IsBlocked_col" prefWidth="85.0" styleClass="table-column" text="IsBlocked" />
+            <TableColumn fx:id="isDeleted_col" styleClass="table-column" text="IsDeleted" />
         </columns>
     </TableView>
-    <Button fx:id="MakeAdmin" layoutX="299.0" layoutY="740.0" mnemonicParsing="false" onAction="#ChangeRole" styleClass="action-button" text="Change Role" />
-    <Button fx:id="RemoveUser" layoutX="551.0" layoutY="740.0" mnemonicParsing="false" onAction="#RemoveUser" styleClass="action-button" text="Remove User" />
-    <Button fx:id="BlockUser" layoutX="770.0" layoutY="740.0" mnemonicParsing="false" onAction="#BlockUser" styleClass="action-button" text="Block User" />
-    <Button fx:id="UnlockUser" layoutX="962.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnblockUser" styleClass="action-button" text="UnBlock User" />
+    <Button fx:id="MakeAdmin" layoutX="291.0" layoutY="740.0" mnemonicParsing="false" onAction="#ChangeRole" styleClass="action-button" text="Change Role" />
+    <Button fx:id="RemoveUser" layoutX="469.0" layoutY="740.0" mnemonicParsing="false" onAction="#RemoveUser" styleClass="action-button" text="Remove User" />
+    <Button fx:id="BlockUser" layoutX="652.0" layoutY="741.0" mnemonicParsing="false" onAction="#BlockUser" styleClass="action-button" text="Block User" />
+    <Button fx:id="UnlockUser" layoutX="824.0" layoutY="740.0" mnemonicParsing="false" onAction="#UnblockUser" styleClass="action-button" text="UnBlock User" />
    <ComboBox fx:id="Customer_Role" layoutX="80.0" layoutY="749.0" prefWidth="150.0" />
 </AnchorPane>
