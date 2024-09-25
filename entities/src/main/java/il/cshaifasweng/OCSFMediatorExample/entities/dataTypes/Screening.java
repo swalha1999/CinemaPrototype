@@ -40,6 +40,9 @@ public class Screening implements Serializable {
     @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<SupportTicket> supportTickets = new HashSet<>();
 
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PriceChangeRequest> priceChangeRequests = new HashSet<>();
+
     private LocalDateTime startingAt;
     private int timeInMinute;
     private int price;
@@ -189,5 +192,14 @@ public class Screening implements Serializable {
     public void setSeats(List<Seat> seats) {
         this.seats = new HashSet<>(seats);
 
+    }
+
+    public Set<PriceChangeRequest> getPriceChangeRequests() {
+        return priceChangeRequests;
+    }
+
+    public void addPriceChangeRequest(PriceChangeRequest priceChangeRequest) {
+        this.priceChangeRequests.add(priceChangeRequest);
+        priceChangeRequest.setScreening(this);
     }
 }
