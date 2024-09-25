@@ -76,6 +76,8 @@ public class AdminAddMovieController {
     private TableColumn<MovieView, ?> producerColumn; // Value injected by FXMLLoader
     @FXML // fx:id="actorField"
     private TextField actorField; // Value injected by FXMLLoader
+    @FXML // fx:id="movieUrlField"
+    private TextField movieUrlField; // Value injected by FXMLLoader
 
     private Movie movieToSend =new Movie();
 
@@ -124,6 +126,7 @@ public class AdminAddMovieController {
         descriptionField.setText("");
         producerField.setText("");
         actorField.setText("");
+        movieUrlField.setText("");
     }
 
     @FXML
@@ -145,7 +148,8 @@ public class AdminAddMovieController {
                 .setGenre(genreComboBox.getSelectionModel().getSelectedItem())
                 .setDescription(descriptionField.getText())
                 .setProducer(producerField.getText())
-                .setActors(actorField.getText());
+                .setActors(actorField.getText())
+                .setMovieUrl(movieUrlField.getText());
 
         Message addMovieRequest = new Message(MessageType.ADD_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
@@ -165,7 +169,8 @@ public class AdminAddMovieController {
                     .setDescription(descriptionField.getText())
                     .setImageBytes(movieToSend.getImageBytes())
                     .setProducer(producerField.getText())
-                    .setActors(actorField.getText());
+                    .setActors(actorField.getText())
+                    .setMovieUrl(movieUrlField.getText());
 
 
             Message UpdateMovieRequest = new Message(MessageType.UPDATE_MOVIE_REQUEST)

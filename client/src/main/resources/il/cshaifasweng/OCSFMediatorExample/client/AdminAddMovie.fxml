@@ -26,11 +26,8 @@
 
                 <Label layoutX="16.0" layoutY="519.0" styleClass="form-label" text="Producer:" />
                 <TextField fx:id="producerField" layoutX="16.0" layoutY="539.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
-
-                <Button fx:id="insertButton" layoutX="27.0" layoutY="742.0" onAction="#Insert" prefHeight="36.0" prefWidth="59.0" styleClass="insert-button" text="Insert" />
                 <Label layoutX="15.0" layoutY="578.0" prefHeight="20.0" prefWidth="89.0" styleClass="form-label" text="Description:" />
                 <TextField fx:id="descriptionField" layoutX="15.0" layoutY="606.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
-                <Button fx:id="deleteButton" layoutX="122.0" layoutY="742.0" onAction="#Delete" prefHeight="36.0" prefWidth="59.0" styleClass="delete-button" text="Delete" />
                 <Label layoutX="16.0" layoutY="383.0" styleClass="form-label" text="Movie Title in hebrew:" />
                 <TextField fx:id="titleHebrewField" layoutX="15.0" layoutY="403.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
                 <ComboBox fx:id="genreComboBox" layoutX="16.0" layoutY="473.0" prefHeight="29.0" prefWidth="173.0" />
@@ -38,6 +35,8 @@
                 <Button fx:id="importImageButton" layoutX="15.0" layoutY="274.0" onAction="#importImage" prefHeight="29.0" prefWidth="173.0" styleClass="import-button" text="Import Image" />
             <TextField fx:id="actorField" layoutX="16.0" layoutY="669.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
             <Label layoutX="18.0" layoutY="649.0" prefHeight="20.0" prefWidth="89.0" styleClass="form-label" text="Actor:" />
+            <TextField fx:id="movieUrlField" layoutX="15.0" layoutY="734.0" prefHeight="29.0" prefWidth="173.0" styleClass="form-textfield" />
+            <Label layoutX="18.0" layoutY="714.0" prefHeight="20.0" prefWidth="89.0" styleClass="form-label" text="Movie Url:" />
             </children>
         </AnchorPane>
 
@@ -54,5 +53,8 @@
         </TableView>
           <Button fx:id="updateButton" layoutX="246.0" layoutY="757.0" onAction="#Update" prefHeight="36.0" prefWidth="59.0" styleClass="update-button" text="Update" />
           <Button fx:id="clearButton" layoutX="356.0" layoutY="757.0" onAction="#Clear" prefHeight="36.0" prefWidth="59.0" styleClass="clear-button" text="Clear" />
+
+          <Button fx:id="insertButton" layoutX="244.0" layoutY="696.0" onAction="#Insert" prefHeight="36.0" prefWidth="59.0" styleClass="insert-button" text="Insert" />
+          <Button fx:id="deleteButton" layoutX="356.0" layoutY="696.0" onAction="#Delete" prefHeight="36.0" prefWidth="59.0" styleClass="delete-button" text="Delete" />
     </children>
 </AnchorPane>
