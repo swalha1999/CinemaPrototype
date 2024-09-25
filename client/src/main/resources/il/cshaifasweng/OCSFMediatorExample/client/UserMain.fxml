@@ -12,7 +12,7 @@
 <StackPane fx:id="stackPaneMain" stylesheets="@css/AdminInterface.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.UserMain">
     <BorderPane fx:id="rootPane">
         <left>
-            <VBox alignment="CENTER" prefHeight="850.0" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
+            <VBox alignment="CENTER" prefHeight="728.0" prefWidth="250.0" spacing="20.0" styleClass="sidebar">
             <Label alignment="TOP_CENTER" prefHeight="75.0" prefWidth="230.0" text="Cinema City" textFill="#ecf0f1">
                <font>
                   <Font name="Bell MT Bold" size="32.0" />
@@ -98,7 +98,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-                <Button fx:id="Logout_Btn" alignment="CENTER" onAction="#logOut" prefHeight="40.0" prefWidth="230.0" styleClass="sidebar-logout-button" text="Log Out">
+                <Button fx:id="Logout_Btn" alignment="CENTER" onAction="#logOut" prefHeight="66.0" prefWidth="230.0" styleClass="sidebar-logout-button" text="Log Out">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -106,10 +106,19 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Button fx:id="UserInfoBtn1" onAction="#ShowUserInfo" prefHeight="49.0" prefWidth="253.0" styleClass="sidebar-button" text="Theatre">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             </VBox>
         </left>
         <center>
-            <BorderPane fx:id="mainPane" style="-fx-background-color: #bdc3c7;" styleClass="main-pane" />
+            <BorderPane fx:id="mainPane" prefHeight="1044.0" prefWidth="40.0" style="-fx-background-color: #bdc3c7;" styleClass="main-pane" />
         </center>
     </BorderPane>
 </StackPane>
