@@ -57,4 +57,5 @@
      <Button fx:id="EditScreeningBtn" layoutX="781.0" layoutY="720.0" onAction="#editScreening" prefHeight="40.0" prefWidth="155.0" styleClass="button-action" text="Edit Screening" />
    <Button fx:id="AddCinemaBtn1" layoutX="35.0" layoutY="718.0" onAction="#addCinema" prefHeight="41.0" prefWidth="231.0" styleClass="button-action" text="Add Cinema" />
      <Button fx:id="RemoveScreeningBtn" layoutX="606.0" layoutY="782.0" onAction="#removeScreening" styleClass="button-action" text="Remove Screening" />
+   <Button fx:id="EditPriceBtn" layoutX="781.0" layoutY="782.0" onAction="#editPrice" prefHeight="40.0" prefWidth="155.0" styleClass="button-action" text="Edit Price" />
 </AnchorPane>

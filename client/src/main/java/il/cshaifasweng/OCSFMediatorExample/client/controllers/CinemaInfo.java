@@ -84,6 +84,9 @@ public class CinemaInfo {
     private Button RemoveScreeningBtn;
 
     @FXML
+    private Button EditPriceBtn;
+
+    @FXML
     public void initialize() throws IOException {
         EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
 
@@ -154,6 +157,17 @@ public class CinemaInfo {
                 showSideUI("EditHall", selectedHall.getHall());
             });
         }
+    }
+
+    @FXML
+    void editPrice(ActionEvent event) {
+        ScreeningView selectedScreening = ScreeningTable.getSelectionModel().getSelectedItem();
+        if(selectedScreening != null){
+            Platform.runLater(() -> {
+                showSideUI("EditPrice", selectedScreening.getScreening());
+            });
+        }
+
     }
 
     @FXML
@@ -283,6 +297,9 @@ public class CinemaInfo {
         }
 
         Cinema updatedCinema =(Cinema) event.getFirstObj();
+        if(updatedCinema == null){
+            return;
+        }
         for (int i = 0; i < cinemaTable.getItems().size(); i++) {
             CinemaView cinemaView = cinemaTable.getItems().get(i);
             if (cinemaView.getCinema().getId() == updatedCinema.getId()) {

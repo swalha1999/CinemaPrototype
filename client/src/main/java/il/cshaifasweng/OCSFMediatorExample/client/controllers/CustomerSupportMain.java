@@ -163,7 +163,7 @@ public class CustomerSupportMain {
 
     }
     @FXML
-    void showCustomerSupprtInbox(ActionEvent event) {
+    void showCustomerSupportInbox(ActionEvent event) {
         loadUI("CustomerSupportInbox");
 
     }
