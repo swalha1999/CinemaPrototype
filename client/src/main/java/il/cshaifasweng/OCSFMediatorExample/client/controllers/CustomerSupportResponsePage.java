@@ -1,9 +1,15 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 
 public class CustomerSupportResponsePage {
 
@@ -28,7 +36,37 @@ public class CustomerSupportResponsePage {
 
     @FXML
     void handleReply(ActionEvent event) {
+        try {
+            // Check if the client is connected to the server
+            if (!Client.getClient().isConnected()) {
+                showNotification("Failed to submit the request. Server connection lost.", false);
+                return;
+            }
 
+            // Create a new SupportTicket and populate its fields
+            SupportTicket supportTicket = new SupportTicket();
+            supportTicket.setDescription(replyDescription.getText());
+
+            // Set the selected user
+            User selectedUser = user;
+
+            // Optionally set other details like subject, email, or user info (if available)
+            supportTicket.setName(user.getFirstName() + " " + user.getLastName());
+
+            // Create the message with the SupportTicket object
+            Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)
+                    .setDataObject(supportTicket)  // Send the SupportTicket object
+                    .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
+            // Send the message to the server
+            Client.getClient().sendToServer(message);
+
+            // Show notification and clear the text area
+            showNotification("Reply has been sent.", true);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log any exception that occurs during the submission
+            showNotification("An error occurred while submitting the request.", false);
+        }
     }
 
     @FXML

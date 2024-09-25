@@ -76,6 +76,8 @@ public class Server extends AbstractServer {
             case GET_ALL_SUPPORT_TICKETS_REQUEST -> handleGetSupportTicketsRequest(request,client,loggedInUser);
             case GET_ALL_TICKETS_REQUEST -> handleGetAllTicketsRequest(request,client,loggedInUser);
             case PURCHASE_BUNDLE_REQUEST -> handlePurchaseBundleRequest(request,client,loggedInUser);
+            case SEND_REPLY_TICKET_REQUEST -> handleSendReplyTicketRequest(request,client,loggedInUser);
+
             //MOVIES
             case ADD_MOVIE_REQUEST -> handleAddMovieRequest(request, client, loggedInUser);
             case REMOVE_MOVIE_REQUEST -> handleRemoveMovieRequest(request, client, loggedInUser);
@@ -140,6 +142,12 @@ public class Server extends AbstractServer {
 
     private Message handlePurchaseBundleRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
         Message response = database.getTicketsManager().PurchaseBundleTickets(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
+    }
+
+    private Message handleSendReplyTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getSupportTicketsManager().;
         sendResponse(client, response);
         return response;
     }
