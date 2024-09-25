@@ -110,7 +110,6 @@ public class Server extends AbstractServer {
             case GET_PRICE_CHANGES_REQUEST -> handleGetPriceChangesRequest(request, client, loggedInUser);
             case APPROVE_PRICE_CHANGE_REQUEST -> handleApprovePriceChangeRequest(request, client, loggedInUser);
             case DENY_PRICE_CHANGE_REQUEST -> handleDenyPriceChangeRequest(request, client, loggedInUser);
-
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
     }
