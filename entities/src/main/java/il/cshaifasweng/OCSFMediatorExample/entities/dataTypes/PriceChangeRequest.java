@@ -9,7 +9,8 @@ public class PriceChangeRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "screening_id")
