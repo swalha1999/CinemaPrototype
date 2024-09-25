@@ -74,21 +74,29 @@ public class Login {
         System.out.println(response.getRole().toString());
         Platform.runLater(()->{
             if (response.isSuccess()) {
-                if(response.getRole() == UserRole.CUSTOMER_SERVICE){
+                switch (response.getRole()) {
+                case CUSTOMER_SERVICE:
                     setRoot("CustomerSupportMain");
-                }
-                if( response.getRole() == UserRole.USER){
+                    break;
+                case USER:
                     setRoot("UserMain");
-                } if(response.getRole() == UserRole.MANAGER_OF_ALL_BRANCHES){
-
+                    break;
+                case MANAGER_OF_ALL_BRANCHES:
+                case SYSTEM_MANAGER:
                     setRoot("AdminMain");
-                }if(response.getRole() == UserRole.BRANCH_MANAGER){
-
+                    break;
+                case BRANCH_MANAGER:
                     setRoot("BranchManagerMain");
-                }if(response.getRole() == UserRole.CONTENT_MANAGER){
+                    break;
+                case CONTENT_MANAGER:
                     setRoot("ContentManagerMain");
-                }if (response.getRole() == UserRole.GUEST){
+                    break;
+                case GUEST:
                     setRoot("GuestMain");
+                    break;
+                default:
+                    System.out.println("Role not found");
+                    break;
                 }
 
             }

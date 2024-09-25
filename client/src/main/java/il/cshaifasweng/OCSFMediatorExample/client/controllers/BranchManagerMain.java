@@ -87,9 +87,6 @@ public class BranchManagerMain {
     }
     public void preLoadPages() {
        loadFXMLPane("BranchManagerDashBoard");
-
-
-
     }
     @FXML
     void showDashBoard(ActionEvent event) {

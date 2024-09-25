@@ -133,6 +133,7 @@ public class ContentManagerMain {
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("EditScreening");
         loadFXMLPane("AdminInbox");
+        loadFXMLPane("EditPrice");
 
 
         Message message = new Message(MessageType.GET_ALL_CINEMAS_REQUEST)

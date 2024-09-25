@@ -1,15 +1,19 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.dataTypes;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "price_change_requests")
 public class PriceChangeRequest implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "screening_id")
@@ -38,11 +42,11 @@ public class PriceChangeRequest implements Serializable {
         this.newPrice = newPrice;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public PriceChangeRequest setId(Long id) {
+    public PriceChangeRequest setId(int id) {
         this.id = id;
         return this;
     }
