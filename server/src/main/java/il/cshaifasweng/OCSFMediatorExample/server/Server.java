@@ -116,19 +116,27 @@ public class Server extends AbstractServer {
     }
 
     private Message handleDenyPriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        return request;
+        Message response = database.getScreeningsManager().denyPriceChangeRequest(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handleApprovePriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        return request;
+        Message response = database.getScreeningsManager().approvePriceChangeRequest(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handleGetPriceChangesRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        return request;
+        Message response = database.getScreeningsManager().getAllPriceChangesRequest(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handlePriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-        return request;
+        Message response = database.getScreeningsManager().addPriceChangeRequest(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handlePurchaseBundleRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
