@@ -157,16 +157,14 @@ public class Message implements Serializable {
     public String toString() {
         return "Message{" +
                 ", type=" + type.toString() +
-//                ", version=" + version.toString() +
-//                ", timeStamp=" + timeStamp.format( java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") ) +
-//                ", SessionKey='" + SessionKey + '\'' +
-//                ", username='" + username + '\'' +
-//                ", userId=" + userId +
-//                ", message='" + message + '\'' +
-//                ", dataType='" + dataType + '\'' +
-//                ", dataObject=" + dataObject.toString() +
+                ", version=" + version.toString() +
+                ", timeStamp=" + timeStamp.format( java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") ) +
+                ", SessionKey='" + SessionKey + '\'' +
+                ", username='" + username + '\'' +
+                ", userId=" + userId +
+                ", message='" + message + '\'' +
+                ", dataType='" + dataType + '\'' +
+                ", dataObject=" + dataObject.toString() +
                 '}';
     }
-
-
 }

@@ -26,30 +26,18 @@ public class AdminInbox {
     @FXML
     private VBox MessageContainer;
 
-    @FXML // fx:id="acceptBtn"
-    private Button acceptBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="rejectBtn"
-    private Button rejectBtn; // Value injected by FXMLLoader
-
     public void initialize() {
         // Register the EventBus
         EventBus.getDefault().register(this);
 
         // Send a request to get all support tickets
-        Message message = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
+        Message getSupportTicketsMessage = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
-    }
+        Client.getClient().sendToServer(getSupportTicketsMessage);
 
-    @FXML
-    void onAccept(ActionEvent event) {
-        // Handle accept button click from the UI
-    }
-
-    @FXML
-    void onReject(ActionEvent event) {
-        // Handle reject button click from the UI
+        Message priceChangeRequestMessage = new Message(MessageType.GET_PRICE_CHANGES_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(priceChangeRequestMessage);
     }
 
     // Add message to the GUI dynamically for Support Tickets
@@ -72,15 +60,6 @@ public class AdminInbox {
         buttonBox.setLayoutX(14.0);
         buttonBox.setLayoutY(70.0);
 
-//        Button acceptButton = new Button("Accept");
-//        acceptButton.getStyleClass().add("ticket-button");
-//        acceptButton.setOnAction(event -> onAccept(ticket));
-//
-//        Button rejectButton = new Button("Reject");
-//        rejectButton.getStyleClass().add("ticket-button");
-//        rejectButton.setOnAction(event -> onReject(ticket));
-//
-//        buttonBox.getChildren().addAll(acceptButton, rejectButton);
         messagePane.getChildren().addAll(senderLabel, contentLabel, buttonBox);
 
         MessageContainer.getChildren().add(messagePane);
@@ -148,21 +127,9 @@ public class AdminInbox {
         });
     }
 
-    // Handling acceptance of support tickets
-    void onAccept(SupportTicket ticket) {
-        // Handle acceptance logic for the ticket
-        // e.g., send a message to the server or update the status of the ticket
-    }
-
-    // Handling rejection of support tickets
-    void onReject(SupportTicket ticket) {
-        // Handle rejection logic for the ticket
-    }
-
     // Handling acceptance of price change requests
     void onAccept(PriceChangeRequest priceChangeRequest) {
         // Handle acceptance logic for the price change request
-
     }
 
     // Handling rejection of price change requests
