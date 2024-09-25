@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.EditPriceRequestEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetPriceChangesEvent;
@@ -20,7 +21,7 @@ import java.util.Objects;
 
 public class EditPrice {
 
-
+    Screening screening;
     @FXML
     private Button ConfirmButton;
 
@@ -31,7 +32,7 @@ public class EditPrice {
     void EditPrice(ActionEvent event) {
         PriceChangeRequest req = new PriceChangeRequest();
         String priceText = PriceText.getText();
-
+        req.setScreening(screening);
         if (priceText.isEmpty()) {
             System.out.println("Price field is empty");
             return;
@@ -47,12 +48,10 @@ public class EditPrice {
             System.out.println("Please enter a valid number");
         }
 
-        Message message = new Message(MessageType.EDIT_PRICE_REQUEST)
+        Message message = new Message(MessageType.ADD_PRICE_CHANGE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setDataObject(newPrice);
-
-        EventBus.getDefault().post(new EditPriceRequestEvent(message));
-
+                .setDataObject(req);
+        Client.getClient().sendToServer(message);
     }
 
 
@@ -66,8 +65,7 @@ public class EditPrice {
         if(!Objects.equals(event.getUIName(), "EditPrice")){
             return;
         }
-
-
+    screening =(Screening) event.getFirstObj();
     }
 
 }
