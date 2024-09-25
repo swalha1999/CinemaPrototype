@@ -1,11 +1,13 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageVersion;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.requests.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.responses.*;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -423,5 +425,19 @@ public class UserDAO {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public LoginResponse loginAsGuest(Message request, ConnectionToClient client) {
+        LoginResponse loginResponse = new LoginResponse();
+
+        loginResponse
+                .setSuccess(true)
+                .setMessage("Login successful")
+                .setRole(UserRole.GUEST)
+                .setUsername("Guest")
+                .setUserId(6969)
+                .setSessionKey(UserDAO.generateSalt());
+
+        return loginResponse;
     }
 }
