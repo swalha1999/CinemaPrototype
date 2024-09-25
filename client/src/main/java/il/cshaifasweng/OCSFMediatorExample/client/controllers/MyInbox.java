@@ -3,7 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyScreeningsEvent;
-import il.cshaifasweng.OCSFMediatorExample.client.events.GetReplyTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemovedTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
@@ -40,6 +39,10 @@ public class MyInbox {
         Message message = new Message(MessageType.GET_MY_SCREENINGS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
+
+        Message getReplyMessages = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(getReplyMessages);
     }
 
     public void addMessage(String sender, String content) {
@@ -133,10 +136,7 @@ public class MyInbox {
         addMessage("Cinema System", messageContent);
     }
 
-    @Subscribe
-    public void onGetReplyTicketResponse(GetReplyTicketEvent event){
 
-    }
 
 
 }

@@ -1,11 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
-import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
-import il.cshaifasweng.OCSFMediatorExample.client.data.UserView;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -39,7 +36,6 @@ public class CustomerSupportResponsePage {
         String currentUsername = SessionKeysStorage.getInstance().getUsername();
 
         EventBus.getDefault().register(this);
-
     }
 
     @FXML
@@ -55,8 +51,6 @@ public class CustomerSupportResponsePage {
             SupportTicket supportTicket = new SupportTicket();
             supportTicket.setDescription(replyDescription.getText());
 
-            // Set the selected user
-            User selectedUser = user;
 
             // Optionally set other details like subject, email, or user info (if available)
             supportTicket.setName(user.getFirstName() + " " + user.getLastName());
@@ -77,12 +71,12 @@ public class CustomerSupportResponsePage {
         }
     }
 
-
-
     @Subscribe
     public void onUIShow(ShowSideUIEvent event) {
         if (!event.getUIName().equals("CustomerSupportResponsePage")) {
             return;
         }
+        SupportTicket ticket = (SupportTicket) event.getFirstObj();
+        user = ticket.getUser();
     }
 }
