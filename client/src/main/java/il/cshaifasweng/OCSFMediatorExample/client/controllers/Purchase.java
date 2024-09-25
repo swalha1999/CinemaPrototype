@@ -68,6 +68,9 @@ public class Purchase {
   @FXML
   private Label NumberItemPurchLabel;
 
+  @FXML // fx:id="bundleBtn"
+  private Button bundleBtn; // Value injected by FXMLLoader
+
   @FXML
   public void initialize() {
     EventBus.getDefault().register(this);
@@ -134,4 +137,17 @@ public class Purchase {
     TotalAmountLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
     NumberItemPurchLabel.setText(String.valueOf(selectedSeats.size()));
   }
+
+  @FXML
+  void bundlePurchase(ActionEvent event) {
+
+    if (selectedSeats == null || selectedSeats.isEmpty()) {
+      showNotification("Please select seats to purchase", false);
+      return;
+    }
+
+
+
+  }
+
 }

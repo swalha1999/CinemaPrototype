@@ -41,6 +41,7 @@ public class MovieDetailsController {
     @FXML private Label titleLabel;
     @FXML private TableView<ScreeningView> screeningTable;
 
+
     private Movie movieToDisplay;
 
     @FXML

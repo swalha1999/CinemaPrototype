@@ -20,6 +20,7 @@ public class MovieView {
     private SimpleStringProperty country;
     private SimpleStringProperty imageUrl;
     private SimpleStringProperty trailerUrl;
+    private SimpleStringProperty producer;
 
     public MovieView(Movie movie) {
         this.movie = movie;
@@ -31,6 +32,7 @@ public class MovieView {
         this.imageUrl = new SimpleStringProperty(movie.getImageUrl());
         this.trailerUrl = new SimpleStringProperty(movie.getTrailerUrl());
         this.id = movie.getId();
+        this.producer = new SimpleStringProperty(movie.getProducer());
 
         this.language = new SimpleStringProperty(
                 movie.getLanguage() != null ? movie.getLanguage().toString() : "Unknown"
@@ -44,6 +46,11 @@ public class MovieView {
     }
 
     // Getter methods for properties
+
+    public String getProducer() {
+        return producer.get();
+    }
+
     public String getEnglishTitle() { return englishTitle.get(); }
     public String getHebrewTitle() { return hebrewTitle.get(); }
     public Date getReleaseDate() { return releaseDate.get(); }
@@ -79,6 +86,7 @@ public class MovieView {
         this.imageUrl = new SimpleStringProperty(movie.getImageUrl());
         this.trailerUrl = new SimpleStringProperty(movie.getTrailerUrl());
         this.genre = new SimpleObjectProperty<>(movie.getGenre());
+        this.producer = new SimpleStringProperty(movie.getProducer());
 
         // Null checks before calling toString()
         this.language = new SimpleStringProperty(

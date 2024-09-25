@@ -58,6 +58,8 @@ public class AdminAddMovieController {
     @FXML
     private TableView<MovieView> moviesTable;
     @FXML
+    private TableColumn<MovieView, ?> actorColumn; // Value injected by FXMLLoader
+    @FXML
     private TextField producerField;
     @FXML
     private TableColumn<MovieView, ?> titleEnglishColumn;
@@ -67,6 +69,10 @@ public class AdminAddMovieController {
     private TableColumn<MovieView, ?> titleHebrewColumn;
     @FXML
     private TextField titleHebrewField;
+    @FXML // fx:id="actorField"
+    private TextField v; // Value injected by FXMLLoader
+    @FXML // fx:id="producerColumn"
+    private TableColumn<MovieView, ?> producerColumn; // Value injected by FXMLLoader
 
     private Movie movieToSend =new Movie();
 
@@ -82,6 +88,7 @@ public class AdminAddMovieController {
         titleHebrewColumn.setCellValueFactory(new PropertyValueFactory<>("hebrewTitle"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        producerColumn.setCellValueFactory(new PropertyValueFactory<>("producer"));
 
         moviesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -90,6 +97,7 @@ public class AdminAddMovieController {
                     titleHebrewField.setText(moviesTable.getSelectionModel().getSelectedItem().getHebrewTitle());
                     genreComboBox.getSelectionModel().select(moviesTable.getSelectionModel().getSelectedItem().getGenre());
                     descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getDescription());
+                    producerField.setText(moviesTable.getSelectionModel().getSelectedItem().getProducer());
                     if (moviesTable.getSelectionModel().getSelectedItem().getImageUrl() != null && !moviesTable.getSelectionModel().getSelectedItem().getImageUrl().isEmpty()) {
                         updateImageView(moviesTable.getSelectionModel().getSelectedItem().getImageUrl());
                     }else if(moviesTable.getSelectionModel().getSelectedItem().getMovie().getImageBytes() != null){
@@ -129,7 +137,8 @@ public class AdminAddMovieController {
                 .setEnglishTitle(titleEnglishField.getText())
                 .setHebrewTitle(titleHebrewField.getText())
                 .setGenre(genreComboBox.getSelectionModel().getSelectedItem())
-                .setDescription(descriptionField.getText());
+                .setDescription(descriptionField.getText())
+                .setProducer(producerField.getText());
 
         Message addMovieRequest = new Message(MessageType.ADD_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
