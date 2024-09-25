@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
 
 <AnchorPane fx:id="rootPane" xmlns:fx="http://javafx.com/fxml" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.VideoPlayer">
-
+    <Button fx:id="muteButton" text="Mute" layoutX="10" layoutY="10" />
 </AnchorPane>
