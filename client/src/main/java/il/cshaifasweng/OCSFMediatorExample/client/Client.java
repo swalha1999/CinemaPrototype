@@ -124,6 +124,9 @@ public class Client extends AbstractClient {
 				case GET_PRICE_CHANGES_RESPONSE:
 					EventBus.getDefault().post(new GetPriceChangesEvent(message));
 					break;
+				case GET_MY_REPLY_TICKETS_RESPONSE:
+					EventBus.getDefault().post(new GetMyReplyTicketsEvent(message));
+					break;
 				default:
 					EventBus.getDefault().post(new MessageEvent(message));
 					break;
