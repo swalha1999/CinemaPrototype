@@ -8,10 +8,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
 <AnchorPane prefHeight="850.0" prefWidth="850.0" style="-fx-background-color: #bdc3c7;" stylesheets="@css/MovieDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController">
     <children>
         <!-- Main Layout HBox for Image and Movie Details -->
         <HBox alignment="CENTER" layoutY="20.0" prefHeight="771.0" prefWidth="844.0" spacing="40.0">
+
+            <!-- Movie Image -->
+            <ImageView fx:id="movieImageView" fitHeight="400.0" fitWidth="270.0" />
 
             <!-- Movie Details and Screening Times -->
             <VBox alignment="CENTER" prefHeight="771.0" prefWidth="763.0" spacing="30.0">
