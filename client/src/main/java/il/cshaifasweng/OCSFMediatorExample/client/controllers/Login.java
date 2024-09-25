@@ -76,7 +76,7 @@ System.out.println(response.getRole().toString());
                 }
                 if( response.getRole() == UserRole.USER){
                     setRoot("UserMain");
-                } if(response.getRole() == UserRole.SYSTEM_MANAGER){
+                } if(response.getRole() == UserRole.MANAGER_OF_ALL_BRANCHES){
 
                     setRoot("AdminMain");
                 }if(response.getRole() == UserRole.BRANCH_MANAGER){
