@@ -106,7 +106,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="UserInfoBtn1" onAction="#ShowUserInfo" prefHeight="49.0" prefWidth="253.0" styleClass="sidebar-button" text="Theatre">
+            <Button fx:id="UserInfoBtn1" onAction="#showMoviesTheatre" prefHeight="49.0" prefWidth="253.0" styleClass="sidebar-button" text="Theatre">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -166,4 +166,7 @@ public class UserMain {
         loadUI("UserInfo");
     }
 
+    public void showMoviesTheatre(ActionEvent actionEvent) {
+        loadUI("VideoPlayer");
+    }
 }
