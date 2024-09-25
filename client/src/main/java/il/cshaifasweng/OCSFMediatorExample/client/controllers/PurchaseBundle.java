@@ -42,7 +42,6 @@ public class PurchaseBundle {
             return;
         }
 
-
         showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
         CVV_Txt.clear();
             Message request = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_REQUEST)

@@ -251,7 +251,18 @@ public class TicketDAO {
 
     public Message PurchaseBundleTickets(Message request, LoggedInUser loggedInUser) {
 
-        return request;
+        Message response = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_RESPONSE);
+
+        User user  = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
+
+        user.setRemainingTicketsPurchasedByBundle(user.getRemainingTicketsPurchasedByBundle() + 20);
+        user.setNumberOfBundlePurchased(user.getNumberOfBundlePurchased() + 1);
+
+        session.beginTransaction();
+        session.update(user);
+        session.getTransaction().commit();
+
+        return response;
     }
 
 }
