@@ -84,6 +84,10 @@ public class SeatPickerController {
 
     @FXML
     private void confirmSelection() {
+        if (SessionKeysStorage.getInstance().getRole() == UserRole.GUEST) {
+            showNotification("You must be logged in to purchase tickets", false);
+            return;
+        }
         showSideUI("Purchase", selectedSeats, screeningData);  // Pass the selected seats and screening data
     }
 
