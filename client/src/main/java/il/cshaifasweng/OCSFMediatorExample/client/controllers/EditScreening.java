@@ -29,8 +29,6 @@ public class EditScreening {
     @FXML // fx:id="movieDate"
     private DatePicker movieDate; // Value injected by FXMLLoader
 
-    @FXML // fx:id="priceField"
-    private TextField priceField; // Value injected by FXMLLoader
 
     @FXML // fx:id="movieNameCombobox"
     private ComboBox<Movie> movieNameCombobox; // Value injected by FXMLLoader
@@ -73,7 +71,6 @@ public class EditScreening {
 
     @FXML
     void handleConfirm(ActionEvent event) {
-        screening.setPrice(Integer.parseInt(priceField.getText()));
         screening.setStartingAt(movieDate.getValue().atTime(LocalTime.of(12, 0)));
         screening.setMovie(movieNameCombobox.getValue());
 
@@ -107,7 +104,6 @@ public class EditScreening {
         screening = (Screening) event.getFirstObj();
 
         int id= screening.getMovie().getId();
-        priceField.setText(Integer.toString(screening.getPrice()));
         movieDate.setValue(screening.getStartingAt().toLocalDate());
         for(Movie movie:movieNameCombobox.getItems()){
             if(movie.getId() == id){

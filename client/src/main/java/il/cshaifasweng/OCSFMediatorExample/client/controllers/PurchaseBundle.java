@@ -27,6 +27,8 @@ public class PurchaseBundle {
     @FXML
     private TextField CVV_Txt;
     @FXML
+    private TextField PurchaseAmount;
+    @FXML
     private Label OrderIdLabel;
 
     @FXML
@@ -45,7 +47,7 @@ public class PurchaseBundle {
         showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
         CVV_Txt.clear();
             Message request = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_REQUEST)
-                    .setDataObject(1)
+                    .setDataObject(PurchaseAmount)
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
             Client.getClient().sendToServer(request);

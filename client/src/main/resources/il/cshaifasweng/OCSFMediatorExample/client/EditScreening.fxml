@@ -4,23 +4,24 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="271.0" prefWidth="365.0" stylesheets="@css/EditScreening.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.EditScreening">
+<AnchorPane prefHeight="850.0" prefWidth="600.0" stylesheets="@css/EditScreening.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.EditScreening">
     <!-- ToolBar at the top -->
     <ToolBar styleClass="toolbar">
-        <Label styleClass="toolbar-label" text=" Screening" />
+        <Label alignment="CENTER" prefHeight="35.0" prefWidth="600.0" styleClass="toolbar-label" text=" Screening" textFill="WHITE">
+         <font>
+            <Font name="Bell MT Bold" size="32.0" />
+         </font></Label>
     </ToolBar>
 
     <!-- Buttons -->
-    <Button layoutX="100.0" layoutY="200.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
-    <Button layoutX="210.0" layoutY="200.0" onAction="#handleBack" styleClass="button-back" text="Back" />
-    <ComboBox fx:id="movieNameCombobox" layoutX="100.0" layoutY="63.0" prefWidth="150.0" />
-    <Label layoutX="27.0" layoutY="66.0" prefHeight="18.0" prefWidth="37.0" text="Movie:" />
-    <Label layoutX="27.0" layoutY="114.0" prefHeight="18.0" prefWidth="37.0" text="Date:" />
-    <DatePicker fx:id="movieDate" layoutX="101.0" layoutY="108.0" prefHeight="30.0" prefWidth="163.0" />
-    <Label layoutX="27.0" layoutY="161.0" prefHeight="18.0" prefWidth="37.0" text="Price:" />
-    <TextField fx:id="priceField" layoutX="101.0" layoutY="155.0" />
+    <Button layoutX="202.0" layoutY="200.0" onAction="#handleConfirm" styleClass="button-confirm" text="Confirm" />
+    <Button layoutX="306.0" layoutY="200.0" onAction="#handleBack" styleClass="button-back" text="Back" />
+    <ComboBox fx:id="movieNameCombobox" layoutX="210.0" layoutY="63.0" prefHeight="25.0" prefWidth="163.0" />
+    <Label layoutX="108.0" layoutY="67.0" prefHeight="18.0" prefWidth="37.0" text="Movie:" />
+    <Label layoutX="108.0" layoutY="123.0" prefHeight="18.0" prefWidth="37.0" text="Date:" />
+    <DatePicker fx:id="movieDate" layoutX="210.0" layoutY="117.0" prefHeight="30.0" prefWidth="163.0" />
 </AnchorPane>
