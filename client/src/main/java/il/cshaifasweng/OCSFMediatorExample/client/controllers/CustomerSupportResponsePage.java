@@ -80,12 +80,9 @@ public class CustomerSupportResponsePage {
 
 
     @Subscribe
-    public void onUIShow(ShowSideUIEvent event,Object dataForPage) {
+    public void onUIShow(ShowSideUIEvent event) {
         if (!event.getUIName().equals("CustomerSupportResponsePage")) {
             return;
         }
-        user = (User) dataForPage;
-
-
     }
 }

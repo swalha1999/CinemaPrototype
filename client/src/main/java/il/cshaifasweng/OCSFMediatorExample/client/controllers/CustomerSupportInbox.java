@@ -77,7 +77,7 @@ public class CustomerSupportInbox {
     }
 
     private void onAnswer(SupportTicket ticket) {
-        showSideUI("CustomerSupportResponsePage",ticket.getUser());
+        showSideUI("CustomerSupportResponsePage",ticket);
     }
 
     // Subscribe to the event to receive and display support tickets
