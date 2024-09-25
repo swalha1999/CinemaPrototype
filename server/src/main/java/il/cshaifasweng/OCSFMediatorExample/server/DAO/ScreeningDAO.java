@@ -242,7 +242,7 @@ public class ScreeningDAO {
     public Message getAllPriceChangesRequest(Message req, LoggedInUser loggedInUser) {
         Message response = new Message(MessageType.GET_PRICE_CHANGES_RESPONSE);
 
-        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
+        if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES && loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
             return response.setSuccess(false)
                     .setMessage("User is not a manager");
         }
