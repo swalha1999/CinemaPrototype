@@ -5,6 +5,8 @@ import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,7 +32,10 @@ public class User implements Serializable {
     private float balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<MovieTicket> tickets;
+    private Set<MovieTicket> tickets = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PriceChangeRequest> priceChangeRequests = new HashSet<>();
 
     @OneToOne
     private Cinema cinema; // This is used for the manager of the cinema
@@ -286,6 +291,16 @@ public class User implements Serializable {
 
     public User setBalance(float balance) {
         this.balance = balance;
+        return this;
+    }
+
+    public Set<PriceChangeRequest> getPriceChangeRequests() {
+        return priceChangeRequests;
+    }
+
+    public User addPriceChangeRequest(PriceChangeRequest priceChangeRequest) {
+        this.priceChangeRequests.add(priceChangeRequest);
+        priceChangeRequest.setContentManager(this);
         return this;
     }
 

@@ -40,6 +40,9 @@ public class Movie implements Serializable {
     @OneToMany(mappedBy = "movie")
     private Set<Screening> screenings = new HashSet<>();
 
+    @OneToMany(mappedBy = "movie")
+    private Set<PriceChangeRequest> priceChangeRequests = new HashSet<>();
+
     public Movie(){}
 
     // Warning: don't copy the id of the movie (it's unique)
@@ -252,6 +255,15 @@ public class Movie implements Serializable {
         this.comingSoon = movie.comingSoon;
         this.isOnlineMovie = movie.isOnlineMovie;
         return this;
+    }
+
+    public Set<PriceChangeRequest> getPriceChangeRequests() {
+        return priceChangeRequests;
+    }
+
+    public void addPriceChangeRequest(PriceChangeRequest priceChangeRequest) {
+        this.priceChangeRequests.add(priceChangeRequest);
+        priceChangeRequest.setMovie(this);
     }
 
     @Override

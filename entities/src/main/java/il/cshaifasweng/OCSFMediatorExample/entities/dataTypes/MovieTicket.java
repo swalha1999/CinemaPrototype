@@ -19,7 +19,6 @@ public class MovieTicket implements Serializable {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screening_id")
     private Screening screening;
 
     @OneToOne(fetch = FetchType.LAZY)
