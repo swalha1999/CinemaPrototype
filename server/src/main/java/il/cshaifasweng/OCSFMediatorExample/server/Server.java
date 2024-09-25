@@ -432,18 +432,6 @@ public class Server extends AbstractServer {
 
     private Message handleGetAllScreeningsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
-        switch (loggedInUser.getRole()) {
-            case SYSTEM_MANAGER:
-            case MANAGER_OF_ALL_BRANCHES:
-            case BRANCH_MANAGER:
-            case CUSTOMER_SERVICE:
-            case CONTENT_MANAGER:
-                break;
-            case USER:
-            default:
-                return sendErrorMessage(client, "Error! User does not have permission to this action");
-        }
-
         Message response = database.getScreeningsManager().getAllScreenings(request);
         sendResponse(client, response);
 
@@ -460,19 +448,6 @@ public class Server extends AbstractServer {
 
     private Message handleGetAllCinemasRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
 
-        switch (loggedInUser.getRole()) {
-            case SYSTEM_MANAGER:
-            case MANAGER_OF_ALL_BRANCHES:
-            case BRANCH_MANAGER:
-            case CUSTOMER_SERVICE:
-            case USER:
-            case CONTENT_MANAGER:
-                break;
-            case NOT_LOGGED_IN:
-            default:
-                return sendErrorMessage(client, "Error! User does not have permission to this action");
-        }
-
         Message response = database.getCinemasManager().getAllCinemas(request);
         sendResponse(client, response);
 
@@ -480,18 +455,6 @@ public class Server extends AbstractServer {
     }
 
     private Message handleGetCinemaHallsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
-
-        switch (loggedInUser.getRole()) {
-            case SYSTEM_MANAGER:
-            case MANAGER_OF_ALL_BRANCHES:
-            case BRANCH_MANAGER:
-            case CUSTOMER_SERVICE:
-            case CONTENT_MANAGER:
-                break;
-            case USER:
-            default:
-                return sendErrorMessage(client, "Error! User does not have permission to this action");
-        }
 
         Message response = database.getCinemasManager().getCinemaHalls(request);
         sendResponse(client, response);
