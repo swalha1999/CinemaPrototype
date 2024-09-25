@@ -83,7 +83,6 @@ public class CustomerSupportMain {
     @FXML
     private Button EditScreeningBtn;
 
-
     @FXML
     private Button RemoveHallBtn;
 
@@ -107,6 +106,7 @@ public class CustomerSupportMain {
         notificationPane = new NotificationPane(stackPaneMain);
         preLoadPages();
     }
+
     @FXML
     private void showCustomers(ActionEvent event) {
         loadUI("CustomerSupportUsersView");
@@ -154,7 +154,6 @@ public class CustomerSupportMain {
         loadFXMLPane("CustomerSupportUsersView");
         loadFXMLPane("CustomerSupportInbox");
 
-
         Message message = new Message();
 
         message = new Message(MessageType.GET_ALL_USERS_REQUEST)
@@ -162,6 +161,7 @@ public class CustomerSupportMain {
         Client.getClient().sendToServer(message);
 
     }
+
     @FXML
     void showCustomerSupportInbox(ActionEvent event) {
         loadUI("CustomerSupportInbox");

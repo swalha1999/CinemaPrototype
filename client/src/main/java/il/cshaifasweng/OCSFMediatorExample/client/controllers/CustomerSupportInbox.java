@@ -1,20 +1,28 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
+import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetAllSupportTicketsEvent;
+import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.loadFXMLPane;
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class CustomerSupportInbox {
     @FXML
@@ -31,24 +39,45 @@ public class CustomerSupportInbox {
     }
 
     // Add message to the GUI dynamically
-    public void addMessage(String sender, String content) {
+    public void addMessage(SupportTicket ticket) {
         AnchorPane messagePane = new AnchorPane();
         messagePane.getStyleClass().add("ticket-pane");
-        messagePane.setPrefWidth(300);
+        messagePane.setPrefWidth(700);
 
-        Label senderLabel = new Label("Sender: " + sender);
+        Label senderLabel = new Label("Sender: " + ticket.getUser().getUsername());
         senderLabel.setLayoutX(14.0);
         senderLabel.setLayoutY(14.0);
         senderLabel.getStyleClass().add("ticket-label");
 
-        Label contentLabel = new Label("Message: " + content);
+        Label contentLabel = new Label("Message: " + ticket.getDescription());
         contentLabel.setLayoutX(14.0);
         contentLabel.setLayoutY(34.0);
         contentLabel.getStyleClass().add("ticket-label");
 
-        messagePane.getChildren().addAll(senderLabel, contentLabel);
+        HBox buttonBox = new HBox(10);
+        buttonBox.setLayoutX(14.0);
+        buttonBox.setLayoutY(70.0);
+
+        Button acceptButton = new Button("Answer");
+        acceptButton.getStyleClass().add("ticket-button");
+        acceptButton.setOnAction(event -> onAnswer(ticket));
+
+        Button rejectButton = new Button("Reject");
+        rejectButton.getStyleClass().add("ticket-button");
+        rejectButton.setOnAction(event -> onReject(ticket));
+
+        buttonBox.getChildren().addAll(acceptButton, rejectButton);
+        messagePane.getChildren().addAll(senderLabel, contentLabel, buttonBox);
 
         MessageContainer.getChildren().add(messagePane);
+    }
+
+    private void onReject(SupportTicket ticket) {
+        System.out.println("Rejected: " + ticket.getUser().getUsername());
+    }
+
+    private void onAnswer(SupportTicket ticket) {
+        showSideUI("CustomerSupportResponsePage",ticket.getUser());
     }
 
     // Subscribe to the event to receive and display support tickets
@@ -63,10 +92,11 @@ public class CustomerSupportInbox {
 
             // Iterate through the support tickets and add them to the GUI
             for (SupportTicket ticket : supportTickets) {
-                String sender = ticket.getUser().getUsername();  // Assuming SupportTicket has a user field
-                String content = ticket.getDescription();  // Assuming SupportTicket has a content field
-                addMessage(sender, content);
+                addMessage(ticket);
             }
         });
     }
+
+
+
 }
