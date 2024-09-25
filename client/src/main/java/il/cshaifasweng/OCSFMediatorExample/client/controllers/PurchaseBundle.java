@@ -46,11 +46,10 @@ public class PurchaseBundle {
 
         showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
         CVV_Txt.clear();
-            Message request = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_REQUEST)
-                    .setDataObject(PurchaseAmount)
+        Message request = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_REQUEST)
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
-            Client.getClient().sendToServer(request);
+        Client.getClient().sendToServer(request);
     }
 
     @Subscribe
