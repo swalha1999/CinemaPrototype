@@ -31,7 +31,7 @@ public class Main {
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Movie.class);
-        configuration.addAnnotatedClass(Actor.class);
+        //configuration.addAnnotatedClass(Actor.class);
         configuration.addAnnotatedClass(MovieTicket.class);
         configuration.addAnnotatedClass(Screening.class);
         configuration.addAnnotatedClass(Hall.class);

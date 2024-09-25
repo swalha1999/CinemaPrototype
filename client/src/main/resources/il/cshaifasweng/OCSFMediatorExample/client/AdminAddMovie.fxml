@@ -52,7 +52,7 @@
             <TableColumn fx:id="descriptionColumn" minWidth="0.0" prefWidth="171.0" text="Description" />
             </columns>
         </TableView>
-          <Button fx:id="updateButton" layoutX="308.0" layoutY="709.0" onAction="#Update" prefHeight="36.0" prefWidth="59.0" styleClass="update-button" text="Update" />
-          <Button fx:id="clearButton" layoutX="418.0" layoutY="709.0" onAction="#Clear" prefHeight="36.0" prefWidth="59.0" styleClass="clear-button" text="Clear" />
+          <Button fx:id="updateButton" layoutX="246.0" layoutY="757.0" onAction="#Update" prefHeight="36.0" prefWidth="59.0" styleClass="update-button" text="Update" />
+          <Button fx:id="clearButton" layoutX="356.0" layoutY="757.0" onAction="#Clear" prefHeight="36.0" prefWidth="59.0" styleClass="clear-button" text="Clear" />
     </children>
 </AnchorPane>

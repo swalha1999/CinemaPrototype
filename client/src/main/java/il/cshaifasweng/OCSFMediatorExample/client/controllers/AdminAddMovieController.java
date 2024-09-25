@@ -73,6 +73,8 @@ public class AdminAddMovieController {
     private TextField v; // Value injected by FXMLLoader
     @FXML // fx:id="producerColumn"
     private TableColumn<MovieView, ?> producerColumn; // Value injected by FXMLLoader
+    @FXML // fx:id="actorField"
+    private TextField actorField; // Value injected by FXMLLoader
 
     private Movie movieToSend =new Movie();
 
@@ -89,6 +91,7 @@ public class AdminAddMovieController {
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         producerColumn.setCellValueFactory(new PropertyValueFactory<>("producer"));
+        actorColumn.setCellValueFactory(new PropertyValueFactory<>("actor"));
 
         moviesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -98,6 +101,7 @@ public class AdminAddMovieController {
                     genreComboBox.getSelectionModel().select(moviesTable.getSelectionModel().getSelectedItem().getGenre());
                     descriptionField.setText(moviesTable.getSelectionModel().getSelectedItem().getDescription());
                     producerField.setText(moviesTable.getSelectionModel().getSelectedItem().getProducer());
+                    actorField.setText(moviesTable.getSelectionModel().getSelectedItem().getMovie().getActors());
                     if (moviesTable.getSelectionModel().getSelectedItem().getImageUrl() != null && !moviesTable.getSelectionModel().getSelectedItem().getImageUrl().isEmpty()) {
                         updateImageView(moviesTable.getSelectionModel().getSelectedItem().getImageUrl());
                     }else if(moviesTable.getSelectionModel().getSelectedItem().getMovie().getImageBytes() != null){
@@ -118,6 +122,7 @@ public class AdminAddMovieController {
         genreComboBox.getSelectionModel().clearSelection();
         descriptionField.setText("");
         producerField.setText("");
+        actorField.setText("");
     }
 
     @FXML
@@ -138,7 +143,8 @@ public class AdminAddMovieController {
                 .setHebrewTitle(titleHebrewField.getText())
                 .setGenre(genreComboBox.getSelectionModel().getSelectedItem())
                 .setDescription(descriptionField.getText())
-                .setProducer(producerField.getText());
+                .setProducer(producerField.getText())
+                .setActors(actorField.getText());
 
         Message addMovieRequest = new Message(MessageType.ADD_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
@@ -157,7 +163,8 @@ public class AdminAddMovieController {
                     .setGenre(genreComboBox.getSelectionModel().getSelectedItem())
                     .setDescription(descriptionField.getText())
                     .setImageBytes(movieToSend.getImageBytes())
-                    .setProducer(producerField.getText());
+                    .setProducer(producerField.getText())
+                    .setActors(actorField.getText());
 
 
             Message UpdateMovieRequest = new Message(MessageType.UPDATE_MOVIE_REQUEST)

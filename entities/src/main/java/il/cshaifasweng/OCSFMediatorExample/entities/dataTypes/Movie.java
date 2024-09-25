@@ -35,13 +35,7 @@ public class Movie implements Serializable {
     private boolean comingSoon;
     private boolean isOnlineMovie;
 
-    @ManyToMany
-    @JoinTable(
-            name = "movie_actor",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id")
-    )
-    private Set<Actor> actors = new HashSet<>();
+    private String actors;
 
     @OneToMany(mappedBy = "movie")
     private Set<Screening> screenings = new HashSet<>();
@@ -63,6 +57,7 @@ public class Movie implements Serializable {
         this.durationInMinutes = other.durationInMinutes;
         this.comingSoon = other.comingSoon;
         this.isOnlineMovie = other.isOnlineMovie;
+        this.actors = other.actors;
     }
 
     public Movie(String name, Date releaseDate) {
@@ -133,8 +128,13 @@ public class Movie implements Serializable {
         return id;
     }
 
-    public Set<Actor> getActors() {
+    public String getActors() {
         return actors;
+    }
+
+    public Movie setActors(String actors) {
+        this.actors=actors;
+        return this;
     }
 
     public Set<Screening> getScreenings() {
@@ -149,16 +149,6 @@ public class Movie implements Serializable {
     public void removeScreening(Screening screening) {
         this.screenings.remove(screening);
         screening.setMovie(null);
-    }
-
-    public void addActor(Actor actor) {
-        this.actors.add(actor);
-        actor.addMovie(this);
-    }
-
-    public void removeActor(Actor actor) {
-        this.actors.remove(actor);
-        actor.removeMovie(this);
     }
 
     public String getEnglishTitle() {
