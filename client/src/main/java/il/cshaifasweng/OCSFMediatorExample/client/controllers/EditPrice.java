@@ -20,19 +20,22 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Objects;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showSideUI;
 
 public class EditPrice {
 
-    Screening screening;
-    @FXML
-    private Button ConfirmButton;
+    @FXML public Button confirmButton;
+    @FXML private TextField PriceText;
+    @FXML private Button returnBtn;
+
+    private Screening screening;
 
     @FXML
-    private TextField PriceText;
+    public void initialize() {
+        EventBus.getDefault().register(this);
 
-    @FXML // fx:id="returnBtn"
-    private Button returnBtn; // Value injected by FXMLLoader
+    }
 
     @FXML
     void onReturn(ActionEvent event) {
@@ -41,44 +44,41 @@ public class EditPrice {
         });
     }
 
-    @FXML
-    void EditPrice(ActionEvent event) {
-        PriceChangeRequest req = new PriceChangeRequest();
-        String priceText = PriceText.getText();
-        req.setScreening(screening);
-        if (priceText.isEmpty()) {
-            System.out.println("Price field is empty");
-            return;
-        }
-
-        int newPrice = 0;
-        try {
-            newPrice = Integer.parseInt(priceText);
-            req.setNewPrice(newPrice);
-            // Further processing after setting the new price
-        } catch (NumberFormatException e) {
-            // Handle the case where the input is not a valid integer
-            System.out.println("Please enter a valid number");
-        }
-
-        Message message = new Message(MessageType.ADD_PRICE_CHANGE_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
-                .setDataObject(req);
-        Client.getClient().sendToServer(message);
-    }
-
-
-    @FXML
-    public void initialize() {
-        EventBus.getDefault().register(this); //TODO: add this to all controllers - please :)
-    }
-
     @Subscribe
     public void onSideUiChange (ShowSideUIEvent event){
-        if(!Objects.equals(event.getUIName(), "EditPrice")){
+        if(!event.getUIName().equals("EditPrice")){
             return;
         }
-    screening =(Screening) event.getFirstObj();
+        System.out.println("We are here");
+        screening = (Screening) event.getFirstObj();
     }
 
+    @FXML
+    public void onConfirmButton(ActionEvent actionEvent) {
+        Message request = new Message(MessageType.ADD_PRICE_CHANGE_REQUEST);
+
+        if (PriceText.getText().isEmpty()) {
+            return;
+        }
+
+        if (screening == null) {
+            showNotification("Error: you must select a screening", false);
+            return;
+        }
+
+        PriceChangeRequest priceChangeRequest = new PriceChangeRequest();
+        priceChangeRequest.setScreening(screening);
+
+        try {
+            priceChangeRequest.setNewPrice(Integer.parseInt(PriceText.getText()));
+        } catch (Exception e) {
+            showNotification("Error: you mush privode a hole number", false);
+        }
+
+
+        request.setSessionKey(SessionKeysStorage.getInstance().getSessionKey()).setDataObject(priceChangeRequest);
+        Client.getClient().sendToServer(request);
+
+
+    }
 }

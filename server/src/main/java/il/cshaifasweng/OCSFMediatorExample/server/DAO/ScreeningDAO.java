@@ -194,34 +194,24 @@ public class ScreeningDAO {
 
         User contentManager = session.get(User.class, loggedInUser.getUserId());
 
-        if (priceChangeRequestFromUser.getMovie() == null) {
-            return response.setSuccess(false)
-                    .setMessage("Movie not found")
-                    .setDataObject(null);
-        }
-
         if (priceChangeRequestFromUser.getScreening() == null) {
             return response.setSuccess(false)
-                    .setMessage("Screening not found")
-                    .setDataObject(null);
+                    .setMessage("Screening not found");
         }
 
         if (priceChangeRequestFromUser.getNewPrice() == 0) {
             return response.setSuccess(false)
-                    .setMessage("New price not found")
-                    .setDataObject(null);
+                    .setMessage("New price not found");
         }
 
         if (contentManager == null) {
             return response.setSuccess(false)
-                    .setMessage("Content Manager not found")
-                    .setDataObject(null);
+                    .setMessage("Content Manager not found");
         }
 
         if (contentManager.getRole() != UserRole.CONTENT_MANAGER) {
             return response.setSuccess(false)
-                    .setMessage("User is not a content manager")
-                    .setDataObject(null);
+                    .setMessage("User is not a content manager");
         }
 
         PriceChangeRequest priceChangeRequest = new PriceChangeRequest();
@@ -244,8 +234,7 @@ public class ScreeningDAO {
 
         if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
             return response.setSuccess(false)
-                    .setMessage("User is not a manager")
-                    .setDataObject(null);
+                    .setMessage("User is not a manager");
         }
 
         //get all price change requests
@@ -264,14 +253,12 @@ public class ScreeningDAO {
 
         if (priceChangeRequest == null) {
             return response.setSuccess(false)
-                    .setMessage("Price change request not found")
-                    .setDataObject(null);
+                    .setMessage("Price change request not found");
         }
 
         if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
             return response.setSuccess(false)
-                    .setMessage("User is not a manager")
-                    .setDataObject(null);
+                    .setMessage("User is not a manager");
         }
 
         priceChangeRequest.getScreening().setPrice(priceChangeRequest.getNewPrice());
@@ -294,14 +281,12 @@ public class ScreeningDAO {
 
         if (priceChangeRequest == null) {
             return response.setSuccess(false)
-                    .setMessage("Price change request not found")
-                    .setDataObject(null);
+                    .setMessage("Price change request not found");
         }
 
         if(loggedInUser.getRole() != UserRole.MANAGER_OF_ALL_BRANCHES || loggedInUser.getRole() != UserRole.SYSTEM_MANAGER){
             return response.setSuccess(false)
-                    .setMessage("User is not a manager")
-                    .setDataObject(null);
+                    .setMessage("User is not a manager");
         }
 
         session.beginTransaction();
