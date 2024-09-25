@@ -252,11 +252,15 @@ public class TicketDAO {
     public Message PurchaseBundleTickets(Message request, LoggedInUser loggedInUser) {
 
         Message response = new Message(MessageType.PURCHASE_TICKETS_BUNDLE_RESPONSE);
-
         User user  = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
 
         user.setRemainingTicketsPurchasedByBundle(user.getRemainingTicketsPurchasedByBundle() + 20);
         user.setNumberOfBundlePurchased(user.getNumberOfBundlePurchased() + 1);
+
+        //TODO: get the credit card number from the request and validate it and charge the user
+
+        response.setSuccess(true)
+                .setMessage("Bundle purchased successfully");
 
         session.beginTransaction();
         session.update(user);
