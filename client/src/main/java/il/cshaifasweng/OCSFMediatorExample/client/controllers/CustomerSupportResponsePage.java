@@ -36,7 +36,6 @@ public class CustomerSupportResponsePage {
     @FXML
     private void initialize() {
         String currentUsername = SessionKeysStorage.getInstance().getUsername();
-        userNameLabel.setText(user.getUsername());
         EventBus.getDefault().register(this);
     }
 
@@ -58,7 +57,7 @@ public class CustomerSupportResponsePage {
             supportTicket.setCreatedDate(LocalDateTime.now());
 
             // Create the message with the SupportTicket object
-            Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)
+            Message message = new Message(MessageType.REPLY_SUPPORT_TICKET_REQUEST)
                     .setDataObject(supportTicket)  // Send the SupportTicket object
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
