@@ -77,6 +77,7 @@ public class CustomerSupportResponsePage {
         if (!event.getUIName().equals("CustomerSupportResponsePage")) {
             return;
         }
-       ticket = (SupportTicket) event.getFirstObj();
+        ticket = (SupportTicket) event.getFirstObj();
+        userNameLabel.setText("Response to " + ticket.getUser().getUsername());
     }
 }
