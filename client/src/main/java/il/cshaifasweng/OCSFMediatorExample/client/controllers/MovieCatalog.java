@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.CinemaMain.setRoot;
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.*;
 
 public class MovieCatalog {
@@ -102,7 +103,10 @@ public class MovieCatalog {
 
         moviePane.setOnMouseClicked(event -> {
             // the movie is good untill here
-            showSideUI("MovieDetails", movie);
+            Platform.runLater(()->{
+                showSideUI("MovieDetails", movie);
+            });
+
         });
 
         moviePane.setOnMouseEntered(event -> {

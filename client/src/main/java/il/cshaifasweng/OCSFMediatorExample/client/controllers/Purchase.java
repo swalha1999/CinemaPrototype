@@ -69,11 +69,14 @@ public class Purchase {
   private Label NumberItemPurchLabel;
 
   @FXML // fx:id="bundleBtn"
-  private Button bundleBtn; // Value injected by FXMLLoader
+  private Button bundlePurchaseBtn; // Value injected by FXMLLoader
 
   @FXML
   public void initialize() {
     EventBus.getDefault().register(this);
+
+    // Disable the return ticket button initially
+    bundlePurchaseBtn.setDisable(true);
   }
 
   @FXML
@@ -89,6 +92,7 @@ public class Purchase {
       showNotification("The Card Number is Not Valid, Please Try Again", false);
       return;
     }
+
     showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
     CVV_Txt.clear();
 
@@ -101,7 +105,6 @@ public class Purchase {
     Client.getClient().sendToServer(request);
   }
 
-
   @FXML
   void ReturnBack(ActionEvent event) {
     showSideUI("SeatPicker");
@@ -109,30 +112,33 @@ public class Purchase {
 
   @Subscribe
   public void onShowSideUI(ShowSideUIEvent event) {
-    if (!event.getUIName().equals("Purchase")) {
-      return;
-    }
 
-    if (event.getFirstObj() instanceof Set) {
-      System.out.println("First obj is set");
-      selectedSeats = (Set<Seat>) event.getFirstObj();
-    }
+      if (!event.getUIName().equals("Purchase")) {
+        return;
+      }
 
-    if (event.getSecondObj() instanceof Screening) {
-      System.out.println("Second obj is screening");
-      screeningData = (Screening) event.getSecondObj();
-    }
+      if (event.getFirstObj() instanceof Set) {
+        System.out.println("First obj is set");
+        selectedSeats = (Set<Seat>) event.getFirstObj();
+      }
 
-    double pricePerSeat =  screeningData.getPrice();
-    MovieTitleLabel.setText(screeningData.getMovie().getTitle());
-    SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));
-    PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
-    TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
-    DurationLabel.setText(String.valueOf(screeningData.getTimeInMinute() + " Minutes"));
-    MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
-    OrderIdLabel.setText(String.valueOf(screeningData.getId()));
-    TotalAmountLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
-    NumberItemPurchLabel.setText(String.valueOf(selectedSeats.size()));
+      if (event.getSecondObj() instanceof Screening) {
+        System.out.println("Second obj is screening");
+        screeningData = (Screening) event.getSecondObj();
+      }
+
+      double pricePerSeat =  screeningData.getPrice();
+      MovieTitleLabel.setText(screeningData.getMovie().getTitle());
+      SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));
+      PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
+      TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
+      DurationLabel.setText(String.valueOf(screeningData.getTimeInMinute() + " Minutes"));
+      MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
+      OrderIdLabel.setText(String.valueOf(screeningData.getId()));
+      TotalAmountLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
+      NumberItemPurchLabel.setText(String.valueOf(selectedSeats.size()));
+
+
   }
 
   @FXML

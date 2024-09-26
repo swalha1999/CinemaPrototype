@@ -4,15 +4,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.image.ImageView?>
-<AnchorPane prefHeight="850.0" prefWidth="850.0" style="-fx-background-color: #bdc3c7;" stylesheets="@css/MovieDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController">
+<AnchorPane prefHeight="850.0" prefWidth="1189.0" style="-fx-background-color: #bdc3c7;" stylesheets="@css/MovieDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.controllers.MovieDetailsController">
     <children>
         <!-- Main Layout HBox for Image and Movie Details -->
-        <HBox alignment="CENTER" layoutY="20.0" prefHeight="771.0" prefWidth="844.0" spacing="40.0">
+        <HBox alignment="CENTER" layoutY="20.0" prefHeight="771.0" prefWidth="1178.0" spacing="40.0">
 
             <!-- Movie Image -->
             <ImageView fx:id="movieImageView" fitHeight="400.0" fitWidth="270.0" />
@@ -31,7 +31,7 @@
                     <VBox spacing="8.0">
                         <Label fx:id="producerLabel" styleClass="details-label" text="Producer: " textFill="#34495e" />
                         <Label fx:id="actorsLabel" styleClass="details-label" text="Main Actors: " textFill="#34495e" />
-                        <Label fx:id="summaryLabel" prefHeight="46.0" prefWidth="755.0" styleClass="details-label" text="Summary: " textFill="#34495e" wrapText="true" />
+                        <Label fx:id="summaryLabel" prefHeight="36.0" prefWidth="763.0" styleClass="details-label" text="Summary: " textFill="#34495e" wrapText="true" />
                     </VBox>
                 </VBox>
 

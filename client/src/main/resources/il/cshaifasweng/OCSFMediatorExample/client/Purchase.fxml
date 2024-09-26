@@ -107,5 +107,5 @@
          <Font name="Bell MT" size="61.0" />
       </font>
    </Label>
-   <Button fx:id="bundleBtn" layoutX="866.0" layoutY="257.0" onAction="#bundlePurchase" styleClass="button-confirm" text="Buy With Bundle" />
+   <Button fx:id="bundlePurchaseBtn" layoutX="866.0" layoutY="257.0" onAction="#bundlePurchase" styleClass="button-confirm" text="Buy With Bundle" />
 </AnchorPane>

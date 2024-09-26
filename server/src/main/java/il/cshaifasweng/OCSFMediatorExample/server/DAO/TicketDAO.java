@@ -130,11 +130,12 @@ public class TicketDAO {
         } else if (hoursUntilScreening >= 1) {
             // Half refund
             user.setBalance(user.getBalance() + (float) ticket.getScreening().getPrice() / 2);
-        } else {
-            return response
-                    .setSuccess(false)
-                    .setMessage("Ticket cannot be refunded less than 1 hour before the screening");
         }
+//        else {
+//            return response
+//                    .setSuccess(false)
+//                    .setMessage("Ticket cannot be refunded less than 1 hour before the screening");
+//        }
 
         session.beginTransaction();
         session.delete(ticket);
