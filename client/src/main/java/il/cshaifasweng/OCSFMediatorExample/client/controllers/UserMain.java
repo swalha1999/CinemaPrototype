@@ -68,6 +68,11 @@ public class UserMain {
 
     @FXML
     public void ShowMyInbox(ActionEvent actionEvent) {
+
+        Message message = new Message(MessageType.GET_MY_SCREENINGS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
         loadUI("MyInbox");
     }
 

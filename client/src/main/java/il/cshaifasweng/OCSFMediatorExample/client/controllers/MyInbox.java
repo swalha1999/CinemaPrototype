@@ -36,13 +36,10 @@ public class MyInbox {
         // Register the EventBus
         EventBus.getDefault().register(this);
         // Send a request to get all screenings for the user
-        Message message = new Message(MessageType.GET_MY_SCREENINGS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(message);
 
-        Message getReplyMessage = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
-                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(getReplyMessage);
+//        Message getReplyMessage = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
+//                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+//        Client.getClient().sendToServer(getReplyMessage);
     }
 
     public void addMessage(String sender, String content) {

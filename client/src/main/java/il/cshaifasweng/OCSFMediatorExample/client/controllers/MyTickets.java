@@ -122,7 +122,6 @@ public class MyTickets {
         return null;  // Return null if no ticket is found with the given ID
     }
 
-
     @Subscribe
     public void onGetMyTicketsEvent(GetMyTicketsEvent event) {
         if (event != null && event.getTickets() != null) {
