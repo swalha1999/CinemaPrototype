@@ -34,7 +34,6 @@ public class MovieDetailsController {
     @FXML private Label genreLabel;
     @FXML private ImageView movieImageView;
     @FXML private Label producerLabel;
-    @FXML private Label ratingLabel;
     @FXML private Label releaseDateLabel;
     @FXML private Button returnBtn;
     @FXML private Label summaryLabel;
@@ -86,15 +85,15 @@ public class MovieDetailsController {
         Client.getClient().sendToServer(message);
 
         Platform.runLater(() -> {
-            titleLabel.setText(movie.getTitle());
-            genreLabel.setText(movie.getGenre().toString());
-            releaseDateLabel.setText(movie.getReleaseDate() == null ? "N/A" : movie.getReleaseDate().toString());
-            durationLabel.setText(movie.getDurationInMinutes() + " minutes");
+            titleLabel.setText("Title: "+movie.getTitle());
+            genreLabel.setText("Genre: "+movie.getGenre().toString());
+            releaseDateLabel.setText("Release Date: " + (movie.getReleaseDate() == null ? "N/A" : movie.getReleaseDate().toString()));
+            durationLabel.setText("Duration: " + movie.getDurationInMinutes() + " minutes");
             // TODO :    fix the rating label :)
-            ratingLabel.setText(movie.getId() + "/10");
             movieImageView.setImage(movie.getImageBytes() == null ? getImage("default-movie.png") : getImageFromBytes(movie.getImageBytes()));
-            summaryLabel.setText(movie.getDescription());
-            producerLabel.setText(movie.getProducer());
+            summaryLabel.setText("Summary: "+movie.getDescription());
+            producerLabel.setText("Producer: "+movie.getProducer());
+            actorsLabel.setText("Actors: "+ movie.getActors());
         });
     }
 
