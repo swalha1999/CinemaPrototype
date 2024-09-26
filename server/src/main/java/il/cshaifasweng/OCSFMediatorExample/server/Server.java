@@ -880,6 +880,9 @@ public class Server extends AbstractServer {
     }
 
     private static void sendNotification(String notificationId) {
+
+        System.out.println("Sending notification: " + notificationId);
+
         Notification notification = notificationMap.get(notificationId);
 
         if (notification == null) {

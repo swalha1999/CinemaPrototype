@@ -74,9 +74,6 @@ public class Purchase {
   @FXML
   public void initialize() {
     EventBus.getDefault().register(this);
-
-    // Disable the return ticket button initially
-    //bundlePurchaseBtn.setDisable(true);
   }
 
   @FXML
