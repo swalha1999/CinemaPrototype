@@ -46,9 +46,9 @@ public class UiUtil {
         EventBus.getDefault().post(new ShowNotificationEvent(message, Success));
     }
 
-    public static Image getImage(String url){
+    public static Image getImage(String url) throws NullPointerException {
         if (url == null || url.isEmpty() || CinemaMain.class.getResource(url) == null) {
-            return new  Image(Objects.requireNonNull(CinemaMain.class.getResourceAsStream("images\\no.jpeg")));
+            throw new NullPointerException("Image not found");
         }else {
             return new Image(Objects.requireNonNull(CinemaMain.class.getResourceAsStream(url)));
         }

@@ -84,7 +84,7 @@ public class MovieCatalog {
 
         ImageView movieImage;
         if(movie.getImageBytes() == null){
-            movieImage = new ImageView(getImage(movie.getImageUrl()));
+            movieImage = new ImageView();
         }else{
             movieImage = new ImageView(getImageFromBytes(movie.getImageBytes()));
         }

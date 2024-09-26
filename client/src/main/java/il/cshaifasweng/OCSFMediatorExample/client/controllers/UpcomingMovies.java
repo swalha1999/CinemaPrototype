@@ -104,10 +104,10 @@ public class UpcomingMovies {
         moviePane.setPrefWidth(400);
 
         ImageView movieImage;
-        if(movie.getImageBytes() == null){
-            movieImage = new ImageView(getImage(movie.getImageUrl()));
-        }else{
+        if(movie.getImageBytes() != null){
             movieImage = new ImageView(getImageFromBytes(movie.getImageBytes()));
+        }else {
+            movieImage = new ImageView();
         }
 
         movieImage.setFitHeight(imageHeight);

@@ -225,7 +225,6 @@ public class AdminAddMovieController {
 
     public void updateImageView(String event) {
         System.out.println("Changed movie view");
-        movieImageView.setImage(getImage(event));
     }
 
     public void importImage(ActionEvent actionEvent) throws IOException {

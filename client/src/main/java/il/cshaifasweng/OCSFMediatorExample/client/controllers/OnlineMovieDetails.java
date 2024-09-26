@@ -96,7 +96,9 @@ public class OnlineMovieDetails {
             genreLabel.setText("Genre: "+movie.getGenre().toString());
             releaseDateLabel.setText("Release Date: " + (movie.getReleaseDate() == null ? "N/A" : movie.getReleaseDate().toString()));
             durationLabel.setText("Duration: " + movie.getDurationInMinutes() + " minutes");
-            movieImageView.setImage(movie.getImageBytes() == null ? getImage("default-movie.png") : getImageFromBytes(movie.getImageBytes()));
+            if (movie.getImageBytes() != null) {
+                movieImageView.setImage(getImageFromBytes(movie.getImageBytes()));
+            }
             summaryLabel.setText("Summary: "+movie.getDescription());
             producerLabel.setText("Producer: "+movie.getProducer());
             actorsLabel.setText("Actors: "+ movie.getActors());
