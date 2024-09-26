@@ -21,9 +21,9 @@
             <VBox alignment="CENTER" prefHeight="771.0" prefWidth="763.0" spacing="30.0">
                 <!-- Movie Title and Summary -->
                 <VBox prefHeight="158.0" prefWidth="644.0" spacing="10.0">
-         
+
                     <!-- Return Button -->
-                 <Button fx:id="returnBtn" mnemonicParsing="false" onAction="#returnToMovieCatalog" prefHeight="35.0" prefWidth="82.0" text="Return" />
+                    <Button fx:id="returnBtn" mnemonicParsing="false" onAction="#returnToMovieCatalog" prefHeight="35.0" prefWidth="82.0" text="Return" />
                     <!-- Movie Title -->
                     <Label fx:id="titleLabel" styleClass="title-label" />
 
