@@ -15,6 +15,7 @@ public class LoginResponse implements Response {
     private String username;
     private String sessionKey;
     private UserRole role;
+    private int cinemaId;
     private int userId;
 
     public LoginResponse() {
@@ -132,4 +133,15 @@ public class LoginResponse implements Response {
     public boolean isFailure() {
         return !success;
     }
+
+    public int getCinemaId() {
+        return cinemaId;
+    }
+
+    public LoginResponse setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
+        return this;
+    }
+
+
 }

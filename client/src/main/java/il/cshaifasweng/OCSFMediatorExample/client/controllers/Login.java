@@ -64,14 +64,18 @@ public class Login {
 
     @Subscribe
     public void  onLoginEvent(LoginEvent response) {
+        if (!response.isSuccess()) {
+            showNotification(response.getMessage(), response.isSuccess());
+            return;
+        }
+
         SessionKeysStorage.getInstance()
                 .clearSession()
                 .setSessionKey(response.getSessionKey())
                 .setUsername(response.getUsername())
+                .setCinemaId(response.getCinemaId())
                 .setRole(response.getRole());
 
-        System.out.println(SessionKeysStorage.getInstance().toString());
-        System.out.println(response.getRole().toString());
         Platform.runLater(()->{
             if (response.isSuccess()) {
                 switch (response.getRole()) {

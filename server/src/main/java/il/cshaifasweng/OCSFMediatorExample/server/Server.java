@@ -47,6 +47,27 @@ public class Server extends AbstractServer {
         }
     }
 
+    private void handleV2Message(Message request, ConnectionToClient client) {
+        switch (request.getType()) {
+            case LOGIN_REQUEST:
+                handleLoginRequest(request, client);
+                break;
+            case LOGOUT_REQUEST:
+                handleLogoutRequest(request, client);
+                break;
+            case REGISTER_REQUEST:
+                handleRegisterRequest(request, client);
+                break;
+            case LOGIN_AS_GUEST_REQUEST:
+                handleLoginAsGuset(request, client);
+                break;
+
+            default:
+                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it this is not supported in V2");
+                break;
+        }
+    }
+
     private Message handleV3Message(Message request, ConnectionToClient client) {
 
         LoggedInUser loggedInUser = sessionKeys.get(request.getSessionKey());
@@ -222,27 +243,6 @@ public class Server extends AbstractServer {
         sendResponse(client, response);
 
         return response;
-    }
-
-    private void handleV2Message(Message request, ConnectionToClient client) {
-        switch (request.getType()) {
-            case LOGIN_REQUEST:
-                handleLoginRequest(request, client);
-                break;
-            case LOGOUT_REQUEST:
-                handleLogoutRequest(request, client);
-                break;
-            case REGISTER_REQUEST:
-                handleRegisterRequest(request, client);
-                break;
-            case LOGIN_AS_GUEST_REQUEST:
-                handleLoginAsGuset(request, client);
-                break;
-
-            default:
-                sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it this is not supported in V2");
-                break;
-        }
     }
 
     private void handleLoginAsGuset(Message request, ConnectionToClient client) {

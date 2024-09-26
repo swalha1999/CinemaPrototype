@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.DAO;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.UserRole;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
@@ -223,6 +224,19 @@ public class UserDAO {
         // mark the user as logged in
         user.setLoggedIn();
         this.updateUser(user);
+
+        //if the user is branch manager, get the cinema id
+        if (user.getRole() == UserRole.BRANCH_MANAGER){
+            if (user.getCinema() != null){
+                loginResponse.setCinemaId(user.getCinema().getId());
+            }else{
+                loginResponse
+                        .setSuccess(false)
+                        .setMessage("User is branch manager but has no cinema assigned");
+                return loginResponse;
+            }
+
+        }
 
         loginResponse
                 .setSuccess(true)

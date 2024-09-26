@@ -29,20 +29,15 @@ import java.util.stream.Collectors;
 public class DashBoard {
 
 
-    @FXML
-    private BarChart<String, Number> LinksTable;
+    @FXML private BarChart<String, Number> LinksTable;
 
-    @FXML
-    private BarChart<String, Number> TicketSaleTable;
+    @FXML private BarChart<String, Number> TicketSaleTable;
 
-    @FXML
-    private BarChart<String, Number> SupportTicketsTable;
+    @FXML private BarChart<String, Number> SupportTicketsTable;
 
-    @FXML
-    private Button backBtn;
+    @FXML private Button backBtn;
 
-    @FXML
-    private ComboBox<CinemaView> locationComboBox;
+    @FXML private ComboBox<CinemaView> locationComboBox;
 
     private CinemaView allLocations;
 
@@ -75,42 +70,6 @@ public class DashBoard {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
     }
-
-//    @FXML
-//    private void PickLocation(ActionEvent event) {
-//        CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();
-//        if (selectedCinema != null ) {
-//            if (selectedCinema.equals(allLocations)) {
-//         Message message = new Message(MessageType.GET_ALL_SUPPORT_TICKETS_REQUEST)
-//                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-//         Message message2 = new Message(MessageType.GET_ALL_TICKETS_REQUEST)
-//                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-//                Client.getClient().sendToServer(message);
-//                Client.getClient().sendToServer(message2);
-//            } else {
-//                String sessionKey = SessionKeysStorage.getInstance().getSessionKey();
-//                Integer selectedCinemaId = selectedCinema.getId().getValue();
-//
-//                Message message = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
-//                        .setSessionKey(sessionKey)
-//                        .setDataObject(selectedCinemaId);
-//
-//                Client client = Client.getClient();
-//
-//                if (client != null) {
-//                    client.sendToServer(message);
-//                } else {
-//                    System.out.println("Client is not initialized.");
-//                    return;
-//                }
-//                Message message2 = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
-//                        .setSessionKey(sessionKey)
-//                        .setDataObject(selectedCinemaId);
-//
-//                Client client1 = Client.getClient();
-//            }
-//        }
-//    }
 
     @Subscribe
     public void onShowCinemaInfo(GetCinemaTicketsEvent event) {
@@ -213,6 +172,7 @@ public class DashBoard {
     public void GoBack(ActionEvent actionEvent) {
 
     }
+
     @FXML
     private void PickLocation(ActionEvent event) {
         CinemaView selectedCinema = locationComboBox.getSelectionModel().getSelectedItem();

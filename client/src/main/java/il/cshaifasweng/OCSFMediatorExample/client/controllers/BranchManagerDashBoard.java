@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
+
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.CinemaView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
@@ -7,9 +8,11 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Cinema;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
+
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,17 +29,18 @@ import java.util.stream.Collectors;
 
 public class BranchManagerDashBoard {
 
-    @FXML
-    private BarChart<String, Number> LinksTable;
+    @FXML private BarChart<String, Number> LinksTable;
 
-    @FXML
-    private BarChart<String, Number> TicketSaleTable;
+    @FXML private BarChart<String, Number> TicketSaleTable;
 
-    @FXML
-    private BarChart<String, Number> SupportTicketsTable;
+    @FXML private BarChart<String, Number> SupportTicketsTable;
 
-    @FXML
-    private Button backBtn;
+    @FXML private Button backBtn;
+
+    @FXML private ComboBox<CinemaView> locationComboBox;
+
+    private CinemaView allLocations;
+
     @FXML
     private void initialize() {
         EventBus.getDefault().register(this);
@@ -143,10 +147,7 @@ public class BranchManagerDashBoard {
     public void GoBack(ActionEvent actionEvent) {
 
     }
-    @FXML
-    private void PickLocation(ActionEvent event) {
-        //TODO: Implement this
-    }
+
 
     @Subscribe
     public void onGetTicketsEvent(GetAllTicketsEvent event) {
@@ -174,5 +175,6 @@ public class BranchManagerDashBoard {
         // Fill the SupportTicketsTable with support tickets
         makeSupportChart(supportTickets, SupportTicketsTable);
     }
+
 
 }

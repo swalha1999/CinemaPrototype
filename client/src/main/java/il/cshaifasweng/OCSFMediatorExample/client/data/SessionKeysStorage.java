@@ -11,6 +11,7 @@ public class SessionKeysStorage {
     private String username;
     private UserRole role;
     private String email;  // Fixed the typo from "Email" to "email" to follow Java naming conventions.
+    private int cinemaId;
 
     // Private constructor to enforce singleton pattern
     private SessionKeysStorage() {
@@ -70,6 +71,16 @@ public class SessionKeysStorage {
         username = null;
         role = null;
         email = null;  // Clear the email as well
+        return this;
+    }
+
+    // Getter and setter for cinemaId
+    public int getCinemaId() {
+        return cinemaId;
+    }
+
+    public SessionKeysStorage setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
         return this;
     }
 

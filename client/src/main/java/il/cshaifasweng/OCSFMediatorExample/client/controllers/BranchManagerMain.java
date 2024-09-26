@@ -90,6 +90,19 @@ public class BranchManagerMain {
     }
     @FXML
     void showDashBoard(ActionEvent event) {
+
+
+
+        Message cinemaTicketsMessage = new Message(MessageType.CINEMA_TICKETS_INFO_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(SessionKeysStorage.getInstance().getCinemaId());
+        Client.getClient().sendToServer(cinemaTicketsMessage);
+
+        Message cinemaSupportTicketsMessage = new Message(MessageType.CINEMA_SUPPORT_TICKETS_INFO_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
+                .setDataObject(SessionKeysStorage.getInstance().getCinemaId());
+        Client.getClient().sendToServer(cinemaSupportTicketsMessage);
+
         loadUI("BranchManagerDashBoard");
     }
     public void loadUI(String ui) {

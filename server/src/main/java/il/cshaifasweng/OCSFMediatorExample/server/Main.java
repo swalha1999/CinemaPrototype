@@ -176,8 +176,8 @@ public class Main {
                 manager.setHashedPassword(UserDAO.hashPassword("password", manager.getSalt()));
                 manager.setRole(UserRole.BRANCH_MANAGER);
                 manager.setBlocked(false);
+                manager.setCinema(cinema);
                 session.save(manager);
-                session.flush();
 
                 cinema.setManager(manager);
                 session.save(cinema);
