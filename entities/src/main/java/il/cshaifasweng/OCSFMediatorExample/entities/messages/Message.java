@@ -80,8 +80,11 @@ public class Message implements Serializable {
     }
 
     public Message setDataObject(Object dataObject) {
+        if (dataObject == null) {
+            return this;
+        }
         this.dataObject = dataObject;
-        this.dataType = dataObject == null ? "null" :  dataObject.getClass().getSimpleName();
+        this.dataType = dataObject.getClass().getSimpleName();
         return this;
     }
 
