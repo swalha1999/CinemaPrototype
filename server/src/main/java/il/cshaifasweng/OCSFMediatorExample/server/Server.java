@@ -92,6 +92,7 @@ public class Server extends AbstractServer {
             case REMOVE_SCREENING_REQUEST -> handleRemoveScreeningRequest(request, client, loggedInUser);
             case UPDATE_SCREENING_REQUEST -> handleUpdateScreeningRequest(request, client, loggedInUser);
             case GET_MY_SCREENINGS_REQUEST -> handleGetMyScreeningsRequest(request, client, loggedInUser);
+            case GET_ONLINE_SCREENING_FOR_MOVIE_REQUEST -> handleGetOnlineScreeningForMovieRequest(request, client, loggedInUser);
 
             //CINEMAS
             case GET_ALL_CINEMAS_REQUEST -> handleGetAllCinemasRequest(request, client, loggedInUser);
@@ -118,6 +119,12 @@ public class Server extends AbstractServer {
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handleGetOnlineScreeningForMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getScreeningsManager().getAllOnlineScreeningsForMovie(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handleDeleteSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {

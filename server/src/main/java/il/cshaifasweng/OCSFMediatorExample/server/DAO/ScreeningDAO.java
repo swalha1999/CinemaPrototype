@@ -49,6 +49,19 @@ public class ScreeningDAO {
                 .setDataObject(allScreening);
     }
 
+    public Message getAllOnlineScreeningsForMovie(Message request, LoggedInUser loggedInUser) {
+        Message response = new Message(MessageType.GET_ONLINE_SCREENING_FOR_MOVIE_RESPONSE);
+        Movie movie = (Movie) request.getDataObject();
+
+        Query<Screening> query = session.createQuery("from Screening where movie = :movie and isOnlineScreening = true", Screening.class);
+        query.setParameter("movie", movie);
+        List<Screening> allScreening = query.getResultList();
+
+        return response.setSuccess(true)
+                .setMessage("All screenings fetched successfully")
+                .setDataObject(allScreening);
+    }
+
     public Message getScreeningForHall(Message request) {
         Message response = new Message(MessageType.GET_SCREENING_FOR_HALL_RESPONSE);
         Hall hall = (Hall) request.getDataObject();
