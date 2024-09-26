@@ -899,19 +899,21 @@ public class Server extends AbstractServer {
         Notification notification = notificationMap.get(notificationId);
 
         if (notification == null) {
+            System.out.println("Notification not found: " + notificationId);
             return;
         }
 
         LoggedInUser user = notification.getUserConnection();
 
         if (user == null) {
+            System.out.println("User not found for notification: " + notificationId);
             return;
         }
 
         try {
             Message notificationMessage = new Message(MessageType.NOTIFICATION)
                     .setMessage(notification.getMessage());
-            System.out.println("Sending notification to user: " + user.getUsername());
+            System.out.println("Sending notification: " + notification.getMessage());
             user.getClient().sendToClient(notificationMessage);
         } catch (IOException e) {
             System.out.println("Error sending notification to user: " + user.getUsername());
@@ -921,6 +923,7 @@ public class Server extends AbstractServer {
 
     public static String addNotification(String message, LocalDateTime time, LoggedInUser user) {
         Notification notification = new Notification(message, time, user);
+        notificationMap.put(notification.getId(), notification);
         return scheduleNotification(notification);
     }
 

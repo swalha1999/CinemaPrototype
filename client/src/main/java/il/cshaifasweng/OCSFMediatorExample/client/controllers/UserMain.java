@@ -150,6 +150,7 @@ public class UserMain {
         loadFXMLPane("SeatPicker");
         loadFXMLPane("UpcomingMovies");
         loadFXMLPane("UserInfo");
+        loadFXMLPane("MyInbox");
 
         Message message;
 
@@ -157,7 +158,6 @@ public class UserMain {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         
         Client.getClient().sendToServer(message);
-
 
     }
 
