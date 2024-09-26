@@ -76,7 +76,7 @@ public class Purchase {
     EventBus.getDefault().register(this);
 
     // Disable the return ticket button initially
-    bundlePurchaseBtn.setDisable(true);
+    //bundlePurchaseBtn.setDisable(true);
   }
 
   @FXML
@@ -138,7 +138,6 @@ public class Purchase {
       TotalAmountLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
       NumberItemPurchLabel.setText(String.valueOf(selectedSeats.size()));
 
-
   }
 
   @FXML
@@ -149,6 +148,8 @@ public class Purchase {
       return;
     }
 
+    showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
+
     screeningData.setSeats(selectedSeats.stream().toList());
     Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
             .setDataObject(screeningData)
@@ -156,7 +157,6 @@ public class Purchase {
             .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
     Client.getClient().sendToServer(request);
-
 
   }
 
