@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyResolvedTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetMyScreeningsEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemovedTicketEvent;
@@ -131,7 +132,7 @@ public class MyInbox {
 
 
     @Subscribe
-    public void onGetMyResolvedTickets(Message message) {
+    public void onGetMyResolvedTickets(GetMyResolvedTicketEvent message) {
 
     }
 }

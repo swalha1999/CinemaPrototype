@@ -27,6 +27,9 @@ public class Client extends AbstractClient {
 				case GET_MY_TICKETS_RESPONSE:
 					EventBus.getDefault().post(new GetMyTicketsEvent(message));
 					break;
+				case GET_MY_RESOLVED_TICKETS_RESPONSE:
+					EventBus.getDefault().post(new GetMyResolvedTicketEvent(message));
+					break;
 				case GET_ALL_USERS_RESPONSE:
 					EventBus.getDefault().post(new GetAllUsersEvent(message));
 					break;
