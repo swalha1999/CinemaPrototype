@@ -91,14 +91,11 @@ public class Purchase {
     }
     showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
     CVV_Txt.clear();
-    // Assign selected seats to the screening
+
     screeningData.setSeats(selectedSeats.stream().toList());
-    // Prepare details for the purchase event
-    String movieTitle = screeningData.getMovie().getTitle();
-    LocalDateTime startTime = screeningData.getStartingAt();
-    LocalDateTime endTime = startTime.plusMinutes(screeningData.getTimeInMinute());
     Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
             .setDataObject(screeningData)
+            .setDataObject2(false)
             .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
     Client.getClient().sendToServer(request);
@@ -146,6 +143,13 @@ public class Purchase {
       return;
     }
 
+    screeningData.setSeats(selectedSeats.stream().toList());
+    Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
+            .setDataObject(screeningData)
+            .setDataObject2(true)
+            .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+
+    Client.getClient().sendToServer(request);
 
 
   }

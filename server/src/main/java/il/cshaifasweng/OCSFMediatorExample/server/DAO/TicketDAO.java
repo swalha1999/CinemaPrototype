@@ -152,6 +152,7 @@ public class TicketDAO {
     public Message purchaseTickets(Message request, LoggedInUser loggedInUser) {
             Message response = new Message(MessageType.PURCHASE_TICKETS_RESPONSE);
             Screening screeningFromUser = (Screening) request.getDataObject();
+            boolean isBundle = (boolean) request.getDataObject2();
             Set<Seat> seats = screeningFromUser.getSeats();
             User user = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
 
@@ -164,6 +165,13 @@ public class TicketDAO {
             if (screening == null) {
                 return response.setSuccess(false)
                         .setMessage("Screening not found");
+            }
+
+            if (isBundle) {
+                if (user.getRemainingTicketsPurchasedByBundle() <= 0) {
+                    return response.setSuccess(false)
+                            .setMessage("No more tickets left in the bundle");
+                }
             }
 
             session.beginTransaction();
@@ -184,12 +192,13 @@ public class TicketDAO {
                 ticket.setNotificationId(notificationId);
                 user.addTicket(ticket);
                 seat.setAvailable(false);
-
                 ticket.setSeat(seat);
-
                 ticket.setTicketPurchaseDay(LocalDateTime.now());
-
                 user.setNumberOfTicketsPurchased(user.getNumberOfTicketsPurchased() + 1);
+                if (isBundle) {
+                    ticket.setBundleTicket(true);
+                    user.setRemainingTicketsPurchasedByBundle(user.getRemainingTicketsPurchasedByBundle() - 1);
+                }
 
                 session.update(seat);
                 session.save(ticket);
