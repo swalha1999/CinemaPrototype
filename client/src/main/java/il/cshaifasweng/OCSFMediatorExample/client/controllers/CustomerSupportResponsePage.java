@@ -50,7 +50,9 @@ public class CustomerSupportResponsePage {
             // Create a new SupportTicket and populate its fields
             SupportTicket supportTicket = new SupportTicket();
             supportTicket.setDescription(replyDescription.getText());
-
+            // TODO: we need to set the user name of the user to the ticket then send it , and we need to delete the ticket from the inbox after responding
+            //supportTicket.setUser(user);
+           // System.out.println(user.getUsername());
 
             // Optionally set other details like subject, email, or user info (if available)
             //supportTicket.setName(user.getFirstName() + " " + user.getLastName());

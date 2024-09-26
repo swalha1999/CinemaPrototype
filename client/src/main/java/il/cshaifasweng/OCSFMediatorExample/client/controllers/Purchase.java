@@ -128,7 +128,7 @@ public class Purchase {
     SeatNumberLabel.setText(String.valueOf(selectedSeats.size()));
     PricePerSeatLabel.setText(String.valueOf(pricePerSeat));
     TotalPriceLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
-    DurationLabel.setText(String.valueOf(screeningData.getTimeInMinute() + "Minutes"));
+    DurationLabel.setText(String.valueOf(screeningData.getTimeInMinute() + " Minutes"));
     MovieTimeLabel.setText(String.valueOf(screeningData.getStartingAt()));
     OrderIdLabel.setText(String.valueOf(screeningData.getId()));
     TotalAmountLabel.setText(String.valueOf(selectedSeats.size() * pricePerSeat));
