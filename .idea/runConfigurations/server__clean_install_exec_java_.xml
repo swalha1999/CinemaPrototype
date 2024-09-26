@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="server [exec:java]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+  <configuration default="false" name="server [clean,install,exec:java]" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
