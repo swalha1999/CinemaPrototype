@@ -7,6 +7,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.controllers;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.client.data.ScreeningView;
 import il.cshaifasweng.OCSFMediatorExample.client.data.SessionKeysStorage;
+import il.cshaifasweng.OCSFMediatorExample.client.events.GetOnlineScreeningForMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.GetScreeningForMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.ShowSideUIEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Movie;
@@ -84,7 +85,7 @@ public class OnlineMovieDetails {
             return;
         }
         showNotification("We are in movie Details", false);
-        Message message = new Message( MessageType.GET_SCREENING_FOR_MOVIE_REQUEST)
+        Message message = new Message( MessageType.GET_ONLINE_SCREENING_FOR_MOVIE_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey())
                 .setDataObject(movie);
 
@@ -103,7 +104,7 @@ public class OnlineMovieDetails {
     }
 
     @Subscribe
-    public void onGetScreeningsForMovieEvent(GetScreeningForMovieEvent event){
+    public void onGetOnlineScreeningForMovieEvent(GetOnlineScreeningForMovieEvent event){
         Platform.runLater(() -> {
             screeningTable.getItems().clear();
             List<Screening> screenings = event.getScreenings();
