@@ -131,11 +131,11 @@ public class TicketDAO {
             // Half refund
             user.setBalance(user.getBalance() + (float) ticket.getScreening().getPrice() / 2);
         }
-//        else {
-//            return response
-//                    .setSuccess(false)
-//                    .setMessage("Ticket cannot be refunded less than 1 hour before the screening");
-//        }
+        else if (hoursUntilScreening < 0) {
+            return response
+                    .setSuccess(false)
+                    .setMessage("Ticket cannot be refunded because the screening has already started");
+        }
 
         session.beginTransaction();
         session.delete(ticket);
@@ -204,8 +204,12 @@ public class TicketDAO {
                 session.update(seat);
                 session.save(ticket);
             }
+
             session.update(user);
             session.getTransaction().commit();
+
+            String message = "You have purchased " + seats.size() + " tickets for the movie '" + screening.getMovie().getTitle() + "'! Enjoy!";
+            String notificationId = addNotification(message, LocalDateTime.now(), loggedInUser);
 
             return response.setSuccess(true)
                     .setMessage("Tickets purchased successfully");

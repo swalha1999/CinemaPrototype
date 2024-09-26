@@ -284,7 +284,7 @@ public class ScreeningDAO {
     }
 
     public Message denyPriceChangeRequest( Message req, LoggedInUser loggedInUser) {
-        Message response = new Message(MessageType.APPROVE_PRICE_CHANGE_RESPONSE);
+        Message response = new Message(MessageType.DENY_PRICE_CHANGE_RESPONSE);
         PriceChangeRequest priceChangeRequestFromUser = (PriceChangeRequest) req.getDataObject();
 
         PriceChangeRequest priceChangeRequest = session.get(PriceChangeRequest.class, priceChangeRequestFromUser.getId());

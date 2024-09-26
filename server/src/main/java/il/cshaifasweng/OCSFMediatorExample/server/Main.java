@@ -53,14 +53,14 @@ public class Main {
         Calendar calendar = Calendar.getInstance();
 
         // Helper method to create dates
-        dates[0] = createDate(calendar, 2024, Calendar.AUGUST, 5);
-        dates[1] = createDate(calendar, 2024, Calendar.AUGUST, 6);
-        dates[2] = createDate(calendar, 2024, Calendar.AUGUST, 10);
-        dates[3] = createDate(calendar, 2024, Calendar.AUGUST, 7);
-        dates[4] = createDate(calendar, 2024, Calendar.AUGUST, 16);
-        dates[5] = createDate(calendar, 2024, Calendar.AUGUST, 18);
-        dates[6] = createDate(calendar, 2024, Calendar.AUGUST, 11);
-        dates[7] = createDate(calendar, 2024, Calendar.AUGUST, 6);
+        dates[0] = createDate(calendar, 2024, Calendar.SEPTEMBER, 5);
+        dates[1] = createDate(calendar, 2024, Calendar.SEPTEMBER, 6);
+        dates[2] = createDate(calendar, 2024, Calendar.SEPTEMBER, 10);
+        dates[3] = createDate(calendar, 2024, Calendar.SEPTEMBER, 7);
+        dates[4] = createDate(calendar, 2024, Calendar.SEPTEMBER, 16);
+        dates[5] = createDate(calendar, 2024, Calendar.SEPTEMBER, 18);
+        dates[6] = createDate(calendar, 2024, Calendar.SEPTEMBER, 11);
+        dates[7] = createDate(calendar, 2024, Calendar.SEPTEMBER, 6);
 
         String[] movieTitles = {
                 "Mission: Impossible – Dead Reckoning Part Two",
@@ -106,11 +106,36 @@ public class Main {
                 "Indiana Jones returns for one last adventure."
         };
 
+        // Sample actors and producers list
+        String[][] actors = {
+                {"Tom Cruise", "Rebecca Ferguson", "Simon Pegg"},
+                {"Timothée Chalamet", "Rebecca Ferguson", "Zendaya"},
+                {"Sam Worthington", "Zoe Saldana", "Sigourney Weaver"},
+                {"Brie Larson", "Iman Vellani", "Teyonah Parris"},
+                {"Eddie Redmayne", "Katherine Waterston", "Dan Fogler"},
+                {"Shameik Moore", "Hailee Steinfeld", "Jake Johnson"},
+                {"Chris Pratt", "Zoe Saldana", "Dave Bautista"},
+                {"Harrison Ford", "Phoebe Waller-Bridge", "Mads Mikkelsen"}
+        };
+
+        String[][] producers = {
+                {"Christopher McQuarrie"},
+                {"Denis Villeneuve"},
+                {"James Cameron"},
+                {"Kevin Feige"},
+                {"David Heyman"},
+                {"Amy Pascal"},
+                {"Kevin Feige", "James Gunn"},
+                {"Kathleen Kennedy"}
+        };
+
         for (int i = 0; i < movies.length; i++) {
             movies[i] = new Movie(movieTitles[i], dates[i]);
             movies[i].setGenre(genres[i]);
             movies[i].setHebrewTitle(hebrewTitles[i]);
             movies[i].setDescription(descriptions[i]);
+            movies[i].setActors(String.join(", ", actors[i]));
+            movies[i].setProducer(producers[i][0]);
 
             // Set some movies as online, some as coming soon, and some as both or neither
             if (i < 2) {
@@ -118,7 +143,6 @@ public class Main {
             } else if (i < 4) {
                 movies[i].setComingSoon(true);
             }
-            // The last two movies will be neither online nor coming soon
 
             // Check if the movie already exists in the database
             Query<Movie> query = session.createQuery("from Movie where name = :name", Movie.class);

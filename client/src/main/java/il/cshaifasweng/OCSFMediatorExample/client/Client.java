@@ -69,6 +69,9 @@ public class Client extends AbstractClient {
 				case GET_SCREENING_FOR_MOVIE_RESPONSE:
 					EventBus.getDefault().post( new GetScreeningForMovieEvent(message));
 					break;
+				case GET_ONLINE_SCREENING_FOR_MOVIE_RESPONSE:
+					EventBus.getDefault().post( new GetOnlineScreeningForMovieEvent(message));
+					break;
 				case GET_ALL_CINEMAS_RESPONSE:
 					EventBus.getDefault().post( new GetAllCinemasEvent(message));
 					break;
@@ -89,9 +92,6 @@ public class Client extends AbstractClient {
 					break;
 				case GET_SEATS_FOR_SCREENING_RESPONSE:
 					EventBus.getDefault().post( new GetSeatsForScreeningEvent(message));
-					break;
-				case PURCHASE_TICKETS_RESPONSE:
-					EventBus.getDefault().post(new PurchaseScreeningEvent(message));
 					break;
 				case NOTIFICATION:
 					EventBus.getDefault().post(new HourTillMovieEvent(message));

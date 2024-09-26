@@ -36,7 +36,7 @@ public class CustomerSupportResponsePage {
     @FXML
     private void initialize() {
         String currentUsername = SessionKeysStorage.getInstance().getUsername();
-
+        userNameLabel.setText(user.getUsername());
         EventBus.getDefault().register(this);
     }
 

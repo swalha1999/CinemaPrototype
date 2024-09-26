@@ -119,7 +119,7 @@ public class OnlineMovies {
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
         moviePane.setOnMouseClicked(event -> {
-            showSideUI("MovieDetails", movie);
+            showSideUI("OnlineMovieDetails", movie);
         });
 
         moviePane.setOnMouseEntered(event -> {

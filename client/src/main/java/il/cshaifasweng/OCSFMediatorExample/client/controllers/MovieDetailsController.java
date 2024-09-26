@@ -60,7 +60,7 @@ public class MovieDetailsController {
         });
     }
 
-     //TODO add the movie actors and the producer to the gui90
+    //TODO add the movie actors and the producer to the gui
     //TODO change the way we display the image in the movie details page
 
     @Subscribe
@@ -69,7 +69,6 @@ public class MovieDetailsController {
         if (!event.getUIName().equals("MovieDetails") || event.getFirstObj() == null) {
             return;
         }
-        showNotification("We are in movie Details", false);
 
         Movie movie = (Movie) event.getFirstObj();
         movieToDisplay = movie;

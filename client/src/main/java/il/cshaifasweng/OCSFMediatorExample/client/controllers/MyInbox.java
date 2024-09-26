@@ -37,9 +37,13 @@ public class MyInbox {
         EventBus.getDefault().register(this);
         // Send a request to get all screenings for the user
 
-//        Message getReplyMessage = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
-//                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-//        Client.getClient().sendToServer(getReplyMessage);
+        Message message = new Message(MessageType.GET_MY_SCREENINGS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(message);
+
+        Message getReplyMessage = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(getReplyMessage);
     }
 
     public void addMessage(String sender, String content) {
@@ -81,30 +85,18 @@ public class MyInbox {
             for (Screening screening : screeningSet) {
                 int screeningId = screening.getId();
 
-                // Check if the screening was already displayed
-                if (!displayedScreeningIds.contains(screeningId)) {
-                    String movieTitle = screening.getMovie().getTitle();
-                    LocalDateTime startTime = screening.getStartingAt();
-                    int durationInMinutes = screening.getMovie().getDurationInMinutes();
+                String movieTitle = screening.getMovie().getTitle();
+                LocalDateTime startTime = screening.getStartingAt();
+                int durationInMinutes = screening.getMovie().getDurationInMinutes();
+                LocalDateTime endTime = startTime.plusMinutes(durationInMinutes);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                String formattedStartTime = startTime.format(formatter);
+                String formattedEndTime = endTime.format(formatter);
+                String messageContent = String.format("Screening for the movie '%s'. \n" +
+                        "From: %s to %s.", movieTitle, formattedStartTime, formattedEndTime);
+                addMessage("Cinema System", messageContent);
+                displayedScreeningIds.add(screeningId);
 
-                    // Calculate end time by adding the duration to the start time
-                    LocalDateTime endTime = startTime.plusMinutes(durationInMinutes);
-
-                    // Format date and time
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    String formattedStartTime = startTime.format(formatter);
-                    String formattedEndTime = endTime.format(formatter);
-
-                    // Create the message content
-                    String messageContent = String.format("Screening for the movie '%s'. \n" +
-                            "From: %s to %s.", movieTitle, formattedStartTime, formattedEndTime);
-
-                    // Add the message to the inbox
-                    addMessage("Cinema System", messageContent);
-
-                    // Mark the screening as displayed
-                    displayedScreeningIds.add(screeningId);
-                }
             }
         } else {
             System.err.println("GetMyScreeningsEvent or Screening data is null.");
