@@ -69,7 +69,6 @@ public class MovieDetailsController {
         if (!event.getUIName().equals("MovieDetails") || event.getFirstObj() == null) {
             return;
         }
-        showNotification("We are in movie Details", false);
 
         Movie movie = (Movie) event.getFirstObj();
         movieToDisplay = movie;

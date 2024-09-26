@@ -90,7 +90,6 @@ public class Purchase {
       return;
     }
 
-    showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
     CVV_Txt.clear();
 
     screeningData.setSeats(selectedSeats.stream().toList());
@@ -144,8 +143,6 @@ public class Purchase {
       showNotification("Please select seats to purchase", false);
       return;
     }
-
-    showNotification("Purchase Successful , Check The Information In Ur Inbox", true);
 
     screeningData.setSeats(selectedSeats.stream().toList());
     Message request = new Message(MessageType.PURCHASE_TICKETS_REQUEST)
