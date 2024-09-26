@@ -124,23 +124,24 @@ public class SupportTicketDAO {
         }
     }
 
-    // Delete a support ticket
-    public Message deleteSupportTicket(Message request) {
+    public Message deleteSupportTicket(Message request, LoggedInUser loggedInUser) {
         SupportTicket ticketFromUser = (SupportTicket) request.getDataObject();
         SupportTicket ticketFromDB = session.get(SupportTicket.class, ticketFromUser.getId());
 
-        if (ticketFromDB != null) {
-            session.delete(ticketFromDB);
-            session.flush();
-
-            return new Message(MessageType.DELETE_SUPPORT_TICKET_RESPONSE)
-                    .setSuccess(true)
-                    .setMessage("Support ticket deleted successfully");
-        } else {
+        if (ticketFromDB == null) {
             return new Message(MessageType.DELETE_SUPPORT_TICKET_RESPONSE)
                     .setSuccess(false)
                     .setMessage("Support ticket not found");
         }
+
+        session.beginTransaction();
+        session.delete(ticketFromDB);
+        session.getTransaction().commit();
+
+        return new Message(MessageType.DELETE_SUPPORT_TICKET_RESPONSE)
+                .setSuccess(true)
+                .setMessage("Support ticket deleted successfully");
+
     }
 
 
