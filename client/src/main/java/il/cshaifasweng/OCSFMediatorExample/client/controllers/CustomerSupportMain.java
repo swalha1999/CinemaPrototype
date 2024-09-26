@@ -153,6 +153,7 @@ public class CustomerSupportMain {
     public void preLoadPages() {
         loadFXMLPane("CustomerSupportUsersView");
         loadFXMLPane("CustomerSupportInbox");
+        loadFXMLPane("CustomerSupportResponsePage");
 
         Message message = new Message();
 

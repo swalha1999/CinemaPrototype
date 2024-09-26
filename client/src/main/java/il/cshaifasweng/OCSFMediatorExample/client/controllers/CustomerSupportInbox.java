@@ -77,6 +77,7 @@ public class CustomerSupportInbox {
     }
 
     private void onAnswer(SupportTicket ticket) {
+      System.out.println(ticket);
         showSideUI("CustomerSupportResponsePage",ticket);
     }
 

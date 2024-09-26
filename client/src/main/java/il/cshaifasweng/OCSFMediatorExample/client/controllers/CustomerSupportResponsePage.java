@@ -15,13 +15,15 @@ import javafx.scene.control.TextArea;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.time.LocalDateTime;
+
 import static il.cshaifasweng.OCSFMediatorExample.client.utils.UiUtil.showNotification;
 
 public class CustomerSupportResponsePage {
 
     private User user;
 
-    private SupportTicket ticket;
+    private  SupportTicket ticket;
     @FXML // fx:id="replyBtn"
     private Button replyBtn; // Value injected by FXMLLoader
 
@@ -51,11 +53,9 @@ public class CustomerSupportResponsePage {
             SupportTicket supportTicket = new SupportTicket();
             supportTicket.setDescription(replyDescription.getText());
             // TODO: we need to set the user name of the user to the ticket then send it , and we need to delete the ticket from the inbox after responding
-            supportTicket.setUser(user);
-            System.out.println(user.getUsername());
-
-            // Optionally set other details like subject, email, or user info (if available)
-            supportTicket.setName(user.getFirstName() + " " + user.getLastName());
+           supportTicket.setUser(ticket.getUser());
+            supportTicket.setEmail(SessionKeysStorage.getInstance().getEmail());
+            supportTicket.setCreatedDate(LocalDateTime.now());
 
             // Create the message with the SupportTicket object
             Message message = new Message(MessageType.SEND_SUPPORT_TICKET_REQUEST)
@@ -78,7 +78,6 @@ public class CustomerSupportResponsePage {
         if (!event.getUIName().equals("CustomerSupportResponsePage")) {
             return;
         }
-        SupportTicket ticket = (SupportTicket) event.getFirstObj();
-        user = ticket.getUser();
+       ticket = (SupportTicket) event.getFirstObj();
     }
 }

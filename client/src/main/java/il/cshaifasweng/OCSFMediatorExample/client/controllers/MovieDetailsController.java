@@ -60,7 +60,7 @@ public class MovieDetailsController {
         });
     }
 
-     //TODO add the movie actors and the producer to the gui
+     //TODO add the movie actors and the producer to the gui90
     //TODO change the way we display the image in the movie details page
 
     @Subscribe

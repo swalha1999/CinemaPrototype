@@ -132,9 +132,5 @@ public class MyInbox {
         // Add the message to the inbox
         addMessage("Cinema System", messageContent);
     }
-
-
-
-
 }
 
