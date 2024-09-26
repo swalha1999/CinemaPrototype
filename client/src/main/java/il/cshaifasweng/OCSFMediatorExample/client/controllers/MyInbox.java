@@ -40,9 +40,9 @@ public class MyInbox {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
-        Message getReplyMessages = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
+        Message getReplyMessage = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
-        Client.getClient().sendToServer(getReplyMessages);
+        Client.getClient().sendToServer(getReplyMessage);
     }
 
     public void addMessage(String sender, String content) {
