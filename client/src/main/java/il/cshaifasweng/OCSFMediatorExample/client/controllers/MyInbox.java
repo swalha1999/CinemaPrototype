@@ -8,6 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.events.HourTillMovieEvent;
 import il.cshaifasweng.OCSFMediatorExample.client.events.RemovedTicketEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.MovieTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.Screening;
+import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.SupportTicket;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
 import javafx.application.Platform;
@@ -28,6 +29,8 @@ public class MyInbox {
 
     @FXML
     private VBox MessageContainer;
+
+    private  List<SupportTicket> resolvedTickets;
 
     // Store unique screenings already displayed
     private final Set<Integer> displayedScreeningIds = new HashSet<>();
@@ -133,7 +136,10 @@ public class MyInbox {
 
     @Subscribe
     public void onGetMyResolvedTickets(GetMyResolvedTicketEvent message) {
-
+        resolvedTickets = message.getResolvedTickets();
+        for (SupportTicket ticket : resolvedTickets) {
+            addMessage("Resolved tickets:", ticket.getScreening().getMovie().getTitle());
+        }
     }
 }
 

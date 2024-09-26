@@ -25,7 +25,7 @@ public class GetMyResolvedTicketEvent {
         return message;
     }
 
-    public List<SupportTicket> getReplyTicket() {
+    public List<SupportTicket> getResolvedTickets() {
         return resolvedTickets;
     }
 }
