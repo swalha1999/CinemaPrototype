@@ -85,6 +85,10 @@ public class MyInbox {
             for (Screening screening : screeningSet) {
                 int screeningId = screening.getId();
 
+                if (displayedScreeningIds.contains(screeningId)) {
+                    continue;
+                }
+
                 String movieTitle = screening.getMovie().getTitle();
                 LocalDateTime startTime = screening.getStartingAt();
                 int durationInMinutes = screening.getMovie().getDurationInMinutes();
