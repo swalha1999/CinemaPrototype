@@ -6,6 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.dataTypes.User;
 import il.cshaifasweng.OCSFMediatorExample.client.Client;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.messages.MessageType;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.greenrobot.eventbus.EventBus;
@@ -46,19 +47,19 @@ public class UserInfo {
             System.err.println("Failed to get user info: " + userInfoReceived.getMessage());
             return;
         }
-
-        User user = userInfoReceived.getUser();
-
-        usernameLabel.setText("Username: " + user.getUsername());
-        emailLabel.setText("Email: " + user.getEmail());
-        roleLabel.setText("Role: " + user.getRole().toString());
-        phoneLabel.setText("Phone: " + user.getPhone());
-        firstNameLabel.setText("First Name: " + user.getFirstName());
-        lastNameLabel.setText("Last Name: " + user.getLastName());
-        balanceLabel.setText("Balance: $" + String.format("%.2f", user.getBalance()));
-        ticketsPurchasedLabel.setText("Tickets Purchased: " + user.getNumberOfTicketsPurchased());
-        bundlesPurchasedLabel.setText("Bundles Purchased: " + user.getNumberOfBundlePurchased());
-        onlineScreeningsPurchasedLabel.setText("Online Screenings Purchased: " + user.getNumberOfOnlineScreeningsPurchased());
-        remainingTicketsPurchasedByBundle.setText("Remaining Tickets Purchased By Bundle: " + user.getRemainingTicketsPurchasedByBundle());
+        Platform.runLater(() -> {
+            User user = userInfoReceived.getUser();
+            usernameLabel.setText("Username: " + user.getUsername());
+            emailLabel.setText("Email: " + user.getEmail());
+            roleLabel.setText("Role: " + user.getRole().toString());
+            phoneLabel.setText("Phone: " + user.getPhone());
+            firstNameLabel.setText("First Name: " + user.getFirstName());
+            lastNameLabel.setText("Last Name: " + user.getLastName());
+            balanceLabel.setText("Balance: $" + String.format("%.2f", user.getBalance()));
+            ticketsPurchasedLabel.setText("Tickets Purchased: " + user.getNumberOfTicketsPurchased());
+            bundlesPurchasedLabel.setText("Bundles Purchased: " + user.getNumberOfBundlePurchased());
+            onlineScreeningsPurchasedLabel.setText("Online Screenings Purchased: " + user.getNumberOfOnlineScreeningsPurchased());
+            remainingTicketsPurchasedByBundle.setText("Remaining Tickets Purchased By Bundle: " + user.getRemainingTicketsPurchasedByBundle());
+        });
     }
 }

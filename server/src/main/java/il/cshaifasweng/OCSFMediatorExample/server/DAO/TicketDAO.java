@@ -185,6 +185,8 @@ public class TicketDAO {
                 user.addTicket(ticket);
                 seat.setAvailable(false);
 
+                ticket.setSeat(seat);
+
                 ticket.setTicketPurchaseDay(LocalDateTime.now());
 
                 user.setNumberOfTicketsPurchased(user.getNumberOfTicketsPurchased() + 1);
