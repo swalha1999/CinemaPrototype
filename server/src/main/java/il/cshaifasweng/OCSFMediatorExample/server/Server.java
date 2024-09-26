@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class Server extends AbstractServer {
     private static final HashMap<String, LoggedInUser> sessionKeys = new HashMap<>();
     private static HashMap<String, Notification> notificationMap = new HashMap<>();
-
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private final DatabaseController database;
 
@@ -877,12 +877,15 @@ public class Server extends AbstractServer {
     }
 
     private static String scheduleNotification(Notification notification) {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(now, notification.getNotificationTime());
 
         long delay = duration.getSeconds();
+
+        if (delay < 0) {
+            delay = 5;
+        }
 
         scheduler.schedule(() -> sendNotification(notification.getId()), delay, TimeUnit.SECONDS);
 
@@ -908,6 +911,7 @@ public class Server extends AbstractServer {
         try {
             Message notificationMessage = new Message(MessageType.NOTIFICATION)
                     .setMessage(notification.getMessage());
+            System.out.println("Sending notification to user: " + user.getUsername());
             user.getClient().sendToClient(notificationMessage);
         } catch (IOException e) {
             System.out.println("Error sending notification to user: " + user.getUsername());
