@@ -112,8 +112,18 @@ public class Server extends AbstractServer {
             case GET_PRICE_CHANGES_REQUEST -> handleGetPriceChangesRequest(request, client, loggedInUser);
             case APPROVE_PRICE_CHANGE_REQUEST -> handleApprovePriceChangeRequest(request, client, loggedInUser);
             case DENY_PRICE_CHANGE_REQUEST -> handleDenyPriceChangeRequest(request, client, loggedInUser);
+
+            //SUPPORT_TICKETS
+            case DELETE_SUPPORT_TICKET_REQUEST -> handleDeleteSupportTicketRequest(request, client, loggedInUser);
+
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handleDeleteSupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getSupportTicketsManager().deleteSupportTicket(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handleDenyPriceChangeRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
