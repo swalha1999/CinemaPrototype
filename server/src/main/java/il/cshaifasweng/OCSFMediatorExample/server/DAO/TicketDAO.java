@@ -148,99 +148,55 @@ public class TicketDAO {
 
     }
 
+
     public Message purchaseTickets(Message request, LoggedInUser loggedInUser) {
-        Message response = new Message(MessageType.PURCHASE_TICKETS_RESPONSE);
+            Message response = new Message(MessageType.PURCHASE_TICKETS_RESPONSE);
+            Screening screeningFromUser = (Screening) request.getDataObject();
+            Set<Seat> seats = screeningFromUser.getSeats();
+            User user = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
 
-        Screening screeningFromUser = (Screening) request.getDataObject();
-        Set<Seat> seats = screeningFromUser.getSeats();
-
-        User user = DatabaseController.getInstance(session).getUsersManager().getUserById(loggedInUser.getUserId());
-        if (user == null) {
-            response.setSuccess(false)
-                    .setMessage("User not found");
-            return response;
-        }
-
-        Screening screening = session.get(Screening.class, screeningFromUser.getId());
-        if (screening == null) {
-            response.setSuccess(false)
-                    .setMessage("Screening not found");
-            return response;
-        }
-
-        if (seats.isEmpty()) {
-            response.setSuccess(false)
-                    .setMessage("No seats selected");
-            return response;
-        }
-
-        Seat seatFromUser = seats.iterator().next();
-        Seat seat = DatabaseController.getInstance(session).getSeatsManager().getSeatById(seatFromUser.getId());
-
-        if (seat == null) {
-            response.setSuccess(false)
-                    .setMessage("Seat not found");
-            return response;
-        }
-
-        if (!seat.isAvailable()) {
-            response.setSuccess(false)
-                    .setMessage("Seat is not available");
-            return response;
-        }
-
-        Transaction transaction = null;
-        try {
-            transaction = session.getTransaction();
-            if (transaction == null || !transaction.isActive()) {
-                transaction = session.beginTransaction();
+            if (user == null) {
+                return response.setSuccess(false)
+                        .setMessage("User not found");
             }
 
-            LocalDateTime purchaseTime = LocalDateTime.now();
+            Screening screening = session.get(Screening.class, screeningFromUser.getId());
+            if (screening == null) {
+                return response.setSuccess(false)
+                        .setMessage("Screening not found");
+            }
 
-            String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
-            String notificationId = addNotification(message, screening.getStartingAt().minusHours(1), loggedInUser);
+            session.beginTransaction();
 
+            for (Seat seatFromUser : seats) {
 
-            MovieTicket ticket = new MovieTicket(user, screening, seat);
-            ticket.setIsUsed(false);
-            ticket.setRefunded(false);
-            ticket.setBundleTicket(false);
-            ticket.setId(ticketcounter++);
-            ticket.setNotificationId(notificationId);
-            ticket.setTicketPurchaseDay(purchaseTime);
-            seat.setAvailable(false);
+                String message = "Reminder: Your movie '" + screening.getMovie().getTitle() + "' starts in 1 hour!";
+                String notificationId = addNotification(message, screening.getStartingAt().minusHours(1), loggedInUser);
 
-            user.setNumberOfTicketsPurchased(user.getNumberOfTicketsPurchased() + 1);
+                Seat seat = session.get(Seat.class, seatFromUser.getId());
+                if (seat == null || !seat.isAvailable()) {
+                    session.getTransaction().rollback();
+                    return response.setSuccess(false)
+                            .setMessage("Seat is not available");
+                }
+                MovieTicket ticket = new MovieTicket();
+                ticket.setScreening(screening);
+                ticket.setNotificationId(notificationId);
+                user.addTicket(ticket);
+                seat.setAvailable(false);
 
-            session.update(seat);
-            session.save(ticket);
+                ticket.setTicketPurchaseDay(LocalDateTime.now());
+
+                user.setNumberOfTicketsPurchased(user.getNumberOfTicketsPurchased() + 1);
+
+                session.update(seat);
+                session.save(ticket);
+            }
             session.update(user);
+            session.getTransaction().commit();
 
-            if (transaction != null && transaction.isActive()) {
-                transaction.commit();
-            }
-
-            response.setDataObject(ticket);
-
-            response.setSuccess(true)
-                    .setMessage("Purchase successful! A confirmation email has been sent to your inbox.");
-            return response;
-
-        } catch (Exception e) {
-            // Rollback transaction if there is an exception
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-
-            // Log the exception for debugging
-            e.printStackTrace();
-
-            // Return error message
-            return new Message(MessageType.PURCHASE_TICKETS_RESPONSE)
-                    .setSuccess(false)
-                    .setMessage("An error occurred while processing the ticket purchase.");
-        }
+            return response.setSuccess(true)
+                    .setMessage("Tickets purchased successfully");
     }
 
     public void setSession(Session session) {
