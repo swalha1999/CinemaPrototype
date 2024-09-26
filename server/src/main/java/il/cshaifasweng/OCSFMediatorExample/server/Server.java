@@ -116,9 +116,23 @@ public class Server extends AbstractServer {
 
             //SUPPORT_TICKETS
             case DELETE_SUPPORT_TICKET_REQUEST -> handleDeleteSupportTicketRequest(request, client, loggedInUser);
+            case GET_MY_RESOLVED_TICKETS_REQUEST -> handleGetMyResolvedTicketsRequest(request, client, loggedInUser);
+            case REPLY_SUPPORT_TICKET_REQUEST -> handleReplySupportTicketRequest(request, client, loggedInUser);
 
             default -> sendErrorMessage(client, "Error! Unknown message received Check if there is a case for it");
         };
+    }
+
+    private Message handleGetMyResolvedTicketsRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getSupportTicketsManager().getMyResolvedTickets(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
+    }
+
+    private Message handleReplySupportTicketRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {
+        Message response = database.getSupportTicketsManager().replyToTicket(request, loggedInUser);
+        sendResponse(client, response);
+        return response;
     }
 
     private Message handleGetOnlineScreeningForMovieRequest(Message request, ConnectionToClient client, LoggedInUser loggedInUser) {

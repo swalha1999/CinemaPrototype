@@ -262,6 +262,30 @@ public class Main {
         session.flush();
     }
 
+    private static void generateSupport() {
+        User admin = new User()
+                .setUsername("support")
+                .setSalt(UserDAO.generateSalt());
+
+        admin.setHashedPassword(UserDAO.hashPassword("support", admin.getSalt()));
+        admin.setRole(UserRole.CUSTOMER_SERVICE);
+        admin.setBlocked(false);
+        admin.setEmail("support@admin.com");
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
+        criteria.select(root).where(builder.equal(root.get("username"), "support"));
+        List<User> users = session.createQuery(criteria).getResultList();
+
+        if (!users.isEmpty()) {
+            return;
+        }
+
+        session.save(admin);
+        session.flush();
+    }
+
     private static void generateTestUser(){
         User user = new User()
                 .setUsername("user")
@@ -294,6 +318,7 @@ public class Main {
             session.beginTransaction();
             generateMovies();
             generateAdmin();
+            generateSupport();
             generateTestUser();
             generateScreening();
             session.getTransaction().commit();

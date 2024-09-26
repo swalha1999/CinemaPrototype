@@ -144,4 +144,40 @@ public class SupportTicketDAO {
 
     }
 
+    public Message replyToTicket(Message request, LoggedInUser loggedInUser) {
+        SupportTicket ticketFromCoustomerSupport = (SupportTicket) request.getDataObject();
+        SupportTicket ticketFromDB = session.get(SupportTicket.class, ticketFromCoustomerSupport.getId());
+
+        if (ticketFromDB == null) {
+            return new Message(MessageType.REPLY_SUPPORT_TICKET_RESPONSE)
+                    .setSuccess(false)
+                    .setMessage("Support ticket not found");
+        }
+
+        ticketFromDB.setDescription(ticketFromCoustomerSupport.getDescription());
+        ticketFromDB.setCreatedDate(LocalDateTime.now());
+        ticketFromDB.setStatus(SupportTicketStatus.RESOLVED);
+
+        session.beginTransaction();
+        session.update(ticketFromDB);
+        session.getTransaction().commit();
+
+        return new Message(MessageType.REPLY_SUPPORT_TICKET_RESPONSE)
+                .setSuccess(true)
+                .setMessage("Support ticket replied successfully");
+    }
+
+
+    public Message getMyResolvedTickets(Message request, LoggedInUser loggedInUser) {
+        List<SupportTicket> tickets = session.createQuery("from SupportTicket where user.id = :userId and status = :status", SupportTicket.class)
+                .setParameter("userId", loggedInUser.getUserId())
+                .setParameter("status", SupportTicketStatus.RESOLVED)
+                .list();
+
+        return new Message(MessageType.GET_MY_RESOLVED_TICKETS_RESPONSE)
+                .setSuccess(true)
+                .setMessage("All resolved support tickets fetched successfully")
+                .setDataObject(tickets);
+    }
+
 }

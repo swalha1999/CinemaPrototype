@@ -49,23 +49,18 @@ public class CustomerSupportResponsePage {
             }
 
             // Create a new SupportTicket and populate its fields
-            SupportTicket supportTicket = new SupportTicket();
-            supportTicket.setDescription(replyDescription.getText());
+
+            ticket.setDescription(replyDescription.getText());
             // TODO: we need to set the user name of the user to the ticket then send it , and we need to delete the ticket from the inbox after responding
-           supportTicket.setUser(ticket.getUser());
-            supportTicket.setEmail(SessionKeysStorage.getInstance().getEmail());
-            supportTicket.setCreatedDate(LocalDateTime.now());
+            ticket.setEmail("support@cinema.com");
 
             // Create the message with the SupportTicket object
             Message message = new Message(MessageType.REPLY_SUPPORT_TICKET_REQUEST)
-                    .setDataObject(supportTicket)  // Send the SupportTicket object
+                    .setDataObject(ticket)  // Send the SupportTicket object
                     .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
 
             // Send the message to the server
             Client.getClient().sendToServer(message);
-
-            // Show notification and clear the text area
-            showNotification("Reply has been sent.", true);
         } catch (Exception e) {
             e.printStackTrace(); // Log any exception that occurs during the submission
             showNotification("An error occurred while submitting the request.", false);

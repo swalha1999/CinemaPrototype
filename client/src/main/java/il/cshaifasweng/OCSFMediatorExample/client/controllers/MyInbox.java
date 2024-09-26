@@ -29,7 +29,7 @@ public class MyInbox {
     private VBox MessageContainer;
 
     // Store unique screenings already displayed
-    private Set<Integer> displayedScreeningIds = new HashSet<>();
+    private final Set<Integer> displayedScreeningIds = new HashSet<>();
 
     @FXML
     public void initialize() {
@@ -41,7 +41,7 @@ public class MyInbox {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
-        Message getReplyMessage = new Message(MessageType.GET_MY_REPLY_TICKETS_REQUEST)
+        Message getReplyMessage = new Message(MessageType.GET_MY_RESOLVED_TICKETS_REQUEST)
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(getReplyMessage);
     }
@@ -127,6 +127,12 @@ public class MyInbox {
 
         // Add the message to the inbox
         addMessage("Cinema System", messageContent);
+    }
+
+
+    @Subscribe
+    public void onGetMyResolvedTickets(Message message) {
+
     }
 }
 

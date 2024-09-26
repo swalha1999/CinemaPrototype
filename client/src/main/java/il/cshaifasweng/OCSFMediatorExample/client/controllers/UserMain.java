@@ -73,6 +73,10 @@ public class UserMain {
                 .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
         Client.getClient().sendToServer(message);
 
+        Message getReplyMessage = new Message(MessageType.GET_MY_RESOLVED_TICKETS_REQUEST)
+                .setSessionKey(SessionKeysStorage.getInstance().getSessionKey());
+        Client.getClient().sendToServer(getReplyMessage);
+
         loadUI("MyInbox");
     }
 
