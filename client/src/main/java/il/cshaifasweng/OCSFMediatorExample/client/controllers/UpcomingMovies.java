@@ -122,19 +122,19 @@ public class UpcomingMovies {
 
         moviePane.getChildren().addAll(movieImage, movieTitle);
 
-        moviePane.setOnMouseClicked(event -> {
-            showSideUI("MovieDetails", movie);
-        });
 
-        moviePane.setOnMouseEntered(event -> {
-            moviePane.setCursor(Cursor.HAND);  // Change to hand cursor
-        });
+        //No need, we don't show information on upcoming movies
+//        moviePane.setOnMouseClicked(event -> {
+//            showSideUI("MovieDetails", movie);
+//        });
 
-        moviePane.setOnMouseExited(event -> {
-            moviePane.setCursor(Cursor.DEFAULT);  // Change back to default cursor
-        });
-
-
+//        moviePane.setOnMouseEntered(event -> {
+//            moviePane.setCursor(Cursor.HAND);  // Change to hand cursor
+//        });
+//
+//        moviePane.setOnMouseExited(event -> {
+//            moviePane.setCursor(Cursor.DEFAULT);  // Change back to default cursor
+//        });
 
         return moviePane;
     }

@@ -214,6 +214,7 @@ public class Main {
                 screening.setHall(cinemas.get(j % cinemas.size()).getHalls().stream().toList().get(j % cinemas.get(j % cinemas.size()).getHalls().size()));
                 screening.setStartingAt(now.plusHours(1).plusMinutes(j == 1 ? 1 : 0));
                 screening.setPrice(45);
+                screening.setIsOnlineScreening(j == 1);
                 session.save(screening);
                 session.flush();
 
