@@ -24,6 +24,6 @@ hight = 900
 5. DONE:Make Req and Res to the Movie DIO `DONE BY: swalha`
 6. DONE: add cinema entity `DONE BY: swalha`
 7. DONE: finish the movie admin controller `DONE BY: omar`
-8. DONE: finish the import function in movie admin controller
+8. DONE: finish the import function in movie admin controller `DONE BY: omar`
 9. TODO: fix the movie details in the movie catalog `DONE BY: omar`
 
